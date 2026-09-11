@@ -98,6 +98,18 @@
   {% endif %}
 
   
+  {%- comment -%}
+    Molin AI - bąbelek czatu ukryty na mobile.
+    Widget to custom element z shadow DOM, więc jedyny punkt zaczepienia to host.
+    Breakpoint 749px = zgodny z motywem (desktop od 750px).
+    Cofnięcie: usuń ten blok.
+  {%- endcomment -%}
+  <style>
+    @media (max-width: 749px) {
+      molin-shop-ai { display: none !important; }
+    }
+  </style>
+
 </head>
 
 <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
