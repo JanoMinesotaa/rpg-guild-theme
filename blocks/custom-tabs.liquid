@@ -1,0 +1,177 @@
+<div class="custom-tabs-block" data-block-id="{{ block.id }}">
+  <div class="tabs-navigation">
+  {% for i in (1..4) %}
+    {% capture tab_title_key %}tab_{{ i }}_title{% endcapture %}
+    {% capture default_title %}Tab {{ i }}{% endcapture %}
+    <button class="tab-button {% if forloop.first %}active{% endif %}" 
+            data-tab="tab-{{ i }}" 
+            onclick="switchTab(event, 'tab-{{ i }}', '{{ block.id }}')">
+      {{ block.settings[tab_title_key] | default: default_title }}
+    </button>
+  {% endfor %}
+</div>
+  
+  <div class="tabs-content">
+  {% for i in (1..4) %}
+    {% capture tab_headline_key %}tab_{{ i }}_headline{% endcapture %}
+    {% capture tab_paragraph_key %}tab_{{ i }}_paragraph{% endcapture %}
+    <div class="tab-content {% if forloop.first %}active{% endif %}" id="tab-{{ i }}-{{ block.id }}">
+      <h3 class="tab-headline">{{ block.settings[tab_headline_key] }}</h3>
+      <p class="tab-paragraph">{{ block.settings[tab_paragraph_key] }}</p>
+    </div>
+  {% endfor %}
+</div>
+
+
+<style>
+.custom-tabs-block {
+  margin: 20px 0;
+}
+
+.tabs-navigation {
+  display: flex;
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tab-button.active {
+  border-bottom-color: #007cba;
+  font-weight: bold;
+}
+
+.tab-button:hover {
+  background-color: #f5f5f5;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.tab-headline {
+  margin-bottom: 10px;
+}
+
+.tab-paragraph {
+  line-height: 1.6;
+}
+</style>
+
+<script>
+function switchTab(event, tabId, blockId) {
+  const block = document.querySelector(`[data-block-id="${blockId}"]`);
+  
+  // Ukryj wszystkie taby
+  block.querySelectorAll('.tab-content').forEach(content => {
+    content.classList.remove('active');
+  });
+  
+  // Usuń aktywną klasę z przycisków
+  block.querySelectorAll('.tab-button').forEach(button => {
+    button.classList.remove('active');
+  });
+  
+  // Pokaż wybrany tab
+  document.getElementById(`${tabId}-${blockId}`).classList.add('active');
+  
+  // Dodaj aktywną klasę do klikniętego przycisku
+  event.target.classList.add('active');
+}
+</script>
+
+{% schema %}
+{
+  "name": "Custom Tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tab_1_title",
+      "label": "Tab 1 - Tytuł",
+      "default": "Tab 1"
+    },
+    {
+      "type": "text",
+      "id": "tab_1_headline",
+      "label": "Tab 1 - Nagłówek",
+      "default": "Nagłówek pierwszego taba"
+    },
+    {
+      "type": "textarea",
+      "id": "tab_1_paragraph",
+      "label": "Tab 1 - Tekst",
+      "default": "Treść pierwszego taba..."
+    },
+    {
+      "type": "text",
+      "id": "tab_2_title",
+      "label": "Tab 2 - Tytuł",
+      "default": "Tab 2"
+    },
+    {
+      "type": "text",
+      "id": "tab_2_headline",
+      "label": "Tab 2 - Nagłówek",
+      "default": "Nagłówek drugiego taba"
+    },
+    {
+      "type": "textarea",
+      "id": "tab_2_paragraph",
+      "label": "Tab 2 - Tekst",
+      "default": "Treść drugiego taba..."
+    },
+    {
+      "type": "text",
+      "id": "tab_3_title",
+      "label": "Tab 3 - Tytuł",
+      "default": "Tab 3"
+    },
+    {
+      "type": "text",
+      "id": "tab_3_headline",
+      "label": "Tab 3 - Nagłówek",
+      "default": "Nagłówek trzeciego taba"
+    },
+    {
+      "type": "textarea",
+      "id": "tab_3_paragraph",
+      "label": "Tab 3 - Tekst",
+      "default": "Treść trzeciego taba..."
+    },
+    {
+      "type": "text",
+      "id": "tab_4_title",
+      "label": "Tab 4 - Tytuł",
+      "default": "Tab 4"
+    },
+    {
+      "type": "text",
+      "id": "tab_4_headline",
+      "label": "Tab 4 - Nagłówek",
+      "default": "Nagłówek czwartego taba"
+    },
+    {
+      "type": "textarea",
+      "id": "tab_4_paragraph",
+      "label": "Tab 4 - Tekst",
+      "default": "Treść czwartego taba..."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Tabs"
+    }
+  ]
+}
+{% endschema %}

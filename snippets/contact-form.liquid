@@ -1,0 +1,275 @@
+{%- doc -%}
+  Renders a contact form with two variants:
+  - Contact form (default): Name, Email, Phone, Message
+  - B2B form: Name, Company Name, Company Address, Email, Phone
+{%- enddoc -%}
+
+<div
+  class="
+    contact-form
+    spacing-style size-style
+    {% if settings.inherit_color_scheme == false %}color-{{ settings.color_scheme }}{% endif %}
+  "
+  style="
+    {% render 'spacing-style', settings: settings %}
+    {% render 'size-style', settings: settings %}
+  "
+  {{ block.shopify_attributes }}
+>
+  {% assign form_id = block.id | default: section.id | prepend: 'ContactForm-' %}
+
+  {%- form 'contact', id: form_id, class: 'contact-form__form' -%}
+    {%- if form.errors -%}
+      <div class="contact-form__error" tabindex="-1" autofocus>
+        {{- 'icon-error.svg' | inline_asset_content -}}
+        {{ form.errors | default_errors }}
+      </div>
+    {%- endif -%}
+
+    {%- if form.posted_successfully? -%}
+      <div class="contact-form__success" tabindex="-1" autofocus>
+        {{- 'icon-checkmark.svg' | inline_asset_content -}}
+        {{ 'custom_forms.contact.success' | t }}
+      </div>
+    {%- endif -%}
+
+    <!-- Name -->
+    <div class="contact-form__group">
+      <label for="{{ form_id }}-name" class="contact-form__label">
+        {{ 'custom_forms.contact.name' | t }}
+      </label>
+
+      <input
+        type="text"
+        id="{{ form_id }}-name"
+        class="contact-form__input"
+        name="contact[name]"
+        required
+        value="{{ form.name }}"
+      >
+    </div>
+
+    {% if settings.form_type == 'b2b' %}
+      <!-- Company name -->
+      <div class="contact-form__group">
+        <label for="{{ form_id }}-business-name" class="contact-form__label">
+          {{ 'custom_forms.contact.company_name' | t }}
+        </label>
+
+        <input
+          type="text"
+          id="{{ form_id }}-business-name"
+          class="contact-form__input"
+          name="contact[Business name]"
+          required
+        >
+      </div>
+
+      <!-- Company address -->
+      <div class="contact-form__group">
+        <label for="{{ form_id }}-business-address" class="contact-form__label">
+          {{ 'custom_forms.contact.company_address' | t }}
+        </label>
+
+        <input
+          type="text"
+          id="{{ form_id }}-business-address"
+          class="contact-form__input"
+          name="contact[Business address]"
+          required
+        >
+      </div>
+    {% endif %}
+
+    <!-- Email -->
+    <div class="contact-form__group">
+      <label for="{{ form_id }}-email" class="contact-form__label">
+        {{ 'custom_forms.contact.email' | t }}
+      </label>
+
+      <input
+        type="email"
+        id="{{ form_id }}-email"
+        class="contact-form__input"
+        name="contact[email]"
+        required
+        value="{{ form.email }}"
+        {% if form.errors contains 'email' %}
+          aria-invalid="true"
+          aria-describedby="{{ form_id }}-email-error"
+        {% endif %}
+      >
+
+      {% if form.errors contains 'email' %}
+        <small id="{{ form_id }}-email-error" class="contact-form__hint">
+          {{ form.errors.messages.email }}
+        </small>
+      {% endif %}
+    </div>
+
+    <!-- Phone -->
+    <div class="contact-form__group">
+      <label for="{{ form_id }}-phone" class="contact-form__label">
+        {% if settings.form_type == 'b2b' %}
+          {{ 'custom_forms.contact.phone' | t }}
+        {% else %}
+          {{ 'custom_forms.contact.phone_optional' | t }}
+        {% endif %}
+      </label>
+
+      <input
+        type="tel"
+        id="{{ form_id }}-phone"
+        class="contact-form__input"
+        name="contact[phone]"
+        autocomplete="tel"
+        pattern="[0-9+\-\s]*"
+        value="{{ form.phone }}"
+        {% if settings.form_type == 'b2b' %}required{% endif %}
+      >
+    </div>
+
+    {% if settings.form_type != 'b2b' %}
+      <!-- Message -->
+      <div class="contact-form__group">
+        <label for="{{ form_id }}-body" class="contact-form__label">
+          {{ 'custom_forms.contact.message' | t }}
+        </label>
+
+        <textarea
+          id="{{ form_id }}-body"
+          class="contact-form__input contact-form__input--textarea"
+          name="contact[body]"
+          rows="8"
+          required
+        >{{- form.body -}}</textarea>
+      </div>
+    {% endif %}
+
+    <!-- Consent checkbox -->
+    <div class="contact-form__checkbox-row">
+      <input
+        type="checkbox"
+        id="{{ form_id }}-consent"
+        class="contact-form__checkbox"
+        required
+      >
+
+      <label for="{{ form_id }}-consent" class="contact-form__checkbox-label">
+        {{ 'custom_forms.contact.consent_before_link' | t }}
+        <a
+          href="{{ shop.privacy_policy.url }}"
+          target="_blank"
+          rel="noopener"
+        >
+          {{ 'custom_forms.contact.privacy_policy' | t }}
+        </a>.
+      </label>
+    </div>
+
+    <div class="form-button-wrapper">
+      {{ submit_button }}
+    </div>
+
+    {% if settings.form_type == 'b2b' %}
+      <input type="hidden" name="contact[tags]" value="contact_form,b2b_form">
+    {% else %}
+      <input type="hidden" name="contact[tags]" value="contact_form">
+    {% endif %}
+  {%- endform -%}
+</div>
+
+{% stylesheet %}
+  .contact-form {
+    padding: 32px 36px 36px;
+  }
+
+  .contact-form__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+  }
+
+  .contact-form__group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs);
+  }
+
+  .contact-form__label,
+  .contact-form__checkbox-label {
+    color: #F0E7D3;
+    font-weight: 400; 
+  }
+
+  .contact-form__input {
+  width: 100%;
+  color: #30261E;
+  background-color: var(--color-input-background);
+  padding: var(--padding-lg) var(--padding-xl);
+  border-radius: var(--style-border-radius-inputs);
+  border: var(--style-border-width-inputs) solid var(--color-input-border);
+  }
+  .contact-form__input::placeholder {
+  color: #30261E;
+  opacity: 0.55;
+  }
+
+  .contact-form__input:focus {
+    color: #30261E;
+  }
+
+  .contact-form__input--textarea { 
+    resize: vertical; 
+    min-height: 200px; 
+  }
+
+  .contact-form__checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-sm);
+  }
+
+  .contact-form__checkbox { 
+    width: 18px; 
+    height: 18px; 
+    margin-top: 4px;
+  }
+
+  .contact-form__checkbox-label { 
+    line-height: 1.4; 
+    color: #F0E7D3;
+  }
+  
+  .contact-form__checkbox-label a {
+    color: #F0E7D3;
+    font-weight: 600; 
+    text-decoration: underline; 
+  }
+
+  .contact-form__hint { 
+    font-size: .875rem; 
+    opacity: .85; 
+  }
+
+  .contact-form__error, 
+  .contact-form__success {
+    display: flex; 
+    align-items: center; 
+    gap: var(--gap-xs);
+    margin-top: 1rem;
+    color: #f9eddc;
+    font-size: 14px;
+  }
+
+  .form-button-wrapper {
+    margin-top: 1.8rem;
+    margin-bottom: 0.4rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .contact-form {
+      padding: 28px 20px 32px;
+    }
+  }
+{% endstylesheet %}

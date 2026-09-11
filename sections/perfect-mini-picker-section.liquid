@@ -1,0 +1,130 @@
+<section class="perfect-mini-picker-section color-{{ section.settings.color_scheme }}"
+  style="background-image: url({{ section.settings.background_image | image_url: width: 2000 }});">
+  
+  <div class="perfect-mini-picker__container">
+    <div class="perfect-mini-picker__left">
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.text != blank %}
+        <p>{{ section.settings.text }}</p>
+      {% endif %}
+      {% if section.settings.button_label != blank %}
+        <a href="{{ section.settings.button_link }}" class="button">{{ section.settings.button_label }}</a>
+      {% endif %}
+    </div>
+
+    <div class="perfect-mini-picker__right">
+      {% render 'perfect-mini-picker' %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.perfect-mini-picker__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: flex-start;
+  gap: 60px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+.perfect-mini-picker-section {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+}
+.perfect-mini-picker__left {
+  max-width: 500px;
+}
+.perfect-mini-picker__right {
+  display: flex;
+  justify-content: flex-end;
+}
+.perfect-mini-picker {
+  background: #F0E7D3;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 420px;
+  width: 100%;
+}
+.perfect-mini-picker-form label {
+  font-weight: 600;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  display: block;
+}
+.perfect-mini-picker-form select,
+.perfect-mini-picker-form button {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 12px;
+}
+.radio-group {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.radio-group input {
+  margin-right: 6px;
+}
+.perfect-mini-picker-form button {
+  background: var(--color-button-primary, #54130F);
+  color: #fff;
+  font-weight: bold;
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Perfect Mini Picker",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find Your Perfect Miniature!"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Description text"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    { "name": "Perfect Mini Picker" }
+  ]
+}
+{% endschema %}
+
+
+

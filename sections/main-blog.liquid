@@ -1,0 +1,452 @@
+<script
+  src="{{ 'blog-posts-list.js' | asset_url }}"
+  type="module"
+></script>
+
+<blog-posts-list section-id="{{ section.id }}">
+  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+  <div
+    class="
+      section
+      color-{{ section.settings.color_scheme }}
+      blog-posts
+      spacing-style
+      size-style
+    "
+    style="{% render 'spacing-style', settings: section.settings %}"
+  >
+    {% content_for 'blocks' %}
+
+    <!-- CONTROLS: Filters + Search (icon) + Sort -->
+    <div class="blog-controls">
+      <div class="blog-filters" role="tablist" aria-label="Categories">
+        <button class="chip is-active" data-filter="__all" role="tab" aria-selected="true">All</button>
+        {% for tag in blog.all_tags %}
+          <button class="chip" data-filter="{{ tag | escape }}" role="tab" aria-selected="false">{{ tag }}</button>
+        {% endfor %}
+      </div>
+
+      <div class="blog-actions">
+        <!-- Lupka (dekoracyjnie) -->
+        <button class="blog-search" type="button" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+            <path d="M20 20L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <div class="blog-sort">
+          <label for="BlogSort-{{ section.id }}" class="sr-only">Sort by</label>
+          <select id="BlogSort-{{ section.id}}" class="sort-select">
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+            <option value="az">Title A–Z</option>
+            <option value="za">Title Z–A</option>
+            <option value="short">Shortest read</option>
+            <option value="long">Longest read</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    {%- paginate blog.articles by 12 -%}
+      <span ref="viewMorePrevious"></span>
+
+      <!-- GRID: 3/2/1 kolumny -->
+      <div class="blog-grid" ref="grid" last-page="{{ paginate.pages }}">
+        {% for article in blog.articles %}
+          {% assign words = article.content | strip_html | split: ' ' | size %}
+          {% assign minutes_float = words | divided_by: 200.0 %}
+          {% assign minutes = minutes_float | ceil %}
+          {% assign tags_attr = article.tags | join: ',' | downcase %}
+
+          <article class="blog-card"
+            data-tags="{{ tags_attr }}"
+            data-title="{{ article.title | downcase | escape }}"
+            data-date="{{ article.published_at | date: "%Y-%m-%d" }}"
+            data-read-min="{{ minutes | at_least: 1 }}"
+          >
+            <!-- 1) Obrazek -->
+            <a class="blog-card__image" href="{{ article.url }}" aria-label="{{ article.title }}">
+              {% if article.image %}
+                {{ article | image_url: width: 800 | image_tag:
+                    loading: 'lazy',
+                    widths: '400,600,800',
+                    sizes: '(min-width: 1024px) 32vw, (min-width: 750px) 48vw, 100vw',
+                    class: 'blog-card__img'
+                }}
+              {% else %}
+                <div class="blog-card__img blog-card__img--placeholder" aria-hidden="true"></div>
+              {% endif %}
+            </a>
+
+            <!-- 2) Meta: data + min read (badge) -->
+            <div class="blog-card__meta">
+              <time datetime="{{ article.published_at | date: "%Y-%m-%d" }}">
+                {{ article.published_at | date: "%d.%m.%Y" }}
+              </time>
+              <span class="dot" aria-hidden="true">•</span>
+              <span class="readtime badge">{{ minutes | at_least: 1 }} min read</span>
+            </div>
+
+            <!-- 3) Tytuł (Rosarivo) -->
+            <h3 class="blog-card__title">
+              <a href="{{ article.url }}">{{ article.title }}</a>
+            </h3>
+
+            <!-- 4) Opis -->
+            <p class="blog-card__excerpt">
+              {{ article.excerpt_or_content | strip_html | truncatewords: 24 }}
+            </p>
+          </article>
+        {% endfor %}
+      </div>
+      {% if paginate.pages > 1 %}
+      <nav class="blog-pagination" role="navigation" aria-label="Pagination">
+        <ul class="blog-pagination__list" role="list">
+          {% if paginate.previous %}
+            <li><a class="blog-pagination__prev" href="{{ paginate.previous.url }}" aria-label="Previous page">‹</a></li>
+          {% endif %}
+          {% for part in paginate.parts %}
+            <li>
+              {% if part.is_link %}
+                <a class="blog-pagination__link" href="{{ part.url }}">{{ part.title }}</a>
+              {% else %}
+                <span class="blog-pagination__link {% if part.title == paginate.current_page %}is-active{% endif %}">
+                  {{ part.title }}
+                </span>
+              {% endif %}
+            </li>
+          {% endfor %}
+          {% if paginate.next %}
+            <li><a class="blog-pagination__next" href="{{ paginate.next.url }}" aria-label="Next page">›</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+  {%- endpaginate -%}
+
+  <div class="blog-newest">
+    <h2 class="blog-newest__title">Newest</h2>
+    <div class="blog-newest__grid">
+      {% assign newest_posts = blog.articles | sort: 'published_at' | reverse %}
+      {% for article in newest_posts limit: 2 %}
+        {% assign wordsN = article.content | strip_html | split: ' ' | size %}
+        {% assign minutesN = wordsN | divided_by: 200.0 | ceil | at_least: 1 %}
+        <a class="blog-newest__card" href="{{ article.url }}">
+          {% if article.image %}
+            {{ article | image_url: width: 720 | image_tag: loading: 'lazy', class: 'blog-newest__img', widths: '360,540,720', sizes: '(min-width: 1024px) 50vw, 100vw' }}
+          {% else %}
+            <div class="blog-newest__img blog-card__img--placeholder"></div>
+          {% endif %}
+          <div class="blog-card__meta">
+            <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%d.%m.%Y' }}</time>
+            <span class="dot">•</span>
+            <span class="badge">{{ minutesN }} min read</span>
+          </div>
+          <h3 class="blog-card__title">{{ article.title }}</h3>
+          <p class="blog-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<script type="application/ld+json">
+{
+  "@type": "BlogPosting",
+  "headline": {{ article.title | json }},
+  "url": {{ shop.url | append: article.url | json }},
+  "datePublished": "{{ article.published_at | date: "%Y-%m-%dT%H:%M:%S" }}+02:00",
+  "dateModified": "{{ article.updated_at | date: "%Y-%m-%dT%H:%M:%S" }}+02:00",
+  {% if article.image %}
+  "image": {
+    "@type": "ImageObject",
+    "url": "{{ article.image | image_url: width: 1200 }}",
+    "width": 1200,
+    "height": 630
+  },
+  {% endif %}
+  "author": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }}
+  },
+  "description": {{ article.excerpt_or_content | strip_html | truncatewords: 30 | json }}
+}
+</script>
+
+</blog-posts-list>
+
+<!-- Enhancer: filtrowanie + sortowanie + URL state -->
+<script type="module">
+  (() => {
+    const root = document.currentScript.closest('blog-posts-list');
+    const grid = root.querySelector('.blog-grid');
+    const cards = Array.from(grid.querySelectorAll('.blog-card'));
+    const controls = root.querySelector('.blog-controls');
+    const chips = Array.from(controls.querySelectorAll('.chip'));
+    const select = controls.querySelector('.sort-select');
+
+    const qs = new URLSearchParams(location.search);
+    const setQS = (k, v) => {
+      if (!v || v === '__all') qs.delete(k); else qs.set(k, v);
+      const url = `${location.pathname}?${qs.toString()}`;
+      history.replaceState(null, '', url);
+    };
+
+    const applyFilter = () => {
+      const active = controls.querySelector('.chip.is-active');
+      const tag = active?.dataset.filter || '__all';
+      cards.forEach(card => {
+        const has = card.dataset.tags?.split(',').map(s => s.trim()) || [];
+        const show = (tag === '__all') || has.includes(tag.toLowerCase());
+        card.style.display = show ? '' : 'none';
+      });
+    };
+
+    const applySort = () => {
+      const mode = select.value;
+      const visible = cards.filter(c => c.style.display !== 'none');
+      const collator = new Intl.Collator();
+
+      visible.sort((a, b) => {
+        if (mode === 'newest')  return b.dataset.date.localeCompare(a.dataset.date);
+        if (mode === 'oldest')  return a.dataset.date.localeCompare(b.dataset.date);
+        if (mode === 'az')      return collator.compare(a.dataset.title, b.dataset.title);
+        if (mode === 'za')      return collator.compare(b.dataset.title, a.dataset.title);
+        if (mode === 'short')   return (+a.dataset.readMin) - (+b.dataset.readMin);
+        if (mode === 'long')    return (+b.dataset.readMin) - (+a.dataset.readMin);
+        return 0;
+      });
+
+      visible.forEach(card => grid.appendChild(card));
+    };
+
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('is-active'));
+        chip.classList.add('is-active');
+        chip.setAttribute('aria-selected', 'true');
+        chips.filter(c => c !== chip).forEach(c => c.setAttribute('aria-selected','false'));
+        setQS('tag', chip.dataset.filter);
+        applyFilter(); applySort();
+      });
+    });
+
+    select.addEventListener('change', () => {
+      setQS('sort', select.value);
+      applySort();
+    });
+
+    const urlTag = qs.get('tag');
+    const urlSort = qs.get('sort');
+    if (urlTag) {
+      const toActivate = chips.find(c => c.dataset.filter.toLowerCase() === urlTag.toLowerCase());
+      if (toActivate) toActivate.click();
+    }
+    if (urlSort) {
+      const opt = Array.from(select.options).find(o => o.value === urlSort);
+      if (opt) select.value = urlSort;
+    }
+    applyFilter(); applySort();
+  })();
+</script>
+
+{% stylesheet %}
+/* ---------- TYPO ---------- */
+/* Interfejs (chipsy, select, meta, excerpt, itp.) */
+.blog-posts, .blog-controls, .chip, .sort-select, .blog-card__meta, .blog-card__excerpt {
+  font-family: "Raleway", var(--font-body, sans-serif);
+}
+/* Nagłówki – Rosarivo */
+.blog-card__title, .blog-card__title a {
+  font-family: "Rosarivo", var(--font-heading, serif);
+}
+
+/* ---------- LAYOUT ---------- */
+.blog-posts {
+  --page-content-width: var(--narrow-page-width);
+  --page-width: calc(var(--page-content-width) + (var(--page-margin) * 2));
+}
+
+.blog-controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+@media (max-width: 749px) {
+  .blog-controls { grid-template-columns: 1fr; gap: 12px; }
+}
+
+.blog-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* Actions (lupka + sort) */
+.blog-actions { display: flex; align-items: center; gap: 12px; }
+
+/* Lupka */
+.blog-search {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 1px solid #54130F; background: transparent; color: #54130F;
+}
+
+/* Sort select – tło #EADFC7, border #54130F */
+.blog-sort .sort-select {
+  min-height: 38px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #54130F;
+  background: #EADFC7;
+  color: var(--color-foreground);
+}
+
+/* Chips */
+.chip {
+  appearance: none;
+  border: 1px solid rgba(from var(--color-foreground) r g b / .16);
+  background: var(--color-background);
+  color: var(--color-foreground);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px; line-height: 1;
+  cursor: pointer;
+}
+.chip:hover { background: rgba(from var(--color-foreground) r g b / .06); }
+.chip.is-active {
+  border-color: rgba(from var(--color-foreground) r g b / .35);
+  font-weight: 600;
+}
+
+/* GRID: 3 / 2 / 1 */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+@media (max-width: 1023px) {
+  .blog-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 749px) {
+  .blog-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- CARD ---------- */
+.blog-card {
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  gap: 10px;
+  background: var(--color-background);
+  overflow: hidden;
+}
+
+.blog-card__image { display: block; position: relative; }
+.blog-card__img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+.blog-card__img--placeholder {
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(0deg, rgba(0,0,0,.04), rgba(0,0,0,.04));
+}
+
+/* Meta (data + badge) */
+.blog-card__meta {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 16px 0 16px;
+  font-size: 12px;
+  color: rgba(from var(--color-foreground) r g b / .7);
+}
+.blog-card__meta .dot { opacity: .6; }
+
+/* Badge „min read” */
+.badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 28px; padding: 0 10px;
+  background: #D5B193; color: #54130F;
+  border-radius: 8px; font-weight: 600;
+}
+
+/* Tytuł (Rosarivo) */
+.blog-card__title {
+  font-size: clamp(24px, 2.2vw, 32px);
+  line-height: 1.4;
+  margin: 0; padding: 0 16px;
+}
+.blog-card__title a { color: #54130F; text-decoration: none; }
+.blog-card__title a:hover { text-decoration: underline; }
+
+/* Opis */
+.blog-card__excerpt {
+  margin: 0; padding: 0 16px 16px 16px;
+  color: rgba(from var(--color-foreground) r g b / .8);
+}
+
+/* ---------- PAGINATION ---------- */
+.blog-pagination { margin-top: 28px; display: flex; justify-content: center; }
+.blog-pagination__list { display: flex; gap: 6px; list-style: none; padding: 0; margin: 0; }
+.blog-pagination__link,
+.blog-pagination__prev,
+.blog-pagination__next {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 36px; height: 36px; padding: 0 10px;
+  text-decoration: none; color: var(--color-foreground);
+  background: #F0E7D3;
+}
+.blog-pagination__link.is-active {
+  background: #54130F;
+  text-decoration: none; color: #F0E7D3;
+  font-weight: 600;
+}
+.blog-pagination__prev:hover,
+.blog-pagination__next:hover,
+.blog-pagination__link:hover { background: rgba(from var(--color-foreground) r g b / 0.06); text-decoration: none; color: #54130F;} 
+
+/* A11y */
+.sr-only {
+  position: absolute !important; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
+}
+/* NEWEST */
+.blog-newest { max-width: var(--page-content-width); margin: 40px auto 0; }
+.blog-newest__title { font-family: "Rosarivo", serif; font-size: clamp(22px, 2.4vw, 28px); color: #54130F; margin-bottom: 16px; }
+.blog-newest__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+@media (max-width: 749px) { .blog-newest__grid { grid-template-columns: 1fr; } }
+.blog-newest__card { display: block; text-decoration: none; color: var(--color-foreground); border: 1px solid rgba(from var(--color-foreground) r g b / .12); border-radius: 10px; overflow: hidden; background: var(--color-background); padding-bottom: 12px; }
+.blog-newest__img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.blog_posts",
+  "blocks": [
+    { "type": "@theme" },
+    { "type": "@app" },
+    { "type": "text" },
+    { "type": "icon" },
+    { "type": "image" },
+    { "type": "button" },
+    { "type": "video" },
+    { "type": "group" },
+    { "type": "spacer" },
+    { "type": "_divider" }
+  ],
+  "disabled_on": { "groups": ["header"] },
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:settings.color_scheme", "default": "scheme-1" },
+    { "type": "header", "content": "t:content.padding" },
+    { "type": "range", "id": "padding-block-start", "label": "t:settings.top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding-block-end", "label": "t:settings.bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+  ]
+}
+{% endschema %}

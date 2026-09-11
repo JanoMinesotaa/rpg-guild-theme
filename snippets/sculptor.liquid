@@ -1,0 +1,6 @@
+{% assign sculptor = product.metafields.custom.sculptor.value %}
+{% if sculptor != blank %}
+  <p class="product-sculptor text-sm color-foreground">
+    Created by <strong>{{ sculptor }}</strong>
+  </p>
+{% endif %}

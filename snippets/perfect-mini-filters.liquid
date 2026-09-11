@@ -1,0 +1,53 @@
+<facets-form-component class="perfect-mini-filters" section-id="{{ section.id }}">
+  <form
+    id="PerfectMiniFiltersForm--{{ section.id }}"
+    class="perfect-mini-filters__form"
+    action="{{ routes.search_url }}"
+    method="get"
+    ref="facetsForm"
+  >
+    {% for filter in results.filters %}
+      {% if filter.label == 'Race' or filter.label == 'Class' or filter.label == 'Weapon' or filter.label == 'Sex' or filter.label == 'Mounted' or filter.label == 'Pose' or filter.label == 'Sculptor' or filter.label == 'Mini Type' or filter.label == 'Mounted'%}
+        <div class="perfect-mini-filters__field">
+          <label class="perfect-mini-filters__label">{{ filter.label }}</label>
+          {% render 'list-filter',
+            filter: filter,
+            filter_style: 'horizontal',
+            sectionId: section.id,
+            active_value_count: filter.active_values.size
+          %}
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    <button type="submit" class="perfect-mini-filters__submit button">
+      {{ section.settings.button_label | default: "Search Miniature" }}
+    </button>
+  </form>
+</facets-form-component>
+
+{% stylesheet %}
+.perfect-mini-filters__form {
+  background: #F0E7D3;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+}
+.perfect-mini-filters__field {
+  margin-bottom: 16px;
+}
+.perfect-mini-filters__label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: block;
+}
+.perfect-mini-filters__submit {
+  background: var(--color-button-primary, #54130F);
+  color: #fff;
+  font-weight: bold;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 6px;
+}
+{% endstylesheet %}

@@ -1,0 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "austria"
+  },
+  "parent": "page.about-us.json",
+  "sections": {
+    "section_zib6rD": {
+      "settings": {},
+      "blocks": {
+        "group_PjhNez": {
+          "blocks": {
+            "common_ninja_all_in_one_suite_app_block_wbxxWh": {
+              "settings": {
+                "appId": "5931706a-dba4-4593-89cc-da3c083141be"
+              }
+            }
+          },
+          "settings": {}
+        }
+      }
+    }
+  }
+}

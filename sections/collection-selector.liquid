@@ -1,0 +1,422 @@
+{% if section.settings.heading != blank %}
+  <h2 class="collection-selector-heading">{{ section.settings.heading }}</h2>
+{% endif %}
+
+<div class="collection-selector">
+  <div class="collection-tabs">
+    {% for block in section.blocks %}
+      {% assign collection = collections[block.settings.collection] %}
+      {% if collection and collection.products.size > 0 %}
+        <button class="collection-tab" data-collection="{{ collection.handle }}" data-collection-url="{{ collection.url }}">
+          {% if block.settings.custom_name != blank %}
+            {{ block.settings.custom_name }}
+          {% else %}
+            {{ collection.title }}
+          {% endif %}
+        </button>
+      {% endif %}
+    {% endfor %}
+  </div>
+  
+  <div class="products-container">
+    {% for block in section.blocks %}
+      {% assign collection = collections[block.settings.collection] %}
+      {% if collection and collection.products.size > 0 %}
+        <div
+          class="collection-products"
+          id="collection-{{ collection.handle }}"
+          style="display: none;"
+          {% if forloop.first %}data-tab-loaded="true"{% else %}data-tab-loaded="false"{% endif %}
+        >
+          <!-- All products button -->
+          <div class="all-products-header">
+            <a href="{{ collection.url }}" class="all-products-button">
+              Discover 
+            </a>
+          </div>
+          
+          <!-- Products grid -->
+          <div class="products-grid">
+            {% for product in collection.products limit: section.settings.products_per_collection %}
+              <div class="product-item">
+                <a href="{{ product.url }}">
+                  <div class="product-media-wrapper" data-lazy-video-wrapper>
+                    <!-- Główne zdjęcie -->
+                    <img src="{{ product.featured_image | image_url: width: 300, height: 300 }}" 
+                        alt="{{ product.title }}" 
+                        width="300" 
+                        height="300"
+                        loading="lazy"
+                        class="primary-media">
+
+                    <!-- Drugie media: video albo fallback -->
+                    {% assign second_media = nil %}
+                    {% if product.media.size > 1 %}
+                      {% assign second_media = product.media[1] %}
+                    {% endif %}
+
+                    {% if second_media %}
+                      <div class="secondary-media">
+                        {% if second_media.media_type == 'video' %}
+                          <template class="lazy-video-template">
+                            {{ second_media | video_tag: controls: false, muted: true, loop: true, playsinline: true, class: 'product-hover-video' }}
+                          </template>
+                        {% else %}
+                          <img src="{{ second_media | image_url: width: 300, height: 300 }}" 
+                              alt="{{ product.title }} alternate" 
+                              width="300" 
+                              height="300"
+                              loading="lazy"
+                              class="product-hover-video">
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  </div>
+
+                  <h3>{{ product.title }}</h3>
+                  <div class="product-rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-count">({{ product.metafields.reviews.rating_count | default: '0' }})</span>
+                  </div>
+                  <div class="product-price">
+                    {% if product.compare_at_price > product.price %}
+                      <span class="current-price">{{ product.price | money }}</span>
+                      <span class="original-price">{{ product.compare_at_price | money }}</span>
+                    {% else %}
+                      <span class="current-price">{{ product.price | money }}</span>
+                    {% endif %}
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+(function() {
+  function setupLazyVideos(container) {
+    const wrappers = container.querySelectorAll('[data-lazy-video-wrapper]');
+    wrappers.forEach(wrapper => {
+      const template = wrapper.querySelector('.lazy-video-template');
+      if (!template) return;
+
+      let loaded = false;
+      function loadVideo() {
+        if (loaded) return;
+        loaded = true;
+        const videoNode = template.content.cloneNode(true);
+        const secondaryMedia = wrapper.querySelector('.secondary-media');
+        secondaryMedia.innerHTML = '';
+        secondaryMedia.appendChild(videoNode);
+        const video = secondaryMedia.querySelector('video');
+        if (video) video.play().catch(() => {});
+      }
+
+      wrapper.addEventListener('mouseenter', loadVideo, { once: true });
+      wrapper.addEventListener('touchstart', loadVideo, { once: true, passive: true });
+    });
+  }
+
+  function initCollectionSelector() {
+    const tabs = document.querySelectorAll('.collection-tab');
+    const productContainers = document.querySelectorAll('.collection-products');
+    
+    if (tabs.length === 0 || productContainers.length === 0) {
+      return;
+    }
+    
+    // Pokaż pierwszą kolekcję domyślnie
+    tabs[0].classList.add('active');
+    if (productContainers[0]) {
+      productContainers[0].style.display = 'block';
+      setupLazyVideos(productContainers[0]);
+    }
+    
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const collectionHandle = this.dataset.collection;
+        
+        // Usuń aktywną klasę ze wszystkich zakładek
+        tabs.forEach(t => t.classList.remove('active'));
+        // Dodaj aktywną klasę do klikniętej zakładki
+        this.classList.add('active');
+        
+        // Ukryj wszystkie kontenery produktów
+        productContainers.forEach(container => {
+          container.style.display = 'none';
+        });
+        
+        // Pokaż produkty z wybranej kolekcji
+        const targetContainer = document.getElementById('collection-' + collectionHandle);
+        
+        if (targetContainer) {
+          targetContainer.style.display = 'block';
+          setupLazyVideos(targetContainer);
+        }
+      });
+    });
+  }
+  
+  // Uruchom po załadowaniu DOM
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCollectionSelector);
+  } else {
+    initCollectionSelector();
+  }
+})();
+</script>
+
+<style>
+.collection-selector-heading {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #8B4513;
+}
+
+.collection-selector {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.collection-tabs {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding-bottom: 10px;
+}
+
+.collection-tab {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 0;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+  border-bottom: 2px solid transparent;
+}
+
+.collection-tab:hover,
+.collection-tab.active {
+  color: #333;
+  border-bottom: 2px solid #8B4513;
+  background: transparent;
+}
+
+.collection-products {
+  display: block;
+}
+
+.all-products-header {
+  margin-bottom: 20px;
+}
+
+.all-products-button {
+  display: inline-block;
+  padding: 8px 20px;
+  background: #8B4513;
+  color: white;
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.all-products-button:hover {
+  background: #A0522D;
+  transform: translateY(-1px);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.product-item {
+  border: 1px solid #eee;
+  padding: 15px;
+  text-align: center;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: transparent;
+}
+
+.product-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.product-item a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-media-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.primary-media {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.secondary-media {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.product-media-wrapper:hover .primary-media {
+  opacity: 0;
+}
+
+.product-media-wrapper:hover .secondary-media {
+  opacity: 1;
+}
+
+.product-hover-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-item h3 {
+  margin: 10px 0 5px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.product-rating {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.stars {
+  color: #FFD700;
+  margin-right: 5px;
+}
+
+.rating-count {
+  color: #666;
+  font-size: 12px;
+}
+
+.product-price {
+  margin-top: 8px;
+}
+
+.current-price {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.original-price {
+  font-size: 0.9rem;
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 8px;
+}
+
+@media (max-width: 768px) {
+  .collection-tabs {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+  
+  .collection-tab {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+  
+  .all-products-button {
+    padding: 6px 16px;
+    font-size: 12px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Selektor kolekcji",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "The Guild's most marvelous equipment",
+      "label": "Nagłówek sekcji"
+    },
+    {
+      "type": "range",
+      "id": "products_per_collection",
+      "min": 4,
+      "max": 12,
+      "step": 2,
+      "default": 4,
+      "label": "Liczba produktów do wyświetlenia"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Kolekcja",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Wybierz kolekcję"
+        },
+        {
+          "type": "text",
+          "id": "custom_name",
+          "label": "Własna nazwa (opcjonalnie)",
+          "info": "Zostaw puste aby użyć oryginalnej nazwy kolekcji"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Selektor kolekcji",
+      "blocks": [
+        {
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

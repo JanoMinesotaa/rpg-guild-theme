@@ -1,0 +1,39 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "b2b"
+  },
+  "parent": "cart.json",
+  "sections": {
+    "cart-section": {
+      "settings": {},
+      "blocks": {
+        "progressify_multi_bar_upsells_block_zqCc68": {
+          "disabled": true,
+          "settings": {}
+        }
+      }
+    },
+    "product_list_NNFgcy": {
+      "settings": {
+        "collection": "all-miniatures-b2b"
+      },
+      "blocks": {
+        "button_a4xXQd": {
+          "settings": {
+            "link": "shopify://collections/all-miniatures-b2b",
+            "label": "Browse full B2B catalogue"
+          }
+        }
+      }
+    }
+  }
+}

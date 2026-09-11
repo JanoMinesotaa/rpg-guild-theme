@@ -1,0 +1,605 @@
+<div
+  class="email-signup-block size-style spacing-style"
+  style="{% render 'size-style', settings: block.settings %}{% render 'spacing-style', settings: block.settings %}"
+  {{ block.shopify_attributes }}
+>
+    {%- form 'customer', class: 'email-signup__form spacing-style' %}
+
+    <div class="form-content-wrapper">
+      <h2 class="form-title">
+        {{ 'custom_forms.email_signup.title' | t }}
+      </h2>
+
+      <p class="form-subtitle">
+  {{ 'custom_forms.email_signup.subtitle_line_1' | t }}
+  {{ 'custom_forms.email_signup.subtitle_line_2' | t }}
+</p>
+
+      <div class="form-field">
+        <label for="NameInput-{{ block.id }}" class="form-label">
+          {{ 'custom_forms.email_signup.name_label' | t }}
+        </label>
+
+        <input
+          id="NameInput-{{ block.id }}"
+          class="form-input"
+          type="text"
+          name="contact[first_name]"
+          required
+        >
+      </div>
+
+      <div class="form-field">
+        <label for="EmailInput-{{ block.id }}" class="form-label">
+          {{ 'custom_forms.email_signup.email_label' | t }}
+        </label>
+
+        <input
+          id="EmailInput-{{ block.id }}"
+          class="form-input"
+          type="email"
+          name="contact[email]"
+          required
+          {% if form.errors %}
+            autofocus
+            aria-invalid="true"
+            aria-describedby="Email-signup__message-error-{{ block.id }}"
+          {% elsif form.posted_successfully? %}
+            aria-describedby="Email-signup__message-success-{{ block.id }}"
+          {% endif %}
+        >
+      </div>
+
+      <div class="form-checkbox">
+        <input
+          type="checkbox"
+          id="ConsentCheckbox-{{ block.id }}"
+          name="consent"
+          required
+        >
+
+        <label for="ConsentCheckbox-{{ block.id }}">
+          {{ 'custom_forms.email_signup.consent_before_link' | t }}
+          <a
+            href="{{ shop.privacy_policy.url }}"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ 'custom_forms.email_signup.privacy_policy' | t }}
+          </a>.
+        </label>
+      </div>
+
+      <div class="form-button-wrapper">
+        <button type="submit" class="submit-button">
+          {{ 'custom_forms.email_signup.submit' | t }}
+        </button>
+      </div>
+
+      {%- if form.errors -%}
+        <div
+          id="Email-signup__message-error-{{ block.id }}"
+          class="form-error"
+          tabindex="-1"
+        >
+          {{- form.errors.translated_fields.email | capitalize }}
+          {{ form.errors.messages.email -}}
+        </div>
+      {%- endif -%}
+
+      {%- if form.posted_successfully? -%}
+        <div
+          id="Email-signup__message-success-{{ block.id }}"
+          class="form-success"
+          tabindex="-1"
+        >
+          <p>{{ 'blocks.email_signup.success' | t }}</p>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endform -%}
+</div>
+
+{% stylesheet %}
+  .email-signup-block {
+    width: 100%;
+  }
+
+  .email-signup__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .form-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .form-title {
+    width: 100%;
+    margin: 0 0 1rem;
+    padding: 0;
+    color: #f9eddc;
+    font-size: clamp(26px, 2.3vw, 32px);
+    font-weight: 600;
+    line-height: 1.15;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .form-subtitle {
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto 1.5rem;
+    color: #f9eddc;
+    font-size: 16px;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1.2rem;
+  }
+
+  .form-label {
+    margin-bottom: 0.5rem;
+    color: #f9eddc;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: #f9eddc;
+    color: #2c1a12;
+    font-size: 16px;
+  }
+
+  .form-input::placeholder {
+    color: #8e6f5a;
+  }
+
+  .form-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 1.6rem;
+    color: #f9eddc;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .form-checkbox input[type='checkbox'] {
+    margin-top: 4px;
+    flex: 0 0 auto;
+  }
+
+  .form-checkbox a {
+    color: #f9eddc;
+    text-decoration: underline;
+  }
+
+  .form-checkbox a:hover {
+    color: #ffffff;
+  }
+
+  .form-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .submit-button {
+    width: fit-content;
+    padding: 10px 24px;
+    border: 2px solid #2c1a12;
+    border-radius: 20px;
+    background-color: #f9eddc;
+    color: #2c1a12;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .submit-button:hover {
+    background-color: #ffffff;
+  }
+
+  .form-error,
+  .form-success {
+    width: 100%;
+    margin-top: 1rem;
+    color: #f9eddc;
+    font-size: 14px;
+  }
+
+  html[lang^='de'] .form-title {
+    font-size: 28px;
+    line-height: 1.1;
+  }
+
+  @media screen and (max-width: 1100px) {
+    .form-content-wrapper {
+      max-width: 560px;
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+
+    .form-button-wrapper {
+      justify-content: center;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .form-content-wrapper {
+      max-width: none;
+      padding: 24px 24px 24px;
+    }
+
+    .form-title {
+      font-size: 28px;
+    }
+
+    .form-subtitle {
+      max-width: none;
+      font-size: 15px;
+    }
+
+    .form-button-wrapper {
+      justify-content: center;
+    }
+
+    .submit-button {
+      width: 100%;
+    }
+  }
+{% endstylesheet %}
+
+<style id="newsletter-overlay-fix">
+  @media screen and (min-width: 1280px) {
+    html body .form-1:has(.email-signup__form) > div {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    html body .form-1:has(.email-signup__form) > div > .custom-section-background,
+    html body .form-1:has(.email-signup__form) > div > .custom-section-content {
+      grid-area: 1 / 1 !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+
+    html body .form-1:has(.email-signup__form) > div > .custom-section-background {
+      height: 100% !important;
+      align-self: stretch !important;
+    }
+
+    html body .form-1:has(.email-signup__form) > div > .custom-section-content {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      transform: none !important;
+      align-self: center !important;
+      z-index: 2 !important;
+    }
+
+    html body .form-1:has(.email-signup__form) .background-image-container {
+      width: 100% !important;
+      height: 100% !important;
+      margin: 0 auto !important;
+      max-width: 1480px !important;
+      overflow: hidden !important;
+      position: static !important;
+    }
+
+    html body .form-1:has(.email-signup__form) .background-image-container img {
+      display: block !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: fill !important;
+    }
+  }
+</style>
+
+{% schema %}
+
+{
+  "name": "t:names.email_signup",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.email_signups_create_customer_profiles"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width == \"custom\" }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "primary",
+      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.input"
+    },
+    {
+      "type": "select",
+      "id": "border_style",
+      "label": "t:settings.border",
+      "options": [
+        {
+          "value": "all",
+          "label": "t:options.all"
+        },
+        {
+          "value": "underline",
+          "label": "t:options.underline"
+        },
+        {
+          "value": "none",
+          "label": "t:options.none"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "t:settings.border_width",
+      "min": 0,
+      "max": 4,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1,
+      "visible_if": "{{ block.settings.border_style != \"none\" }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100,
+      "visible_if": "{{ block.settings.border_style != \"underline\" }}"
+    },
+    {
+      "type": "select",
+      "id": "input_type_preset",
+      "label": "t:settings.type_preset",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "paragraph",
+          "label": "t:options.paragraph"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "paragraph",
+      "info": "t:info.edit_presets_in_theme_settings"
+    },
+    {
+      "type": "header",
+      "content": "t:content.submit_button"
+    },
+    {
+      "type": "select",
+      "id": "style_class",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "button",
+          "label": "t:options.primary"
+        },
+        {
+          "value": "button-secondary",
+          "label": "t:options.secondary"
+        },
+        {
+          "value": "button-unstyled",
+          "label": "t:options.link"
+        }
+      ],
+      "default": "button"
+    },
+    {
+      "type": "select",
+      "id": "display_type",
+      "label": "t:settings.display",
+      "options": [
+        {
+          "value": "text",
+          "label": "t:options.text"
+        },
+        {
+          "value": "arrow",
+          "label": "t:options.arrow"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:settings.label",
+      "default": "t:text_defaults.sign_up",
+      "visible_if": "{{ block.settings.display_type == \"text\" }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "integrated_button",
+      "label": "t:settings.integrated_button",
+      "default": false,
+      "visible_if": "{{ block.settings.border_style != \"underline\" }}"
+    },
+    {
+      "type": "select",
+      "id": "button_type_preset",
+      "label": "t:settings.type_preset",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "paragraph",
+          "label": "t:options.paragraph"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "paragraph",
+      "info": "t:info.edit_presets_in_theme_settings",
+      "visible_if": "{{ block.settings.display_type == \"text\" }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.email_signup",
+      "category": "t:categories.forms"
+    }
+  ]
+  
+}
+{% endschema %}

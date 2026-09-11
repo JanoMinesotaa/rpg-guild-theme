@@ -1,0 +1,1024 @@
+{% assign carousel_id = block.id | replace: '_', '' | downcase %}
+
+<benefits-carousel-{{ carousel_id }}
+  class="benefits-carousel benefits-carousel-{{ carousel_id }} spacing-style{% if block.settings.inherit_color_scheme == false %} color-{{ block.settings.color_scheme }}{% endif %}"
+  style="
+    --benefits-heading-font-family: var(--font-{{ block.settings.heading_preset }}--family);
+    --benefits-heading-font-style: var(--font-{{ block.settings.heading_preset }}--style);
+    --benefits-heading-font-weight: var(--font-{{ block.settings.heading_preset }}--weight);
+    --benefits-heading-font-size: var(--font-{{ block.settings.heading_preset }}--size);
+    --benefits-heading-line-height: var(--font-{{ block.settings.heading_preset }}--line-height);
+    --benefits-heading-case: var(--font-{{ block.settings.heading_preset }}--case);
+
+    --benefits-card-heading-font-family: var(--font-{{ block.settings.card_heading_preset }}--family);
+    --benefits-card-heading-font-style: var(--font-{{ block.settings.card_heading_preset }}--style);
+    --benefits-card-heading-font-weight: var(--font-{{ block.settings.card_heading_preset }}--weight);
+    --benefits-card-heading-font-size: var(--font-{{ block.settings.card_heading_preset }}--size);
+    --benefits-card-heading-line-height: var(--font-{{ block.settings.card_heading_preset }}--line-height);
+    --benefits-card-heading-case: var(--font-{{ block.settings.card_heading_preset }}--case);
+
+    --benefits-icon-size: {{ block.settings.icon_size }}px;
+    --benefits-gap: {{ block.settings.gap }}px;
+
+    {% render 'spacing-style', settings: block.settings %}
+  "
+  {{ block.shopify_attributes }}
+>
+  <div class="benefits-carousel__inner">
+    {% if block.settings.heading != blank or block.settings.text != blank %}
+      <div class="benefits-carousel__header">
+        {% if block.settings.heading != blank %}
+          <h2 class="benefits-carousel__heading">
+            {{ block.settings.heading }}
+          </h2>
+        {% endif %}
+
+        {% if block.settings.text != blank %}
+          <div class="benefits-carousel__text rte">
+            {{ block.settings.text }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="benefits-carousel__viewport">
+      <div class="benefits-carousel__track" data-benefits-slider>
+        {% for i in (1..9) %}
+          {% assign enabled_key = 'benefit_' | append: i | append: '_enabled' %}
+          {% assign icon_key = 'benefit_' | append: i | append: '_icon' %}
+          {% assign image_icon_key = 'benefit_' | append: i | append: '_image_icon' %}
+          {% assign heading_key = 'benefit_' | append: i | append: '_heading' %}
+          {% assign text_key = 'benefit_' | append: i | append: '_text' %}
+
+          {% assign enabled = block.settings[enabled_key] %}
+          {% assign icon = block.settings[icon_key] %}
+          {% assign image_icon = block.settings[image_icon_key] %}
+          {% assign benefit_heading = block.settings[heading_key] %}
+          {% assign benefit_text = block.settings[text_key] %}
+
+          {% if enabled %}
+            <div class="benefits-carousel__slide">
+              <div class="benefits-carousel__card">
+                <div class="benefits-carousel__icon" aria-hidden="true">
+                  {% if image_icon != blank %}
+                    {{
+                      image_icon
+                      | image_url: width: 200
+                      | image_tag:
+                        loading: 'lazy',
+                        class: 'benefits-carousel__icon-image'
+                    }}
+                  {% elsif icon != blank and icon != 'none' %}
+                    <svg
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      {% render 'icon', icon: icon %}
+                    </svg>
+                  {% endif %}
+                </div>
+
+                {% if benefit_heading != blank %}
+                  <h4 class="benefits-carousel__card-heading">
+                    {{ benefit_heading }}
+                  </h4>
+                {% endif %}
+
+                {% if benefit_text != blank %}
+                  <div class="benefits-carousel__card-text rte">
+                    {{ benefit_text }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    {% if block.settings.show_controls %}
+      <div class="benefits-carousel__controls">
+        <button class="benefits-carousel__button" data-benefits-prev aria-label="Previous benefit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="benefits-carousel__dots" data-benefits-dots></div>
+
+        <button class="benefits-carousel__button" data-benefits-next aria-label="Next benefit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    {% endif %}
+  </div>
+</benefits-carousel-{{ carousel_id }}>
+
+{% stylesheet %}
+  .benefits-carousel {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .benefits-carousel__inner {
+    max-width: var(--page-width, 1200px);
+    margin-inline: auto;
+    padding-inline: var(--padding-lg, 20px);
+    box-sizing: border-box;
+  }
+
+  .benefits-carousel__header {
+    margin-bottom: 56px;
+  }
+
+  .benefits-carousel__heading {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: var(--font-h2--size);
+    line-height: var(--font-h2--line-height);
+    color: var(--color-foreground-heading);
+    text-wrap: balance;
+  }
+
+  .benefits-carousel__text {
+    margin-top: 16px;
+    max-width: 720px;
+    color: var(--color-foreground);
+  }
+
+  .benefits-carousel__viewport {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .benefits-carousel__track {
+    display: flex;
+    gap: var(--benefits-gap, 32px);
+    transition: transform 0.45s ease;
+    will-change: transform;
+  }
+
+  .benefits-carousel__slide {
+    flex: 0 0 calc((100% - (var(--benefits-gap, 32px) * 2)) / 3);
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .benefits-carousel__card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    color: var(--color-foreground);
+  }
+
+  .benefits-carousel__icon {
+    width: var(--benefits-icon-size, 32px);
+    height: var(--benefits-icon-size, 32px);
+    color: var(--color-foreground-heading);
+    margin-bottom: 18px;
+    display: block;
+  }
+
+  .benefits-carousel__icon svg,
+  .benefits-carousel__icon-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .benefits-carousel__icon-image {
+    object-fit: contain;
+  }
+
+  .benefits-carousel__card-heading {
+    margin: 0 0 14px;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: 24px;
+    line-height: 1.15;
+    color: var(--color-foreground-heading);
+    text-wrap: balance;
+  }
+
+  .benefits-carousel__card-text {
+    font-family: var(--font-body--family);
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--color-foreground);
+    max-width: 100%;
+  }
+
+  .benefits-carousel__card-text p {
+    margin: 0;
+  }
+
+  .benefits-carousel__controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 44px;
+  }
+
+  .benefits-carousel__button {
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    border: var(--style-border-width, 1px) solid var(--color-border);
+    background: var(--color-background);
+    color: var(--color-foreground-heading);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .benefits-carousel__button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .benefits-carousel__button svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .benefits-carousel__dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .benefits-carousel__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    border: none;
+    padding: 0;
+    background: var(--color-border);
+    cursor: pointer;
+  }
+
+  .benefits-carousel__dot.active {
+    background: var(--color-foreground-heading);
+  }
+
+  @media screen and (max-width: 989px) {
+    .benefits-carousel__slide {
+      flex: 0 0 calc((100% - var(--benefits-gap, 32px)) / 2);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .benefits-carousel__inner {
+      padding-inline: 24px;
+    }
+
+    .benefits-carousel__header {
+      margin-bottom: 36px;
+    }
+
+    .benefits-carousel__heading {
+      font-size: 34px;
+      line-height: 1.1;
+    }
+
+    .benefits-carousel__viewport {
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .benefits-carousel__viewport::-webkit-scrollbar {
+      display: none;
+    }
+
+    .benefits-carousel__track {
+      gap: 20px;
+      transform: none !important;
+      width: max-content;
+    }
+
+    .benefits-carousel__slide {
+      flex: 0 0 calc(100vw - 96px);
+      width: calc(100vw - 96px);
+      max-width: calc(100vw - 96px);
+      min-width: calc(100vw - 96px);
+      scroll-snap-align: start;
+      box-sizing: border-box;
+    }
+
+    .benefits-carousel__card,
+    .benefits-carousel__card-heading,
+    .benefits-carousel__card-text,
+    .benefits-carousel__card-text p {
+      max-width: 100%;
+      min-width: 0;
+      white-space: normal !important;
+      overflow: visible !important;
+      overflow-wrap: break-word !important;
+      word-break: normal !important;
+      box-sizing: border-box;
+    }
+
+    .benefits-carousel__card-heading {
+      font-size: 22px;
+      line-height: 1.15;
+    }
+
+    .benefits-carousel__card-text {
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .benefits-carousel__controls {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+<script>
+  (function() {
+    class BenefitsCarousel{{ carousel_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentIndex = 0;
+      }
+
+      connectedCallback() {
+        this.slider = this.querySelector('[data-benefits-slider]');
+        this.prevButton = this.querySelector('[data-benefits-prev]');
+        this.nextButton = this.querySelector('[data-benefits-next]');
+        this.dotsContainer = this.querySelector('[data-benefits-dots]');
+        this.slides = this.slider ? this.slider.querySelectorAll('.benefits-carousel__slide') : [];
+
+        if (!this.slider || this.slides.length === 0) return;
+
+        this.updateSlidesPerView();
+        this.createDots();
+        this.updateSlider();
+        this.setupEventListeners();
+      }
+
+      updateSlidesPerView() {
+        if (window.innerWidth <= 749) {
+          this.currentSlidesPerView = 1;
+        } else if (window.innerWidth <= 989) {
+          this.currentSlidesPerView = 2;
+        } else {
+          this.currentSlidesPerView = 3;
+        }
+
+        this.totalSlides = Math.max(1, this.slides.length - this.currentSlidesPerView + 1);
+
+        if (this.currentIndex > this.totalSlides - 1) {
+          this.currentIndex = Math.max(0, this.totalSlides - 1);
+        }
+      }
+
+      setupEventListeners() {
+        if (this.prevButton) {
+          this.prevButton.addEventListener('click', () => this.goToPrev());
+        }
+
+        if (this.nextButton) {
+          this.nextButton.addEventListener('click', () => this.goToNext());
+        }
+
+        window.addEventListener('resize', () => {
+          this.updateSlidesPerView();
+          this.createDots();
+          this.updateSlider();
+        });
+
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+
+        this.slider.addEventListener('touchstart', (event) => {
+          startX = event.touches[0].clientX;
+          currentX = startX;
+          isDragging = true;
+        }, { passive: true });
+
+        this.slider.addEventListener('touchmove', (event) => {
+          if (!isDragging) return;
+          currentX = event.touches[0].clientX;
+        }, { passive: true });
+
+        this.slider.addEventListener('touchend', () => {
+          if (!isDragging) return;
+          isDragging = false;
+
+          const diff = startX - currentX;
+
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) this.goToNext();
+            else this.goToPrev();
+          }
+        });
+      }
+
+      createDots() {
+        if (!this.dotsContainer) return;
+
+        this.dotsContainer.innerHTML = '';
+
+        for (let i = 0; i < this.totalSlides; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'benefits-carousel__dot';
+          dot.setAttribute('aria-label', `Go to benefit ${i + 1}`);
+          dot.addEventListener('click', () => this.goToSlide(i));
+          this.dotsContainer.appendChild(dot);
+        }
+      }
+
+      updateSlider() {
+        const targetSlide = this.slides[this.currentIndex];
+        const offset = targetSlide ? targetSlide.offsetLeft : 0;
+
+        this.slider.style.transform = `translateX(-${offset}px)`;
+
+        if (this.prevButton) {
+          this.prevButton.disabled = this.currentIndex === 0;
+        }
+
+        if (this.nextButton) {
+          this.nextButton.disabled = this.currentIndex >= this.totalSlides - 1;
+        }
+
+        const dots = this.dotsContainer ? this.dotsContainer.querySelectorAll('.benefits-carousel__dot') : [];
+
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === this.currentIndex);
+        });
+      }
+
+      goToPrev() {
+        if (this.currentIndex > 0) {
+          this.currentIndex--;
+          this.updateSlider();
+        }
+      }
+
+      goToNext() {
+        if (this.currentIndex < this.totalSlides - 1) {
+          this.currentIndex++;
+          this.updateSlider();
+        }
+      }
+
+      goToSlide(index) {
+        this.currentIndex = index;
+        this.updateSlider();
+      }
+    }
+
+    if (!customElements.get('benefits-carousel-{{ carousel_id }}')) {
+      customElements.define('benefits-carousel-{{ carousel_id }}', BenefitsCarousel{{ carousel_id }});
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Benefits carousel",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Should You Partner With Us?"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Intro text"
+    },
+    {
+      "type": "select",
+      "id": "heading_preset",
+      "label": "Section heading preset",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "card_heading_preset",
+      "label": "Card heading preset",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ],
+      "default": "h4"
+    },
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "Inherit color scheme",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_controls",
+      "label": "Show navigation controls",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 16,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap between cards",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+
+    {
+      "type": "header",
+      "content": "Benefit 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "benefit_1_enabled",
+      "label": "Enable benefit 1",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "benefit_1_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "box", "label": "Box" },
+        { "value": "lightning_bolt", "label": "Lightning bolt" },
+        { "value": "star", "label": "Star" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "check_box", "label": "Check box" }
+      ],
+      "default": "box"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefit_1_image_icon",
+      "label": "Custom icon image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "benefit_1_heading",
+      "label": "Heading",
+      "default": "Over 1,000 Models in Catalogue"
+    },
+    {
+      "type": "richtext",
+      "id": "benefit_1_text",
+      "label": "Text",
+      "default": "<p>Our printer farm allows us to deliver up to 5000+ figures per week with consistent, repeatable quality.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Benefit 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "benefit_2_enabled",
+      "label": "Enable benefit 2",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "benefit_2_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "box", "label": "Box" },
+        { "value": "lightning_bolt", "label": "Lightning bolt" },
+        { "value": "star", "label": "Star" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "check_box", "label": "Check box" }
+      ],
+      "default": "box"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefit_2_image_icon",
+      "label": "Custom icon image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "benefit_2_heading",
+      "label": "Heading",
+      "default": "Retail-Ready Packaging"
+    },
+    {
+      "type": "richtext",
+      "id": "benefit_2_text",
+      "label": "Text",
+      "default": "<p>Every mini ships in branded blister packaging with EAN barcode. Unbox, place on shelf, done.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Benefit 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "benefit_3_enabled",
+      "label": "Enable benefit 3",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "benefit_3_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "box", "label": "Box" },
+        { "value": "lightning_bolt", "label": "Lightning bolt" },
+        { "value": "star", "label": "Star" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "check_box", "label": "Check box" }
+      ],
+      "default": "stopwatch"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefit_3_image_icon",
+      "label": "Custom icon image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "benefit_3_heading",
+      "label": "Heading",
+      "default": "No Minimum Order Quantity"
+    },
+    {
+      "type": "richtext",
+      "id": "benefit_3_text",
+      "label": "Text",
+      "default": "<p>Order 1 or 100 - no MOQ pressure. Test what sells before committing to bigger volumes.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Benefit 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "benefit_4_enabled",
+      "label": "Enable benefit 4",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "benefit_4_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "box", "label": "Box" },
+        { "value": "lightning_bolt", "label": "Lightning bolt" },
+        { "value": "star", "label": "Star" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "check_box", "label": "Check box" }
+      ],
+      "default": "lightning_bolt"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefit_4_image_icon",
+      "label": "Custom icon image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "benefit_4_heading",
+      "label": "Heading",
+      "default": "Fast Fulfilment"
+    },
+    {
+      "type": "richtext",
+      "id": "benefit_4_text",
+      "label": "Text",
+      "default": "<p>Orders produced and shipped quickly. No waiting months for a container from overseas.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Benefit 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "benefit_5_enabled",
+      "label": "Enable benefit 5",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "benefit_5_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "box", "label": "Box" },
+        { "value": "lightning_bolt", "label": "Lightning bolt" },
+        { "value": "star", "label": "Star" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "check_box", "label": "Check box" }
+      ],
+      "default": "stopwatch"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefit_5_image_icon",
+      "label": "Custom icon image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "benefit_5_heading",
+      "label": "Heading",
+      "default": "Printed On Demand"
+    },
+    {
+      "type": "richtext",
+      "id": "benefit_5_text",
+      "label": "Text",
+      "default": "<p>We only produce what's ordered. No dead stock sitting in your storage room.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Benefit 6"
+    },
+    {
+      "type": "checkbox",
+      "id": "benefit_6_enabled",
+      "label": "Enable benefit 6",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "benefit_6_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "box", "label": "Box" },
+        { "value": "lightning_bolt", "label": "Lightning bolt" },
+        { "value": "star", "label": "Star" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "check_box", "label": "Check box" }
+      ],
+      "default": "star"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefit_6_image_icon",
+      "label": "Custom icon image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "benefit_6_heading",
+      "label": "Heading",
+      "default": "Proven Sellers"
+    },
+    {
+      "type": "richtext",
+      "id": "benefit_6_text",
+      "label": "Text",
+      "default": "<p>Every model in our wholesale catalogue is already selling in our online store.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Benefit 7"
+    },
+    {
+      "type": "checkbox",
+      "id": "benefit_7_enabled",
+      "label": "Enable benefit 7",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "benefit_7_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "box", "label": "Box" },
+        { "value": "lightning_bolt", "label": "Lightning bolt" },
+        { "value": "star", "label": "Star" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "check_box", "label": "Check box" }
+      ],
+      "default": "lightning_bolt"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefit_7_image_icon",
+      "label": "Custom icon image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "benefit_7_heading",
+      "label": "Heading",
+      "default": "Margins That Make Sense"
+    },
+    {
+      "type": "richtext",
+      "id": "benefit_7_text",
+      "label": "Text",
+      "default": "<p>We sell to you at wholesale - you sell at retail. Built-in margin from day one.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Benefit 8"
+    },
+    {
+      "type": "checkbox",
+      "id": "benefit_8_enabled",
+      "label": "Enable benefit 8",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "benefit_8_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "box", "label": "Box" },
+        { "value": "lightning_bolt", "label": "Lightning bolt" },
+        { "value": "star", "label": "Star" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "check_box", "label": "Check box" }
+      ],
+      "default": "truck"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefit_8_image_icon",
+      "label": "Custom icon image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "benefit_8_heading",
+      "label": "Heading",
+      "default": "Free B2B Shipment"
+    },
+    {
+      "type": "richtext",
+      "id": "benefit_8_text",
+      "label": "Text",
+      "default": "<p>Enjoy a free shipping offer to all orders that exceed 36 units.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Benefit 9"
+    },
+    {
+      "type": "checkbox",
+      "id": "benefit_9_enabled",
+      "label": "Enable benefit 9",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "benefit_9_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "box", "label": "Box" },
+        { "value": "lightning_bolt", "label": "Lightning bolt" },
+        { "value": "star", "label": "Star" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "check_box", "label": "Check box" }
+      ],
+      "default": "lock"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefit_9_image_icon",
+      "label": "Custom icon image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "benefit_9_heading",
+      "label": "Heading",
+      "default": "Exclusive Wholesale Access"
+    },
+    {
+      "type": "richtext",
+      "id": "benefit_9_text",
+      "label": "Text",
+      "default": "<p>These models are available exclusively through selected wholesale partners.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Benefits carousel"
+    }
+  ]
+}
+{% endschema %}

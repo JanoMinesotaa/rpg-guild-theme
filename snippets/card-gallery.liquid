@@ -1,0 +1,212 @@
+{%- doc -%}
+  Displays product images in a card gallery.
+  Logic:
+  - Always show first media as primary
+  - On hover: show first available video (if exists), otherwise nearest next image
+  - Disable hover media for B2B products
+{%- enddoc -%}
+
+{% liquid
+  assign product = block.settings.product
+  assign image_sizes = '(min-width: 750px) 50vw, 100vw'
+%}
+
+{%- assign first_media = product.media[0] -%}
+
+{%- assign is_b2b = false -%}
+{%- if product.tags contains 'B2B' -%}
+  {%- assign is_b2b = true -%}
+{%- endif -%}
+
+{%- comment -%}
+  Find first video after featured_media
+{%- endcomment -%}
+{% assign hover_video = blank %}
+{% unless is_b2b %}
+  {% for m in product.media offset:1 %}
+    {% if m.media_type == 'video' and hover_video == blank %}
+      {% assign hover_video = m %}
+    {% endif %}
+  {% endfor %}
+{% endunless %}
+
+{%- comment -%}
+  If no video found, pick first image after featured
+{%- endcomment -%}
+{% assign hover_image = blank %}
+{% unless is_b2b %}
+  {% if hover_video == blank %}
+    {% for m in product.media offset:1 %}
+      {% if m.media_type == 'image' and hover_image == blank %}
+        {% assign hover_image = m %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endunless %}
+
+<div
+  class="card-gallery card-gallery-{{ block.id }} spacing-style border-style{% if is_b2b %} no-hover{% endif %}"
+  style="
+    {% render 'border-override', settings: block.settings %}
+    {% render 'spacing-style', settings: block.settings %}
+    --gallery-aspect-ratio: 1;
+  "
+  data-product-id="{{ product.id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="card-gallery__media">
+    {%- if first_media -%}
+      <div class="primary-media">
+        {% render 'product-media',
+          media: first_media,
+          sizes: image_sizes,
+          loading: 'lazy',
+          preview_image_only: true
+        %}
+      </div>
+    {%- endif -%}
+
+    {%- if is_b2b == false and hover_video != blank and hover_video.media_type == 'video' -%}
+      <div class="secondary-media" data-lazy-video-wrapper>
+        <div class="product-media">
+          <template class="lazy-video-template">
+            {{ hover_video | video_tag:
+              controls: false,
+              muted: true,
+              loop: true,
+              playsinline: true,
+              class: 'product-hover-video'
+            }}
+          </template>
+        </div>
+      </div>
+
+    {%- elsif is_b2b == false and hover_image -%}
+      {%- assign hover_preview_src = hover_image.preview_image.src -%}
+      {%- assign hover_preview_src_down = hover_preview_src | downcase -%}
+
+      {%- if hover_preview_src_down contains '.gif' -%}
+        <div class="secondary-media">
+          <div class="product-media">
+            <img
+              src="{{ hover_image.preview_image | image_url: width: 800 }}"
+              alt="{{ product.title | escape }}"
+              class="product-hover-gif"
+              width="800"
+              height="800"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            >
+          </div>
+        </div>
+      {%- else -%}
+        <div class="secondary-media">
+          {% render 'product-media',
+            media: hover_image,
+            sizes: image_sizes,
+            loading: 'lazy',
+            preview_image_only: true
+          %}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+
+  {{ children }}
+</div>
+
+{% stylesheet %}
+  .card-gallery {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .card-gallery__media {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .primary-media {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: opacity .3s ease;
+  }
+
+  .secondary-media {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+  }
+
+  .card-gallery:hover .primary-media {
+    opacity: 0;
+  }
+
+  .card-gallery:hover .secondary-media {
+    opacity: 1;
+  }
+
+  .product-hover-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .card-gallery.no-hover:hover .primary-media {
+  opacity: 1 !important;
+}
+  
+{% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function () {
+    const cards = document.querySelectorAll('.card-gallery');
+
+    cards.forEach(card => {
+      const wrapper = card.querySelector('[data-lazy-video-wrapper]');
+      if (!wrapper) return;
+
+      const template = wrapper.querySelector('.lazy-video-template');
+      if (!template) return;
+
+      let loaded = false;
+
+      function loadAndPlayVideo() {
+        if (loaded) return;
+        loaded = true;
+
+        const videoNode = template.content.cloneNode(true);
+        const container = wrapper.querySelector('.product-media');
+        container.innerHTML = '';
+        container.appendChild(videoNode);
+
+        const video = container.querySelector('video');
+        if (video) {
+          video.play().catch(() => {});
+        }
+      }
+
+      // Desktop: load on hover
+      card.addEventListener('mouseenter', loadAndPlayVideo, { once: true });
+
+      // Mobile: load on first touch
+      card.addEventListener('touchstart', function (e) {
+        if (window.innerWidth <= 749) {
+          loadAndPlayVideo();
+
+          const secondary = card.querySelector('.secondary-media');
+          const primary = card.querySelector('.primary-media');
+
+          if (secondary && primary) {
+            secondary.style.opacity = '1';
+            primary.style.opacity = '0';
+          }
+        }
+      }, { once: true, passive: true });
+    });
+  });
+{% endjavascript %}

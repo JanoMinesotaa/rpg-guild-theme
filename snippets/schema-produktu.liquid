@@ -1,0 +1,90 @@
+{%- comment -%}
+  Wzmocnienie danych strukturalnych produktu. Blok generuje filtr `structured_data`
+  Shopify - nie da sie w nim niczego dopisac, wiec przechwytujemy jego wyjscie
+  i wstrzykujemy brakujace pola do gotowego JSON-a. Nie tworzymy drugiego bloku:
+  dwa sprzeczne opisy tego samego produktu zwykle koncza sie zignorowaniem obu.
+
+  Co dokladamy i dlaczego:
+
+  1. aggregateRating - PO STRONIE SERWERA, z metadanych `reviews` Shopify.
+     Fera wstrzykuje te same dane, ale JavaScriptem i dopiero po przewinieciu strony.
+     Googlebot to renderuje, wiec gwiazdki w wynikach sa. Roboty AI czytaja surowy
+     HTML i nie widza ich w ogole - sprawdzone 2026-08-23 na czterech robotach
+     (GPTBot, PerplexityBot, ClaudeBot, Googlebot): zero `aggregateRating` w kodzie.
+
+  2. itemCondition - zawsze nowy, bezwarunkowo prawdziwe.
+
+  3. priceValidUntil - data kroczaca +90 dni. Istotne, bo caly katalog ma cene
+     przekreslona, a Google przy ofercie promocyjnej oczekuje daty waznosci;
+     data z przeszlosci potrafi wygasic bogaty wynik.
+
+  4. additionalProperty - fakty o figurce z metadanych `custom`, ktorych schema
+     do tej pory nie uzywala. To jedyne miejsce, gdzie model jezykowy moze
+     przeczytac, ze to Rogue / Human / Scimitar / DM Stash, nie zgadujac tego
+     z tytulu. Pokrycie w katalogu (2026-08-23, ~6 600 produktow):
+       mini_type 6 365, sculptor 6 357, pose 6 279, mounted 6 257,
+       race_ 6 250, sex 6 248, class 6 192, weapon_ 6 110.
+     Pola idą na poziom grupy (ProductGroup), bo opisuja produkt, nie wariant.
+     Puste metadane sa pomijane - nie emitujemy pustych PropertyValue.
+
+  Uzycie w sekcji produktu, zamiast golego `| structured_data`:
+    {% render 'schema-produktu', product: section.settings.product %}
+{%- endcomment -%}
+
+{%- capture product_ld -%}{{ product | structured_data }}{%- endcapture -%}
+
+{%- liquid
+  assign wazna_do = 'now' | date: '%s' | plus: 7776000 | date: '%Y-%m-%d'
+  assign pola_oferty = '"@type":"Offer","itemCondition":"https://schema.org/NewCondition","priceValidUntil":"' | append: wazna_do | append: '",'
+  assign product_ld = product_ld | replace: '"@type":"Offer",', pola_oferty
+
+  assign klucze = 'mini_type,class,race_,sex,pose,mounted,weapon_,sculptor' | split: ','
+  assign etykiety = 'Miniature type,Character class,Race,Gender,Pose,Mounted,Weapon,Sculptor' | split: ','
+-%}
+
+{%- capture cechy -%}
+  {%- assign pierwsza = true -%}
+  {%- for klucz in klucze -%}
+{%- assign wartosc = product.metafields.custom[klucz].value | strip -%}    {%- if wartosc != blank -%}
+      {%- unless pierwsza -%},{%- endunless -%}
+      {"@type":"PropertyValue","name":{{ etykiety[forloop.index0] | json }},"value":{{ wartosc | json }}}
+      {%- assign pierwsza = false -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- liquid
+  assign wstawka = ''
+
+  assign liczba_ocen = product.metafields.reviews.rating_count.value | plus: 0
+  assign ocena = product.metafields.reviews.rating.value
+
+  if liczba_ocen > 0 and ocena != blank
+    capture oceny
+      echo '"aggregateRating":{"@type":"AggregateRating","ratingValue":'
+      echo ocena.rating
+      echo ',"ratingCount":'
+      echo liczba_ocen
+      echo ',"bestRating":'
+      echo ocena.scale_max
+      echo ',"worstRating":'
+      echo ocena.scale_min
+      echo '},'
+    endcapture
+    assign wstawka = wstawka | append: oceny
+  endif
+
+  assign cechy = cechy | strip
+  if cechy != ''
+    assign wstawka = wstawka | append: '"additionalProperty":[' | append: cechy | append: '],'
+  endif
+
+  if wstawka != ''
+    assign wstawka = '{' | append: wstawka | append: '"@context"'
+    assign product_ld = product_ld | replace_first: '{"@context"', wstawka
+  endif
+-%}
+
+<script type="application/ld+json">
+  {{ product_ld }}
+</script>

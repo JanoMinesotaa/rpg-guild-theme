@@ -1,0 +1,321 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "disabled": true,
+      "settings": {
+        "content_direction": "column",
+        "section_width": "page-width",
+        "section_height": "small",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "color_scheme": "",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "hero_7DWhYb": {
+      "type": "hero",
+      "blocks": {
+        "group_MXVzjf": {
+          "type": "group",
+          "settings": {
+            "enable_slider": false,
+            "custom_class": "spacer reset-grid home-headline content",
+            "padding_top": "0",
+            "padding_right": "0",
+            "padding_bottom": "-",
+            "padding_left": "0",
+            "margin_top": "0",
+            "margin_right": "0",
+            "margin_bottom": "0",
+            "margin_left": "0",
+            "link": "",
+            "open_in_new_tab": false,
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "mobile_horizontal_alignment_row": "flex-start",
+            "mobile_vertical_alignment_row": "center",
+            "mobile_horizontal_alignment_column": "center",
+            "mobile_vertical_alignment_column": "center",
+            "gap": 24,
+            "gap_mobile": 12,
+            "width": "fit-content",
+            "custom_width_unit": "%",
+            "custom_width_value": "100",
+            "width_mobile": "fill",
+            "custom_width_mobile_unit": "%",
+            "custom_width_mobile_value": "100",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image": "shopify://shop_images/Frame_1984078155.png",
+            "background_image_position": "fit",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 100,
+            "padding-block-end": 100,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "group_mbyrdJ": {
+              "type": "group",
+              "settings": {
+                "enable_slider": false,
+                "custom_class": "c",
+                "padding_top": "0",
+                "padding_right": "0",
+                "padding_bottom": "0",
+                "padding_left": "0",
+                "margin_top": "0",
+                "margin_right": "0",
+                "margin_bottom": "0",
+                "margin_left": "0",
+                "link": "",
+                "open_in_new_tab": false,
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "center",
+                "vertical_alignment_flex_direction_column": "center",
+                "mobile_horizontal_alignment_row": "flex-start",
+                "mobile_vertical_alignment_row": "center",
+                "mobile_horizontal_alignment_column": "flex-start",
+                "mobile_vertical_alignment_column": "center",
+                "gap": 24,
+                "gap_mobile": 12,
+                "width": "fit-content",
+                "custom_width_unit": "%",
+                "custom_width_value": "100",
+                "width_mobile": "fill",
+                "custom_width_mobile_unit": "%",
+                "custom_width_mobile_value": "100",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "padding-block-start": 0,
+                "padding-block-end": 24,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "text_RgmFhx": {
+                  "type": "text",
+                  "settings": {
+                    "enable_custom_font": false,
+                    "custom_class": "title use-rosarivo title-404",
+                    "text": "<h2>Arcane Magic Is Blocking The Search</h2>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "center",
+                    "type_preset": "h3",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 24,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "text_ka99NL": {
+                  "type": "text",
+                  "settings": {
+                    "enable_custom_font": false,
+                    "custom_class": "c",
+                    "text": "<p>Even in the Forgotten Realms a 404 error can occur...</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "center",
+                    "type_preset": "custom",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "balance",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 24,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_RgmFhx",
+                "text_ka99NL"
+              ]
+            },
+            "group_AzCCnb": {
+              "type": "group",
+              "name": "t:names.group",
+              "settings": {
+                "enable_slider": false,
+                "custom_class": "c",
+                "padding_top": "0",
+                "padding_right": "0",
+                "padding_bottom": "0",
+                "padding_left": "0",
+                "margin_top": "0",
+                "margin_right": "0",
+                "margin_bottom": "0",
+                "margin_left": "0",
+                "link": "",
+                "open_in_new_tab": false,
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "mobile_horizontal_alignment_row": "flex-start",
+                "mobile_vertical_alignment_row": "center",
+                "mobile_horizontal_alignment_column": "flex-start",
+                "mobile_vertical_alignment_column": "center",
+                "gap": 12,
+                "gap_mobile": 12,
+                "width": "fill",
+                "custom_width_unit": "%",
+                "custom_width_value": "100",
+                "width_mobile": "fill",
+                "custom_width_mobile_unit": "%",
+                "custom_width_mobile_value": "100",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "button_JbqhGG": {
+                  "type": "button",
+                  "name": "t:names.button",
+                  "settings": {
+                    "label": "Take me back",
+                    "link": "shopify://collections/all-products",
+                    "open_in_new_tab": false,
+                    "custom_class": "btn-2",
+                    "style_class": "button",
+                    "anchor": "",
+                    "append_anchor_to_link": false,
+                    "width": "fit-content",
+                    "custom_width": 100,
+                    "width_mobile": "fit-content",
+                    "custom_width_mobile": 100
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "button_JbqhGG"
+              ]
+            }
+          },
+          "block_order": [
+            "group_mbyrdJ",
+            "group_AzCCnb"
+          ]
+        }
+      },
+      "block_order": [
+        "group_MXVzjf"
+      ],
+      "name": "Baner",
+      "settings": {
+        "link": "",
+        "open_in_new_tab": false,
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/404_Page.png",
+        "media_type_2": "image",
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "full-width",
+        "section_height": "auto",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-1",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "hero_7DWhYb"
+  ]
+}

@@ -1,0 +1,280 @@
+<div class="perfect-mini-picker">
+  <form id="perfectMiniPickerForm"
+        class="perfect-mini-picker-form"
+        action="{{ routes.search_url }}"
+        method="get">
+
+    <!-- upewniamy się że szukamy produktów -->
+    <input type="hidden" name="type" value="product">
+
+    <!-- wymuszamy zawsze query, żeby Shopify search pokazał wyniki -->
+    <input type="hidden" name="q" value="*">
+
+    <!-- Class -->
+    <label for="pmp-class">Class:</label>
+    <select id="pmp-class" name="filter.p.m.custom.class">
+      <option value="">Select</option>
+      <option value="Angel">Angel</option>
+      <option value="Artficer">Artficer</option>
+      <option value="Bandit">Bandit</option>
+      <option value="Barbarian">Barbarian</option>
+      <option value="Bard">Bard</option>
+      <option value="Beast">Beast</option>
+      <option value="Berserker">Berserker</option>
+      <option value="Bladesinger">Bladesinger</option>
+      <option value="Cleric">Cleric</option>
+      <option value="Companion">Companion</option>
+      <option value="Construct">Construct</option>
+      <option value="Cultist">Cultist</option>
+      <option value="Druid">Druid</option>
+      <option value="Dwarf">Dwarf</option>
+      <option value="Fight">Fight</option>
+      <option value="Fighter">Fighter</option>
+      <option value="Goblin">Goblin</option>
+      <option value="Guardian">Guardian</option>
+      <option value="Human">Human</option>
+      <option value="Human Villain">Human Villain</option>
+      <option value="King">King</option>
+      <option value="Monk">Monk</option>
+      <option value="Monster">Monster</option>
+      <option value="NPCs">NPCs</option>
+      <option value="Paladin">Paladin</option>
+      <option value="Priest">Priest</option>
+      <option value="Ranger">Ranger</option>
+      <option value="Rogue">Rogue</option>
+      <option value="Sorcerer">Sorcerer</option>
+      <option value="Warforged">Warforged</option>
+      <option value="Warlock">Warlock</option>
+      <option value="Wizard">Wizard</option>
+    </select>
+
+    <!-- Sex -->
+    <label for="pmp-sex">Sex:</label>
+    <select id="pmp-sex" name="filter.p.m.custom.sex">
+      <option value="">Select</option>
+      <option value="Female">Female</option>
+      <option value="Male">Male</option>
+      <option value="Unidentified">Unidentified</option>
+    </select>
+    
+    <!-- Race -->
+    <label for="pmp-race">Race:</label>
+    <select id="pmp-race" name="filter.p.m.custom.race">
+      <option value="">Select</option>
+      <option value="Aarakocra">Aarakocra</option>
+      <option value="Aberration">Aberration</option>
+      <option value="Alien">Alien</option>
+      <option value="Beast">Beast</option>
+      <option value="Beholder">Beholder</option>
+      <option value="Bugbear">Bugbear</option>
+      <option value="Bulldog">Bulldog</option>
+      <option value="Celestial">Celestial</option>
+      <option value="Centaur">Centaur</option>
+      <option value="Companion">Companion</option>
+      <option value="Construct">Construct</option>
+      <option value="Crocodilian">Crocodilian</option>
+      <option value="Crustacean">Crustacean</option>
+      <option value="Death Knight">Death Knight</option>
+      <option value="Demon">Demon</option>
+      <option value="Dinosaur">Dinosaur</option>
+      <option value="Dog">Dog</option>
+      <option value="Dragon">Dragon</option>
+      <option value="Dragonborn">Dragonborn</option>
+      <option value="Dragonspawn">Dragonspawn</option>
+      <option value="Drow">Drow</option>
+      <option value="Duergar">Duergar</option>
+      <option value="Dwarf">Dwarf</option>
+      <option value="Elemental">Elemental</option>
+      <option value="Elf">Elf</option>
+      <option value="Fey">Fey</option>
+      <option value="Fiend">Fiend</option>
+      <option value="Fighter">Fighter</option>
+      <option value="Fly Rider">Fly Rider</option>
+      <option value="Forest Elf">Forest Elf</option>
+      <option value="Forest Spirit">Forest Spirit</option>
+      <option value="Ghost">Ghost</option>
+      <option value="Ghoul">Ghoul</option>
+      <option value="Giant">Giant</option>
+      <option value="Giant Spider">Giant Spider</option>
+      <option value="Giff">Giff</option>
+      <option value="Gnoll">Gnoll</option>
+      <option value="Gnome">Gnome</option>
+      <option value="Goblin">Goblin</option>
+      <option value="Gobor">Gobor</option>
+      <option value="Golem">Golem</option>
+      <option value="Gray Orc">Gray Orc</option>
+      <option value="Griffon">Griffon</option>
+      <option value="Grung">Grung</option>
+      <option value="Half Orc">Half Orc</option>
+      <option value="Halfling">Halfling</option>
+      <option value="Harpy">Harpy</option>
+      <option value="Hell Hound">Hell Hound</option>
+      <option value="High Elf">High Elf</option>
+      <option value="Hobgoblin">Hobgoblin</option>
+      <option value="Human">Human</option>
+      <option value="Human Villain">Human Villain</option>
+      <option value="Humanoid">Humanoid</option>
+      <option value="Imp">Imp</option>
+      <option value="Kenku">Kenku</option>
+      <option value="Kikimora">Kikimora</option>
+      <option value="Kobold">Kobold</option>
+      <option value="Leonin">Leonin</option>
+      <option value="Leshy">Leshy</option>
+      <option value="Lich">Lich</option>
+      <option value="Lizard">Lizard</option>
+      <option value="Lizardfolk">Lizardfolk</option>
+      <option value="Locust">Locust</option>
+      <option value="Merfolk">Merfolk</option>
+      <option value="Mimic">Mimic</option>
+      <option value="Mind Flayer">Mind Flayer</option>
+      <option value="Minotaur">Minotaur</option>
+      <option value="Monster">Monster</option>
+      <option value="Monstrosity">Monstrosity</option>
+      <option value="Mousefolk">Mousefolk</option>
+      <option value="Mummy">Mummy</option>
+      <option value="Myconid">Myconid</option>
+      <option value="Necromancer">Necromancer</option>
+      <option value="Ogre">Ogre</option>
+      <option value="Oliphant">Oliphant</option>
+      <option value="Orc">Orc</option>
+      <option value="Owlbear">Owlbear</option>
+      <option value="Ratmen">Ratmen</option>
+      <option value="Rhinofolk">Rhinofolk</option>
+      <option value="Sahuagin">Sahuagin</option>
+      <option value="Satyr">Satyr</option>
+      <option value="Sharkfolk">Sharkfolk</option>
+      <option value="Skeleton">Skeleton</option>
+      <option value="Specter">Specter</option>
+      <option value="Spider">Spider</option>
+      <option value="Tauren">Tauren</option>
+      <option value="Tiefling">Tiefling</option>
+      <option value="Tortle">Tortle</option>
+      <option value="Treant">Treant</option>
+      <option value="Troll">Troll</option>
+      <option value="Undead">Undead</option>
+      <option value="Vampire">Vampire</option>
+      <option value="Warforged">Warforged</option>
+      <option value="Werebear">Werebear</option>
+      <option value="Werewolf">Werewolf</option>
+      <option value="Witch">Witch</option>
+      <option value="Wraith">Wraith</option>
+      <option value="Wyvern">Wyvern</option>
+      <option value="Yuan Ti">Yuan Ti</option>
+      <option value="Zombie">Zombie</option>
+    </select>
+
+     <!-- Pose -->
+    <label for="pmp-pose">Pose:</label>
+    <select id="pmp-pose" name="filter.p.m.custom.pose">
+      <option value="">Select</option>
+      <option value="Still">Still</option>
+      <option value="Dynamic">Dynamic</option>
+    </select>
+
+    <!-- Mounted -->
+    <label for="pmp-mounted">Mounted:</label>
+    <select id="pmp-mounted" name="filter.p.m.custom.mounted">
+      <option value="">Select</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+
+    <!-- Sculptor -->
+    <label for="pmp-sculptor">Sculptor:</label>
+    <select id="pmp-sculptor" name="filter.p.m.custom.sculptor">
+      <option value="">Select</option>
+      <option value="Artisan Guild">Artisan Guild</option>
+      <option value="Cast n Play">Cast n Play</option>
+      <option value="DM Stash">DM Stash</option>
+      <option value="Rescale">Rescale</option>
+      <option value="Galaad">Galaad</option>
+      <option value="Daybreak">Daybreak</option>
+      <option value="Dungeon Dog">Dungeon Dog</option>
+    </select>
+
+    <!-- Mini Type -->
+    <label for="pmp-mini-type">Mini Type:</label>
+    <select id="pmp-mini-type" name="filter.p.m.custom.mini-type">
+      <option value="">Select</option>
+      <option value="Miniature">Miniature</option>
+      <option value="Bust">Bust</option>
+      <option value="Set">Set</option>
+      <option value="Terrain">Terrain</option>
+      <option value="Giant">Giant</option>
+    </select>
+
+
+
+     <!-- Weapon -->
+    <label for="pmp-weapon">Weapon:</label>
+    <select id="pmp-weapon" name="filter.p.m.custom.weapon">
+      <option value="">Select</option>
+      <option value="Battleaxe">Battleaxe</option>
+      <option value="Bow">Bow</option>
+      <option value="Crossbow">Crossbow</option>
+      <option value="Dagger">Dagger</option>
+      <option value="Flail">Flail</option>
+      <option value="Halberd">Halberd</option>
+      <option value="Gun">Gun</option>
+      <option value="Hammer">Hammer</option>
+      <option value="Longsword">Longsword</option>
+      <option value="Mace">Mace</option>
+      <option value="Rapier">Rapier</option>
+      <option value="Rare Weapon">Rare Weapon</option>
+      <option value="Scimitar">Scimitar</option>
+      <option value="Sickle">Sickle</option>
+      <option value="Spear">Spear</option>
+      <option value="Sword">Sword</option>
+      <option value="Trident">Trident</option>
+      <option value="Quarterstaff">Quarterstaff</option>
+      <option value="Javelin">Javelin</option>
+      <option value="Instrument">Instrument</option>
+      <option value="Wand">Wand</option>
+      <option value="Axe">Axe</option>
+      <option value="Wand">Wand</option>
+      <option value="Fists/Claws">Fists/Claws</option>
+    </select>
+
+    
+
+    <!-- Submit -->
+    <button type="submit" class="button button-primary">Search Miniature</button>
+  </form>
+</div>
+
+{% stylesheet %}
+.perfect-mini-picker {
+  background: #F0E7D3;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 420px;
+}
+.perfect-mini-picker-form label {
+  font-weight: 600;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  display: block;
+}
+.perfect-mini-picker-form select,
+.perfect-mini-picker-form button {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 12px;
+}
+.radio-group {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.radio-group input {
+  margin-right: 6px;
+}
+.perfect-mini-picker-form button {
+  background: var(--color-button-primary, #54130F);
+  color: #fff;
+  font-weight: bold;
+}
+{% endstylesheet %}
+

@@ -1,0 +1,57 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "b2b"
+  },
+  "parent": "collection.all-miniatures.json",
+  "sections": {
+    "section_EJExHB": {
+      "settings": {},
+      "blocks": {
+        "group_adnLaD": {
+          "blocks": {
+            "group_ADDE8A": {
+              "blocks": {
+                "button_y64Xm": {
+                  "type": "button",
+                  "name": "t:names.button",
+                  "disabled": false,
+                  "settings": {
+                    "label": "Shop All",
+                    "link": "shopify://collections/all-miniatures-b2b",
+                    "open_in_new_tab": false,
+                    "custom_class": "C",
+                    "style_class": "button-secondary",
+                    "anchor": "",
+                    "append_anchor_to_link": false,
+                    "header-39a46dbda024abfceafa3a24062fa179": null,
+                    "width": "fit-content",
+                    "custom_width": 100,
+                    "width_mobile": "fit-content",
+                    "custom_width_mobile": 100
+                  }
+                }
+              },
+              "block_order": [
+                "text_fzAjct",
+                "text_bgmhCc",
+                "text_PPJUF9",
+                "button_y64Xm"
+              ],
+              "settings": {}
+            }
+          },
+          "settings": {}
+        }
+      }
+    }
+  }
+}

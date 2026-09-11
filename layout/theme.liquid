@@ -1,0 +1,326 @@
+<!doctype html>
+<html
+  class="no-js{% if request.design_mode %} shopify-design-mode{% endif %}"
+  lang="{{ request.locale.iso_code }}"
+>
+
+  
+<head>
+  {%- if request.page_type == 'collection' -%}
+  {%- assign noindex_handles = 'best-selling-collection,quick-order,physical-products,miniatures,all-miniatures-b2b' | split: ',' -%}
+  {%- if noindex_handles contains collection.handle -%}
+    <meta name="robots" content="noindex, follow">
+  {%- endif -%}
+{%- endif -%}
+{%- if request.page_type == 'product' and product.tags contains 'noindex' -%}
+    <meta name="robots" content="noindex, follow">
+  {%- endif -%}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preconnect fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Google Fonts -->
+<link
+  rel="preload"
+  as="style"
+  href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;700&family=Rosarivo:ital@0;1&display=swap"
+  onload="this.onload=null;this.rel='stylesheet'"
+>
+<noscript>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;700&family=Rosarivo:ital@0;1&display=swap"
+  >
+</noscript>
+
+  <!-- Base CSS -->
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+
+  <!-- Swiper (only if used) -->
+{% if content_for_layout contains 'swiper' %}
+  <link
+    rel="preload"
+    as="style"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    onload="this.onload=null;this.rel='stylesheet'"
+  >
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  </noscript>
+  <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+{% endif %}
+
+  <!-- Cookiebot -->
+  <script
+    id="Cookiebot"
+    src="https://consent.cookiebot.com/uc.js"
+    data-cbid="39e9cd61-692d-4f9b-9d45-0d60548dbe0d"
+    type="text/javascript"
+    defer
+  ></script>
+
+  <!-- SEO -->
+  {% render 'meta-tags' %}
+  {% render 'fonts' %}
+  {% render 'scripts' %}
+  {% render 'theme-styles-variables' %}
+  {% render 'color-schemes' %}
+
+  {% if settings.favicon != blank %}
+    <link
+      rel="icon"
+      type="image/png"
+      href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+    >
+  {% endif %}
+
+  
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  {% if request.page_type == 'index' %}
+  <link
+    rel="preload"
+    as="image"
+    href="https://rpgguild.shop/cdn/shop/files/home-hero-fix.png?v=1755425181&width=1950"
+    fetchpriority="high">
+{% endif %}
+
+{{ content_for_header }}
+
+  {% if request.design_mode %}
+    {% render 'theme-editor' %}
+  {% endif %}
+
+  {% if request.path contains '/policies/' %}
+    <meta name="robots" content="noindex">
+  {% endif %}
+
+  
+</head>
+
+<body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+
+{% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
+{% render 'predictive-search' %}
+
+<div id="header-group">
+  {% sections 'header-group' %}
+</div>
+
+{% render 'breadcrumbs' %}
+
+<main
+  id="MainContent"
+  class="content-for-layout {{ request.page_type }}"
+  role="main"
+  data-page-transition-enabled="{{ settings.page_transition_enabled }}"
+  data-product-transition="{{ settings.transition_to_main_product }}"
+  data-template="{{ template }}"
+>
+  {{ content_for_layout }}
+</main>
+
+{% sections 'footer-group' %}
+{% render 'search-modal' %}
+{% render 'edrone' %}
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* MENU – DESKTOP + MOBILE SAFE */
+
+  const menu = document.querySelector('.header-menu');
+  if (menu) {
+    const ACTIVE =
+      'li.gm-item.gm-level-0.gm-has-submenu.gm-submenu-mega.gm-submenu-align-full.gm-active';
+
+    function isDesktop() {
+  return window.matchMedia('(min-width: 750px)').matches;
+}
+
+    let locked = false;
+    let scrollY = 0;
+
+    function syncMenuState() {
+      const open = menu.querySelector(ACTIVE);
+
+      // DESKTOP → scroll lock
+      if (isDesktop()) {
+        if (open && !locked) {
+          locked = true;
+          scrollY = window.scrollY;
+          document.body.style.top = `-${scrollY}px`;
+          document.body.classList.add('scroll-locked');
+        } else if (!open && locked) {
+          locked = false;
+          document.body.classList.remove('scroll-locked');
+          document.body.style.top = '';
+          window.scrollTo(0, scrollY);
+        }
+      }
+    }
+
+    const observer = new MutationObserver(syncMenuState);
+    observer.observe(menu, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class'],
+      childList: true
+    });
+
+    document.addEventListener('click', () => {
+      setTimeout(syncMenuState, 0);
+    });
+
+    window.addEventListener('beforeunload', () => {
+      observer.disconnect();
+    });
+  }
+
+  /* SWIPER */
+
+  if (window.Swiper && document.querySelector('.swiper')) {
+    new Swiper('.swiper', {
+      loop: true,
+      autoplay: { delay: 3000 },
+      slidesPerView: 1,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      }
+    });
+  }
+
+  /* HERO ACCORDIONS */
+
+  document.querySelectorAll('[class^="hero-guild-button"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('hero-guild-button-opened');
+      btn.nextElementSibling?.classList.toggle('flex');
+    });
+  });
+
+});
+
+/* HERO VIDEO – LCP */
+
+window.addEventListener('load', () => {
+  const videos = document.querySelectorAll('.hero__video');
+  if (!videos.length) return;
+
+  videos.forEach(video => {
+    video.muted = true;
+    video.play().catch(() => {});
+  });
+});
+</script>
+
+
+
+{% if settings.quick_add or settings.mobile_quick_add %}
+  {% render 'quick-add-modal' %}
+{% endif %}
+
+{% # theme-check-disable ParserBlockingScript %}
+<script src="{{ 'critical.js' | asset_url }}"></script>
+{% # theme-check-enable ParserBlockingScript %}
+<script>
+(function () {
+  if (window.Shopify && window.Shopify.designMode) return;
+
+  const CN_SRC = "https://cdn.commoninja.com/sdk/latest/commonninja.js";
+  let loaded = false;
+
+  function loadCommonNinja() {
+    if (loaded) return;
+    loaded = true;
+
+    const s = document.createElement("script");
+    s.src = CN_SRC;
+    s.defer = true;
+    document.head.appendChild(s);
+
+    cleanup();
+  }
+
+  function cleanup() {
+    ["scroll","touchstart","wheel","mousemove","keydown"].forEach(evt => {
+      window.removeEventListener(evt, loadCommonNinja, opts);
+    });
+    if (io) io.disconnect();
+  }
+
+  const opts = { passive: true };
+  ["scroll","touchstart","wheel","mousemove","keydown"].forEach(evt => {
+    window.addEventListener(evt, loadCommonNinja, opts);
+  });
+
+  const target = document.querySelector('[data-cn="faq"]');
+  let io = null;
+
+  if (target && "IntersectionObserver" in window) {
+    io = new IntersectionObserver((entries) => {
+      if (entries.some(e => e.isIntersecting)) loadCommonNinja();
+    }, { rootMargin: "300px" });
+    io.observe(target);
+  }
+})();
+</script>
+<script>
+/* READ MORE – show-more + btn-2-fix */
+function initReadMore() {
+  document.querySelectorAll('.btn-2.btn-2-fix').forEach(btn => {
+    const wrapper = btn.closest('.group-wrapper');
+    if (!wrapper) return;
+    const group = wrapper.querySelector('.show-more-section');
+    if (!group) return;
+    const hiddenItems = group.querySelectorAll('[class*="hidden-text-"]');
+    btn.addEventListener('click', () => {
+      hiddenItems.forEach(el => {
+        if (el.style.getPropertyValue('display') === 'block') {
+          el.style.removeProperty('display');
+        } else {
+          el.style.setProperty('display', 'block', 'important');
+        }
+      });
+    });
+  });
+}
+
+/* LEARN MORE – toggle-button + toggle-description */
+function initLearnMore() {
+  const btn = document.getElementById('learnMoreToggle');
+  const content = document.getElementById('toggleContent');
+  if (!btn || !content) return;
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (content.style.getPropertyValue('display') === 'block') {
+      content.style.removeProperty('display');
+    } else {
+      content.style.setProperty('display', 'block', 'important');
+    }
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    initReadMore();
+    initLearnMore();
+  });
+} else {
+  initReadMore();
+  initLearnMore();
+}
+</script>
+
+
+</body>
+</html>
+

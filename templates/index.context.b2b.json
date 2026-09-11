@@ -1,0 +1,177 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "b2b"
+  },
+  "parent": "index.json",
+  "sections": {
+    "section_mxgRNK": {
+      "settings": {},
+      "blocks": {
+        "group_TGQ4iB": {
+          "blocks": {
+            "text_afRaXi": {
+              "settings": {
+                "text": ""
+              }
+            },
+            "button_TCN69m": {
+              "settings": {
+                "label": "All B2B Miniatures",
+                "link": "shopify://collections/all-miniatures-b2b"
+              }
+            },
+            "group_tXRh6i": {
+              "blocks": {
+                "group_aq6TC": {
+                  "type": "group",
+                  "name": "t:names.group",
+                  "disabled": false,
+                  "blocks": {},
+                  "block_order": [],
+                  "settings": {
+                    "enable_slider": false,
+                    "header-aa1eedc7da1fc941cd608be7a3b418c4": null,
+                    "custom_class": "c",
+                    "padding_top": "0",
+                    "padding_right": "0",
+                    "padding_bottom": "0",
+                    "padding_left": "0",
+                    "header-f2e289c45d75a9329210ddf9d36d0cab": null,
+                    "margin_top": "0",
+                    "margin_right": "0",
+                    "margin_bottom": "0",
+                    "margin_left": "0",
+                    "link": "",
+                    "open_in_new_tab": false,
+                    "header-f09ff5348995aed142e2369d7de4cee1": null,
+                    "content_direction": "column",
+                    "vertical_on_mobile": true,
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "center",
+                    "align_baseline": false,
+                    "horizontal_alignment_flex_direction_column": "flex-start",
+                    "vertical_alignment_flex_direction_column": "center",
+                    "mobile_horizontal_alignment_row": "flex-start",
+                    "mobile_vertical_alignment_row": "center",
+                    "mobile_horizontal_alignment_column": "flex-start",
+                    "mobile_vertical_alignment_column": "center",
+                    "gap": 12,
+                    "gap_mobile": 12,
+                    "header-dc89f4729382ad01713418984e22b1ce": null,
+                    "width": "fill",
+                    "custom_width_unit": "%",
+                    "custom_width_value": "100",
+                    "width_mobile": "fill",
+                    "custom_width_mobile_unit": "%",
+                    "custom_width_mobile_value": "100",
+                    "custom_height": 100,
+                    "header-74f29486edcee6160c52686788ac11f1": null,
+                    "inherit_color_scheme": true,
+                    "color_scheme": "",
+                    "background_media": "none",
+                    "video": null,
+                    "video_position": "cover",
+                    "background_image": null,
+                    "background_image_position": "cover",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "toggle_overlay": false,
+                    "overlay_color": "#00000026",
+                    "overlay_style": "solid",
+                    "gradient_direction": "to top",
+                    "header-cc03f8350f7c80bcd8a0c78229c92697": null,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  }
+                }
+              },
+              "block_order": [
+                "group_6LBcPC",
+                "group_4yUtJi",
+                "group_6EEeAz",
+                "group_c48VWT",
+                "group_aq6TC"
+              ],
+              "settings": {}
+            }
+          },
+          "block_order": [
+            "text_zTUHmg",
+            "group_tXRh6i",
+            "text_afRaXi",
+            "button_TCN69m",
+            "group_PBhphT"
+          ],
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "group_TGQ4iB",
+        "group_TMA3DM"
+      ]
+    },
+    "collection_selector_iTdWid": {
+      "settings": {},
+      "blocks": {
+        "collection_gcRKtr": {
+          "settings": {
+            "collection": "dragon-5e",
+            "custom_name": "Dragons"
+          }
+        },
+        "collection_8XY4tC": {
+          "settings": {
+            "collection": "goblin-5e",
+            "custom_name": "Goblins"
+          }
+        },
+        "collection_FheKMt": {
+          "settings": {
+            "collection": "elf-5e",
+            "custom_name": "Elves"
+          }
+        },
+        "collection_8brbHj": {
+          "settings": {
+            "collection": "wizard-5e",
+            "custom_name": "Wizards"
+          }
+        },
+        "collection_gnJ8Wb": {
+          "settings": {
+            "collection": "tiefling-5e",
+            "custom_name": "Tieflings"
+          }
+        }
+      }
+    },
+    "section_KjkrjR": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
+    "hero_XFBPJU": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
+    "marquee_kdwRMF": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    }
+  }
+}

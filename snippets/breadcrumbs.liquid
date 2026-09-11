@@ -1,0 +1,219 @@
+{% if settings.show_breadcrumb_nav %}
+
+{%- style -%}
+  .breadcrumbs {
+    padding: 1rem 2rem;
+    max-width: 1330px;
+    margin-inline: auto;
+    color: {{ settings.breadcrumb_text_color }};
+    font-size: 15px;
+  }
+
+  .breadcrumbs li {
+    display: inline-block;
+  }
+
+  .breadcrumbs a {
+    text-decoration: none;
+    font-size: 15px;
+    color: inherit;
+  }
+
+  .breadcrumb-delimeter:not(:last-child):after {
+    {%- if settings.breadcrumb_delimeter == "angle_right" -%}
+      content: "›";
+      font-size: 14px;
+    {%- elsif settings.breadcrumb_delimeter == "slash" -%}
+      content: "/";
+      font-size: 16px;
+    {%- endif -%}
+    display: inline-block;
+    margin-left: .75rem;
+    margin-right: 0.50rem;
+    speak: none;
+  }
+
+  .breadcrumbs [aria-current="page"] {
+    color: inherit;
+    font-weight: normal;
+    text-decoration: none;
+  }
+{%- endstyle -%}
+
+{%- comment -%}
+  Ukrywanie breadcrumbs na wybranych stronach 
+{%- endcomment -%}
+{% if page_title == "Black Friday" or page_title == "Welcome to our Guild!" %}
+  <style>.breadcrumbs { display: none; }</style>
+{% endif %}
+{%- capture okruszki -%}
+<div class="breadcrumbs" aria-label="breadcrumbs">
+  {%- unless template == 'index' or template == 'cart' -%}
+    <a href="{{ routes.root_url }}" title="Home">Home</a>
+    {%- case template.name -%}
+      {%- when 'article' -%}
+        {%- for link in linklists.main-menu.links -%}
+          {%- if link.url == blog.url -%}
+            <span class="breadcrumb-delimeter"></span>
+            {{ link.title | link_to: link.url }}
+            {% break %}
+          {%- endif -%}
+        {%- endfor -%}
+        <span class="breadcrumb-delimeter"></span>
+        <a href="{{ article.url }}" aria-current="page">{{ article.title }}</a>
+
+      {%- when "product" -%}
+        {%- capture product_url_string -%}
+          {%- for collection in product.collections -%}
+            {{ collection.url }}|
+          {%- endfor -%}
+        {%- endcapture -%}
+
+        {%- assign object_url_string = product_url_string | append: product.url -%}
+        {%- assign object_urls = object_url_string | split: '|' -%}
+
+        {%- comment -%}
+          Podmenu bierzemy WPROST z link.links, a nie przez linklists[link.title | handle].
+          Powod zmierzony 2026-09-07: tytuly menu sa tlumaczone per rynek
+          (Shop -> Geschaft -> Boutique, Categories -> Kategorien -> Categories),
+          wiec handle liczony z tytulu na /de-de/ i /fr-fr/ nie trafial w zaden linklist.
+          Poziomy 2 i 3 menu nie powstawaly wcale, petle na depth '2' i '3' nie mialy
+          czego znalezc i sciezka zapadala sie do "Home > produkt". Root i rynki
+          anglojezyczne (/en-at/) dzialaly, bo tam tytuly zostaja po angielsku.
+          link.links jest niezalezne od jezyka. Gałąź {%- else -%} nizej uzywala go
+          od zawsze - to ta sama droga, tylko konsekwentnie.
+        {%- endcomment -%}
+
+        {%- assign level = 1 -%}
+        {%- for link in linklists.main-menu.links -%}
+          {%- assign link_handle = link.title | handle -%}
+          {%- assign link_titles = link_titles | append: link.title | append: '|' -%}
+          {%- assign link_urls = link_urls | append: link.url | append: '|' -%}
+          {%- assign link_levels = link_levels | append: level | append: '|' -%}
+          {%- assign link_parents = link_parents | append: 'main-menu' | append: '|' -%}
+          {%- assign link_handles = link_handles | append: link_handle | append: '|' -%}
+
+          {%- if link.links != blank -%}
+            {%- for clink in link.links -%}
+              {%- if forloop.first -%}
+                {%- assign level = level | plus: 1 -%}
+              {%- endif -%}
+              {% assign clink_handle = clink.title | handle %}
+              {%- assign link_titles = link_titles | append: clink.title | append: '|' -%}
+              {%- assign link_urls = link_urls | append: clink.url | append: '|' -%}
+              {%- assign link_levels = link_levels | append: level | append: '|' -%}
+              {%- assign link_parents = link_parents | append: link_handle | append: '|' -%}
+              {%- assign link_handles = link_handles | append: clink_handle | append: '|' -%}
+              {%- if clink.links != blank -%}
+                {%- for gclink in clink.links -%}
+                  {%- if forloop.first -%}
+                    {%- assign level = level | plus: 1 -%}
+                  {%- endif -%}
+                  {% assign gclink_handle = gclink.title | handle %}
+                  {%- assign link_titles = link_titles | append: gclink.title | append: '|' -%}
+                  {%- assign link_urls = link_urls | append: gclink.url | append: '|' -%}
+                  {%- assign link_levels = link_levels | append: level | append: '|' -%}
+                  {%- assign link_parents = link_parents | append: gclink_handle | append: '|' -%}
+                  {%- assign link_handles = link_handles | append: gclink_handle | append: '|' -%}
+                  {%- if forloop.last -%}
+                    {%- assign level = level | minus: 1 -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+              {%- if forloop.last -%}
+                {%- assign level = level | minus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- assign str_size = link_levels | size | minus: 1 -%}
+        {%- assign llevels = link_levels | slice: 0, str_size | split: '|' -%}
+        {%- assign str_size = link_titles | size | minus: 1 -%}
+        {%- assign ltitles = link_titles | slice: 0, str_size | split: '|' -%}
+        {%- assign str_size = link_handles | size | minus: 1 -%}
+        {%- assign lhandles = link_handles | slice: 0, str_size | split: '|' -%}
+        {%- assign str_size = link_parents | size | minus: 1 -%}
+        {%- assign lparents = link_parents | slice: 0, str_size | split: '|' -%}
+        {%- assign str_size = link_urls | size | minus: 1 -%}
+        {%- assign lurls = link_urls | slice: 0, str_size | split: '|' -%}
+
+        {%- assign depth = '3' -%}
+        {%- assign bc3_parent_list_handle = '' -%}
+        {%- for url in lurls -%}
+          {%- if object_urls contains url and llevels[forloop.index0] == depth -%}
+            {%- unless url == product.url or url == collection.url -%}
+              {%- capture bc3 -%}{{ ltitles[forloop.index0] | link_to: url, ltitles[forloop.index0] }}{%- endcapture -%}
+            {%- endunless -%}
+            {%- assign bc3_parent_list_handle = lparents[forloop.index0] -%}
+            {%- assign bc3_list_handle = lhandles[forloop.index0] -%}
+            {% break %}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- assign depth = '2' -%}
+        {%- assign bc2_parent_list_handle = '' -%}
+        {%- if bc3_parent_list_handle == '' -%} 
+          {%- for url in lurls -%}
+            {%- if llevels[forloop.index0] == depth and object_urls contains url -%}
+              {%- unless url == product.url or url == collection.url -%}
+                {%- capture bc2 -%}{{ ltitles[forloop.index0] | link_to: url, ltitles[forloop.index0] }}{%- endcapture -%}
+              {% endunless %}
+              {%- assign bc2_parent_list_handle = lparents[forloop.index0] -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%} 
+        {%- endif -%}
+
+        {%- if bc1 -%}
+          <span class="breadcrumb-delimeter"></span>{{ bc1 }}
+        {%- endif -%}
+        {%- if bc2 -%}
+          <span class="breadcrumb-delimeter"></span>{{ bc2 }}
+        {%- endif -%}
+        {%- if bc3 -%}
+          <span class="breadcrumb-delimeter"></span>{{ bc3 }}
+        {%- endif -%}
+
+        <span class="breadcrumb-delimeter"></span>
+        <a href="{{ product.url }}" aria-current="page">{{ product.title }}</a>
+
+      {%- else -%}
+        {% for link in linklists.main-menu.links %}
+          {% if link.child_active or link.active %}
+            <span class="breadcrumb-delimeter"></span>
+            <a href="{{ link.url }}">{{ link.title | escape }}</a>
+            {% for clink in link.links %}
+              {% if clink.child_active or clink.active %}
+                <span class="breadcrumb-delimeter"></span>
+                <a href="{{ clink.url }}">{{ clink.title | escape }}</a>
+                {% for gclink in clink.links %}
+                  {% if gclink.child_active or gclink.active %}
+                    <span class="breadcrumb-delimeter"></span>
+                    <a href="{{ gclink.url }}">{{ gclink.title | escape }}</a>
+                  {% endif %}
+                {%- endfor -%}
+              {% endif %}
+            {%- endfor -%}
+          {% endif %}
+        {%- endfor -%}
+    {%- endcase -%}
+  {%- endunless -%}
+</div>
+{%- endcapture -%}
+{{ okruszki }}
+{% render 'schema-okruszki', okruszki: okruszki %}
+
+	{% if request.path == "/pages/dnd-mystery-box" %}
+		<div class="text-block title use-rosarivo"><h1 class="opt-page-heading">Dungeons and Dragons Mystery Box - A Surprise for Players!</h1></div>
+	{% endif %}
+
+
+<script defer>
+  const breadCrumbLinks = document.querySelectorAll(".breadcrumbs a");
+  const lastLink = breadCrumbLinks[breadCrumbLinks.length - 1];
+  if (lastLink) lastLink.href = "javascript:void(0)";
+</script>
+
+
+{% endif %}

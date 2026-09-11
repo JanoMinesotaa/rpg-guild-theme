@@ -1,0 +1,630 @@
+<section class="product-tabs" data-product-tabs>
+
+  {%- assign default_about = product.description -%}
+  {%- if product.metafields.custom.about != blank -%}
+    {%- assign default_about = product.metafields.custom.about | metafield_tag -%}
+  {%- endif -%}
+
+  {%- comment -%} NAV (przyciski) – na podstawie tab_* bloków w kolejności edytora {%- endcomment -%}
+  <div class="product-tabs__nav" role="tablist" aria-label="Product information tabs">
+    {%- for block in section.blocks -%}
+     {%- if block.type == 'tab_about' or block.type == 'tab_scale' or block.type == 'tab_treatment' or block.type == 'tab_reviews'-%}
+        {%- assign tab_title = block.settings.title -%}
+        {%- if tab_title == blank -%}
+          {%- case block.type -%}
+            {%- when 'tab_about' -%}{%- assign tab_title = 'About' -%}
+            {%- when 'tab_scale' -%}{%- assign tab_title = 'Scale' -%}
+            {%- when 'tab_treatment' -%}{%- assign tab_title = 'Treatment' -%}
+            {%- when 'tab_reviews' -%}{%- assign tab_title = 'Reviews' -%}
+            {%- when 'custom-tabs' -%}{%- assign tab_title = 'Custom Tabs' -%}
+          {%- endcase -%}
+        {%- endif -%}
+        <button
+          class="product-tabs__tab{% if forloop.index == 1 %} is-active{% endif %}"
+          role="tab"
+          aria-selected="{% if forloop.index == 1 %}true{% else %}false{% endif %}"
+          aria-controls="panel-{{ section.id }}-{{ block.id }}"
+          id="tab-{{ section.id }}-{{ block.id }}"
+          type="button"
+          data-tab="{{ block.id }}"
+          {{ block.shopify_attributes }}
+        >{{ tab_title }}</button>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="product-tabs__panels">
+
+    {%- assign open_panel = false -%}
+    {%- assign first_tab = true -%}
+    {%- assign active_tab_type = '' -%}
+
+    {%- assign pills = '' -%}
+    {%- assign images_full = '' -%}
+    {%- assign seps = '' -%}
+    {%- assign heads = '' -%}
+    {%- assign texts = '' -%}
+    {%- assign tables = '' -%}
+    {%- assign buttons = '' -%}
+    {%- assign side = '' -%}
+    {%- assign ribbons = '' -%}
+    {%- assign apps = '' -%}
+    {%- assign saw_text_or_table = false -%}
+    {%- assign saw_ribbon = false -%}
+
+    {%- for block in section.blocks -%}
+
+      {%- assign is_tab = false -%}
+      {%- if block.type == 'tab_about' or block.type == 'tab_scale' or block.type == 'tab_treatment' or block.type == 'tab_reviews'-%}
+        {%- assign is_tab = true -%}
+      {%- endif -%}
+
+      {%- if is_tab -%}
+        {%- if open_panel -%}
+          {%- if active_tab_type == 'tab_reviews' -%}
+            {{ apps }}
+            {%- unless saw_ribbon -%}
+              <div class="product-tabs__ribbon">
+                <img src="https://cdn.shopify.com/s/files/1/0689/3204/3018/files/Frame_1984077870.png?v=1752179897" alt="RPG Guild ribbon" loading="lazy">
+              </div>
+            {%- endunless -%}
+          {%- else -%}
+            {%- if pills != '' -%}<div class="product-tabs__pills">{{ pills }}</div>{%- endif -%}
+            {{ images_full }}
+            {{ seps }}
+            <div class="product-tabs__content">
+              <div class="product-tabs__content-col product-tabs__content-col--text">
+                {{ heads }}
+                {%- if active_tab_type == 'tab_about' and saw_text_or_table == false -%}
+                  <div class="rte product-tabs__rte">{{ default_about }}</div>
+                {%- endif -%}
+                {{ texts }}{{ tables }}{{ buttons }}
+              </div>
+              {%- if side != '' -%}
+                <div class="product-tabs__content-col product-tabs__content-col--media">{{ side }}</div>
+              {%- endif -%}
+            </div>
+            {%- if ribbons != '' -%}
+              {{ ribbons }}
+            {%- else -%}
+              <div class="product-tabs__ribbon">
+                <img src="https://cdn.shopify.com/s/files/1/0689/3204/3018/files/Frame_1984077870.png?v=1752179897" alt="RPG Guild ribbon" loading="lazy">
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+          </div></div></div>
+          {%- comment -%} zamknięto: frame-inner / frame / panel {%- endcomment -%}
+        {%- endif -%}
+
+        {%- assign active_tab_type = block.type -%}
+        <div class="product-tabs__panel{% if first_tab %} is-active{% endif %}"
+             id="panel-{{ section.id }}-{{ block.id }}"
+             role="tabpanel"
+             aria-labelledby="tab-{{ section.id }}-{{ block.id }}">
+          <div class="product-tabs__frame" style="
+            --frame-url: url('https://cdn.shopify.com/s/files/1/0689/3204/3018/files/Stroked_border.png?v=1756395192');
+            --frame-pad: {{ section.settings.frame_padding }}px;">
+            <div class="product-tabs__frame-inner">
+
+        {%- assign open_panel = true -%}
+        {%- assign first_tab = false -%}
+
+        {%- assign pills = '' -%}
+        {%- assign images_full = '' -%}
+        {%- assign seps = '' -%}
+        {%- assign heads = '' -%}
+        {%- assign texts = '' -%}
+        {%- assign tables = '' -%}
+        {%- assign buttons = '' -%}
+        {%- assign side = '' -%}
+        {%- assign ribbons = '' -%}
+        {%- assign apps = '' -%}
+        {%- assign saw_text_or_table = false -%}
+        {%- assign saw_ribbon = false -%}
+
+      {%- else -%}
+        {%- if open_panel -%}
+          {%- case block.type -%}
+            {%- when 'pill' -%}
+              {% capture pills %}{{ pills }}<span class="product-tabs__pill" {{ block.shopify_attributes }}>
+                {%- if block.settings.icon != blank -%}
+                  {{ block.settings.icon | image_url: width: 32 | image_tag: loading: 'lazy', alt: '', width: 18, height: 18 }}
+                {%- endif -%}
+                {{- block.settings.label -}}
+              </span>{% endcapture %}
+
+            {%- when 'pills_container' -%}
+              {% capture pills_container_content %}
+                <div class="product-tabs__pills-container" {{ block.shopify_attributes }}>
+                  {%- if block.settings.container_title != blank -%}
+                    <h4 class="pills-container-title">{{ block.settings.container_title }}</h4>
+                  {%- endif -%}
+                </div>
+              {% endcapture %}
+              {%- assign texts = texts | append: pills_container_content -%}
+
+
+
+
+            {%- when 'image_full' -%}
+              {%- if block.settings.image != blank -%}
+                {% capture images_full %}{{ images_full }}
+                  <div class="product-tabs__image" {{ block.shopify_attributes }}>
+                    {{ block.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', alt: block.settings.alt }}
+                  </div>
+                {% endcapture %}
+              {%- endif -%}
+
+            {%- when 'separator' -%}
+              {% capture seps %}{{ seps }}<div class="product-tabs__separator" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', alt: block.settings.alt }}
+                {%- endif -%}
+              </div>{% endcapture %}
+
+            {%- when 'heading' -%}
+              {% capture heads %}{{ heads }}<h3 class="product-tabs__heading" {{ block.shopify_attributes }}>{{ block.settings.text }}</h3>{% endcapture %}
+
+            {%- when 'text' -%}
+              {% capture texts %}{{ texts }}<div class="rte product-tabs__rte" {{ block.shopify_attributes }}>{{ block.settings.rich }}</div>{% endcapture %}
+              {%- assign saw_text_or_table = true -%}
+
+            {%- when 'table' -%}
+              {% capture tables %}{{ tables }}<div class="product-tabs__table rte" {{ block.shopify_attributes }}>{{ block.settings.rich }}</div>{% endcapture %}
+              {%- assign saw_text_or_table = true -%}
+
+            {%- when 'button' -%}
+              {% capture buttons %}{{ buttons }}<a class="product-tabs__btn" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>{% endcapture %}
+
+            {%- when 'side_image' -%}
+              {%- if block.settings.image != blank -%}
+                {% capture side %}<div class="product-tabs__media" {{ block.shopify_attributes }}>
+                  {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: block.settings.alt }}
+                </div>{% endcapture %}
+              {%- endif -%}
+
+            {%- when 'ribbon' -%}
+              {%- assign saw_ribbon = true -%}
+              {% capture ribbons %}{{ ribbons }}<div class="product-tabs__ribbon" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', alt: block.settings.alt }}
+                {%- endif -%}
+              </div>{% endcapture %}
+
+            {%- when 'custom-tabs' -%}
+                {%- capture custom_tabs_content -%}
+                  <div class="custom-tabs-block" data-block-id="{{ block.id }}">
+                    <div class="tabs-navigation">
+                      {% for i in (1..4) %}
+                        {% capture tab_title_key %}tab_{{ i }}_title{% endcapture %}
+                        {% capture default_title %}Tab {{ i }}{% endcapture %}
+                        <button class="tab-button {% if forloop.first %}active{% endif %}" 
+                                data-tab="tab-{{ i }}" 
+                                onclick="switchTab(event, 'tab-{{ i }}', '{{ block.id }}')">
+                          {{ block.settings[tab_title_key] | default: default_title }}
+                        </button>
+                      {% endfor %}
+                    </div>
+        
+        <div class="tabs-content">
+            {% for i in (1..4) %}
+              {% capture tab_headline_key %}tab_{{ i }}_headline{% endcapture %}
+              {% capture tab_paragraph_key %}tab_{{ i }}_paragraph{% endcapture %}
+              {% capture tab_image_key %}tab_{{ i }}_image{% endcapture %}
+              {% capture tab_title_key %}tab_{{ i }}_title{% endcapture %}
+              <div class="tab-content {% if forloop.first %}active{% endif %}" id="tab-{{ i }}-{{ block.id }}">
+                <div class="tab-content-wrapper">
+                  <div class="tab-text">
+                    <h3 class="tab-headline">{{ block.settings[tab_headline_key] }}</h3>
+                    <p class="tab-paragraph">{{ block.settings[tab_paragraph_key] }}</p>
+                  </div>
+                  {% if block.settings[tab_image_key] != blank %}
+                    <div class="tab-image">
+                      <img src="{{ block.settings[tab_image_key] | img_url: 'master' }}" 
+                          alt="{{ block.settings[tab_title_key] | default: 'Tab' }} {{ i }}" 
+                          loading="lazy">
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          </div>
+        {%- endcapture -%}
+        {%- assign texts = texts | append: custom_tabs_content -%}
+
+
+            {%- else -%}
+              {%- if active_tab_type == 'tab_reviews' and block.type contains '@app' -%}
+                {% capture apps %}{{ apps }}<div class="product-tabs__reviews" {{ block.shopify_attributes }}>{% render block %}</div>{% endcapture %}
+              {%- endif -%}
+          {%- endcase -%}
+        {%- endif -%}
+      {%- endif -%}
+
+    {%- endfor -%}
+
+    {%- if open_panel -%}
+      {%- if active_tab_type == 'tab_reviews' -%}
+        {{ apps }}
+        {%- unless saw_ribbon -%}
+          <div class="product-tabs__ribbon">
+            <img src="https://cdn.shopify.com/s/files/1/0689/3204/3018/files/Frame_1984077870.png?v=1752179897" alt="RPG Guild ribbon" loading="lazy">
+          </div>
+        {%- endunless -%}
+      {%- else -%}
+        {%- if pills != '' -%}<div class="product-tabs__pills">{{ pills }}</div>{%- endif -%}
+        {{ images_full }}
+        {{ seps }}
+        <div class="product-tabs__content">
+          <div class="product-tabs__content-col product-tabs__content-col--text">
+            {{ heads }}
+            {%- if active_tab_type == 'tab_about' and saw_text_or_table == false -%}
+              <div class="rte product-tabs__rte">{{ default_about }}</div>
+            {%- endif -%}
+            {{ texts }}{{ tables }}{{ buttons }}
+          </div>
+          {%- if side != '' -%}
+            <div class="product-tabs__content-col product-tabs__content-col--media">{{ side }}</div>
+          {%- endif -%}
+        </div>
+        {%- if ribbons != '' -%}
+          {{ ribbons }}
+        {%- else -%}
+          <div class="product-tabs__ribbon">
+            <img src="https://cdn.shopify.com/s/files/1/0689/3204/3018/files/Frame_1984077870.png?v=1752179897" alt="RPG Guild ribbon" loading="lazy">
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+      </div>
+      </div>
+      
+    {%- endif -%}
+
+  </div>
+
+  <style>
+    .product-tabs{
+      --ink:#54130F; --bg:#EADFC7; --muted:#D5B193; --accent:#54130F; --accent-ink:#fff;
+      --maxw:1220px; --gap:56px; --chip-radius:999px; --shadow:none;
+      color:var(--ink);
+      font-family:"Raleway",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      margin:var(--gap) auto;
+    }
+    .product-tabs h1,.product-tabs h2,.product-tabs h3,.product-tabs h4{
+      font-family:"Rosarivo",Georgia,"Times New Roman",serif;
+      color:var(--ink);
+    }
+
+    /* NAV */
+    .product-tabs__nav{display:flex;gap:.6rem;flex-wrap:wrap;margin:0 auto 24px;max-width:var(--maxw);padding:0 16px}
+    .product-tabs__tab{
+      padding:.6rem 1rem;
+      background:var(--bg);color:var(--ink);box-shadow:var(--shadow);font-size:.95rem;line-height:1;cursor:pointer;
+      transition:transform .15s ease,background-color .15s ease,color .15s ease
+    }
+    .product-tabs__tab:hover{transform:translateY(-1px)}
+    .product-tabs__tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+    .product-tabs__tab.is-active{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+    /* Panels */
+    .product-tabs__panel{display:none}.product-tabs__panel.is-active{display:block}
+
+    /* Frame  */
+    .product-tabs__frame{
+      background: var(--frame-url) no-repeat center/100% 100%;
+      padding: var(--frame-pad, 18px);
+      border:none;border-radius:0;box-shadow:none;margin:0 auto;max-width:var(--maxw)
+    }
+    .product-tabs__frame-inner{
+      padding:clamp(16px,2.2vw,24px);
+      background:transparent;min-height:120px
+    }
+
+    /* Pills */
+    .product-tabs__pills{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:8px 0 16px}
+    .product-tabs__pill{
+      display:inline-flex;align-items:center;gap:8px;height:32px;padding:6px 12px;
+      box-shadow:none;font-size:.92rem;line-height:1;white-space:nowrap
+    }
+    .product-tabs__pill img{width:18px;height:18px;object-fit:contain}
+
+    /* Obrazy/separatory/wstęga */
+    .product-tabs__image{margin:12px 0}
+    .product-tabs__image img{width:100%;height:auto;display:block;border-radius:6px}
+    .product-tabs__separator,.product-tabs__ribbon{margin:12px 0}
+    .product-tabs__separator img{max-width:100%;height:auto;display:block}
+    .product-tabs__ribbon img{width:100%;height:auto;display:block}
+
+    /* Treść */
+    .product-tabs__content{display:grid;grid-template-columns:1fr;gap:24px;align-items:start;margin-top:10px}
+    .product-tabs__heading{font-size:clamp(1.35rem,1.2rem + .6vw,1.75rem);line-height:1.25;margin:0 0 .6rem 0;font-weight:700}
+    .product-tabs__rte{font-size:1rem;line-height:1.7}
+    .product-tabs__table{margin-top:8px}
+    .product-tabs__btn{display:inline-block;margin-top:14px;padding:.7rem 1.2rem;border:1px solid var(--accent);
+      background:var(--accent);color:var(--accent-ink);border-radius:var(--chip-radius);text-decoration:none;box-shadow:var(--shadow);
+      transition:filter .15s ease,transform .15s ease}
+    .product-tabs__btn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+    .product-tabs__btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+    .product-tabs__content-col--media img{display:block;max-width:100%;height:auto;border-radius:6px}
+
+    /* Reviews embed width */
+    .product-tabs__reviews .fera-container,
+    .product-tabs__reviews .stamped-container{max-width:var(--maxw);margin:0 auto}
+
+    .custom-tabs-block {
+      margin: 20px 0;
+    }
+
+    .tabs-navigation {
+      display: flex;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+
+    .tab-button {
+      background: none;
+      border: none;
+      padding: 12px 24px;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+      font-family: Raleway;
+      font-size: 20px;
+      color: #30261E;
+      position: relative;
+    }
+
+    .tab-button.active {
+      border-bottom-color: #54130F;
+      font-weight: medium;
+      color: #30261E;
+    }
+
+    .tab-button:hover {
+      border-bottom-color: #30261E;
+      color: #30261E;
+      transform: translateY(-1px);
+    }
+
+    .tab-button:focus {
+      outline: 1px solid #54130F;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 20px 0;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .tab-content-wrapper {
+      display: flex;
+      gap: 30px;
+      align-items: flex-start;
+    }
+
+    .tab-text {
+      flex: 1;
+    }
+
+    .tab-headline {
+      margin-bottom: 15px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .tab-paragraph {
+      line-height: 1.6;
+    }
+
+    .tab-image {
+      flex: 0 0 300px;
+      max-width: 300px;
+    }
+
+    .tab-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .tab-content-wrapper {
+        flex-direction: column;
+    }
+      
+      .tab-image {
+        flex: none;
+        max-width: 100%;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tab-headline {
+      margin-bottom: 24px;
+      font-size: 1.3em;
+      font-weight: medium;
+      color: #54130F;
+      padding-left: 15px;
+    }
+
+    .tab-paragraph {
+      line-height: 1.6;
+      margin-bottom: 24px;
+      color: var(--ink, #333);
+      font-size: 16px;
+      padding-left: 19px; 
+    }
+    .product-tabs__pills-container {
+      margin: 15px 0;
+    }
+
+    .pills-container-title {
+      font-size: 1.1em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #54130F;
+    }
+
+    .pills-container-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    @media(min-width:980px){
+      .product-tabs__content{grid-template-columns:1.05fr .95fr;gap:28px}
+    }
+  </style>
+
+  <script>
+(function(){
+  const root = document.currentScript.closest('[data-product-tabs]');
+  if(!root) return;
+  const tabs = root.querySelectorAll('.product-tabs__tab');
+  const panels = root.querySelectorAll('.product-tabs__panel');
+  
+  function activate(id){
+    tabs.forEach(b=>{
+      const a=b.dataset.tab===id;
+      b.classList.toggle('is-active',a);
+      b.setAttribute('aria-selected',a?'true':'false');
+    });
+    panels.forEach(p=>p.classList.toggle('is-active', p.id.endsWith(id)));
+  }
+  
+  tabs.forEach(btn=>{
+    btn.addEventListener('click', ()=> activate(btn.dataset.tab));
+    btn.addEventListener('keydown', (e)=>{
+      const i=[...tabs].indexOf(btn);
+      if(e.key==='ArrowRight') tabs[(i+1)%tabs.length].focus();
+      if(e.key==='ArrowLeft')  tabs[(i-1+tabs.length)%tabs.length].focus();
+    });
+  });
+
+  window.switchTab = function(event, tabId, blockId) {
+    const block = document.querySelector(`[data-block-id="${blockId}"]`);
+    
+    if (!block) return;
+    
+    block.querySelectorAll('.tab-content').forEach(content => {
+      content.classList.remove('active');
+    });
+    
+    block.querySelectorAll('.tab-button').forEach(button => {
+      button.classList.remove('active');
+    });
+    
+     const targetTab = document.getElementById(`${tabId}-${blockId}`);
+    if (targetTab) {
+      targetTab.classList.add('active');
+    }
+    
+      event.target.classList.add('active');
+  };
+})();
+</script>
+
+
+  {% schema %}
+{
+  "name": "Product Tabs",
+  "settings": [
+    { "type": "range", "id": "frame_padding", "label": "Frame padding", "min": 0, "max": 48, "step": 2, "default": 18 }
+  ],
+  "blocks": [
+    { "type": "tab_about", "name": "Tab: About", "settings": [ { "type": "text", "id": "title", "label": "Title", "default": "About" } ] },
+    { "type": "tab_scale", "name": "Tab: Scale", "settings": [ { "type": "text", "id": "title", "label": "Title", "default": "Scale" } ] },
+    { "type": "tab_treatment", "name": "Tab: Treatment", "settings": [ { "type": "text", "id": "title", "label": "Title", "default": "Treatment" } ] },
+    { "type": "tab_reviews", "name": "Tab: Reviews", "settings": [ { "type": "text", "id": "title", "label": "Title", "default": "Reviews" } ] },
+    { 
+      "type": "pills_container",
+      "name": "Pills Container",
+      "settings": [
+        {
+          "type": "text",
+          "id": "container_title",
+          "label": "Container Title (optional)",
+          "info": "Optional title for this group of pills"
+        }
+      ]
+    },
+    { "type": "pill", "name": "Pill", "settings": [
+      { "type": "image_picker", "id": "icon", "label": "Icon" },
+      { "type": "text", "id": "label", "label": "Label", "default": "High Quality" }
+    ]},
+    { "type": "image_full", "name": "Image (full width)", "settings": [
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "alt", "label": "Alt" }
+    ]},
+    { 
+      "type": "custom-tabs", 
+      "name": "Custom Tabs Block", 
+      "settings": [
+        { "type": "text", "id": "tab_1_title", "label": "Tab 1 - Title", "default": "Unassembled" },
+        { "type": "text", "id": "tab_1_headline", "label": "Tab 1 - Headline", "default": "Comes Unassembled!" },
+        { "type": "textarea", "id": "tab_1_paragraph", "label": "Tab 1 - Content", "default": "After gluing and applying a black primer to the miniature, we perform a light drybrush technique to enhance shadows and details. This gives the miniature a more defined appearance. Perfect for painting!" },
+        { "type": "image_picker", "id": "tab_1_image", "label": "Tab 1 - Image" },
+        
+        { "type": "text", "id": "tab_2_title", "label": "Tab 2 - Title", "default": "Assembled" },
+        { "type": "text", "id": "tab_2_headline", "label": "Tab 2 - Headline", "default": "Comes Assembled!" },
+        { "type": "textarea", "id": "tab_2_paragraph", "label": "Tab 2 - Content", "default": "Hero goes text about: Assembled" },
+        { "type": "image_picker", "id": "tab_2_image", "label": "Tab 2 - Image" },
+        
+        { "type": "text", "id": "tab_3_title", "label": "Tab 3 - Title", "default": "Primed" },
+        { "type": "text", "id": "tab_3_headline", "label": "Tab 3 - Headline", "default": "Comes Primed!" },
+        { "type": "textarea", "id": "tab_3_paragraph", "label": "Tab 3 - Content", "default": "Hero goes text about: Primed" },
+        { "type": "image_picker", "id": "tab_3_image", "label": "Tab 3 - Image" },
+        
+        { "type": "text", "id": "tab_4_title", "label": "Tab 4 - Title", "default": "Dry Brushed" },
+        { "type": "text", "id": "tab_4_headline", "label": "Tab 4 - Headline", "default": "Comes Brushed!" },
+        { "type": "textarea", "id": "tab_4_paragraph", "label": "Tab 4 - Content", "default": "Hero goes text about: Brushed" },
+        { "type": "image_picker", "id": "tab_4_image", "label": "Tab 4 - Image" }
+      ]
+    },
+    { "type": "separator", "name": "Separator image", "settings": [
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "alt", "label": "Alt" }
+    ]},
+    { "type": "heading", "name": "Heading", "settings": [
+      { "type": "text", "id": "text", "label": "Text", "default": "Section heading" }
+    ]},
+    { "type": "text", "name": "Text (rich)", "settings": [
+      { "type": "richtext", "id": "rich", "label": "Content" }
+    ]},
+    { "type": "table", "name": "Table/extra (rich)", "settings": [
+      { "type": "richtext", "id": "rich", "label": "Content" }
+    ]},
+    { "type": "side_image", "name": "Side image", "settings": [
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "alt", "label": "Alt" }
+    ]},
+    { "type": "button", "name": "Button", "settings": [
+      { "type": "text", "id": "label", "label": "Label", "default": "Ask for size" },
+      { "type": "url", "id": "url", "label": "Link" }
+    ]},
+    { "type": "ribbon", "name": "Bottom ribbon (override)", "settings": [
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "alt", "label": "Alt" }
+    ]},
+    { "type": "@app" }
+  ],
+  "presets": [{ "name": "Product Tabs" }]
+}
+{% endschema %}
+
+</section>

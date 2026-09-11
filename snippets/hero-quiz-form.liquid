@@ -1,0 +1,55 @@
+{%- comment -%}
+  Hero Quiz Form Snippet
+  Renders product finder quiz with limited filters
+{%- endcomment -%}
+
+{%- liquid
+  assign quiz_filters = filters | slice: 0, 5
+  assign form_action = routes.search_url
+  if block.settings.quiz_results_page != blank
+    assign form_action = '/pages/' | append: block.settings.quiz_results_page
+  endif
+-%}
+
+<div class="hero-quiz-wrapper">
+  <div class="hero-quiz-content">
+    <h2 class="quiz-title">{{ block.settings.quiz_title | default: 'Find Your Perfect Miniature!' }}</h2>
+    
+    <form class="hero-quiz-form" action="{{ form_action }}" method="get" id="heroQuizForm-{{ block.id }}">
+      {%- for filter in quiz_filters -%}
+        <div class="quiz-question">
+          <label for="filter-{{ filter.param_name }}">{{ filter.label }}</label>
+          
+          {%- case filter.type -%}
+            {%- when 'list' -%}
+              <select name="{{ filter.param_name }}" id="filter-{{ filter.param_name }}" class="quiz-select">
+                <option value="">Select</option>
+                {%- for value in filter.values -%}
+                  <option value="{{ value.value }}">{{ value.label }}</option>
+                {%- endfor -%}
+              </select>
+              
+            {%- when 'boolean' -%}
+              <div class="quiz-radio-group">
+                <input type="radio" name="{{ filter.param_name }}" value="true" id="{{ filter.param_name }}-yes">
+                <label for="{{ filter.param_name }}-yes">Yes</label>
+                <input type="radio" name="{{ filter.param_name }}" value="false" id="{{ filter.param_name }}-no">
+                <label for="{{ filter.param_name }}-no">No</label>
+              </div>
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+      
+      <button type="submit" class="quiz-submit-btn">
+        {{ block.settings.submit_text | default: 'Search Miniature' }}
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+document.getElementById('heroQuizForm-{{ block.id }}').addEventListener('submit', function(e) {
+  // dodatkowa logika – np. walidacja albo custom redirect
+  console.log('Quiz submitted');
+});
+</script>

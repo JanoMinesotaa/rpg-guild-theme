@@ -1,0 +1,449 @@
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div class="section color-{{ section.settings.color_scheme }}">
+  <div
+    class="spacing-style section-content-wrapper"
+    style="
+      {% render 'layout-panel-style', settings: section.settings %}
+      {% render 'spacing-style', settings: section.settings %}
+    "
+  >
+    <div class="article-topbar">
+      <h1 class="article-title">{{ article.title }}</h1>
+    </div>
+    <!-- SUBTITLE + EXCERPT + SEPARATOR -->
+    {% assign subtitle = article.excerpt | strip %}
+    {% if subtitle != blank %}
+      <div class="article-intro">
+        <p class="article-subtitle">{{ subtitle }}</p>
+        <img class="article-separator" alt="" loading="lazy"
+            src="https://cdn.shopify.com/s/files/1/0689/3204/3018/files/Frame_1984077844.png?v=1754256912"
+            alt=""width="948px"
+            height="0.83px"
+            loading="lazy"
+      class="article-separator"/>
+      </div>
+    {% endif %}
+
+    <!-- HERO -->
+    <header class="article-hero">
+      {% if article.image %}
+        {{ article | image_url: width: 2000 | image_tag:
+            loading: 'eager',
+            widths: '1000,1400,1800,2000',
+            sizes: '(min-width: 1024px) 100vw, 100vw',
+            class: 'hero-img'
+        }}
+      {% endif %}
+    </header>
+
+    <!-- TAGI pod hero -->
+    {% if article.tags.size > 0 %}
+      <ul class="tags tags--top" role="list">
+        {% for tag in article.tags %}
+          <li><a class="chip" href="/blogs/{{ blog.handle }}/tagged/{{ tag | handle }}">{{ tag }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <!-- META: Author lewo / Data + Read time prawo -->
+    <div class="article-meta">
+          {% assign words = article.content | strip_html | split: ' ' | size %}
+          {% assign minutes = words | divided_by: 200.0 | ceil | at_least: 1 %}
+          <time class="date" datetime="{{ article.published_at | date: "%Y-%m-%d" }}">{{ article.published_at | date: "%d.%m.%Y" }}</time>
+          <span class="dot">•</span>
+          <span class="badge">{{ minutes }} min read</span>
+          {% if article.user %}
+            <span class="dot">•</span>
+            <span class="author">{{ article.user.first_name }} {{ article.user.last_name }}</span>
+          {% endif %}
+        </div>
+
+    <!-- LAYOUT: lewa kolumna (content) + prawa sticky (TOC + share panel) -->
+    <div class="article-layout">
+      <!-- Lewa kolumna -->
+      <div class="article-main">
+        <!-- CONTENT -->
+        <article class="article-content rte">
+          {{ article.content }}
+        </article>
+
+        <!-- SHARE PANEL pod kontentem -->
+        {% assign share_url = shop.url | append: article.url %}
+        <div class="share-panel share-panel--main">
+          <div class="share-panel__inner">
+            <span class="share-panel__text">Like what you see? Share with a friend.</span>
+            <div class="share-icons">
+              <a class="share-icon" aria-label="Share on LinkedIn"
+                 href="https://www.linkedin.com/shareArticle?mini=true&url={{ share_url | url_encode }}&title={{ article.title | url_encode }}"
+                 target="_blank" rel="noopener">
+                in
+              </a>
+              <a class="share-icon" aria-label="Share on YouTube"
+                 href="https://www.youtube.com/" target="_blank" rel="noopener">▶</a>
+              <a class="share-icon" aria-label="Share on Instagram"
+                 href="https://www.instagram.com/" target="_blank" rel="noopener">◎</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- NEXT ARTICLE -->
+        {% if article.next %}
+          <div class="article-next">
+            <span>Next article</span>
+            <a class="next-link" href="{{ article.next.url }}">
+              {{ article.next.title }}
+              <img src="{{ 'icon-arrow-right.svg' | asset_url }}" alt="" width="16" height="16" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+
+        <!-- RELATED (2 articles) -->
+        <div class="article-related">
+          <h2 class="related-title">Related</h2>
+          <div class="related-grid">
+            {% assign related = '' | split: '' %}
+
+            {% if article.tags.size > 0 %}
+              {% for a in blog.articles %}
+                {% if a.id != article.id %}
+                  {% assign overlap = false %}
+                  {% for t in a.tags %}
+                    {% if article.tags contains t %}
+                      {% assign overlap = true %}
+                    {% endif %}
+                  {% endfor %}
+                  {% if overlap %}
+                    {% assign related = related | push: a %}
+                  {% endif %}
+                {% endif %}
+                {% if related.size == 2 %}{% break %}{% endif %}
+              {% endfor %}
+            {% endif %}
+
+            {% if related.size < 2 %}
+              {% assign related_ids = related | map: 'id' %}
+              {% for a in blog.articles %}
+                {% if a.id != article.id %}
+                  {% unless related_ids contains a.id %}
+                    {% assign related = related | push: a %}
+                    {% assign related_ids = related | map: 'id' %}
+                  {% endunless %}
+                {% endif %}
+                {% if related.size == 2 %}{% break %}{% endif %}
+              {% endfor %}
+            {% endif %}
+
+            {% for a in related %}
+              <a class="related-card" href="{{ a.url }}">
+                {% if a.tags.size > 0 %}
+                  <div class="related-tags">
+                    {% for tg in a.tags limit: 2 %}
+                      <span class="related-tag">{{ tg }}</span>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                {% if a.image %}
+                  {{ a | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'related-img', widths: '600,900,1200', sizes: '(min-width: 1024px) 50vw, 100vw' }}
+                {% else %}
+                  <div class="related-img related-img--ph"></div>
+                {% endif %}
+                <div class="related-meta">
+                  <time datetime="{{ a.published_at | date: "%Y-%m-%d" }}">{{ a.published_at | date: "%d.%m.%Y" }}</time>
+                  <span class="dot">•</span>
+                  {% assign w = a.content | strip_html | split: ' ' | size %}
+                  <span class="badge">{{ w | divided_by: 200.0 | ceil | at_least: 1 }} min read</span>
+                </div>
+                <div class="related-title-text">{{ a.title }}</div>
+                <p class="related-excerpt">{{ a.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Prawa kolumna (sticky) -->
+      <aside class="article-aside">
+        <div class="aside-inner">
+          <div class="toc">
+            <div class="toc-title">In this article</div>
+            <ol id="TocList" class="toc-list"><!-- wypełni JS --></ol>
+          </div>
+
+          <!-- SHARE PANEL w aside -->
+          <div class="share-panel share-panel--aside">
+            <div class="share-panel__inner">
+              <span class="share-panel__text">Share with a friend!</span>
+              <div class="share-icons">
+                <a class="share-icon" aria-label="Share on LinkedIn"
+                   href="https://www.linkedin.com/shareArticle?mini=true&url={{ share_url | url_encode }}&title={{ article.title | url_encode }}"
+                   target="_blank" rel="noopener">in</a>
+                <a class="share-icon" aria-label="Share on YouTube"
+                   href="https://www.youtube.com/" target="_blank" rel="noopener">▶</a>
+                <a class="share-icon" aria-label="Share on Instagram"
+                   href="https://www.instagram.com/" target="_blank" rel="noopener">◎</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+  {{ article | structured_data }}
+</script>
+
+<!-- TOC builder + active link on scroll -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const toc = document.getElementById("TocList");
+  if (!toc) return;
+
+  const h2s = document.querySelectorAll(".article-content h2");
+  h2s.forEach((h, i) => {
+    const id = h.id || `h2-${i}`;
+    h.id = id;
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = `#${id}`;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+
+  const links = toc.querySelectorAll("a");
+  const map = new Map(); // id -> link
+  links.forEach(a => map.set(a.getAttribute("href").slice(1), a));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove("is-active"));
+        const l = map.get(e.target.id);
+        if (l) l.classList.add("is-active");
+      }
+    });
+  }, { rootMargin: "-40% 0% -55% 0%", threshold: 0 });
+
+  h2s.forEach(h => io.observe(h));
+});
+</script>
+
+{% stylesheet %}
+/* ========== TOKI OGÓLNE ========== */
+:root {
+  --article-gap: 56px;
+}
+.article, .article-content, .article-breadcrumb, .tags, .share, .article-meta, .toc-list {
+  font-family: "Raleway", var(--font-body, sans-serif);
+}
+.article-title, .related-title, .related-title-text, .toc-title {
+  font-family: "Rosarivo", var(--font-heading, serif);
+}
+
+.article-topbar {
+  max-width: var(--page-content-width);
+  margin: 0 auto 24px;
+  display: flex;
+  flex-direction: column;  
+  gap: 8px;
+}
+
+.article-topbar .article-title {
+  margin: 0;
+  font-family: "Rosarivo", serif;
+  font-size: clamp(28px, 3vw, 40px);
+  color: #54130F;
+}
+
+.article-topbar .article-breadcrumb {
+  align-self: flex-end;     
+  font-size: 14px;
+  color: rgba(0,0,0,.65);
+}
+
+.article-topbar .article-breadcrumb .crumb {
+  text-decoration: none;
+  color: rgba(0,0,0,.65);
+}
+
+.article-topbar .article-breadcrumb .crumb.current {
+  color: #54130F;
+  font-weight: 500;
+}
+
+.article-topbar .article-breadcrumb .sep {
+  margin: 0 6px;
+  color: rgba(0,0,0,.4);
+}
+
+/* ===== INTRO ===== */
+.article-intro {
+  max-width: var(--normal-content-width);
+  margin: 0 auto calc(var(--article-gap) * .6);
+}
+.article-subtitle {
+  font-size: clamp(16px, 2vw, 18px);
+  line-height: 1.6;
+  color: #8A6E63; /* delikatnie cieple */
+  margin: 0 0 14px;
+}
+.article-separator {
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  height: auto;
+}
+
+/* ===== HERO ===== */
+.article-hero { max-width: var(--page-content-width); margin: var(--article-gap) auto var(--article-gap); }
+.hero-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+
+/* ===== TAGI ===== */
+.tags--top {
+  max-width: var(--normal-content-width);
+  margin: 0 auto calc(var(--article-gap) * .6);
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none;
+}
+.chip {
+  display: inline-block; padding: 8px 12px; border-radius: 999px;
+  border: 1px solid rgba(from var(--color-foreground) r g b / .16);
+  text-decoration: none; color: var(--color-foreground);
+}
+.chip:hover { background: rgba(from var(--color-foreground) r g b / .06); }
+
+/* ===== META ===== */
+.article-meta--row {
+  max-width: var(--normal-content-width);
+  margin: 0 auto var(--article-gap);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: center;
+}
+.meta-left { display: flex; align-items: center; gap: 10px; }
+.meta-label { font-size: 12px; opacity: .65; }
+.meta-right { display: flex; align-items: center; gap: 10px; font-size: 12px; color: rgba(from var(--color-foreground) r g b / .75); }
+.badge { display: inline-flex; align-items: center; justify-content: center; height: 26px; padding: 0 10px; background: #D5B193; color: #54130F; font-weight: 600; }
+.dot { opacity: .6; }
+
+/* ===== LAYOUT ===== */
+.article-layout {
+  display: grid;
+  grid-template-columns: 3fr 1.2fr;
+  gap: 40px;
+  max-width: var(--page-content-width);
+  margin: 0 auto;
+  padding-top: 48px;   /* odstęp nad całą siatką */
+}
+
+@media (max-width: 1023px) {
+  .article-layout {
+    grid-template-columns: 1fr;
+    padding-top: 32px; /* opcjonalnie mniejszy odstęp na mobile */
+  }
+  .article-aside .aside-inner { 
+    position: static; 
+  }
+}
+
+/* ===== CONTENT ===== */
+.article-content {
+  max-width: var(--normal-content-width);
+  margin: 0 auto var(--article-gap);
+  color: var(--color-foreground);
+  line-height: 1.7;
+}
+.article-content h2, .article-content h3, .article-content h4 {
+  font-family: "Rosarivo", var(--font-heading, serif);
+  color: #54130F;
+  scroll-margin-top: 120px; /* dla anchorów */
+}
+.article-content h2 { font-size: clamp(24px, 2.3vw, 32px); margin: var(--article-gap) 0 8px; }
+.article-content h3 { font-size: clamp(20px, 1.9vw, 24px); margin: 28px 0 6px; }
+.article-content h4 { font-size: clamp(18px, 1.6vw, 20px); margin: 22px 0 6px; }
+.article-content p { margin: 10px 0; }
+.article-content ul, .article-content ol { padding-left: 1.25rem; margin: 10px 0; }
+.article-content blockquote { margin: 16px 0; padding: 14px 16px; border-left: 3px solid #54130F; background: rgba(0,0,0,.04); border-radius: 6px; }
+.article-content img { width: 100%; height: auto; }
+
+/* ===== ASIDE (sticky) ===== */
+.article-aside { position: relative; }
+.article-aside .aside-inner { position: sticky; top: 100px; display: flex; flex-direction: column; gap: 24px; }
+.toc-title { font-size: 16px; margin-bottom: 8px; color: #54130F; }
+.toc-list { font-size: 14px; line-height: 1.4; display: flex; flex-direction: column; gap: 6px; padding-left: 18px; }
+.toc-list a { color: var(--color-foreground); text-decoration: none; }
+.toc-list a.is-active { font-weight: 700; color: #54130F; }
+.toc-list :hover { font-weight: 700; color: #54130F; }
+
+/* ===== SHARE PANELS ===== */
+.share-panel {
+  background-image: url('https://cdn.shopify.com/s/files/1/0689/3204/3018/files/Frame_1244831431.png?v=1752232982');
+  background-size: cover;
+  background-position: center;
+  padding: 14px 16px;
+  color: #fff;
+}
+.share-panel__inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.share-panel__text { font-size: 14px; }
+.share-icons { display: inline-flex; gap: 8px; }
+.share-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 6px;
+  background: #F0E7D3;
+  color: #54130F; text-decoration: none; font-weight: 700; font-size: 14px;
+}
+.share-icon:hover {
+  background: #54130F;
+  color: #F0E7D3;
+}
+
+/* ===== NEXT ARTICLE ===== */
+.article-next {
+  max-width: var(--normal-content-width);
+  margin: var(--article-gap) auto calc(var(--article-gap) * .75);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.article-next .next-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: #54130F; text-decoration: none; font-weight: 600;
+}
+.article-next .next-link:hover { text-decoration: underline; }
+
+/* ===== RELATED (2) ===== */
+.article-related { max-width: var(--page-content-width); margin: var(--article-gap) auto 0; }
+.related-title { color: #54130F; margin: 0 0 16px; font-size: clamp(22px, 2.4vw, 28px); }
+.related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+@media (max-width: 1023px) { .related-grid { grid-template-columns: 1fr; } }
+.related-card {
+  display: grid; grid-template-rows: auto auto auto auto; gap: 10px;
+  text-decoration: none; color: var(--color-foreground); }
+.related-tags { position: absolute; z-index: 1; padding: 10px; display: flex; gap: 6px; }
+.related-tag { background: #254223; color: #fff; font-size: 11px; padding: 4px 8px; border-radius: 6px; }
+.related-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+.related-meta { display: flex; align-items: center; gap: 8px; font-size: 12px; color: rgba(from var(--color-foreground) r g b / .75); }
+.related-title-text { color: #54130F; font-family: "Rosarivo", var(--font-heading, serif); font-size: clamp(18px, 1.8vw, 20px); }
+.related-excerpt { margin: 0; opacity: .85; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Blog post",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "select", "id": "content_direction", "label": "Direction", "options": [{ "value": "column", "label": "Vertical" }], "default": "column", "visible_if": "{{ section.settings.gap < 0 }}" },
+    { "type": "range", "id": "gap", "label": "Gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 12 },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "header", "content": "CTA" },
+    { "type": "checkbox", "id": "show_cta", "label": "Show CTA image", "default": false },
+    { "type": "url", "id": "cta_link", "label": "CTA link" },
+    { "type": "text", "id": "cta_image", "label": "CTA image URL", "default": "https://cdn.shopify.com/s/files/1/0689/3204/3018/files/Frame_1984078135.png?v=1752186126" },
+    { "type": "header", "content": "Padding" },
+    { "type": "range", "id": "padding-block-start", "label": "Top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding-block-end", "label": "Bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+  ],
+  "presets": []
+}
+{% endschema %}
