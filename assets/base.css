@@ -12520,35 +12520,3 @@ color: #54130F !important;
 .swym-storefront-layout-empty-sfl-description {
 color: #54130F !important;
 }
-
-/* ------------------------------------------------------------------
-   Koszyk: cztery USP (Worldwide Shipment / 30-Days Returns /
-   Custom Production / VAT included) jako przewijany rzad na mobile,
-   tak jak pigulki w tabach produktowych (.product-tabs__pills).
-
-   Czysty CSS, zero JS - natywne przewijanie palcem.
-
-   Selektor celuje w ID bloku (group_d98HN8), bo custom_class nie dociera
-   do przetlumaczonych storefrontow (fr/de maja wlasne kopie ustawien).
-   Sciezka jest dokladna - wrapper > .group-block > .group-block-content -
-   bo wewnatrz tej grupy jest jeszcze 4 takie same rzedy, po jednym
-   w kazdym USP (ikona + tekst). Szerszy selektor rozwalilby ikony.
-
-   !important, bo klasa .flex-wrap wymusza flex-wrap: wrap !important.
-   Powyzej 767px nic sie nie zmienia - uklad zostaje jak byl.
-
-   Cofniecie: usun ten blok (albo git checkout przed-usp-slider).
-   ------------------------------------------------------------------ */
-@media (max-width: 767px) {
-  [class*='group_d98HN8'] > .group-block > .group-block-content {
-    flex-wrap: nowrap !important;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 10px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  [class*='group_d98HN8'] > .group-block > .group-block-content > * {
-    flex: 0 0 auto !important;
-  }
-}
