@@ -25,6 +25,7 @@
       "blocks": {
         "group_9UQUPi": {
           "type": "group",
+              "disabled": true,
           "name": "Content",
           "settings": {
             "enable_slider": false,
@@ -365,7 +366,7 @@
         "color_scheme": "",
         "background_media": "image",
         "video_position": "cover",
-        "background_image": "shopify://shop_images/Haslo_od_Janek_via_Slack_1.png",
+        "background_image": "shopify://shop_images/bundles-shop-rosarivo-en.webp",
         "background_image_position": "cover",
         "border": "none",
         "border_width": 1,
