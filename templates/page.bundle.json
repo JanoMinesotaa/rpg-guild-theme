@@ -343,7 +343,7 @@
       ],
       "name": "Hero",
       "settings": {
-        "custom_class": "hero-spacer title-lg hero-bg-33",
+        "custom_class": "hero-spacer title-lg hero-bg-bundles",
         "padding_top": "0",
         "padding_right": "0",
         "padding_bottom": "0",
