@@ -12520,3 +12520,42 @@ color: #54130F !important;
 .swym-storefront-layout-empty-sfl-description {
 color: #54130F !important;
 }
+
+/* ------------------------------------------------------------------
+   Safari 26 (iOS): szklany pasek zamiast jednolitej bordowej belki.
+
+   Safari 26 ignoruje <meta name="theme-color">. Swoj dolny pasek robi
+   przezroczysty tylko wtedy, gdy tresc strony fizycznie wchodzi pod
+   niego - musi miec co rozmyc. Warunkiem jest viewport-fit=cover,
+   ustawione w layout/theme.liquid i snippets/meta-tags.liquid.
+   Bez tego Safari maluje plaski kolor.
+
+   Ponizsze pilnuje, zeby przy okazji nic waznego nie wpadlo pod pasek
+   domowy iPhone'a. env(safe-area-inset-*) na urzadzeniach bez wciecia
+   zwraca 0px, wiec na desktopie, Androidzie i starszych iPhonach
+   te reguly nie zmieniaja dokladnie nic.
+
+   Cofniecie: git checkout przed-viewport-cover -- layout/theme.liquid
+   snippets/meta-tags.liquid assets/base.css
+   ------------------------------------------------------------------ */
+
+/* Jednoznaczny kolor tla, gdy Safari nie ma czego probkowac. */
+html {
+  background-color: var(--color-background, #F0E7D3);
+}
+
+/* Plywajace serduszko listy zyczen - trzymaj nad paskiem domowym. */
+.swym-heart {
+  bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+/* Powiadomienia Swym - to samo. */
+.swym-storefront-layout-notification-position-left,
+.swym-storefront-layout-notification-position-right {
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+/* Szuflada menu - zapas na dole, zeby ostatnia pozycja byla klikalna. */
+.menu-drawer {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
