@@ -122,6 +122,22 @@
 </style>
 
 {%- comment -%}
+  Safari 26 (iOS) ignoruje <meta name="theme-color"> i barwi swoj dolny pasek
+  kolorem probkowanym z CSS strony: elementy fixed/sticky przy krawedzi ekranu,
+  a gdy ich brak - tlo <html>. Nasze <html> nie mialo zadnego tla (przezroczyste),
+  wiec Safari braly kolor skadinad - stad bordowa belka na dole na iPhone.
+
+  Ponizsze daje Safari jednoznaczny kolor do wziecia. Uzywamy tokenu motywu,
+  a nie sztywnej wartosci, wiec reguła podazy za schematem kolorow strony.
+
+  Nie dotyka ukladu strony - <html> i tak bylo zakryte przez <body>.
+  Cofniecie: usun ten blok.
+{%- endcomment -%}
+<style>
+  html { background-color: var(--color-background, #F0E7D3); }
+</style>
+
+{%- comment -%}
   Komunikat "Adventurers from USA" w koszyku - tylko rynek USA.
   Domyslnie ukryty; odslaniany wylacznie gdy wybrany kraj = US i jezyk
   nie jest francuski ani niemiecki. Rynki FR, DE, CH i AT go nie zobacza.
