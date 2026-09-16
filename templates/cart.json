@@ -516,7 +516,7 @@
           "name": "t:names.group",
           "settings": {
             "enable_slider": false,
-            "custom_class": "c",
+            "custom_class": "c usa-only",
             "padding_top": "0",
             "padding_right": "0",
             "padding_bottom": "0",
