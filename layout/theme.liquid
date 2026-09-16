@@ -123,10 +123,21 @@
 
 {%- comment -%}
   Komunikat "Adventurers from USA" w koszyku - tylko rynek USA.
-  Grupa bloku ma klase .usa-only (templates/cart.json -> group_Xf7kRz).
-  Domyslnie ukryta; odslaniana wylacznie gdy wybrany kraj = US i jezyk
-  nie jest francuski ani niemiecki. Rynki FR, DE, CH i AT jej nie zobacza.
+  Domyslnie ukryty; odslaniany wylacznie gdy wybrany kraj = US i jezyk
+  nie jest francuski ani niemiecki. Rynki FR, DE, CH i AT go nie zobacza.
+
   Warunek musi byc tutaj, bo blok siedzi w pliku .json, gdzie nie dziala {% if %}.
+
+  Dwa selektory, bo jeden nie wystarcza:
+   - .usa-only  - klasa ustawiona w templates/cart.json, czytelna intencja.
+   - [class*="group_Xf7kRz"] - ID bloku, wbudowane w group-wrapper przez motyw.
+  Shopify traktuje ustawienia typu `text` jako tlumaczalne, a custom_class
+  nim jest. Storefronty fr-FR, fr-CH, de-DE, de-AT i de-CH maja wlasna,
+  starsza wartosc custom_class ("c"), wiec klasa .usa-only do nich NIE dociera
+  - sprawdzone na zywo 2026-09-16. ID bloku nie podlega tlumaczeniu i dziala
+  na kazdym z nich. Klase zostawiam jako druga warstwe na wypadek, gdyby
+  blok kiedys dostal nowe ID.
+
   Cofniecie: usun ten blok i klase "usa-only" z cart.json.
 {%- endcomment -%}
 {%- liquid
@@ -139,7 +150,8 @@
 -%}
 {%- unless usa_notice -%}
 <style>
-  .usa-only { display: none !important; }
+  .usa-only,
+  [class*="group_Xf7kRz"] { display: none !important; }
 </style>
 {%- endunless -%}
   
