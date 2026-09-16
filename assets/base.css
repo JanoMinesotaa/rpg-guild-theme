@@ -12377,6 +12377,28 @@ body .compare-at-price, body .original-price, product-price .compare-at-price, p
     overscroll-behavior: contain;       /* bez “ciągnięcia” strony pod spodem */
     max-height: 80vh;                   /* opcjonalnie, żeby w ogóle był scroll */
   }
+/* ------------------------------------------------------------------
+   Strona Custom Guild's Bundles - wlasne tlo hero.
+
+   Motyw trzyma tla hero w numerowanych klasach .hero-bg-NN z adresem
+   obrazu wpisanym na sztywno w CSS. Ustawienie background_image
+   w edytorze renderuje sie jako <img>, ale to tlo z CSS leży NA NIM,
+   wiec sama podmiana w szablonie nic nie daje.
+
+   Strona bundli i strona B2B Cooperation dzielily klase .hero-bg-33.
+   Podmiana adresu w tej klasie zmienilaby tlo rowniez na B2B, dlatego
+   bundle dostaja wlasna klase, a .hero-bg-33 zostaje nietknieta.
+
+   Cofniecie: usun ten blok i przywroc "hero-bg-33" w page.bundle.json
+   (albo git checkout przed-hero-bg-bundles).
+   ------------------------------------------------------------------ */
+.hero-bg-bundles .custom-section-background > div {
+  background: url("/cdn/shop/files/bundles-shop-rosarivo-en-alpha.webp?v=1789575402") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
   @media(max-width: 749px) {
  header-component .gm-menu.gm-menu-mobile.gm-submenu-open-style-slide {
     overflow-x: unset !important; */
@@ -12558,26 +12580,4 @@ html {
 /* Szuflada menu - zapas na dole, zeby ostatnia pozycja byla klikalna. */
 .menu-drawer {
   padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-/* ------------------------------------------------------------------
-   Strona Custom Guild's Bundles - wlasne tlo hero.
-
-   Motyw trzyma tla hero w numerowanych klasach .hero-bg-NN z adresem
-   obrazu wpisanym na sztywno w CSS. Ustawienie background_image
-   w edytorze renderuje sie jako <img>, ale to tlo z CSS leży NA NIM,
-   wiec sama podmiana w szablonie nic nie daje.
-
-   Strona bundli i strona B2B Cooperation dzielily klase .hero-bg-33.
-   Podmiana adresu w tej klasie zmienilaby tlo rowniez na B2B, dlatego
-   bundle dostaja wlasna klase, a .hero-bg-33 zostaje nietknieta.
-
-   Cofniecie: usun ten blok i przywroc "hero-bg-33" w page.bundle.json
-   (albo git checkout przed-hero-bg-bundles).
-   ------------------------------------------------------------------ */
-.hero-bg-bundles .custom-section-background > div {
-  background: url("/cdn/shop/files/bundles-shop-rosarivo-en-alpha.webp?v=1789575402") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  background-position: center !important;
 }
