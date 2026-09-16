@@ -156,15 +156,75 @@
   endif
 %}
 
+{%- comment -%}
+  Kotwica encji marki. Faza 15 (GEO), etap 15.2, 2026-09-16.
+
+  `sameAs` to lista kanalow, ktore sa TYM SAMYM podmiotem co ta domena. Sluzy do tego,
+  zeby Google i modele jezykowe polaczyly rozproszona reputacje w jedna encje.
+  Powod liczbowy: w sondzie AI z 08.09 nasze 60 tys. sprzedanych sztuk na Etsy wychodzilo
+  w cytowaniach jako `etsy.com` (6,2%), nie jako RPG Guild. YouTube jest cytowany przez
+  AI Overview na 21 z 49 fraz naszej luki mocnej, Pinterest na 13 - a zadnego z nich
+  nie bylo ani w schemie, ani w stopce sklepu.
+
+  Zrodlo listy: `brain/markets-and-channels.md` + kanal YouTube wykryty 16.09.
+  Piec adresow potwierdzonych odczytem HTTP 200. Etsy oddaje botom 403, Instagram nie
+  rozwiazuje sie z maszyny roboczej - oba wziete ze stopki sklepu, czyli z konfiguracji Jana.
+
+  Przy okazji dwie poprawki w tym samym bloku:
+    - `@context` z http na https
+    - `url` bylo `request.origin | append: page.url`, wiec na adresach /pages/ Organization
+      dostawala URL podstrony zamiast korzenia. Encja musi wskazywac na korzen.
+
+  Cofniecie: data/shopify-backup/2026-09-16/theme-faqpage/header.liquid
+{%- endcomment -%}
+{%- comment -%}
+  `description` encji marki. Faza 15 (GEO), etap 15.3, 2026-09-16. Tekst zatwierdzony przez Jana.
+
+  Po co: w 96 odpowiedziach sondy z 08.09 ZADEN model nie opisal naszego modelu biznesowego.
+  Research z 16.09 (16 odpytan) pokazal dodatkowo, ze nazwa "RPG Guild" jest zajeta przez
+  cztery inne podmioty - Perplexity nie rozpoznalo nas w ogole. Stad "based in Poland"
+  na poczatku: miejsce i branza to najtansze rozroznienie encji.
+
+  Dlaczego rozgalezienie po locale, a nie plik `locales/`: pliki `locales/*.json` maja
+  w naglowku ostrzezenie "auto-generated (...) may be overwritten" przez edytor jezykow
+  Shopify. Tresc marki nie moze zalezec od pliku, ktory platforma nadpisuje.
+
+  Literaly w PODWOJNYCH cudzyslowach - francuski ma apostrofy (l'avance, l'UE), ktore
+  zlamalyby literal w pojedynczych.
+
+  Czego tu celowo NIE MA: zdania o braku kosztow formy i braku minimum zamowienia.
+  Decyzja Jana 16.09 - ten argument idzie WYLACZNIE do sekcji B2B/wholesale, bo jest
+  argumentem dla kupca hurtowego, nie dla gracza kupujacego jedna figurke.
+{%- endcomment -%}
+{%- liquid
+  case request.locale.iso_code
+    when 'de'
+      assign opis_marki = "RPG Guild ist ein Hersteller und Onlineshop für physische D&D- und Tabletop-RPG-Miniaturen mit Sitz in Polen. Wir fertigen jede Figur auf Bestellung: in Harz gedruckt, von Hand ausgearbeitet, nie auf Vorrat gegossen oder auf Lager gelegt, und weltweit aus der EU versandt."
+    when 'fr'
+      assign opis_marki = "RPG Guild est un fabricant et une boutique en ligne de figurines physiques pour D&D et RPG de table, basé en Pologne. Nous fabriquons chaque figurine à la commande : imprimée en résine, finie à la main, jamais coulée à l'avance ni gardée en stock, puis expédiée dans le monde entier depuis l'UE."
+    else
+      assign opis_marki = "RPG Guild is a manufacturer and online shop of physical D&D and tabletop RPG miniatures, based in Poland. We craft every figure to order: printed in resin, hand-detailed, never cast in advance or held in stock, then shipped worldwide from the EU."
+  endcase
+-%}
 <script type="application/ld+json">
   {
-    "@context": "http://schema.org",
+    "@context": "https://schema.org",
     "@type": "Organization",
     "name": {{ shop.name | json }},
+    "description": {{ opis_marki | json }},
     {% if settings.logo %}
       "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
     {% endif %}
-    "url": {{ request.origin | append: page.url | json }}
+    "sameAs": [
+      "https://www.etsy.com/shop/RPGGuildPolska",
+      "https://www.youtube.com/@rpgguild",
+      "https://www.facebook.com/RPGGuild",
+      "https://www.instagram.com/rpgguild/",
+      "https://www.tiktok.com/@rpg_guild",
+      "https://pl.pinterest.com/RPG_Guild/",
+      "https://shop.app/m/z5w27dre3f"
+    ],
+    "url": {{ request.origin | json }}
   }
 </script>
 

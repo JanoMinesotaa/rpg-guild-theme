@@ -112,6 +112,19 @@
         "padding-block-end": 0
       }
     },
+    "perfect_mini_picker_section_AdYiwj": {
+      "type": "perfect-mini-picker-section",
+      "disabled": true,
+      "name": "Perfect Mini Picker",
+      "settings": {
+        "background_image": "shopify://shop_images/Find_Miniature_f5feba60-808f-48f5-8451-1c6a9950e92d.png",
+        "heading": "Find Your Perfect Miniature!",
+        "text": "",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": ""
+      }
+    },
     "section_tJEjwT": {
       "type": "section",
       "blocks": {
@@ -170,7 +183,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "group_T7EHEf": {
+            "group_ChCNaB": {
               "type": "group",
               "name": "Text",
               "settings": {
@@ -225,13 +238,13 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "text_4HDzMC": {
+                "text_jLxRnt": {
                   "type": "text",
                   "name": "Headline",
                   "settings": {
                     "enable_custom_font": true,
                     "custom_class": "home-hero-title",
-                    "text": "<h1>{{ closest.collection.title }}</h1>",
+                    "text": "<h2>{{ closest.collection.title }}</h2>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -253,7 +266,7 @@
                   },
                   "blocks": {}
                 },
-                "text_rLHjei": {
+                "text_dWL96j": {
                   "type": "text",
                   "name": "Sub headline",
                   "disabled": true,
@@ -282,7 +295,7 @@
                   },
                   "blocks": {}
                 },
-                "text_b8ddgP": {
+                "text_LmeWAM": {
                   "type": "text",
                   "name": "Description",
                   "settings": {
@@ -312,9 +325,9 @@
                 }
               },
               "block_order": [
-                "text_4HDzMC",
-                "text_rLHjei",
-                "text_b8ddgP"
+                "text_jLxRnt",
+                "text_dWL96j",
+                "text_LmeWAM"
               ]
             },
             "group_b6gAbV": {
@@ -701,7 +714,7 @@
                           "settings": {
                             "enable_custom_font": false,
                             "custom_class": "c",
-                            "text": "<p>Hand Detailed Miniatures</p>",
+                            "text": "<p>Custom Production</p>",
                             "width": "fit-content",
                             "max_width": "normal",
                             "alignment": "left",
@@ -766,7 +779,7 @@
             }
           },
           "block_order": [
-            "group_T7EHEf",
+            "group_ChCNaB",
             "group_b6gAbV",
             "image_kHWymz"
           ]
@@ -775,6 +788,7 @@
       "block_order": [
         "group_RTNHjc"
       ],
+      "disabled": true,
       "name": "Hero",
       "settings": {
         "custom_class": "hero-spacer title-lg hero-bg-2",
@@ -1020,7 +1034,7 @@
         "padding-block-start": 0,
         "padding-block-end": 0,
         "show_bestsellers": true,
-        "bestsellers_heading": "Guild’s choice",
+        "bestsellers_heading": "Guild's choice:",
         "bestseller_1": "5e-rogue-assassin-miniature",
         "bestseller_2": "mystery-box-of-monster-dnd-miniatures",
         "bestseller_3": "tiamat-5e-the-dragon-queen-miniature",
@@ -1030,13 +1044,13 @@
         "promo_text": "Pick our Mystery box and draw from 5k+ miniatures",
         "promo_link": "shopify://pages/dnd-mystery-box",
         "promo_button_text": "Learn more",
-        "other_products_heading": "Every DnD {{ collection.title }}:"
+        "other_products_heading": "Every DnD {{ collection.title }} Miniature"
       }
     },
-    "section_rBgBaN": {
+    "section_DzpkzB": {
       "type": "section",
       "blocks": {
-        "group_3UXQEm": {
+        "group_AHHV8q": {
           "type": "group",
           "name": "Lewa sekcja",
           "settings": {
@@ -1091,7 +1105,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "group_qMaYRA": {
+            "group_kgKVx8": {
               "type": "group",
               "name": "t:names.group",
               "settings": {
@@ -1146,7 +1160,7 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "text_jNdNXW": {
+                "text_A7wPRL": {
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
@@ -1176,10 +1190,10 @@
                 }
               },
               "block_order": [
-                "text_jNdNXW"
+                "text_A7wPRL"
               ]
             },
-            "group_j4jcRY": {
+            "group_EcUji8": {
               "type": "group",
               "settings": {
                 "enable_slider": false,
@@ -1233,7 +1247,7 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "group_F6yzAx": {
+                "group_pdyXNk": {
                   "type": "group",
                   "settings": {
                     "enable_slider": false,
@@ -1287,7 +1301,7 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {
-                    "group_M3KepJ": {
+                    "group_yzVfnh": {
                       "type": "group",
                       "name": "t:names.group",
                       "settings": {
@@ -1342,7 +1356,7 @@
                         "padding-inline-end": 0
                       },
                       "blocks": {
-                        "text_XJVt6L": {
+                        "text_39dpEE": {
                           "type": "text",
                           "name": "t:names.text",
                           "settings": {
@@ -1370,7 +1384,7 @@
                           },
                           "blocks": {}
                         },
-                        "group_y3rCaJ": {
+                        "group_PwFRAE": {
                           "type": "group",
                           "name": "t:names.group",
                           "settings": {
@@ -1428,11 +1442,11 @@
                         }
                       },
                       "block_order": [
-                        "text_XJVt6L",
-                        "group_y3rCaJ"
+                        "text_39dpEE",
+                        "group_PwFRAE"
                       ]
                     },
-                    "text_qXJUKk": {
+                    "text_e3TWGe": {
                       "type": "text",
                       "settings": {
                         "enable_custom_font": false,
@@ -1459,7 +1473,7 @@
                       },
                       "blocks": {}
                     },
-                    "divider_CL7P3H": {
+                    "divider_weLfHL": {
                       "type": "_divider",
                       "name": "t:names.divider",
                       "settings": {
@@ -1473,12 +1487,12 @@
                     }
                   },
                   "block_order": [
-                    "group_M3KepJ",
-                    "text_qXJUKk",
-                    "divider_CL7P3H"
+                    "group_yzVfnh",
+                    "text_e3TWGe",
+                    "divider_weLfHL"
                   ]
                 },
-                "group_JRWmDc": {
+                "group_NeAqjL": {
                   "type": "group",
                   "name": "t:names.group",
                   "settings": {
@@ -1533,7 +1547,7 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {
-                    "group_bNiG6z": {
+                    "group_F3JjPM": {
                       "type": "group",
                       "name": "t:names.group",
                       "settings": {
@@ -1588,7 +1602,7 @@
                         "padding-inline-end": 0
                       },
                       "blocks": {
-                        "text_QMKWHJ": {
+                        "text_dpcNQ7": {
                           "type": "text",
                           "name": "t:names.text",
                           "settings": {
@@ -1616,7 +1630,7 @@
                           },
                           "blocks": {}
                         },
-                        "group_F9xnbJ": {
+                        "group_hh4GwJ": {
                           "type": "group",
                           "name": "t:names.group",
                           "settings": {
@@ -1674,11 +1688,11 @@
                         }
                       },
                       "block_order": [
-                        "text_QMKWHJ",
-                        "group_F9xnbJ"
+                        "text_dpcNQ7",
+                        "group_hh4GwJ"
                       ]
                     },
-                    "text_CzGPPx": {
+                    "text_npap6P": {
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
@@ -1706,7 +1720,7 @@
                       },
                       "blocks": {}
                     },
-                    "divider_HhVicn": {
+                    "divider_A6LQzr": {
                       "type": "_divider",
                       "name": "t:names.divider",
                       "settings": {
@@ -1720,12 +1734,12 @@
                     }
                   },
                   "block_order": [
-                    "group_bNiG6z",
-                    "text_CzGPPx",
-                    "divider_HhVicn"
+                    "group_F3JjPM",
+                    "text_npap6P",
+                    "divider_A6LQzr"
                   ]
                 },
-                "group_UrC3Tx": {
+                "group_T68rej": {
                   "type": "group",
                   "name": "t:names.group",
                   "settings": {
@@ -1780,7 +1794,7 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {
-                    "group_rdwCLn": {
+                    "group_K8ydwn": {
                       "type": "group",
                       "name": "t:names.group",
                       "settings": {
@@ -1835,7 +1849,7 @@
                         "padding-inline-end": 0
                       },
                       "blocks": {
-                        "text_g9wGe8": {
+                        "text_HKFBmT": {
                           "type": "text",
                           "name": "t:names.text",
                           "settings": {
@@ -1863,7 +1877,7 @@
                           },
                           "blocks": {}
                         },
-                        "group_B6jxQh": {
+                        "group_3dmCnV": {
                           "type": "group",
                           "name": "t:names.group",
                           "settings": {
@@ -1921,11 +1935,11 @@
                         }
                       },
                       "block_order": [
-                        "text_g9wGe8",
-                        "group_B6jxQh"
+                        "text_HKFBmT",
+                        "group_3dmCnV"
                       ]
                     },
-                    "text_VxrRax": {
+                    "text_daEF4M": {
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
@@ -1955,24 +1969,24 @@
                     }
                   },
                   "block_order": [
-                    "group_rdwCLn",
-                    "text_VxrRax"
+                    "group_K8ydwn",
+                    "text_daEF4M"
                   ]
                 }
               },
               "block_order": [
-                "group_F6yzAx",
-                "group_JRWmDc",
-                "group_UrC3Tx"
+                "group_pdyXNk",
+                "group_NeAqjL",
+                "group_T68rej"
               ]
             }
           },
           "block_order": [
-            "group_qMaYRA",
-            "group_j4jcRY"
+            "group_kgKVx8",
+            "group_EcUji8"
           ]
         },
-        "group_ewM9CB": {
+        "group_6x7dJ9": {
           "type": "group",
           "name": "Prawa sekcja",
           "settings": {
@@ -2027,7 +2041,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "group_beTmRY": {
+            "group_hQiwRG": {
               "type": "group",
               "name": "t:names.group",
               "settings": {
@@ -2082,7 +2096,7 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "text_TNKDpa": {
+                "text_WqCEXW": {
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
@@ -2112,10 +2126,10 @@
                 }
               },
               "block_order": [
-                "text_TNKDpa"
+                "text_WqCEXW"
               ]
             },
-            "group_rCxM69": {
+            "group_qwWLY6": {
               "type": "group",
               "name": "zdjecia",
               "settings": {
@@ -2170,14 +2184,14 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "common_ninja_all_in_one_suite_app_block_edkfae": {
+                "common_ninja_all_in_one_suite_app_block_BpXMDW": {
                   "type": "shopify://apps/common-ninja-all-in-one-suite/blocks/app-block/c062b79d-db93-4e96-aa90-38eecd46c8f7",
                   "settings": {
                     "isVisible": true,
                     "appId": "4cc764da-fb6a-4ffd-980e-6822188fb218"
                   }
                 },
-                "image_k6hJpp": {
+                "image_eAVALz": {
                   "type": "image",
                   "name": "t:names.image",
                   "disabled": true,
@@ -2203,11 +2217,11 @@
                 }
               },
               "block_order": [
-                "common_ninja_all_in_one_suite_app_block_edkfae",
-                "image_k6hJpp"
+                "common_ninja_all_in_one_suite_app_block_BpXMDW",
+                "image_eAVALz"
               ]
             },
-            "group_LfdGLj": {
+            "group_jratCF": {
               "type": "group",
               "name": "Separator",
               "settings": {
@@ -2262,7 +2276,7 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "group_cwbmHd": {
+                "group_AyzG7p": {
                   "type": "group",
                   "settings": {
                     "enable_slider": false,
@@ -2316,7 +2330,7 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {
-                    "image_CrpGxE": {
+                    "image_bTyVTt": {
                       "type": "image",
                       "name": "t:names.image",
                       "settings": {
@@ -2341,15 +2355,15 @@
                     }
                   },
                   "block_order": [
-                    "image_CrpGxE"
+                    "image_bTyVTt"
                   ]
                 }
               },
               "block_order": [
-                "group_cwbmHd"
+                "group_AyzG7p"
               ]
             },
-            "group_LYCjhb": {
+            "group_eX9JPU": {
               "type": "group",
               "name": "Ikony",
               "disabled": true,
@@ -2405,7 +2419,7 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "icon_QyLcx4": {
+                "icon_TRaLhB": {
                   "type": "icon",
                   "name": "t:names.icon",
                   "settings": {
@@ -2417,7 +2431,7 @@
                   },
                   "blocks": {}
                 },
-                "icon_berhGD": {
+                "icon_CX7Aqg": {
                   "type": "icon",
                   "name": "t:names.icon",
                   "settings": {
@@ -2431,19 +2445,19 @@
                 }
               },
               "block_order": [
-                "icon_QyLcx4",
-                "icon_berhGD"
+                "icon_TRaLhB",
+                "icon_CX7Aqg"
               ]
             }
           },
           "block_order": [
-            "group_beTmRY",
-            "group_rCxM69",
-            "group_LfdGLj",
-            "group_LYCjhb"
+            "group_hQiwRG",
+            "group_qwWLY6",
+            "group_jratCF",
+            "group_eX9JPU"
           ]
         },
-        "group_3VA6Lj": {
+        "group_AkzF4Q": {
           "type": "group",
           "name": "Prawa sekcja",
           "disabled": true,
@@ -2499,7 +2513,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "group_KPxGLn": {
+            "group_7EadMt": {
               "type": "group",
               "name": "t:names.group",
               "settings": {
@@ -2554,7 +2568,7 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "text_TTr7br": {
+                "text_xdVnyb": {
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
@@ -2584,10 +2598,10 @@
                 }
               },
               "block_order": [
-                "text_TTr7br"
+                "text_xdVnyb"
               ]
             },
-            "group_3XzyFL": {
+            "group_4cFUPc": {
               "type": "group",
               "name": "zdjecia",
               "disabled": true,
@@ -2643,7 +2657,7 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "image_QNpqHT": {
+                "image_kfDYNX": {
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
@@ -2666,7 +2680,7 @@
                   },
                   "blocks": {}
                 },
-                "image_8mawL3": {
+                "image_TJHYHh": {
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
@@ -2689,7 +2703,7 @@
                   },
                   "blocks": {}
                 },
-                "image_qJRNcP": {
+                "image_ak7Uwc": {
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
@@ -2714,12 +2728,12 @@
                 }
               },
               "block_order": [
-                "image_QNpqHT",
-                "image_8mawL3",
-                "image_qJRNcP"
+                "image_kfDYNX",
+                "image_TJHYHh",
+                "image_ak7Uwc"
               ]
             },
-            "group_F3cPBM": {
+            "group_4pBRKK": {
               "type": "group",
               "name": "Niestandardowy liquid",
               "settings": {
@@ -2774,7 +2788,7 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "group_MnyXYp": {
+                "group_3HUBeH": {
                   "type": "group",
                   "settings": {
                     "enable_slider": false,
@@ -2828,7 +2842,7 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {
-                    "custom_liquid_f3pcjC": {
+                    "custom_liquid_7MmbbQ": {
                       "type": "custom-liquid",
                       "name": "t:names.custom_liquid",
                       "settings": {
@@ -2838,15 +2852,15 @@
                     }
                   },
                   "block_order": [
-                    "custom_liquid_f3pcjC"
+                    "custom_liquid_7MmbbQ"
                   ]
                 }
               },
               "block_order": [
-                "group_MnyXYp"
+                "group_3HUBeH"
               ]
             },
-            "group_jQ9ibr": {
+            "group_mFiiqx": {
               "type": "group",
               "name": "t:names.group",
               "settings": {
@@ -2901,7 +2915,7 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "image_bKpVL4": {
+                "image_dTkkfz": {
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
@@ -2926,10 +2940,10 @@
                 }
               },
               "block_order": [
-                "image_bKpVL4"
+                "image_dTkkfz"
               ]
             },
-            "group_QVntnV": {
+            "group_M9wHX9": {
               "type": "group",
               "name": "t:names.group",
               "settings": {
@@ -2984,7 +2998,7 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "group_3jezQD": {
+                "group_yAjCWH": {
                   "type": "group",
                   "name": "Niestandardowy liquid",
                   "settings": {
@@ -3040,7 +3054,7 @@
                   },
                   "blocks": {}
                 },
-                "group_fi94Qt": {
+                "group_fFNaQd": {
                   "type": "group",
                   "name": "Ikony",
                   "settings": {
@@ -3095,7 +3109,7 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {
-                    "icon_iiAJ4y": {
+                    "icon_dAWbTg": {
                       "type": "icon",
                       "name": "t:names.icon",
                       "settings": {
@@ -3107,7 +3121,7 @@
                       },
                       "blocks": {}
                     },
-                    "icon_reTKph": {
+                    "icon_TjhGmV": {
                       "type": "icon",
                       "name": "t:names.icon",
                       "settings": {
@@ -3121,30 +3135,30 @@
                     }
                   },
                   "block_order": [
-                    "icon_iiAJ4y",
-                    "icon_reTKph"
+                    "icon_dAWbTg",
+                    "icon_TjhGmV"
                   ]
                 }
               },
               "block_order": [
-                "group_3jezQD",
-                "group_fi94Qt"
+                "group_yAjCWH",
+                "group_fFNaQd"
               ]
             }
           },
           "block_order": [
-            "group_KPxGLn",
-            "group_3XzyFL",
-            "group_F3cPBM",
-            "group_jQ9ibr",
-            "group_QVntnV"
+            "group_7EadMt",
+            "group_4cFUPc",
+            "group_4pBRKK",
+            "group_mFiiqx",
+            "group_M9wHX9"
           ]
         }
       },
       "block_order": [
-        "group_3UXQEm",
-        "group_ewM9CB",
-        "group_3VA6Lj"
+        "group_AHHV8q",
+        "group_6x7dJ9",
+        "group_AkzF4Q"
       ],
       "name": "Guild",
       "settings": {
@@ -3332,7 +3346,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "Read more",
-                "link": "shopify://collections/all",
+                "link": "https://rpgguild.shop/pages/get-a-free-mini",
                 "open_in_new_tab": false,
                 "custom_class": "btn-1",
                 "style_class": "button-secondary",
@@ -3582,10 +3596,10 @@
         "padding-block-end": 0
       }
     },
-    "section_WLGRGJ": {
+    "section_AMz4Gw": {
       "type": "section",
       "blocks": {
-        "group_9rFUmU": {
+        "group_yRbwKg": {
           "type": "group",
           "name": "t:names.group",
           "settings": {
@@ -3640,7 +3654,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_CbCHDA": {
+            "text_EEGMiY": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
@@ -3670,10 +3684,10 @@
             }
           },
           "block_order": [
-            "text_CbCHDA"
+            "text_EEGMiY"
           ]
         },
-        "group_3bUFUB": {
+        "group_VDatpP": {
           "type": "group",
           "name": "t:names.group",
           "settings": {
@@ -3728,7 +3742,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "accordion_kr9hpm": {
+            "accordion_KyyrTG": {
               "type": "accordion",
               "name": "t:names.accordion",
               "settings": {
@@ -3747,14 +3761,14 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "accordion_row_qqAMVA": {
+                "accordion_row_RfUBRF": {
                   "type": "_accordion-row",
                   "settings": {
                     "heading": "What scale should I pick if I want my miniature to fit a DnD grid perfectly?",
                     "open_by_default": true
                   },
                   "blocks": {
-                    "text_84HLCf": {
+                    "text_Mmzw9Y": {
                       "type": "text",
                       "settings": {
                         "enable_custom_font": false,
@@ -3783,17 +3797,17 @@
                     }
                   },
                   "block_order": [
-                    "text_84HLCf"
+                    "text_Mmzw9Y"
                   ]
                 },
-                "accordion_row_V4ytT9": {
+                "accordion_row_KiNPrL": {
                   "type": "_accordion-row",
                   "settings": {
                     "heading": "There is no scale option I want, what are my options?",
                     "open_by_default": false
                   },
                   "blocks": {
-                    "text_X4iVWg": {
+                    "text_c7dqgT": {
                       "type": "text",
                       "settings": {
                         "enable_custom_font": false,
@@ -3822,10 +3836,10 @@
                     }
                   },
                   "block_order": [
-                    "text_X4iVWg"
+                    "text_c7dqgT"
                   ]
                 },
-                "accordion_row_HXBR8b": {
+                "accordion_row_N6U7LX": {
                   "type": "_accordion-row",
                   "name": "t:names.accordion_dash_row",
                   "settings": {
@@ -3833,7 +3847,7 @@
                     "open_by_default": false
                   },
                   "blocks": {
-                    "text_r3Vjgk": {
+                    "text_dJtdyK": {
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
@@ -3863,10 +3877,10 @@
                     }
                   },
                   "block_order": [
-                    "text_r3Vjgk"
+                    "text_dJtdyK"
                   ]
                 },
-                "accordion_row_iGTQ4X": {
+                "accordion_row_Cf9tRn": {
                   "type": "_accordion-row",
                   "name": "t:names.accordion_dash_row",
                   "settings": {
@@ -3874,7 +3888,7 @@
                     "open_by_default": false
                   },
                   "blocks": {
-                    "text_88KYy6": {
+                    "text_tgMM7T": {
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
@@ -3904,10 +3918,10 @@
                     }
                   },
                   "block_order": [
-                    "text_88KYy6"
+                    "text_tgMM7T"
                   ]
                 },
-                "accordion_row_bpzWjr": {
+                "accordion_row_KapXJA": {
                   "type": "_accordion-row",
                   "name": "t:names.accordion_dash_row",
                   "settings": {
@@ -3915,7 +3929,7 @@
                     "open_by_default": false
                   },
                   "blocks": {
-                    "text_E4Jp8P": {
+                    "text_q7rUYG": {
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
@@ -3945,10 +3959,10 @@
                     }
                   },
                   "block_order": [
-                    "text_E4Jp8P"
+                    "text_q7rUYG"
                   ]
                 },
-                "accordion_row_xFWedx": {
+                "accordion_row_GLJaee": {
                   "type": "_accordion-row",
                   "name": "t:names.accordion_dash_row",
                   "settings": {
@@ -3956,7 +3970,7 @@
                     "open_by_default": false
                   },
                   "blocks": {
-                    "text_KMhjhW": {
+                    "text_pqb7gH": {
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
@@ -3986,68 +4000,28 @@
                     }
                   },
                   "block_order": [
-                    "text_KMhjhW"
-                  ]
-                },
-                "accordion_row_whmSFJ": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Why do your miniatures cost more than mass-produced ones?",
-                    "open_by_default": false
-                  },
-                  "blocks": {
-                    "text_LazwEG": {
-                      "type": "text",
-                      "settings": {
-                        "enable_custom_font": false,
-                        "custom_class": "c",
-                        "text": "<p>Because nothing here is cast in advance. Every figure is printed on demand in resin and hand-detailed. That takes five to seven working days, and with weekends inside that window a parcel can leave the Guild on the tenth or eleventh day. Shipping from the EU comes on top. A mass-produced mini is cheaper because it was made before anyone wanted it. What you pay for here is the one character your player has been describing for a year.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-subheading--family)",
-                        "font_size": "1.25rem",
-                        "line_height": "loose",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_LazwEG"
+                    "text_pqb7gH"
                   ]
                 }
               },
               "block_order": [
-                "accordion_row_qqAMVA",
-                "accordion_row_whmSFJ",
-                "accordion_row_V4ytT9",
-                "accordion_row_HXBR8b",
-                "accordion_row_iGTQ4X",
-                "accordion_row_bpzWjr",
-                "accordion_row_xFWedx"
+                "accordion_row_RfUBRF",
+                "accordion_row_KiNPrL",
+                "accordion_row_N6U7LX",
+                "accordion_row_Cf9tRn",
+                "accordion_row_KapXJA",
+                "accordion_row_GLJaee"
               ]
             }
           },
           "block_order": [
-            "accordion_kr9hpm"
+            "accordion_KyyrTG"
           ]
         }
       },
       "block_order": [
-        "group_9rFUmU",
-        "group_3bUFUB"
+        "group_yRbwKg",
+        "group_VDatpP"
       ],
       "name": "FAQ",
       "settings": {
@@ -4121,12 +4095,13 @@
   },
   "order": [
     "section",
+    "perfect_mini_picker_section_AdYiwj",
     "section_tJEjwT",
     "main",
-    "section_rBgBaN",
+    "section_DzpkzB",
     "section_WpqYYg",
     "section_DpQNeT",
-    "section_WLGRGJ",
+    "section_AMz4Gw",
     "hero_KfWRWF"
   ]
 }

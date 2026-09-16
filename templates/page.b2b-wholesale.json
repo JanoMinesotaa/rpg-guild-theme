@@ -4977,7 +4977,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>Our production farm is capable of manufacturing up to 20,000 miniatures per month while maintaining consistent quality standards.</p>",
+                        "text": "<p>Our production farm manufactures up to 20,000 miniatures per month for wholesale partners, printed to order rather than held in stock.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -5018,7 +5018,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>Our standard production time is approximately 10 - 15 days for most orders, depending on project complexity and order size.</p>",
+                        "text": "<p>Wholesale production runs take approximately 10-15 days, depending on project complexity and order size. Retail orders placed in our store are produced in 5-7 working days.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",

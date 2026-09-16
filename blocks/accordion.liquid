@@ -14,7 +14,48 @@
   "
   {{ block.shopify_attributes }}
 >
-  {% content_for 'blocks' %}
+  {%- comment -%}
+    FAQPage z WIDOCZNEJ tresci akordeonu. Faza 15 (GEO), 2026-09-16.
+
+    Dlaczego przechwycenie, a nie ustawienia blokow: architektura blokow motywu nie
+    udostepnia rodzicowi ustawien dzieci (sonda 16.09: block.blocks zwraca wiersze,
+    ale settings i zagniezdzone bloki sa puste). Capture daje tresc JUZ PRZETLUMACZONA
+    i dokladnie te, ktora widzi czlowiek - czego wymaga Google.
+
+    Dwa bezpieczniki, oba celowe:
+      1. do schemy wchodza tylko wiersze, ktorych naglowek zawiera znak zapytania.
+         Akordeon marki na stronie glownej ("Guild's definition", "The Guild's oath")
+         to nie sa pytania i oznaczanie ich jako Question byloby nieprawda.
+      2. minimum dwa pytania, inaczej nie emitujemy nic. To drugie sito odsiewa
+         akordeon marki, w ktorym pytaniem jest tylko jeden wiersz.
+
+    UWAGA na twarda spacje: czesc naglowkow ma po znaku zapytania U+00A0, ktorej
+    liquidowy `strip` NIE usuwa. Dlatego warunek brzmi `contains`, a nie badanie
+    ostatniego znaku - to drugie gubilo dwa wiersze z kart postaci (sprawdzone 16.09).
+
+    Artykuly blogu pomijamy - maja wlasny FAQPage wpisany w tresc artykulu.
+    Cofniecie: data/shopify-backup/2026-09-16/theme-faqpage/accordion.liquid
+  {%- endcomment -%}
+  {%- capture faq_raw -%}{% content_for 'blocks' %}{%- endcapture -%}
+  {{ faq_raw }}
+  {%- unless request.page_type == 'article' -%}
+    {%- assign faq_rows = faq_raw | split: '<accordion-custom' -%}
+    {%- assign faq_n = 0 -%}
+    {%- capture faq_items -%}
+      {%- for faq_row in faq_rows offset: 1 -%}
+        {%- assign faq_q = faq_row | split: '<summary class="details__header">' | last | split: '<span class="svg-wrapper' | first | strip_html | strip -%}
+        {%- assign faq_a = faq_row | split: '<div class="details-content">' | last | split: '</details>' | first | replace: '</p>', '</p> ' | strip_html | strip -%}
+        {%- if faq_q != blank and faq_a != blank and faq_q contains '?' -%}
+          {%- if faq_n > 0 -%},{%- endif -%}
+          {"@type":"Question","name":{{ faq_q | json }},"acceptedAnswer":{"@type":"Answer","text":{{ faq_a | json }}}}
+          {%- assign faq_n = faq_n | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- if faq_n > 1 -%}
+      <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{{ faq_items }}]}</script>
+    {%- endif -%}
+  {%- endunless -%}
 </div>
 
 {% stylesheet %}

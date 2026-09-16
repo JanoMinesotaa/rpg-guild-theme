@@ -36,6 +36,33 @@
 {%- liquid
   assign wazna_do = 'now' | date: '%s' | plus: 7776000 | date: '%Y-%m-%d'
   assign pola_oferty = '"@type":"Offer","itemCondition":"https://schema.org/NewCondition","priceValidUntil":"' | append: wazna_do | append: '",'
+
+  comment
+    handlingTime 5-7 dni roboczych. Faza 15 (GEO), 2026-09-16, zatwierdzone przez Jana.
+    Do dzis czas produkcji istnial WYLACZNIE jako proza w FAQ - Offer nie mial ani
+    shippingDetails, ani handlingTime. To jest kanoniczne pole, z ktorego Google czyta
+    czas miedzy zamowieniem a wysylka, i jest dokladnie tym, co u nas znaczy "druk na zamowienie".
+
+    Powod: dwa z czterech modeli AI opisywaly nasza produkcje jako "hybrid small-batch"
+    i sugerowaly zapas magazynowy (research 2026-09-16). Proza da sie zignorowac,
+    danej strukturalnej nie.
+
+    TRZY WYJATKI, kazdy poparty naszym wlasnym tekstem na sklepie:
+      - karty postaci: PDF, "nothing to ship and nothing to wait for"
+      - kosci: "Dice come from stock, so there is no five to seven day print queue"
+      - karta podarunkowa: nie jest rzecza fizyczna
+    Dla nich nie emitujemy handlingTime w ogole. Wpisanie tam 5-7 dni byloby nieprawda,
+    a zgadywanie ich wlasnego czasu - wymyslaniem danych.
+  endcomment
+  assign suf = product.template_suffix | default: ''
+  assign druk_na_zamowienie = true
+  if suf contains 'character-sheet' or suf contains 'dnd-dice' or suf contains 'gift-card'
+    assign druk_na_zamowienie = false
+  endif
+  if druk_na_zamowienie
+    assign pola_oferty = pola_oferty | append: '"shippingDetails":{"@type":"OfferShippingDetails","deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":5,"maxValue":7,"unitCode":"DAY"}}},'
+  endif
+
   assign product_ld = product_ld | replace: '"@type":"Offer",', pola_oferty
 
   assign klucze = 'mini_type,class,race_,sex,pose,mounted,weapon_,sculptor' | split: ','

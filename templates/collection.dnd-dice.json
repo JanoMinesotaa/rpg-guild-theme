@@ -2923,84 +2923,6 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "accordion_row_Cq3wkf": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "What scale should I pick if I want my miniature to fit a DnD grid perfectly?",
-                    "open_by_default": true
-                  },
-                  "blocks": {
-                    "text_wahyJg": {
-                      "type": "text",
-                      "settings": {
-                        "enable_custom_font": false,
-                        "custom_class": "c",
-                        "text": "<p>In most cases, the right choice is <strong>32mm scale</strong>. However, if you’d like to know the <em>exact</em> size of a specific miniature, simply reach out to us — we’ll gladly provide precise details. At times this may mean adjusting the original size to perfectly match your game, but that is no problem for the Guild. Your satisfaction is always our highest priority.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-subheading--family)",
-                        "font_size": "1.25rem",
-                        "line_height": "loose",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_wahyJg"
-                  ]
-                },
-                "accordion_row_RzzDbq": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "There is no scale option I want, what are my options?",
-                    "open_by_default": false
-                  },
-                  "blocks": {
-                    "text_xcRQEc": {
-                      "type": "text",
-                      "settings": {
-                        "enable_custom_font": false,
-                        "custom_class": "c",
-                        "text": "<p>Feel free to message us about it! We will estimate if we can meet your needs. We've been printing miniatures in a <strong>variety of scale on demand!</strong></p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-subheading--family)",
-                        "font_size": "1.25rem",
-                        "line_height": "loose",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_xcRQEc"
-                  ]
-                },
                 "accordion_row_nkD3jP": {
                   "type": "_accordion-row",
                   "name": "t:names.accordion_dash_row",
@@ -3040,88 +2962,6 @@
                   },
                   "block_order": [
                     "text_VqJjAc"
-                  ]
-                },
-                "accordion_row_hMtA6T": {
-                  "type": "_accordion-row",
-                  "name": "t:names.accordion_dash_row",
-                  "settings": {
-                    "heading": "Can I request custom miniatures or other prints on demand?",
-                    "open_by_default": false
-                  },
-                  "blocks": {
-                    "text_9CiwbR": {
-                      "type": "text",
-                      "name": "t:names.text",
-                      "settings": {
-                        "enable_custom_font": false,
-                        "custom_class": "c",
-                        "text": "<p>Yes! <strong>We just need a STL file to work with</strong>, which you can buy  from any online artist you like. For this case and any other, please message us first and we will take it from there.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-subheading--family)",
-                        "font_size": "1.25rem",
-                        "line_height": "loose",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_9CiwbR"
-                  ]
-                },
-                "accordion_row_bU9Dgr": {
-                  "type": "_accordion-row",
-                  "name": "t:names.accordion_dash_row",
-                  "settings": {
-                    "heading": "How long does production & preparation usually take?",
-                    "open_by_default": false
-                  },
-                  "blocks": {
-                    "text_fqFKjx": {
-                      "type": "text",
-                      "name": "t:names.text",
-                      "settings": {
-                        "enable_custom_font": false,
-                        "custom_class": "c",
-                        "text": "<p>We take our craft very seriously! Each miniature also goes through a hand-detailing process. <strong>It usually takes between 5 to 7 business days </strong>with the default, drybrush or primer option. Shipping time depends on your geolocation. You can <strong>get the estimated time</strong> on the top of each product page. Our full process is explained here.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-subheading--family)",
-                        "font_size": "1.25rem",
-                        "line_height": "loose",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_fqFKjx"
                   ]
                 },
                 "accordion_row_hDR6pa": {
@@ -3164,14 +3004,170 @@
                   "block_order": [
                     "text_GRgRtP"
                   ]
+                },
+                "accordion_row_yTMzVE": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "What are the dice made of?",
+                    "open_by_default": true
+                  },
+                  "blocks": {
+                    "text_wWHWcC": {
+                      "type": "text",
+                      "settings": {
+                        "enable_custom_font": false,
+                        "custom_class": "c",
+                        "text": "<p>Clear epoxy resin, hand-poured and hand-polished, then inked so the numbers stay readable. These are sharp edge dice, and most sets carry a liquid core that shifts while the die rolls.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-subheading--family)",
+                        "font_size": "1.25rem",
+                        "line_height": "loose",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_wWHWcC"
+                  ]
+                },
+                "accordion_row_XgIxxk": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Why do handmade dice cost more than a plastic set?",
+                    "open_by_default": false
+                  },
+                  "blocks": {
+                    "text_BPmfQw": {
+                      "type": "text",
+                      "settings": {
+                        "enable_custom_font": false,
+                        "custom_class": "c",
+                        "text": "<p>Because a plastic set leaves an injection mould by the thousand, and a resin set leaves a silicone mould one pour at a time. Every die is then demoulded, sanded, polished and inked by hand. That work is the whole price difference, and it is also why no two sets come out quite the same.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-subheading--family)",
+                        "font_size": "1.25rem",
+                        "line_height": "loose",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_BPmfQw"
+                  ]
+                },
+                "accordion_row_oDLGeX": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Do the sets have all seven dice?",
+                    "open_by_default": false
+                  },
+                  "blocks": {
+                    "text_IpUrki": {
+                      "type": "text",
+                      "settings": {
+                        "enable_custom_font": false,
+                        "custom_class": "c",
+                        "text": "<p>Yes. D20, D12, D10, percentile D10, D8, D6 and D4, the full set a 5e table needs. A soft velvet bag comes with every order.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-subheading--family)",
+                        "font_size": "1.25rem",
+                        "line_height": "loose",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_IpUrki"
+                  ]
+                },
+                "accordion_row_eUEVXZ": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "When do the dice ship?",
+                    "open_by_default": false
+                  },
+                  "blocks": {
+                    "text_eHpZsR": {
+                      "type": "text",
+                      "settings": {
+                        "enable_custom_font": false,
+                        "custom_class": "c",
+                        "text": "<p>Dice come from stock, so there is no five to seven day print queue in front of them the way there is with our miniatures. If a set shows as available, it leaves with your order. If it shows as sold out, it is genuinely gone until the next pour. Delivery time then depends on where you are.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-subheading--family)",
+                        "font_size": "1.25rem",
+                        "line_height": "loose",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_eHpZsR"
+                  ]
                 }
               },
               "block_order": [
-                "accordion_row_Cq3wkf",
-                "accordion_row_RzzDbq",
+                "accordion_row_yTMzVE",
+                "accordion_row_XgIxxk",
+                "accordion_row_oDLGeX",
+                "accordion_row_eUEVXZ",
                 "accordion_row_nkD3jP",
-                "accordion_row_hMtA6T",
-                "accordion_row_bU9Dgr",
                 "accordion_row_hDR6pa"
               ]
             }

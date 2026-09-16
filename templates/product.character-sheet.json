@@ -2529,7 +2529,7 @@
                 "accordion_row_UfCeMB": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "What scale should I pick if I want my miniature to fit a DnD grid perfectly?",
+                    "heading": "When do I get the file? ",
                     "open_by_default": true
                   },
                   "blocks": {
@@ -2538,7 +2538,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>In most cases, the right choice is <strong>32mm scale</strong>. However, if you’d like to know the <em>exact</em> size of a specific miniature, simply reach out to us — we’ll gladly provide precise details. At times this may mean adjusting the original size to perfectly match your game, but that is no problem for the Guild. Your satisfaction is always our highest priority.</p>",
+                        "text": "<p>The moment your order goes through. The sheet lands in your inbox as a PDF, so there is nothing to ship and nothing to wait for.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -2568,7 +2568,7 @@
                 "accordion_row_jKwyAi": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "There is no scale option I want, what are my options?",
+                    "heading": "Can I fill it in on my computer, or do I have to print it? ",
                     "open_by_default": false
                   },
                   "blocks": {
@@ -2577,7 +2577,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>Feel free to message us about it! We will estimate if we can meet your needs. We've been printing miniatures in a <strong>variety of scale on demand!</strong></p>",
+                        "text": "<p>Either way. You can type straight into the PDF and keep it on your laptop or tablet, or print it and fill it in by hand at the table.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -2608,7 +2608,7 @@
                   "type": "_accordion-row",
                   "name": "t:names.accordion_dash_row",
                   "settings": {
-                    "heading": "There's been an issue with my order, can you help?",
+                    "heading": "How is this different from the free official sheet?",
                     "open_by_default": false
                   },
                   "blocks": {
@@ -2618,7 +2618,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>Absolutely! Whether your order was delayed in shipment, a miniature arrived damaged, or a piece is missing - feel encouraged to contact us. We offer <strong>hassle-free refunds within 30 days</strong>, no questions asked. In most cases, it simply means sending you the missing part or replacing anything you’re not fully satisfied with.</p>",
+                        "text": "<p>The official sheet is one layout for every class. This one is built for a single class, with room for the things that class actually tracks. The Artificer sheet, for instance, gives infusions their own section with space for the item each one is attached to.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -2649,7 +2649,7 @@
                   "type": "_accordion-row",
                   "name": "t:names.accordion_dash_row",
                   "settings": {
-                    "heading": "Can I request custom miniatures or other prints on demand?",
+                    "heading": "Do I need a printer at all? ",
                     "open_by_default": false
                   },
                   "blocks": {
@@ -2659,7 +2659,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>Yes! <strong>We just need a STL file to work with</strong>, which you can buy  from any online artist you like. For this case and any other, please message us first and we will take it from there.</p>",
+                        "text": "<p>No. The PDF works in your desktop / browser, and plenty of players never print it as it is fully editable online</p><p></p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -2690,7 +2690,7 @@
                   "type": "_accordion-row",
                   "name": "t:names.accordion_dash_row",
                   "settings": {
-                    "heading": "How long does production & preparation usually take?",
+                    "heading": "Which edition is this for?",
                     "open_by_default": false
                   },
                   "blocks": {
@@ -2700,7 +2700,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>We take our craft very seriously! Each miniature also goes through a hand-detailing process. <strong>It usually takes between 5 to 7 business days </strong>with the default, drybrush or primer option. Shipping time depends on your geolocation. You can <strong>get the estimated time</strong> on the top of each product page. Our full process is explained here.</p>",
+                        "text": "<p>Fifth edition, and only fifth edition. If your table runs the 2024 rules, this sheet is not built for them.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -2726,47 +2726,6 @@
                   "block_order": [
                     "text_JrYVBG"
                   ]
-                },
-                "accordion_row_nTdp7a": {
-                  "type": "_accordion-row",
-                  "name": "t:names.accordion_dash_row",
-                  "settings": {
-                    "heading": "Is RPG Guild focused only on D2C, or do you also work with businesses?",
-                    "open_by_default": false
-                  },
-                  "blocks": {
-                    "text_hWUp8Y": {
-                      "type": "text",
-                      "name": "t:names.text",
-                      "settings": {
-                        "enable_custom_font": false,
-                        "custom_class": "c",
-                        "text": "<p><strong>We are open to a variety of B2B opportunities and requests!</strong> If you're looking for a reliable partner visit our B2B page and contact us for more details :)</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-subheading--family)",
-                        "font_size": "1.25rem",
-                        "line_height": "loose",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_hWUp8Y"
-                  ]
                 }
               },
               "block_order": [
@@ -2774,8 +2733,7 @@
                 "accordion_row_jKwyAi",
                 "accordion_row_amQAwC",
                 "accordion_row_t7GzU9",
-                "accordion_row_jGcYx9",
-                "accordion_row_nTdp7a"
+                "accordion_row_jGcYx9"
               ]
             }
           },

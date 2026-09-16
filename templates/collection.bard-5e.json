@@ -3987,10 +3987,50 @@
                   "block_order": [
                     "text_XmQtPD"
                   ]
+                },
+                "accordion_row_JcBcqU": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Why do your miniatures cost more than mass-produced ones?",
+                    "open_by_default": false
+                  },
+                  "blocks": {
+                    "text_FySISU": {
+                      "type": "text",
+                      "settings": {
+                        "enable_custom_font": false,
+                        "custom_class": "c",
+                        "text": "<p>Because nothing here is cast in advance. Every figure is printed on demand in resin and hand-detailed. That takes five to seven working days, and with weekends inside that window a parcel can leave the Guild on the tenth or eleventh day. Shipping from the EU comes on top. A mass-produced mini is cheaper because it was made before anyone wanted it. What you pay for here is the one character your player has been describing for a year.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-subheading--family)",
+                        "font_size": "1.25rem",
+                        "line_height": "loose",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_FySISU"
+                  ]
                 }
               },
               "block_order": [
                 "accordion_row_RfUBRF",
+                "accordion_row_JcBcqU",
                 "accordion_row_KiNPrL",
                 "accordion_row_N6U7LX",
                 "accordion_row_Cf9tRn",

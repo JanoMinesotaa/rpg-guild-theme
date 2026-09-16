@@ -15,6 +15,15 @@
 {%- if request.page_type == 'product' and product.tags contains 'noindex' -%}
     <meta name="robots" content="noindex, follow">
   {%- endif -%}
+{%- comment -%}
+  Angielskie klony regionalne (/en-at/, /en-ch/, /en-de/, /en-pl/) serwuja tresc
+  identyczna ze strona glowna - tlumaczenia istnieja tylko dla `de` i `fr`.
+  Noindex nalozony 2026-09-15; rynki, waluty i dostepnosc stron zostaja bez zmian.
+  Disallow w robots.txt dopiero po deindeksacji, nie wczesniej.
+{%- endcomment -%}
+{%- if localization.language.iso_code == 'en' and routes.root_url != '/' -%}
+    <meta name="robots" content="noindex, follow">
+  {%- endif -%}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -96,41 +105,44 @@
   {% if request.path contains '/policies/' %}
     <meta name="robots" content="noindex">
   {% endif %}
+{%- comment -%} Molin AI - ukrycie na mobile {%- endcomment -%}
 
+{%- comment -%} 1. Wersja wg instrukcji Molin AI {%- endcomment -%}
+<script>
+  if (window.innerWidth < 768) {
+    window.molinSettings = { hidden: true };
+  }
+</script>
+
+{%- comment -%} 2. Zabezpieczenie - działa niezależnie od API Molina {%- endcomment -%}
+<style>
+  @media (max-width: 767px) {
+    molin-shop-ai { display: none !important; }
+  }
+</style>
+
+{%- comment -%}
+  Komunikat "Adventurers from USA" w koszyku - tylko rynek USA.
+  Grupa bloku ma klase .usa-only (templates/cart.json -> group_Xf7kRz).
+  Domyslnie ukryta; odslaniana wylacznie gdy wybrany kraj = US i jezyk
+  nie jest francuski ani niemiecki. Rynki FR, DE, CH i AT jej nie zobacza.
+  Warunek musi byc tutaj, bo blok siedzi w pliku .json, gdzie nie dziala {% if %}.
+  Cofniecie: usun ten blok i klase "usa-only" z cart.json.
+{%- endcomment -%}
+{%- liquid
+  assign usa_notice = false
+  assign loc_country = localization.country.iso_code | upcase
+  assign loc_lang = request.locale.iso_code | downcase | split: '-' | first
+  if loc_country == 'US' and loc_lang != 'fr' and loc_lang != 'de'
+    assign usa_notice = true
+  endif
+-%}
+{%- unless usa_notice -%}
+<style>
+  .usa-only { display: none !important; }
+</style>
+{%- endunless -%}
   
-  {%- comment -%}
-    Molin AI - bąbelek czatu ukryty na mobile.
-    Widget to custom element z shadow DOM, więc jedyny punkt zaczepienia to host.
-    Breakpoint 749px = zgodny z motywem (desktop od 750px).
-    Cofnięcie: usuń ten blok.
-  {%- endcomment -%}
-  <style>
-    @media (max-width: 749px) {
-      molin-shop-ai { display: none !important; }
-    }
-  </style>
-
-  {%- comment -%}
-    Komunikat "Adventurers from USA" w koszyku - tylko rynek USA.
-    Grupa bloku ma klase .usa-only (templates/cart.json -> group_Xf7kRz).
-    Domyslnie ukryta; pokazywana tylko gdy wybrany kraj = US
-    i jezyk nie jest francuski/niemiecki (FR/DE/CH/AT nigdy tego nie zobacza).
-    Cofniecie: usun ten blok i klase "usa-only" z cart.json.
-  {%- endcomment -%}
-  {%- liquid
-    assign usa_notice = false
-    assign loc_country = localization.country.iso_code | upcase
-    assign loc_lang = request.locale.iso_code | downcase | split: '-' | first
-    if loc_country == 'US' and loc_lang != 'fr' and loc_lang != 'de'
-      assign usa_notice = true
-    endif
-  -%}
-  {%- unless usa_notice -%}
-    <style>
-      .usa-only { display: none !important; }
-    </style>
-  {%- endunless -%}
-
 </head>
 
 <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">

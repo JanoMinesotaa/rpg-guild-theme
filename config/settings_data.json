@@ -219,11 +219,6 @@
         "disabled": false,
         "settings": {}
       },
-      "7853159783943503583": {
-        "type": "shopify://apps/delivery-timer/blocks/global_deliverytimer/bace9725-6846-4fad-8461-027a1ac43ad8",
-        "disabled": false,
-        "settings": {}
-      },
       "12039540494896870458": {
         "type": "shopify://apps/practical-fees-surcharges/blocks/packaging-fee/019d54ed-0abc-778a-90d3-434137ffd946",
         "disabled": false,
@@ -239,13 +234,13 @@
         "disabled": false,
         "settings": {}
       },
-      "5918445685253060206": {
-        "type": "shopify://apps/bundler/blocks/bundler-script-append/7a6ae1b8-3b16-449b-8429-8bb89a62c664",
+      "11348531219507317188": {
+        "type": "shopify://apps/eb-easy-bundle-builder/blocks/app-embed/05b1325c-6303-4da5-8e2f-b13ab2a50e1a",
         "disabled": false,
         "settings": {}
       },
-      "11348531219507317188": {
-        "type": "shopify://apps/eb-easy-bundle-builder/blocks/app-embed/05b1325c-6303-4da5-8e2f-b13ab2a50e1a",
+      "7853159783943503583": {
+        "type": "shopify://apps/delivery-timer/blocks/global_deliverytimer/bace9725-6846-4fad-8461-027a1ac43ad8",
         "disabled": false,
         "settings": {}
       }
