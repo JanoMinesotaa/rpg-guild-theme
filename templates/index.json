@@ -1701,7 +1701,7 @@
           "settings": {
             "enable_custom_font": false,
             "custom_class": "c",
-            "text": "<p><strong>0 $ or € </strong>= <a href=\"https://rpgguild.shop/products/potion-5e-dnd-health-potion-accessory\" target=\"_blank\" title=\"https://rpgguild.shop/products/potion-5e-dnd-health-potion-accessory\">Free Potion</a></p>",
+            "text": "<p><strong>0 $ or € </strong>= <a href=\"/products/potion-5e-dnd-health-potion-accessory\" target=\"_blank\" title=\"/products/potion-5e-dnd-health-potion-accessory\">Free Potion</a></p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -1739,7 +1739,7 @@
           "settings": {
             "enable_custom_font": false,
             "custom_class": "c",
-            "text": "<p><strong>15 $ or € </strong>= <a href=\"https://rpgguild.shop/products/free-dnd-mini-of-the-month\" target=\"_blank\" title=\"https://rpgguild.shop/products/free-dnd-mini-of-the-month\">Free Mini of the Month</a></p>",
+            "text": "<p><strong>15 $ or € </strong>= <a href=\"/products/free-dnd-mini-of-the-month\" target=\"_blank\" title=\"/products/free-dnd-mini-of-the-month\">Free Mini of the Month</a></p>",
             "width": "100%",
             "max_width": "none",
             "alignment": "left",
@@ -1815,7 +1815,7 @@
           "settings": {
             "enable_custom_font": false,
             "custom_class": "c",
-            "text": "<p><strong>75 $ or € </strong>= <a href=\"https://rpgguild.shop/products/random-free-miniature\" target=\"_blank\" title=\"https://rpgguild.shop/products/random-free-miniature\">Random Free Miniature</a></p>",
+            "text": "<p><strong>75 $ or € </strong>= <a href=\"/products/random-free-miniature\" target=\"_blank\" title=\"/products/random-free-miniature\">Random Free Miniature</a></p>",
             "width": "100%",
             "max_width": "none",
             "alignment": "left",
@@ -5384,7 +5384,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "Read more",
-                "link": "https://rpgguild.shop/pages/get-a-free-mini",
+                "link": "/pages/get-a-free-mini",
                 "open_in_new_tab": false,
                 "custom_class": "btn-1",
                 "style_class": "button-secondary",
