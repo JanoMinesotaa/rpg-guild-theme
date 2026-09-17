@@ -216,6 +216,7 @@
       "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
     {% endif %}
     "sameAs": [
+      "https://www.trustpilot.com/review/rpgguild.shop",
       "https://www.etsy.com/shop/RPGGuildPolska",
       "https://www.youtube.com/@rpgguild",
       "https://www.facebook.com/RPGGuild",
@@ -224,6 +225,13 @@
       "https://pl.pinterest.com/RPG_Guild/",
       "https://shop.app/m/z5w27dre3f"
     ],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Kopanina 79A",
+      "postalCode": "60-105",
+      "addressLocality": "Pozna\u0144",
+      "addressCountry": "PL"
+    },
     "url": {{ request.origin | json }}
   }
 </script>
