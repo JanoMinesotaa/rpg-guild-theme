@@ -1301,7 +1301,7 @@
                       "settings": {
                         "enable_custom_font": true,
                         "custom_class": "c",
-                        "text": "<p><a href=\"https://rpgguild.shop/pages/get-a-free-mini\" title=\"Free Mini for You! | RPG Guild\">Free Miniature</a></p>",
+                        "text": "<p><a href=\"/pages/get-a-free-mini\" title=\"Free Mini for You! | RPG Guild\">Free Miniature</a></p>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -1329,7 +1329,7 @@
                       "settings": {
                         "enable_custom_font": true,
                         "custom_class": "c",
-                        "text": "<p><a href=\"https://rpgguild.shop/pages/about-us#shopify-section-template--25660681978122__section_zib6rD\" title=\"https://rpgguild.shop/pages/about-us#shopify-section-template--25660681978122__section_zib6rD\">Quests List</a></p>",
+                        "text": "<p><a href=\"/pages/about-us#shopify-section-template--25660681978122__section_zib6rD\" title=\"/pages/about-us#shopify-section-template--25660681978122__section_zib6rD\">Quests List</a></p>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -1505,7 +1505,7 @@
                       "settings": {
                         "enable_custom_font": true,
                         "custom_class": "c",
-                        "text": "<p><a href=\"https://rpgguild.shop/pages/miniature-printing-b2b-cooperation\" title=\"B2B Cooperation | RPG Guild\">B2B Cooperation</a></p>",
+                        "text": "<p><a href=\"/pages/miniature-printing-b2b-cooperation\" title=\"B2B Cooperation | RPG Guild\">B2B Cooperation</a></p>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -1946,7 +1946,7 @@
                       "settings": {
                         "enable_custom_font": true,
                         "custom_class": "c",
-                        "text": "<p><a href=\"https://rpgguild.shop/collections/miniatures-on-sale\" title=\"https://rpgguild.shop/collections/miniatures-on-sale\">Miniatures on Sale</a></p>",
+                        "text": "<p><a href=\"/collections/miniatures-on-sale\" title=\"/collections/miniatures-on-sale\">Miniatures on Sale</a></p>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -2181,7 +2181,7 @@
                       "settings": {
                         "enable_custom_font": true,
                         "custom_class": "c",
-                        "text": "<p><a href=\"https://rpgguild.shop/products/free-dnd-mini-of-the-month\" target=\"_blank\" title=\"https://rpgguild.shop/products/free-dnd-mini-of-the-month\">Mini of the Month</a></p>",
+                        "text": "<p><a href=\"/products/free-dnd-mini-of-the-month\" target=\"_blank\" title=\"/products/free-dnd-mini-of-the-month\">Mini of the Month</a></p>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
