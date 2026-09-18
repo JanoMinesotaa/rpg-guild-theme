@@ -1294,8 +1294,8 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 20,
-        "padding-block-end": 20
+        "padding-block-start": 40,
+        "padding-block-end": 40
       }
     },
     "section_longNightSeason": {
@@ -1307,8 +1307,8 @@
         "blood_strength": 62,
         "cta_label": "See the whole season",
         "cta_link": "shopify://pages/dnd-mystery-box",
-        "padding_top": 20,
-        "padding_bottom": 20
+        "padding_top": 40,
+        "padding_bottom": 40
       },
       "blocks": {
         "act_1": {
