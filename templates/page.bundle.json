@@ -1294,8 +1294,8 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 72,
-        "padding-block-end": 0
+        "padding-block-start": 20,
+        "padding-block-end": 20
       }
     },
     "section_longNightSeason": {
@@ -1307,9 +1307,46 @@
         "blood_strength": 62,
         "cta_label": "See the whole season",
         "cta_link": "shopify://pages/dnd-mystery-box",
-        "padding_top": 80,
-        "padding_bottom": 64
-      }
+        "padding_top": 20,
+        "padding_bottom": 20
+      },
+      "blocks": {
+        "act_1": {
+          "type": "act",
+          "settings": {
+            "phase": "rising",
+            "label": "Act I",
+            "name": "Blood Moon Rising",
+            "when": "October",
+            "line": "The bestiary stirs, and something follows you home."
+          }
+        },
+        "act_2": {
+          "type": "act",
+          "settings": {
+            "phase": "drip",
+            "label": "Act II",
+            "name": "Blood Moon · Black Friday",
+            "when": "November",
+            "line": "The moon comes full. The Guild opens everything."
+          }
+        },
+        "act_3": {
+          "type": "act",
+          "settings": {
+            "phase": "eclipse",
+            "label": "Act III",
+            "name": "The Last Moon",
+            "when": "December",
+            "line": "One eclipse, and the Guild closes the gates."
+          }
+        }
+      },
+      "block_order": [
+        "act_1",
+        "act_2",
+        "act_3"
+      ]
     }
   },
   "order": [
