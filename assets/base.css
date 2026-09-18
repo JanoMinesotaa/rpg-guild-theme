@@ -12564,7 +12564,7 @@ background: #F0E7D3 !important;
    684px z dostepnych 1349px) i odstepy sa nierowne, bo szerokosc kazdego
    USP wynika z dlugosci tekstu (131 / 205 / 171 / 106 px).
 
-   Siatka zamiast flexa: 4 rowne kolumny od 1024px, 2 kolumny nizej.
+   Siatka zamiast flexa: 4 rowne kolumny od 1200px, 2 kolumny nizej.
    Progi sa sztywne celowo - repeat(auto-fit, minmax(...)) dawalo przy
    900px uklad 3+1, a przy 150px minimum lamalo tekst i robilo rzedy
    o roznej wysokosci (25 / 86 / 61 px).
@@ -12574,7 +12574,7 @@ background: #F0E7D3 !important;
 
    Zmierzone na zywo przed zapisem:
      1440px - 4 kolumny po 319px, odstepy miedzy srodkami 343/343/343
-     1024px - 4 kolumny po 223px, odstepy 243/243/243
+     1200px - 4 kolumny (prog dobrany pod niemiecki, patrz nizej)
       900px - 2 kolumny po 405px, dwa rzedy
       768px - 2 kolumny po 339px, dwa rzedy
    Wszedzie wysokosc kazdego USP 25px i zero poziomego paska strony.
@@ -12605,7 +12605,15 @@ background: #F0E7D3 !important;
   }
 }
 
-@media (min-width: 1024px) {
+/* Prog 4 kolumn celuje w NIEMIECKI, nie w angielski.
+   Zmierzona szerokosc najszerszego USP bez lamania (max-content):
+     en 205px ("Worldwide Shipping")
+     fr 205px ("Retour sous 30 jours")
+     de 233px ("30 Tage Rueckgaberecht")  <- ten decyduje
+   4 kolumny potrzebuja 4*233 + 3*24 = 1004px kontenera, czyli okna ~1084px.
+   Prog 1024px lamal niemiecki: wysokosci 25 i 61px, uklad poszarpany.
+   1200px daje 262px na kolumne, czyli 29px zapasu na de. */
+@media (min-width: 1200px) {
   [class*='group_d98HN8'] > .group-block > .group-block-content {
     grid-template-columns: repeat(4, 1fr);
   }
