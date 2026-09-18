@@ -26,141 +26,6 @@
           },
           "blocks": {}
         },
-        "progressify_multi_bar_upsells_block_zqCc68": {
-          "type": "shopify://apps/progressify-multi-bar-upsells/blocks/block/82c18c6a-85d2-42a6-aa30-f91433549659",
-          "settings": {}
-        },
-        "spacer_BYqFjx": {
-          "type": "spacer",
-          "name": "t:names.spacer",
-          "settings": {
-            "size": "pixel",
-            "percent_size": 100,
-            "pixel_size": 300,
-            "custom_mobile_size": false,
-            "size_mobile": "percent",
-            "percent_size_mobile": 100,
-            "pixel_size_mobile": 120
-          },
-          "blocks": {}
-        },
-        "group_Xf7kRz": {
-          "type": "group",
-          "name": "t:names.group",
-          "settings": {
-            "enable_slider": false,
-            "custom_class": "c usa-only",
-            "padding_top": "0",
-            "padding_right": "0",
-            "padding_bottom": "0",
-            "padding_left": "0",
-            "margin_top": "0",
-            "margin_right": "0",
-            "margin_bottom": "0",
-            "margin_left": "0",
-            "link": "",
-            "open_in_new_tab": false,
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "mobile_horizontal_alignment_row": "flex-start",
-            "mobile_vertical_alignment_row": "center",
-            "mobile_horizontal_alignment_column": "flex-start",
-            "mobile_vertical_alignment_column": "center",
-            "gap": 24,
-            "gap_mobile": 12,
-            "width": "fill",
-            "custom_width_unit": "%",
-            "custom_width_value": "100",
-            "width_mobile": "fill",
-            "custom_width_mobile_unit": "%",
-            "custom_width_mobile_value": "100",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "padding-block-start": 36,
-            "padding-block-end": 36,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "text_mhRhVa": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "enable_custom_font": true,
-                "custom_class": "c",
-                "text": "<h4>Adventurers from USA 🇺🇸</h4>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_KaJcma": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "enable_custom_font": false,
-                "custom_class": "c",
-                "text": "<p>Despite the latest government tariffs policy between USA & EU, we can now guarantee no<strong> extra delivery fees </strong>during shipment. Enjoy!</p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_mhRhVa",
-            "text_KaJcma"
-          ]
-        },
         "group_d98HN8": {
           "type": "group",
           "settings": {
@@ -209,8 +74,8 @@
             "overlay_color": "#00000026",
             "overlay_style": "solid",
             "gradient_direction": "to top",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-start": 20,
+            "padding-block-end": 20,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -627,6 +492,149 @@
             "group_kBFG4J"
           ]
         },
+        "progressify_multi_bar_upsells_block_zqCc68": {
+          "type": "shopify://apps/progressify-multi-bar-upsells/blocks/block/82c18c6a-85d2-42a6-aa30-f91433549659",
+          "settings": {}
+        },
+        "spacer_BYqFjx": {
+          "type": "spacer",
+          "name": "t:names.spacer",
+          "settings": {
+            "size": "pixel",
+            "percent_size": 100,
+            "pixel_size": 300,
+            "custom_mobile_size": false,
+            "size_mobile": "percent",
+            "percent_size_mobile": 100,
+            "pixel_size_mobile": 120
+          },
+          "blocks": {}
+        },
+        "group_Xf7kRz": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "enable_slider": false,
+            "custom_class": "c usa-only",
+            "padding_top": "0",
+            "padding_right": "0",
+            "padding_bottom": "0",
+            "padding_left": "0",
+            "margin_top": "0",
+            "margin_right": "0",
+            "margin_bottom": "0",
+            "margin_left": "0",
+            "link": "",
+            "open_in_new_tab": false,
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "mobile_horizontal_alignment_row": "flex-start",
+            "mobile_vertical_alignment_row": "center",
+            "mobile_horizontal_alignment_column": "flex-start",
+            "mobile_vertical_alignment_column": "center",
+            "gap": 24,
+            "gap_mobile": 12,
+            "width": "fill",
+            "custom_width_unit": "%",
+            "custom_width_value": "100",
+            "width_mobile": "fill",
+            "custom_width_mobile_unit": "%",
+            "custom_width_mobile_value": "100",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 36,
+            "padding-block-end": 36,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_mhRhVa": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "enable_custom_font": true,
+                "custom_class": "c",
+                "text": "<h4>Adventurers from USA 🇺🇸</h4>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_KaJcma": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "enable_custom_font": false,
+                "custom_class": "c",
+                "text": "<p>Despite the latest government tariffs policy between USA & EU, we can now guarantee no<strong> extra delivery fees </strong>during shipment. Enjoy!</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_mhRhVa",
+            "text_KaJcma"
+          ]
+        },
+        "custom_liquid_uspAuto": {
+          "type": "custom-liquid",
+          "name": "USP auto-scroll (skrypt, bez tresci)",
+          "settings": {
+            "custom_liquid": "<script>\n/* Koszyk: automatyczny przesuw rzedu USP na mobile (group_d98HN8).\n   Pauza przy dotknieciu i najechaniu, powrot po 4s bezczynnosci.\n   Szanuje prefers-reduced-motion. Powyzej 767px nie robi nic.\n   Cofniecie: usun ten blok z szablonu koszyka. */\n(function () {\n  var SEL = \"[class*='group_d98HN8'] > .group-block > .group-block-content\";\n  var SPEED = 0.35;\n  var IDLE = 4000;\n  var row = null, dir = 1, paused = false, idle = null, widoczny = true, snapZdjety = false;\n  var mqMobile = window.matchMedia('(max-width: 767px)');\n  var mqMotion = window.matchMedia('(prefers-reduced-motion: reduce)');\n\n  function przywrocSnap() {\n    if (row && snapZdjety) { row.style.scrollSnapType = ''; snapZdjety = false; }\n  }\n  function pauza() {\n    paused = true;\n    przywrocSnap();\n    clearTimeout(idle);\n    idle = setTimeout(function () { paused = false; }, IDLE);\n  }\n  function podepnij(el) {\n    if (el.dataset.uspAuto) return;\n    el.dataset.uspAuto = '1';\n    ['pointerdown', 'touchstart', 'wheel'].forEach(function (ev) {\n      el.addEventListener(ev, pauza, { passive: true });\n    });\n    el.addEventListener('mouseenter', function () { paused = true; przywrocSnap(); });\n    el.addEventListener('mouseleave', function () { paused = false; });\n    if (window.IntersectionObserver) {\n      new IntersectionObserver(function (w) { widoczny = w[0].isIntersecting; }).observe(el);\n    }\n  }\n  function klatka() {\n    if (!row || !row.isConnected) {\n      row = document.querySelector(SEL);\n      snapZdjety = false;\n      if (row) podepnij(row);\n    }\n    if (row && !paused && widoczny && !document.hidden && mqMobile.matches && !mqMotion.matches) {\n      var max = row.scrollWidth - row.clientWidth;\n      if (max > 1) {\n        if (!snapZdjety) { row.style.scrollSnapType = 'none'; snapZdjety = true; }\n        var next = row.scrollLeft + SPEED * dir;\n        if (next >= max) { next = max; dir = -1; }\n        else if (next <= 0) { next = 0; dir = 1; }\n        row.scrollLeft = next;\n      }\n    }\n    requestAnimationFrame(klatka);\n  }\n  requestAnimationFrame(klatka);\n})();\n</script>"
+          },
+          "blocks": {}
+        },
         "cart-page-title": {
           "type": "_cart-title",
           "static": true,
@@ -657,14 +665,6 @@
           },
           "blocks": {}
         },
-        "custom_liquid_uspAuto": {
-          "type": "custom-liquid",
-          "name": "USP auto-scroll (skrypt, bez tresci)",
-          "settings": {
-            "custom_liquid": "<script>\n/* Koszyk: automatyczny przesuw rzedu USP na mobile (group_d98HN8).\n   Pauza przy dotknieciu i najechaniu, powrot po 4s bezczynnosci.\n   Szanuje prefers-reduced-motion. Powyzej 767px nie robi nic.\n   Cofniecie: usun ten blok z szablonu koszyka. */\n(function () {\n  var SEL = \"[class*='group_d98HN8'] > .group-block > .group-block-content\";\n  var SPEED = 0.35;\n  var IDLE = 4000;\n  var row = null, dir = 1, paused = false, idle = null, widoczny = true, snapZdjety = false;\n  var mqMobile = window.matchMedia('(max-width: 767px)');\n  var mqMotion = window.matchMedia('(prefers-reduced-motion: reduce)');\n\n  function przywrocSnap() {\n    if (row && snapZdjety) { row.style.scrollSnapType = ''; snapZdjety = false; }\n  }\n  function pauza() {\n    paused = true;\n    przywrocSnap();\n    clearTimeout(idle);\n    idle = setTimeout(function () { paused = false; }, IDLE);\n  }\n  function podepnij(el) {\n    if (el.dataset.uspAuto) return;\n    el.dataset.uspAuto = '1';\n    ['pointerdown', 'touchstart', 'wheel'].forEach(function (ev) {\n      el.addEventListener(ev, pauza, { passive: true });\n    });\n    el.addEventListener('mouseenter', function () { paused = true; przywrocSnap(); });\n    el.addEventListener('mouseleave', function () { paused = false; });\n    if (window.IntersectionObserver) {\n      new IntersectionObserver(function (w) { widoczny = w[0].isIntersecting; }).observe(el);\n    }\n  }\n  function klatka() {\n    if (!row || !row.isConnected) {\n      row = document.querySelector(SEL);\n      snapZdjety = false;\n      if (row) podepnij(row);\n    }\n    if (row && !paused && widoczny && !document.hidden && mqMobile.matches && !mqMotion.matches) {\n      var max = row.scrollWidth - row.clientWidth;\n      if (max > 1) {\n        if (!snapZdjety) { row.style.scrollSnapType = 'none'; snapZdjety = true; }\n        var next = row.scrollLeft + SPEED * dir;\n        if (next >= max) { next = max; dir = -1; }\n        else if (next <= 0) { next = 0; dir = 1; }\n        row.scrollLeft = next;\n      }\n    }\n    requestAnimationFrame(klatka);\n  }\n  requestAnimationFrame(klatka);\n})();\n</script>"
-          },
-          "blocks": {}
-        },
         "cart-page-summary": {
           "type": "_cart-summary",
           "static": true,
@@ -682,10 +682,10 @@
       },
       "block_order": [
         "spacer_4VhBC3",
+        "group_d98HN8",
         "progressify_multi_bar_upsells_block_zqCc68",
         "spacer_BYqFjx",
         "group_Xf7kRz",
-        "group_d98HN8",
         "custom_liquid_uspAuto"
       ],
       "settings": {
