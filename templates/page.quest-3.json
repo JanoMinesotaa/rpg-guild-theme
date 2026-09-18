@@ -2828,7 +2828,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "Read more",
-                "link": "https://rpgguild.shop/pages/get-a-free-mini",
+                "link": "shopify://pages/get-a-free-mini",
                 "open_in_new_tab": false,
                 "custom_class": "btn-1",
                 "style_class": "button-secondary",
