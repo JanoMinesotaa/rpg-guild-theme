@@ -12581,3 +12581,46 @@ html {
 .menu-drawer {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
+
+/* ------------------------------------------------------------------
+   Koszyk: cztery USP (Worldwide Shipment / 30-Days Returns /
+   Custom Production / VAT included) jako przewijany palcem rzad
+   na mobile, tak jak pigulki w tabach produktowych
+   (.product-tabs__pills, linia ~9317).
+
+   Czysty CSS, zero JS - natywne przewijanie palcem, bez strzalek.
+
+   Selektor celuje w ID bloku (group_d98HN8), bo custom_class nie dociera
+   do przetlumaczonych storefrontow (fr/de maja wlasne kopie ustawien).
+   Sciezka jest dokladna - wrapper > .group-block > .group-block-content -
+   bo wewnatrz tej grupy jest jeszcze 4 takie same rzedy, po jednym
+   w kazdym USP (ikona + tekst). Szerszy selektor rozwalilby ikony.
+
+   !important, bo klasa .flex-wrap wymusza flex-wrap: wrap !important.
+   Powyzej 767px nic sie nie zmienia - uklad zostaje jak byl.
+
+   scroll-snap x proximity: przesuw dojezdza do krawedzi USP zamiast
+   zatrzymywac sie w polowie slowa. "proximity", nie "mandatory" -
+   przy mandatory palec nie moze zatrzymac sie miedzy elementami
+   i gest robi sie szarpany.
+
+   Druga proba tego rozwiazania. Pierwsza (a4e647f, 16.09) dzialala,
+   ale poleciala przy rollbacku belki Safari - oba siedzialy w tym pliku.
+   Tamta nie miala snapu. Cofniecie: usun ten blok albo
+   git checkout przed-usp-slider-2 -- assets/base.css
+   ------------------------------------------------------------------ */
+@media (max-width: 767px) {
+  [class*='group_d98HN8'] > .group-block > .group-block-content {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
+
+  [class*='group_d98HN8'] > .group-block > .group-block-content > * {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start;
+  }
+}
