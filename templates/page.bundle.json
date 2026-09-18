@@ -25,8 +25,8 @@
       "blocks": {
         "group_9UQUPi": {
           "type": "group",
-          "disabled": true,
           "name": "Content",
+          "disabled": true,
           "settings": {
             "enable_slider": false,
             "custom_class": "home-hero-left w-full",
@@ -378,8 +378,7 @@
         "gradient_direction": "to top",
         "padding-block-start": 0,
         "padding-block-end": 0
-      },
-      "disabled": true
+      }
     },
     "section_9DNaRd": {
       "type": "section",
@@ -444,7 +443,7 @@
               "settings": {
                 "enable_custom_font": true,
                 "custom_class": "c",
-                "text": "<h2>Why Choose Us?</h2>",
+                "text": "<h2>Explore Guild's Custom Miniature Bundles:</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -470,10 +469,154 @@
           "block_order": [
             "text_wH7WX9"
           ]
+        },
+        "group_3Dqpwm": {
+          "type": "group",
+          "settings": {
+            "enable_slider": false,
+            "custom_class": "",
+            "padding_top": "0",
+            "padding_right": "0",
+            "padding_bottom": "0",
+            "padding_left": "0",
+            "margin_top": "0",
+            "margin_right": "0",
+            "margin_bottom": "0",
+            "margin_left": "0",
+            "link": "",
+            "open_in_new_tab": false,
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "mobile_horizontal_alignment_row": "flex-start",
+            "mobile_vertical_alignment_row": "center",
+            "mobile_horizontal_alignment_column": "flex-start",
+            "mobile_vertical_alignment_column": "center",
+            "gap": 24,
+            "gap_mobile": 24,
+            "width": "fill",
+            "custom_width_unit": "px",
+            "custom_width_value": "",
+            "width_mobile": "fill",
+            "custom_width_mobile_unit": "%",
+            "custom_width_mobile_value": "100",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "group_pMgHex": {
+          "type": "group",
+          "settings": {
+            "enable_slider": false,
+            "custom_class": "",
+            "padding_top": "0",
+            "padding_right": "0",
+            "padding_bottom": "0",
+            "padding_left": "0",
+            "margin_top": "0",
+            "margin_right": "0",
+            "margin_bottom": "0",
+            "margin_left": "0",
+            "link": "",
+            "open_in_new_tab": false,
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "mobile_horizontal_alignment_row": "flex-start",
+            "mobile_vertical_alignment_row": "center",
+            "mobile_horizontal_alignment_column": "flex-start",
+            "mobile_vertical_alignment_column": "center",
+            "gap": 24,
+            "gap_mobile": 24,
+            "width": "fill",
+            "custom_width_unit": "px",
+            "custom_width_value": "",
+            "width_mobile": "fill",
+            "custom_width_mobile_unit": "%",
+            "custom_width_mobile_value": "100",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_b3CTtN": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "enable_custom_font": false,
+                "custom_class": "c",
+                "text": "<p>Drop any minis into the bundle, mix classes and monsters in one order, and the discount updates itself as you go. <br/><br/>Each one is yours to spec: 28, 32 or 38mm, assembled or raw, primed or drybrushed. <strong>Pick your first below.</strong></p><p></p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-body--family)",
+                "font_size": "0.75rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_b3CTtN"
+          ]
         }
       },
       "block_order": [
-        "group_VtK934"
+        "group_VtK934",
+        "group_3Dqpwm",
+        "group_pMgHex"
       ],
       "name": "Heading + paragraph",
       "settings": {
@@ -557,6 +700,441 @@
         "padding-block-end": 0
       }
     },
+    "collection_list_9LJ6h4": {
+      "type": "collection-list",
+      "blocks": {
+        "static-collection-card": {
+          "type": "collection-card",
+          "name": "t:names.collection_card",
+          "static": true,
+          "settings": {
+            "collection": "{{ closest.collection }}",
+            "placement": "below_image",
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-end",
+            "collection_card_gap": 12,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-1",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 2
+          },
+          "blocks": {
+            "collection_title_cFUzee": {
+              "type": "collection-title",
+              "name": "t:names.collection_title",
+              "settings": {
+                "collection": "{{ closest.collection }}",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#ffffff",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 4,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
+              },
+              "blocks": {}
+            },
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "name": "t:names.collection_card_image",
+              "static": true,
+              "settings": {
+                "collection": "{{ closest.collection }}",
+                "image_ratio": "portrait",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_title_cFUzee"
+          ]
+        }
+      },
+      "name": "t:names.collections_bento",
+      "settings": {
+        "collection_list": [
+          "dnd-mystery-box",
+          "dnd-5e-character-sheet-pdf",
+          "handmade-dnd-dice-sets-20",
+          "modular-dnd-terrain-sets",
+          "modular-dnd-terrain-starter-sets",
+          "dnd-terrain-tiles"
+        ],
+        "layout_type": "carousel",
+        "carousel_on_mobile": false,
+        "columns": 3,
+        "mobile_columns": "1",
+        "columns_gap": 12,
+        "bento_gap": 8,
+        "rows_gap": 36,
+        "max_collections": 4,
+        "icons_style": "arrows_large",
+        "icons_shape": "circle",
+        "section_width": "page-width",
+        "gap": 36,
+        "color_scheme": "",
+        "padding-block-start": 36,
+        "padding-block-end": 72
+      }
+    },
+    "section_DkE4QG": {
+      "type": "section",
+      "blocks": {
+        "group_n7x7Q4": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "enable_slider": false,
+            "custom_class": "faq-title",
+            "padding_top": "0",
+            "padding_right": "0",
+            "padding_bottom": "0",
+            "padding_left": "0",
+            "margin_top": "0",
+            "margin_right": "0",
+            "margin_bottom": "0",
+            "margin_left": "0",
+            "link": "",
+            "open_in_new_tab": false,
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "center",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "mobile_horizontal_alignment_row": "flex-start",
+            "mobile_vertical_alignment_row": "center",
+            "mobile_horizontal_alignment_column": "flex-start",
+            "mobile_vertical_alignment_column": "flex-start",
+            "gap": 12,
+            "gap_mobile": 12,
+            "width": "fill",
+            "custom_width_unit": "%",
+            "custom_width_value": "100",
+            "width_mobile": "fill",
+            "custom_width_mobile_unit": "%",
+            "custom_width_mobile_value": "100",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_WhJthT": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "enable_custom_font": false,
+                "custom_class": "title use-rosarivo home-faq-title",
+                "text": "<p>The Scroll of Answers (FAQ)</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_WhJthT"
+          ]
+        },
+        "group_DDNrNw": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "enable_slider": false,
+            "custom_class": "c",
+            "padding_top": "20",
+            "padding_right": "0",
+            "padding_bottom": "20",
+            "padding_left": "0",
+            "margin_top": "0",
+            "margin_right": "0",
+            "margin_bottom": "0",
+            "margin_left": "0",
+            "link": "",
+            "open_in_new_tab": false,
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "mobile_horizontal_alignment_row": "flex-start",
+            "mobile_vertical_alignment_row": "center",
+            "mobile_horizontal_alignment_column": "flex-start",
+            "mobile_vertical_alignment_column": "center",
+            "gap": 44,
+            "gap_mobile": 12,
+            "width": "fill",
+            "custom_width_unit": "%",
+            "custom_width_value": "100",
+            "width_mobile": "fill",
+            "custom_width_mobile_unit": "%",
+            "custom_width_mobile_value": "100",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "accordion_3Y6KwR": {
+              "type": "accordion",
+              "name": "t:names.accordion",
+              "settings": {
+                "icon": "plus",
+                "dividers": true,
+                "type_preset": "h4",
+                "inherit_color_scheme": false,
+                "color_scheme": "scheme-1",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 24,
+                "padding-block-end": 24,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_row_cjPDQh": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "How does the bundle discount work?",
+                    "open_by_default": true
+                  },
+                  "blocks": {
+                    "text_zL48LD": {
+                      "type": "text",
+                      "settings": {
+                        "enable_custom_font": false,
+                        "custom_class": "c",
+                        "text": "<p>It applies itself as you build. Five minis take 10% off, ten take 15%, and twenty take 30% - no code to enter, and the total updates with every mini you add.</p><p></p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-subheading--family)",
+                        "font_size": "1.25rem",
+                        "line_height": "loose",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_zL48LD"
+                  ]
+                },
+                "accordion_row_eRjkLD": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Can I mix anything in one bundle?",
+                    "open_by_default": false
+                  },
+                  "blocks": {
+                    "text_JapynQ": {
+                      "type": "text",
+                      "settings": {
+                        "enable_custom_font": false,
+                        "custom_class": "c",
+                        "text": "<p>Yes - every miniature! Heroes, monsters, NPCs and giants can share the same bundle, and nothing here is a fixed set - if a mini is in our catalogue, it can go in.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-subheading--family)",
+                        "font_size": "1.25rem",
+                        "line_height": "loose",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_JapynQ"
+                  ]
+                },
+                "accordion_row_8QXWNb": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "When will my bundle arrive?",
+                    "open_by_default": false
+                  },
+                  "blocks": {
+                    "text_FRd8gq": {
+                      "type": "text",
+                      "settings": {
+                        "enable_custom_font": false,
+                        "custom_class": "c",
+                        "text": "<p>We craft every mini to order, so your bundle is printed after you place it: 5 to 7 business days in the forge, then shipping (up to 10 business days for most international orders). You get a tracking number by email the moment it leaves us.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-subheading--family)",
+                        "font_size": "1.25rem",
+                        "line_height": "loose",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_FRd8gq"
+                  ]
+                }
+              },
+              "block_order": [
+                "accordion_row_cjPDQh",
+                "accordion_row_eRjkLD",
+                "accordion_row_8QXWNb"
+              ]
+            }
+          },
+          "block_order": [
+            "accordion_3Y6KwR"
+          ]
+        }
+      },
+      "block_order": [
+        "group_n7x7Q4",
+        "group_DDNrNw"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "custom_class": "spacer spacing reser-grid faq",
+        "padding_top": "0",
+        "padding_right": "0",
+        "padding_bottom": "0",
+        "padding_left": "0",
+        "margin_top": "0",
+        "margin_right": "0",
+        "margin_bottom": "0",
+        "margin_left": "0",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 72
+      }
+    },
     "hero_6RqV6b": {
       "type": "hero",
       "name": "Baner",
@@ -587,24 +1165,15 @@
         "padding-block-start": 72,
         "padding-block-end": 40
       }
-    },
-    "long_night_hero": {
-      "type": "long-night-hero",
-      "name": "Hero · The Long Night",
-      "settings": {
-        "kicker": "ACT I · BLOOD MOON RISING · OCTOBER",
-        "heading": "Build the party you actually need.",
-        "body": "Pick any miniatures from our 5,000+ catalogue - no pre-made bundles or fixed sets.",
-        "body_2": "The bigger the party, the bigger the discount. Create a bundle of 20 and pay for 14!"
-      }
     }
   },
   "order": [
     "main",
-    "long_night_hero",
     "section_6kDNaa",
     "section_9DNaRd",
     "17891285356cd42f64",
+    "collection_list_9LJ6h4",
+    "section_DkE4QG",
     "hero_6RqV6b"
   ]
 }
