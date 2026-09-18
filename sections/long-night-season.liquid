@@ -1,0 +1,438 @@
+{%- comment -%}
+  THE LONG NIGHT · sekcja sezonu
+  ---------------------------------------------------------------------------
+  Moduł, który z dowolnego miejsca sklepu prowadzi na landing sezonu.
+  Trzy akty jako oś czasu; kliknięcie w akt podświetla go bez przeładowania.
+
+  SEKCJA NIE MA WŁASNEGO TŁA ANI RAMKI. Siedzi na tle strony i nic jej nie
+  zamyka w prostokąt - plamy krwi wychodzą poza obrys i gasną maską, zgodnie
+  z regułą z README kampanii: "żadna grafika nie jest przycinana prostą linią".
+
+  TEKST JEST W USTAWIENIACH, NIE W MARKUPIE. Pola typu text / inline_richtext
+  Shopify wystawia w Translate & Adapt jako treść motywu. Tekst wpisany
+  w Custom Liquid albo wypalony w grafice nie jest tłumaczalny.
+
+  Skala wzięta z motywu (odczytana z żywego sklepu), nie wymyślona:
+      akapit 18px · h2 48-56px · h3 28-48px · etykiety 16px
+      tło #F0E7D3 · tekst #30261E · strona 120rem
+  Kanwa projektowa to 1920px, więc 1cqw = 19.2px.
+{%- endcomment -%}
+
+{%- liquid
+  assign uid = section.id
+  assign current = section.settings.current_act | default: 1
+-%}
+
+{% style %}
+  #LongNight-{{ uid }}{
+    /* kampania */
+    --ln-blood:#54130F; --ln-blood-950:#280703;
+    --ln-moon:#E92E4A; --ln-red-600:#76281D;
+    --ln-parchment:#F0E7D3;
+    /* motyw */
+    /* Kolor tekstu motywu. Odczytany z zywego sklepu (--color-foreground),
+       wpisany wprost, bo scheme-1 z mysnikiem nie przechodzi w notacji
+       kropkowej Liquida. */
+    --sh-fg:#30261E;
+    --sh-fg-soft:#6B5A4A;
+    /* odstepy - osemki przeliczone na kanwe 1920 */
+    --s-1:.4167cqw; --s-2:.8333cqw; --s-3:1.25cqw; --s-4:1.6667cqw;
+    --s-6:2.5cqw;   --s-8:3.3333cqw;
+    --ease-out:cubic-bezier(.2,.7,.3,1); --dur-fast:140ms; --dur-mid:280ms;
+
+    position:relative;container-type:inline-size;isolation:isolate;
+    padding-block:{{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;
+    color:var(--sh-fg);
+  }
+  #LongNight-{{ uid }} *{box-sizing:border-box}
+
+  /* ── krew ───────────────────────────────────────────────────────────
+     Arkusz slozy za MASKE wypelniona kolorem blood: sam jest niemal czarny
+     i na kremie schodzilby w bez. Plamy wychodza POZA obrys i gasna
+     radialnie, wiec zadna nie jest ucieta krawedzia sekcji. */
+  #LongNight-{{ uid }} .ln__stain{
+    position:absolute;z-index:0;pointer-events:none;background:var(--ln-blood);
+    --sheet:url({{ 'long-night-spatter.webp' | asset_url }});
+    -webkit-mask-image:var(--sheet),radial-gradient(closest-side,#000 52%,transparent 100%);
+    mask-image:var(--sheet),radial-gradient(closest-side,#000 52%,transparent 100%);
+    -webkit-mask-size:100% auto,100% 100%;mask-size:100% auto,100% 100%;
+    -webkit-mask-repeat:no-repeat,no-repeat;mask-repeat:no-repeat,no-repeat;
+    -webkit-mask-position:center,center;mask-position:center,center;
+    -webkit-mask-composite:source-in;mask-composite:intersect;
+  }
+  #LongNight-{{ uid }} .ln__stain--l{
+    inset-block-start:-6cqw;inset-inline-start:-9cqw;inline-size:56cqw;block-size:40cqw;
+    opacity:{{ section.settings.blood_strength | divided_by: 100.0 }};
+  }
+  #LongNight-{{ uid }} .ln__stain--r{
+    inset-block-end:-8cqw;inset-inline-end:-7cqw;inline-size:44cqw;block-size:32cqw;
+    opacity:{{ section.settings.blood_strength | times: 0.7 | divided_by: 100.0 }};
+    transform:scaleX(-1);
+  }
+  /* Krew jest TLEM i nie wchodzi przed tresc - welon pergaminu odsuwa ja
+     od kolumn i przywraca kontrast tekstu. */
+  #LongNight-{{ uid }} .ln__veil{
+    position:absolute;z-index:1;inset:-2cqw 4cqw;pointer-events:none;
+    background:radial-gradient(64cqw 44cqw at 50% 48%,
+      rgba(240,231,211,.94) 0%, rgba(240,231,211,.78) 42%, rgba(240,231,211,0) 78%);
+  }
+
+  #LongNight-{{ uid }} .ln__inner{
+    position:relative;z-index:2;inline-size:min(100%,120rem);margin-inline:auto;
+    padding-inline:var(--s-6);
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+  }
+  #LongNight-{{ uid }} .ln__kicker{
+    margin:0;font-weight:700;font-size:.8333cqw;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--ln-red-600);
+  }
+  #LongNight-{{ uid }} .ln__title{
+    margin:var(--s-2) 0 0;font-family:"Rosarivo","Iowan Old Style",Georgia,serif;
+    font-weight:400;font-style:normal;font-size:2.9167cqw;line-height:1.04;
+    letter-spacing:-.016em;color:var(--ln-blood);overflow-wrap:anywhere;min-width:0;
+  }
+
+  #LongNight-{{ uid }} .ln__acts{
+    margin:var(--s-8) 0 0;padding:0;list-style:none;inline-size:100%;max-inline-size:76cqw;
+    display:grid;grid-template-columns:repeat({{ section.blocks.size | at_most: 4 | at_least: 1 }},minmax(0,1fr));
+    gap:var(--s-6);
+  }
+  #LongNight-{{ uid }} .ln__act{
+    appearance:none;border:0;background:none;cursor:pointer;position:relative;
+    inline-size:100%;padding:var(--s-3) var(--s-2) var(--s-4);
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    opacity:.62;transition:opacity var(--dur-mid) var(--ease-out);
+  }
+  #LongNight-{{ uid }} .ln__act:hover{opacity:.88}
+  #LongNight-{{ uid }} .ln__act:focus-visible{outline:2px solid var(--ln-blood);outline-offset:3px}
+  #LongNight-{{ uid }} .ln__act[aria-current="true"]{opacity:1}
+  /* Znak aktu biezacego: krotka krwawa linia na osi */
+  #LongNight-{{ uid }} .ln__act::after{
+    content:"";position:absolute;inset-block-end:0;inset-inline-start:50%;translate:-50% 0;
+    inline-size:0;block-size:2px;background:var(--ln-blood);
+    transition:inline-size var(--dur-mid) var(--ease-out);
+  }
+  #LongNight-{{ uid }} .ln__act[aria-current="true"]::after{inline-size:3.75cqw}
+
+  #LongNight-{{ uid }} .ln__moon{
+    inline-size:5.2cqw;block-size:auto;object-fit:contain;
+    transition:transform var(--dur-mid) var(--ease-out);
+  }
+  #LongNight-{{ uid }} .ln__act:hover .ln__moon{transform:translateY(-.5cqw)}
+
+  #LongNight-{{ uid }} .ln__no{
+    margin:var(--s-3) 0 0;font-weight:700;font-size:.8333cqw;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ln-red-600);white-space:nowrap;
+  }
+  #LongNight-{{ uid }} .ln__name{
+    margin:var(--s-1) 0 0;font-family:"Rosarivo","Iowan Old Style",Georgia,serif;
+    font-weight:400;font-size:1.4583cqw;line-height:1.14;color:var(--sh-fg);
+    transition:color var(--dur-mid) var(--ease-out);
+  }
+  #LongNight-{{ uid }} .ln__act[aria-current="true"] .ln__name{color:var(--ln-blood)}
+  #LongNight-{{ uid }} .ln__when{
+    margin:var(--s-1) 0 0;font-weight:700;font-size:.8333cqw;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--sh-fg-soft);
+  }
+  #LongNight-{{ uid }} .ln__line{
+    margin:var(--s-3) 0 0;font-weight:500;font-size:.9375cqw;line-height:1.55;
+    color:var(--sh-fg);max-inline-size:24ch;
+  }
+
+  #LongNight-{{ uid }} .ln__cta{
+    margin-block-start:var(--s-8);display:inline-block;
+    font-weight:700;font-size:.8333cqw;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ln-blood);text-decoration:none;border:1px solid var(--ln-blood);
+    padding:var(--s-3) var(--s-6);white-space:nowrap;
+    transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out);
+  }
+  #LongNight-{{ uid }} .ln__cta:hover{background:var(--ln-blood);color:var(--ln-parchment)}
+  #LongNight-{{ uid }} .ln__cta:focus-visible{outline:2px solid var(--ln-blood);outline-offset:3px}
+  #LongNight-{{ uid }} .ln__cta:active{background:var(--ln-red-600);color:var(--ln-parchment)}
+
+  @media (prefers-reduced-motion:reduce){
+    #LongNight-{{ uid }} .ln__act,
+    #LongNight-{{ uid }} .ln__moon,
+    #LongNight-{{ uid }} .ln__name,
+    #LongNight-{{ uid }} .ln__cta{transition-duration:.01ms}
+    #LongNight-{{ uid }} .ln__act:hover .ln__moon{transform:none}
+  }
+
+  /* Ponizej 750px kolumny schodza w jedna - mobilny kadr sezonu jest
+     osobnym zadaniem, to jest bezpieczny fallback, nie projekt. */
+  @media screen and (max-width:749px){
+    #LongNight-{{ uid }}{container-type:normal}
+    #LongNight-{{ uid }} .ln__acts{grid-template-columns:1fr;gap:28px;max-inline-size:none}
+    #LongNight-{{ uid }} .ln__kicker,
+    #LongNight-{{ uid }} .ln__no,
+    #LongNight-{{ uid }} .ln__when,
+    #LongNight-{{ uid }} .ln__cta{font-size:14px}
+    #LongNight-{{ uid }} .ln__title{font-size:34px}
+    #LongNight-{{ uid }} .ln__name{font-size:22px}
+    #LongNight-{{ uid }} .ln__line{font-size:16px;max-inline-size:32ch}
+    #LongNight-{{ uid }} .ln__moon{inline-size:84px}
+    #LongNight-{{ uid }} .ln__stain--l,
+    #LongNight-{{ uid }} .ln__stain--r{inline-size:120%;block-size:60%}
+    #LongNight-{{ uid }} .ln__act::after{inline-size:0}
+    #LongNight-{{ uid }} .ln__act[aria-current="true"]::after{inline-size:48px}
+  }
+{% endstyle %}
+
+<section id="LongNight-{{ uid }}" class="long-night" aria-label="{{ section.settings.heading | strip_html | escape }}">
+  <div class="ln__stain ln__stain--l"></div>
+  <div class="ln__stain ln__stain--r"></div>
+  <div class="ln__veil"></div>
+
+  <div class="ln__inner">
+    {%- if section.settings.kicker != blank -%}
+      <p class="ln__kicker">{{ section.settings.kicker }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ln__title">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="ln__acts">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign idx = forloop.index
+            assign is_now = false
+            if idx == current
+              assign is_now = true
+            endif
+            assign moon_file = 'long-night-moon-' | append: block.settings.phase | append: '.webp'
+          -%}
+          <li>
+            <button
+              class="ln__act"
+              type="button"
+              data-act="{{ idx }}"
+              aria-current="{{ is_now }}"
+              {{ block.shopify_attributes }}
+            >
+              <img
+                class="ln__moon"
+                src="{{ moon_file | asset_url }}"
+                alt=""
+                width="480"
+                height="480"
+                loading="lazy"
+              >
+              {%- if block.settings.label != blank -%}
+                <span class="ln__no">{{ block.settings.label }}</span>
+              {%- endif -%}
+              {%- if block.settings.name != blank -%}
+                <span class="ln__name">{{ block.settings.name }}</span>
+              {%- endif -%}
+              {%- if block.settings.when != blank -%}
+                <span class="ln__when">{{ block.settings.when }}</span>
+              {%- endif -%}
+              {%- if block.settings.line != blank -%}
+                <span class="ln__line">{{ block.settings.line }}</span>
+              {%- endif -%}
+            </button>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank -%}
+      <a class="ln__cta" href="{{ section.settings.cta_link | default: '#' }}">
+        {{- section.settings.cta_label -}}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('LongNight-{{ uid }}');
+    if (!root) return;
+    var acts = root.querySelectorAll('.ln__act');
+    acts.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        acts.forEach(function (b) {
+          b.setAttribute('aria-current', String(b === btn));
+        });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "The Long Night · sezon",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Sekcja nie ma własnego tła - siedzi na tle strony. Teksty poniżej tłumaczy Translate & Adapt (Motyw → ten szablon)."
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Nadtytuł",
+      "default": "October - December 2026"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Hasło",
+      "default": "The Long Night"
+    },
+    {
+      "type": "header",
+      "content": "Akt bieżący"
+    },
+    {
+      "type": "range",
+      "id": "current_act",
+      "label": "Który akt jest zapalony",
+      "info": "Numer aktu liczony od lewej. Odwiedzający może przełączyć pozostałe klikając w kafel.",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Krew w tle"
+    },
+    {
+      "type": "range",
+      "id": "blood_strength",
+      "label": "Siła plam",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "default": 62
+    },
+    {
+      "type": "header",
+      "content": "Przycisk"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Napis na przycisku",
+      "default": "See the whole season"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Link przycisku",
+      "info": "Landing sezonu. Do czasu jego powstania można podpiąć /pages/black-friday."
+    },
+    {
+      "type": "header",
+      "content": "Odstępy"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Odstęp u góry",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Odstęp u dołu",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "act",
+      "name": "Akt",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "select",
+          "id": "phase",
+          "label": "Faza księżyca",
+          "options": [
+            { "value": "rising", "label": "Rosnący" },
+            { "value": "full", "label": "Pełnia" },
+            { "value": "drip", "label": "Pełnia ociekająca (znak aktu II)" },
+            { "value": "last", "label": "Ostatni" },
+            { "value": "eclipse", "label": "Zaćmienie" }
+          ],
+          "default": "rising"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Numer aktu",
+          "default": "Act I"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "name",
+          "label": "Nazwa aktu",
+          "default": "Blood Moon Rising"
+        },
+        {
+          "type": "text",
+          "id": "when",
+          "label": "Termin",
+          "default": "October"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "line",
+          "label": "Zdanie",
+          "info": "Krótko i obrazem. Co dokładnie jest w akcie, klient przeczyta na landingu.",
+          "default": "The bestiary stirs, and something follows you home."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "The Long Night · sezon",
+      "blocks": [
+        {
+          "type": "act",
+          "settings": {
+            "phase": "rising",
+            "label": "Act I",
+            "name": "Blood Moon Rising",
+            "when": "October",
+            "line": "The bestiary stirs, and something follows you home."
+          }
+        },
+        {
+          "type": "act",
+          "settings": {
+            "phase": "drip",
+            "label": "Act II",
+            "name": "Blood Moon · Black Friday",
+            "when": "November",
+            "line": "The moon comes full. The Guild opens everything."
+          }
+        },
+        {
+          "type": "act",
+          "settings": {
+            "phase": "eclipse",
+            "label": "Act III",
+            "name": "The Last Moon",
+            "when": "December",
+            "line": "One eclipse, and the Guild closes the gates."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
