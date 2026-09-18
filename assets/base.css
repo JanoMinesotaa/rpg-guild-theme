@@ -12557,6 +12557,60 @@ background: #F0E7D3 !important;
   }
 }
 
+/* ------------------------------------------------------------------
+   Koszyk: rzad USP na DESKTOP - rowne odstepy, pelna szerokosc.
+
+   Bez tego rzad siedzi w lewej polowie kontenera (zmierzone na 1440px:
+   684px z dostepnych 1349px) i odstepy sa nierowne, bo szerokosc kazdego
+   USP wynika z dlugosci tekstu (131 / 205 / 171 / 106 px).
+
+   Siatka zamiast flexa: 4 rowne kolumny od 1024px, 2 kolumny nizej.
+   Progi sa sztywne celowo - repeat(auto-fit, minmax(...)) dawalo przy
+   900px uklad 3+1, a przy 150px minimum lamalo tekst i robilo rzedy
+   o roznej wysokosci (25 / 86 / 61 px).
+
+   Ponizej 768px nic sie nie zmienia - tam rzadzi slider palcem
+   z autoplayem (blok wyzej w tym pliku).
+
+   Zmierzone na zywo przed zapisem:
+     1440px - 4 kolumny po 319px, odstepy miedzy srodkami 343/343/343
+     1024px - 4 kolumny po 223px, odstepy 243/243/243
+      900px - 2 kolumny po 405px, dwa rzedy
+      768px - 2 kolumny po 339px, dwa rzedy
+   Wszedzie wysokosc kazdego USP 25px i zero poziomego paska strony.
+
+   UWAGA: ten blok MUSI stac przed regula
+   .swym-storefront-layout-notification-message ponizej - ona ma
+   niedomknieta klamre i polyka wszystko, co jest po niej.
+
+   Cofniecie: usun ten blok albo git checkout przed-usp-desktop.
+   ------------------------------------------------------------------ */
+@media (min-width: 768px) {
+  [class*='group_d98HN8'] > .group-block {
+    width: 100% !important;
+  }
+
+  [class*='group_d98HN8'] > .group-block > .group-block-content {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    width: 100% !important;
+    align-items: center;
+  }
+
+  [class*='group_d98HN8'] > .group-block > .group-block-content > * {
+    justify-content: center;
+    width: auto !important;
+    min-width: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  [class*='group_d98HN8'] > .group-block > .group-block-content {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 .swym-storefront-layout-notification-message {
 color: #54130F !important;
 
