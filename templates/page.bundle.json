@@ -25,7 +25,7 @@
       "blocks": {
         "group_9UQUPi": {
           "type": "group",
-              "disabled": true,
+          "disabled": true,
           "name": "Content",
           "settings": {
             "enable_slider": false,
@@ -378,7 +378,8 @@
         "gradient_direction": "to top",
         "padding-block-start": 0,
         "padding-block-end": 0
-      }
+      },
+      "disabled": true
     },
     "section_9DNaRd": {
       "type": "section",
@@ -586,10 +587,21 @@
         "padding-block-start": 72,
         "padding-block-end": 40
       }
+    },
+    "long_night_hero": {
+      "type": "long-night-hero",
+      "name": "Hero · The Long Night",
+      "settings": {
+        "kicker": "ACT I · BLOOD MOON RISING · OCTOBER",
+        "heading": "Build the party you actually need.",
+        "body": "Pick any miniatures from our 5,000+ catalogue - no pre-made bundles or fixed sets.",
+        "body_2": "The bigger the party, the bigger the discount. Create a bundle of 20 and pay for 14!"
+      }
     }
   },
   "order": [
     "main",
+    "long_night_hero",
     "section_6kDNaa",
     "section_9DNaRd",
     "17891285356cd42f64",

@@ -245,6 +245,16 @@
       height="{{ section.settings.mark_left.height }}"
       loading="eager"
     >
+  {%- else -%}
+    <img
+      src="{{ 'long-night-crest.webp' | asset_url }}"
+      alt=""
+      aria-hidden="true"
+      class="ln-hero__mark ln-hero__mark--left"
+      width="993"
+      height="1080"
+      loading="eager"
+    >
   {%- endif -%}
 
   {%- if section.settings.mark_right != blank -%}
@@ -256,6 +266,16 @@
       class="ln-hero__mark ln-hero__mark--right"
       width="{{ section.settings.mark_right.width }}"
       height="{{ section.settings.mark_right.height }}"
+      loading="eager"
+    >
+  {%- else -%}
+    <img
+      src="{{ 'long-night-moon.png' | asset_url }}"
+      alt=""
+      aria-hidden="true"
+      class="ln-hero__mark ln-hero__mark--right"
+      width="300"
+      height="300"
       loading="eager"
     >
   {%- endif -%}
@@ -310,13 +330,13 @@
       "type": "image_picker",
       "id": "mark_left",
       "label": "Znak lewy - crest",
-      "info": "crest-blood.png"
+      "info": "Puste = crest wgrany z motywem (long-night-crest.webp)."
     },
     {
       "type": "image_picker",
       "id": "mark_right",
       "label": "Znak prawy - księżyc",
-      "info": "Faza za aktem: moon-rising / moon-full / moon-last / eclipse."
+      "info": "Puste = księżyc rosnący wgrany z motywem. Faza idzie za aktem: rising / full / last / eclipse."
     },
     {
       "type": "header",
