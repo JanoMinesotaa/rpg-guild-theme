@@ -1053,7 +1053,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>We craft every mini to order, so your bundle is printed after you place it: 5 to 7 business days in the forge, then shipping (up to 10 business days for most international orders). You get a tracking number by email the moment it leaves us.</p>",
+                        "text": "<p>We craft every mini to order, so your bundle is printed after you place it: 5 to 7 business days in the forge, then shipping (5-8 days inside the EU, 10-14 to the US, longer to Canada and Australia). You get a tracking number by email the moment it leaves us.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
