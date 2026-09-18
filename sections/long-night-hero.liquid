@@ -1,0 +1,379 @@
+{%- comment -%}
+  THE LONG NIGHT · hero desktop
+  ---------------------------------------------------------------------------
+  Kadr "rozbryzg / przełom" jako TŁO (obraz), cały tekst jako ŻYWY TEKST
+  w ustawieniach sekcji. To jest cały powód istnienia tej sekcji: pola typu
+  text / inline_richtext Shopify wystawia w Translate & Adapt jako treść
+  motywu, więc trzy języki to trzy zestawy tłumaczeń, a nie trzy komplety
+  grafik. Tekst wpisany w blok Custom Liquid albo w surowy HTML NIE jest
+  tłumaczalny - dlatego nie idziemy tamtą drogą.
+
+  Skala: kanwa projektowa to 1920 × 892. Wszystkie stopnie pisma i marginesy
+  są przeliczone na cqw (1cqw = 1% szerokości sekcji), więc kadr zachowuje
+  proporcje warsztatu przy każdej szerokości ekranu - dokładnie tak, jak
+  podgląd w 05-banners robi to przez transform: scale().
+
+  Mobile: osobny hero jest do zrobienia. Póki "Obraz - mobile" jest pusty,
+  telefon dostaje ten sam kadr proporcjonalnie zmniejszony (nic się nie psuje,
+  jest po prostu mały). Po wgraniu kadru mobilnego sekcja przechodzi na
+  proporcję 375 × 669 i mobilne stopnie pisma z warsztatu.
+{%- endcomment -%}
+
+{%- liquid
+  assign frame = section.settings.image
+  assign frame_mobile = section.settings.image_mobile
+  assign has_mobile = false
+  if frame_mobile != blank
+    assign has_mobile = true
+  endif
+-%}
+
+{% style %}
+  @font-face {
+    font-family: "Rosarivo";
+    src: url({{ 'Rosarivo-Regular.ttf' | asset_url }}) format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  #LongNightHero-{{ section.id }} {
+    /* Kampania · The Long Night (zastane, nie ruszać) */
+    --ln-night: #0E0E0E;
+    --ln-moon: #E92E4A;
+    --ln-red-200: #CD8682;
+    --ln-parchment: #F0E7D3;
+    --ln-sub: #D9CDB6;
+
+    /* Okno treści - kolumna jest wyśrodkowana, więc znosi kadrowanie */
+    --win-t: 20%;
+    --win-b: 28%;
+    --win-x: 8%;
+    /* Znaki narożne są zakotwiczone w rogu, więc siedzą głębiej */
+    --mark-x: 13%;
+    --mark-y: 24%;
+    --mark-size: 5.4167cqw;
+
+    position: relative;
+    container-type: inline-size;
+    aspect-ratio: 1920 / 892;
+    overflow: hidden;
+    background: var(--ln-night);
+    color: var(--ln-parchment);
+    isolation: isolate;
+  }
+
+  #LongNightHero-{{ section.id }} .ln-hero__frame {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+
+  #LongNightHero-{{ section.id }} .ln-hero__frame--mobile { display: none; }
+
+  #LongNightHero-{{ section.id }} .ln-hero__mark {
+    position: absolute;
+    inset-block-start: var(--mark-y);
+    inline-size: var(--mark-size);
+    block-size: var(--mark-size);
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 3;
+  }
+  #LongNightHero-{{ section.id }} .ln-hero__mark--left { inset-inline-start: var(--mark-x); }
+  #LongNightHero-{{ section.id }} .ln-hero__mark--right { inset-inline-end: var(--mark-x); }
+
+  #LongNightHero-{{ section.id }} .ln-hero__type {
+    position: absolute;
+    inset: var(--win-t) var(--win-x) var(--win-b);
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.7292cqw;
+  }
+
+  #LongNightHero-{{ section.id }} .ln-hero__type > * { margin: 0; }
+
+  #LongNightHero-{{ section.id }} .ln-hero__kicker {
+    font-family: Raleway, ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.9896cqw;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ln-red-200);
+  }
+
+  #LongNightHero-{{ section.id }} .ln-hero__head {
+    font-family: "Rosarivo", "Iowan Old Style", Georgia, serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 3.9583cqw;
+    line-height: 1.04;
+    letter-spacing: -0.014em;
+    color: var(--ln-parchment);
+    max-inline-size: 20ch;
+    padding-block-start: 0.8333cqw;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+
+  /* Tekst drugorzędny tonowany z kremu, nie z szarości - szarość na krwawym
+     tle robi się brudna. Zmierzone: 11,8:1 przy progu 4,5:1. */
+  #LongNightHero-{{ section.id }} .ln-hero__sub {
+    font-family: Raleway, ui-sans-serif, system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 1.1979cqw;
+    line-height: 1.48;
+    color: var(--ln-sub);
+    max-inline-size: 52ch;
+    text-wrap: balance;
+  }
+
+  /* Drugi rząd jest odcięty od pierwszego, nie tylko odstępem: pierwszy mówi,
+     co klient może zrobić, drugi co z tego ma. */
+  #LongNightHero-{{ section.id }} .ln-hero__sub--2 {
+    font-weight: 700;
+    margin-block-start: 0.7292cqw;
+    padding-block-start: 1.1458cqw;
+    border-block-start: 1px solid color-mix(in oklab, var(--ln-moon) 38%, transparent);
+    max-inline-size: 46ch;
+  }
+
+  /* Księżyc na tekście drobnym wychodzi 4,4:1 - ledwo nad progiem. Kursywa
+     niesie akcent, więc zostaje, ale tylko na krótkiej frazie. */
+  #LongNightHero-{{ section.id }} .ln-hero__type em {
+    color: var(--ln-moon);
+    font-style: italic;
+  }
+
+  #LongNightHero-{{ section.id }} .ln-hero__cta {
+    display: inline-block;
+    margin-block-start: 1.25cqw;
+    font-family: Raleway, ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.9375cqw;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ln-parchment);
+    text-decoration: none;
+    border: 1px solid var(--ln-moon);
+    padding: 0.8333cqw 1.6667cqw;
+    white-space: nowrap;
+  }
+  #LongNightHero-{{ section.id }} .ln-hero__cta:hover { background: var(--ln-moon); }
+
+  {%- if has_mobile -%}
+    /* Kadr mobilny wgrany - przechodzimy na 375 × 669 i mobilne stopnie */
+    @media screen and (max-width: 749px) {
+      #LongNightHero-{{ section.id }} {
+        aspect-ratio: 375 / 669;
+        --win-t: 14%;
+        --win-b: 22%;
+        --win-x: 7.5%;
+        --mark-x: 11%;
+        --mark-y: 17%;
+        --mark-size: 14.4cqw;
+      }
+      #LongNightHero-{{ section.id }} .ln-hero__frame--desktop { display: none; }
+      #LongNightHero-{{ section.id }} .ln-hero__frame--mobile { display: block; }
+      #LongNightHero-{{ section.id }} .ln-hero__type { gap: 4.2667cqw; }
+      /* Francuski nadtytuł jest najdłuższy i przy .2em łamał się na dwa wiersze */
+      #LongNightHero-{{ section.id }} .ln-hero__kicker { font-size: 2.5333cqw; letter-spacing: 0.1em; }
+      #LongNightHero-{{ section.id }} .ln-hero__head { font-size: 9.0667cqw; max-inline-size: 16ch; padding-block-start: 2.1333cqw; }
+      #LongNightHero-{{ section.id }} .ln-hero__sub { font-size: 4cqw; max-inline-size: 34ch; }
+      #LongNightHero-{{ section.id }} .ln-hero__sub--2 { margin-block-start: 2.6667cqw; padding-block-start: 3.7333cqw; max-inline-size: 32ch; }
+    }
+  {%- endif -%}
+{% endstyle %}
+
+<section id="LongNightHero-{{ section.id }}" class="ln-hero">
+  {%- if frame != blank -%}
+    {{
+      frame
+      | image_url: width: 2400
+      | image_tag:
+        class: 'ln-hero__frame ln-hero__frame--desktop',
+        widths: '750, 1100, 1500, 1920, 2400',
+        sizes: '100vw',
+        loading: 'eager',
+        fetchpriority: 'high',
+        alt: ''
+    }}
+  {%- else -%}
+    <img
+      src="{{ 'long-night-hero-frame.webp' | asset_url }}"
+      alt=""
+      class="ln-hero__frame ln-hero__frame--desktop"
+      width="2400"
+      height="1100"
+      loading="eager"
+      fetchpriority="high"
+    >
+  {%- endif -%}
+
+  {%- if has_mobile -%}
+    {{
+      frame_mobile
+      | image_url: width: 1200
+      | image_tag:
+        class: 'ln-hero__frame ln-hero__frame--mobile',
+        widths: '375, 750, 1125',
+        sizes: '100vw',
+        loading: 'eager',
+        alt: ''
+    }}
+  {%- endif -%}
+
+  {%- comment -%}
+    Znaki narożne są ozdobą, nie treścią - stąd surowy <img> z aria-hidden
+    zamiast image_tag (filtr nie przyjmuje atrybutów z myślnikiem).
+  {%- endcomment -%}
+  {%- if section.settings.mark_left != blank -%}
+    <img
+      src="{{ section.settings.mark_left | image_url: width: 300 }}"
+      srcset="{{ section.settings.mark_left | image_url: width: 300 }} 1x, {{ section.settings.mark_left | image_url: width: 600 }} 2x"
+      alt=""
+      aria-hidden="true"
+      class="ln-hero__mark ln-hero__mark--left"
+      width="{{ section.settings.mark_left.width }}"
+      height="{{ section.settings.mark_left.height }}"
+      loading="eager"
+    >
+  {%- endif -%}
+
+  {%- if section.settings.mark_right != blank -%}
+    <img
+      src="{{ section.settings.mark_right | image_url: width: 300 }}"
+      srcset="{{ section.settings.mark_right | image_url: width: 300 }} 1x, {{ section.settings.mark_right | image_url: width: 600 }} 2x"
+      alt=""
+      aria-hidden="true"
+      class="ln-hero__mark ln-hero__mark--right"
+      width="{{ section.settings.mark_right.width }}"
+      height="{{ section.settings.mark_right.height }}"
+      loading="eager"
+    >
+  {%- endif -%}
+
+  <div class="ln-hero__type">
+    {%- if section.settings.kicker != blank -%}
+      <p class="ln-hero__kicker">{{ section.settings.kicker }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ln-hero__head">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.body != blank -%}
+      <p class="ln-hero__sub">{{ section.settings.body }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.body_2 != blank -%}
+      <p class="ln-hero__sub ln-hero__sub--2">{{ section.settings.body_2 }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank -%}
+      <a class="ln-hero__cta" href="{{ section.settings.cta_link | default: '#' }}">
+        {{- section.settings.cta_label -}}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "The Long Night · hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Kadr"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Obraz - desktop (1920 × 892)",
+      "info": "Puste = kadr wgrany z motywem (long-night-hero-frame.webp)."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Obraz - mobile (375 × 669)",
+      "info": "Zostaw puste, dopóki nie zrobimy osobnego hero mobilnego."
+    },
+    {
+      "type": "image_picker",
+      "id": "mark_left",
+      "label": "Znak lewy - crest",
+      "info": "crest-blood.png"
+    },
+    {
+      "type": "image_picker",
+      "id": "mark_right",
+      "label": "Znak prawy - księżyc",
+      "info": "Faza za aktem: moon-rising / moon-full / moon-last / eclipse."
+    },
+    {
+      "type": "header",
+      "content": "Tekst"
+    },
+    {
+      "type": "paragraph",
+      "content": "Te pola tłumaczy Translate & Adapt (Motyw → ten szablon). Nie wklejaj tu tekstu jako obrazu ani jako Custom Liquid - to przestaje być tłumaczalne."
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Nadtytuł",
+      "default": "ACT I · BLOOD MOON RISING · OCTOBER"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Hasło",
+      "default": "Build the party you actually need."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "body",
+      "label": "Wstęp - pierwszy rząd",
+      "default": "Pick any miniatures from our 5,000+ catalogue - no pre-made bundles or fixed sets."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "body_2",
+      "label": "Wstęp - drugi rząd (pod linią)",
+      "info": "Kursywa (<em>) dostaje kolor księżyca. W zatwierdzonym kadrze nie jest użyta - trzymaj ją na krótką frazę, jeśli kiedyś będzie potrzebna.",
+      "default": "The bigger the party, the bigger the discount. Create a bundle of 20 and pay for 14!"
+    },
+    {
+      "type": "header",
+      "content": "Przycisk (opcjonalny)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Na stronie bundli akcją jest builder pod banerem, więc domyślnie przycisku nie ma."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Napis na przycisku"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Link przycisku"
+    }
+  ],
+  "presets": [
+    {
+      "name": "The Long Night · hero"
+    }
+  ]
+}
+{% endschema %}
