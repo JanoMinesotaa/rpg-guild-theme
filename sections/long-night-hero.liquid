@@ -58,7 +58,10 @@
     container-type: inline-size;
     aspect-ratio: 1920 / 892;
     overflow: hidden;
-    background: var(--ln-night);
+    /* Kadr jest RGBA i ma zyc na tle strony, nie na wlasnym. Warsztat maluje
+       pod kanwa noc, bo tam sprawdza sie kreacje na roznych podlozach -
+       w motywie to samo tlo zamykalo ramke w czarnym prostokacie. */
+    background: transparent;
     color: var(--ln-parchment);
     isolation: isolate;
   }
