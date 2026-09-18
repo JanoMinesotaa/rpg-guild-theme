@@ -1297,6 +1297,19 @@
         "padding-block-start": 72,
         "padding-block-end": 0
       }
+    },
+    "section_longNightSeason": {
+      "type": "long-night-season",
+      "settings": {
+        "kicker": "October - December 2026",
+        "heading": "The Long Night",
+        "current_act": 1,
+        "blood_strength": 62,
+        "cta_label": "See the whole season",
+        "cta_link": "shopify://pages/dnd-mystery-box",
+        "padding_top": 80,
+        "padding_bottom": 64
+      }
     }
   },
   "order": [
@@ -1304,6 +1317,7 @@
     "section_6kDNaa",
     "section_9DNaRd",
     "17891285356cd42f64",
+    "section_longNightSeason",
     "section_shopOther",
     "collection_list_9LJ6h4",
     "section_DkE4QG",
