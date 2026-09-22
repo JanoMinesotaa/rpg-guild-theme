@@ -224,3 +224,16 @@ dostęp do sekretów skrzynki.
 
 **Test bez czekania do rana:** zakładka Actions → „Dzienny raport zmian" →
 Run workflow. Ręczne uruchomienie omija bramkę godzinową.
+
+### Ograniczenie, o którym trzeba wiedzieć
+
+Mail czyta **wyłącznie `git log`**. Zmiana zrobiona przez Admin API, MCP albo
+klikiem w panelu Shopify - polityki sklepu, tłumaczenia, pliki, ustawienia
+wysyłki - nie zostawia commita, więc sama z siebie do maila nie trafi.
+
+Dlatego obowiązuje zasada: **każda taka zmiana dostaje wpis w tym pliku,
+oznaczony `[poza repo]`, i jest commitowana.** Commit z dopiskiem jest tym
+śladem, który wpada do porannego maila.
+
+Jeśli w dzienniku widzisz lukę - zmianę na sklepie, której tu nie ma - to znaczy,
+że zasada została złamana, a nie że automat zawiódł.
