@@ -195,3 +195,32 @@ dla `/bin/bash`.
 5. **Wariant poziomy nowego zdjęcia** (`Custom_Production_2026_landscape.webp`)
    jest podstawiony w czterech szablonach terenów, których nie używa żaden
    produkt. Dziś to martwy kod.
+
+---
+
+## Jak działa ten dziennik
+
+**Repozytorium:** https://github.com/JanoMinesotaa/rpg-guild-theme
+**Ten plik na surowo:** https://raw.githubusercontent.com/JanoMinesotaa/rpg-guild-theme/main/rpg_guild_changelog.md
+
+Plik jest publiczny, więc można go wkleić do dowolnego czatu jako link - nie
+wymaga logowania ani konta na GitHubie.
+
+**Codzienny mail o 8:00** - workflow `.github/workflows/dziennik-zmian.yml`
+zbiera commity z poprzedniego dnia kalendarzowego i wysyła je mailem.
+Gdy zmian nie było, mail nie idzie w ogóle.
+
+GitHub Actions zna tylko UTC, a 8:00 w Polsce to 06:00 UTC latem i 07:00 zimą.
+Dlatego workflow odpala się dwa razy, a wysyłka jest bramkowana sprawdzeniem
+lokalnej godziny w strefie `Europe/Warsaw` - mail wychodzi raz dziennie,
+o 8:00 czasu polskiego, przez cały rok.
+
+Wysyłka idzie przez `smtplib` w `.github/scripts/dziennik_maila.py`, bez
+zewnętrznych akcji z marketplace'u - w publicznym repo cudza akcja miałaby
+dostęp do sekretów skrzynki.
+
+**Sekrety repo, które muszą być ustawione:** `MAIL_SERVER`, `MAIL_PORT`,
+`MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_TO`, opcjonalnie `MAIL_CC`.
+
+**Test bez czekania do rana:** zakładka Actions → „Dzienny raport zmian" →
+Run workflow. Ręczne uruchomienie omija bramkę godzinową.
