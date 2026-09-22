@@ -74,6 +74,42 @@ def zbuduj_tresc(lista, od, repo):
         linie.append("")
         linie.append(f"    Diff: https://github.com/{repo}/commit/{c['krotki']}")
         linie.append("")
+
+    surowy = f"https://raw.githubusercontent.com/{repo}/main/rpg_guild_changelog.md"
+    linie += [
+        "",
+        "=" * 64,
+        "JAK PODPIAC SWOJEGO CHATA POD TEN DZIENNIK",
+        "=" * 64,
+        "",
+        "Pelny dziennik jest publiczny, wiec kazdy chat z dostepem do sieci",
+        "(ChatGPT, Claude, Gemini) przeczyta go z tego adresu:",
+        "",
+        f"  {surowy}",
+        "",
+        "SPOSOB 1 - doraznie, bez konfiguracji",
+        "Wklej powyzszy link do czatu i dopisz pytanie, np.:",
+        "",
+        '  "Przeczytaj ten plik i powiedz, co zmienilo sie w ostatnim tygodniu"',
+        '  "Z tego dziennika: jakie sa znane, otwarte problemy?"',
+        '  "Czy w tym motywie sa jakies pulapki, o ktorych powinienem wiedziec',
+        '   zanim dotkne pliku assets/base.css?"',
+        "",
+        "SPOSOB 2 - na stale, wlasny GPT (ChatGPT Plus)",
+        "ChatGPT -> Explore GPTs -> Create -> w polu Instructions wklej:",
+        "",
+        f'  "Zrodlem prawdy o motywie Shopify RPG Guild jest {surowy}',
+        '   Przed kazda odpowiedzia pobierz ten plik i opieraj sie na nim.',
+        '   Odpowiadaj po polsku, konkretnie, z numerami commitow."',
+        "",
+        "Wlacz w nim Web Browsing. Od tego momentu pytasz go normalnie,",
+        "a on sam siega po aktualna wersje dziennika.",
+        "",
+        "UWAGA: GitHub cache'uje surowe pliki okolo 5 minut. Jesli commit",
+        "wlasnie poszedl, a chat go nie widzi - odczekaj chwile i powtorz.",
+        "",
+        "Kod motywu w calosci: https://github.com/" + repo,
+    ]
     return "\n".join(linie)
 
 def main():
