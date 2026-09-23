@@ -6,7 +6,7 @@
   zostaje nietknięty. Dlatego landing jest czterema osobnymi sekcjami,
   a nie jedną.
 
-  FORMULARZ JEST NATYWNY: `{% form 'customer' %}` z polem contact[email]
+  FORMULARZ JEST NATYWNY: tag form 'customer' z polem contact[email]
   i tagiem "newsletter". To jest jedyna droga, którą Shopify zapisuje adres
   jako subskrybenta - a stamtąd bierze go Edrone. Żadnego przechwytywania
   submitu JavaScriptem: skrypt dokłada tylko podpowiedź przy literówce
@@ -216,7 +216,7 @@
     { "type": "text", "id": "placeholder", "label": "Podpowiedź w polu", "default": "you@table.example" },
     { "type": "text", "id": "button", "label": "Napis na przycisku", "default": "Send word" },
     { "type": "text", "id": "button_sending", "label": "Napis w trakcie wysyłania", "default": "Sending" },
-    { "type": "text", "id": "msg_idle", "label": "Komunikat w spoczynku", "default": "" },
+    { "type": "text", "id": "msg_idle", "label": "Komunikat w spoczynku", "info": "Zwykle puste - linia pod polem czeka na komunikat po wysłaniu." },
     { "type": "text", "id": "msg_success", "label": "Komunikat po zapisie", "default": "You are on the list. Watch for the first letter." },
     { "type": "text", "id": "msg_error", "label": "Komunikat przy literówce w adresie", "default": "That address is missing something. Check it and try again." },
     { "type": "header", "content": "Zgoda marketingowa" },

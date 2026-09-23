@@ -70,6 +70,11 @@ od początku, a po trzech sekundach bezpiecznik `ln-shown` pokazuje wszystko.
 (W pierwszej wersji skrypt nie był nigdzie wstawiony, więc karty i księga
 zostałyby niewidoczne - wyłapane przed pushem.)
 
+**Pułapka przy pierwszym pushu:** serwer odrzucił `long-night-lp-signal`,
+bo pole `text` miało `"default": ""` - Shopify nie przyjmuje pustego defaultu,
+a lokalny `theme check` tego nie łapie. Szablon odpadł razem z nią, bo
+odwoływał się do nieistniejącej sekcji. Pozostałe 18 plików weszło.
+
 **Jak cofnąć:** wszystkie pliki są nowe, więc `git rm` tych ścieżek albo powrót
 do tagu `przed-lp-long-night` (`ebf2d46`). Na sklepie: odepnij szablon
 `long-night` od strony - sekcje przestają się renderować, nic innego nie zależy
