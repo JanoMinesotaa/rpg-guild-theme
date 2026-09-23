@@ -2,7 +2,7 @@
   THE LONG NIGHT · landing sezonu - PODKŁAD WSPÓLNY
   ---------------------------------------------------------------------------
   Renderuje go KAŻDA z czterech sekcji landingu, w pierwszej linii szablonu.
-  Robi dwie rzeczy i nic więcej:
+  Robi trzy rzeczy i nic więcej:
 
     1. wstawia arkusz `long-night-lp.css` - tokeny kampanii i prymitywy
        (przycisk, miara strony, nadtytuł, wejście sekcji);
@@ -18,6 +18,17 @@
 {%- endcomment -%}
 
 {{ 'long-night-lp.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Treść landingu NIGDY nie zależy od tego, czy skrypt dojedzie. Ukrycie przed
+  wejściem sekcji działa tylko pod `html.ln-js`, który stawia ten wiersz
+  inline - zanim treść sekcji się sparsuje, więc nie ma mignięcia. Po trzech
+  sekundach `ln-shown` pokazuje wszystko, nawet gdyby long-night-lp.js w ogóle
+  się nie wczytał. Cztery sekcje = cztery kopie tego wiersza; są idempotentne,
+  a sam skrypt pilnuje, żeby wykonać się raz.
+{%- endcomment -%}
+<script>(function(d){d.classList.add('ln-js');setTimeout(function(){d.classList.add('ln-shown')},3000)})(document.documentElement);</script>
+<script src="{{ 'long-night-lp.js' | asset_url }}" defer></script>
 
 {% style %}
   @font-face{

@@ -125,12 +125,16 @@
 
 /* Wejście sekcji - jedyny ruch wjazdowy na stronie. Klasę `is-in` dokłada
    long-night-lp.js; ma bezpiecznik czasowy, więc strona nigdy nie zostaje pusta. */
-.ln-lp .ln-reveal{opacity:0;transform:translateY(14px);will-change:opacity,transform;
+.ln-lp .ln-reveal{
   transition:opacity var(--dur-long) var(--ease-out),transform var(--dur-long) var(--ease-out)}
-.ln-lp .ln-reveal.is-in{opacity:1;transform:none}
+/* Ukrywamy TYLKO wtedy, gdy snippet postawił `html.ln-js`. Bez skryptu treść
+   stoi widoczna od początku; `ln-shown` to bezpiecznik po trzech sekundach. */
+html.ln-js .ln-lp .ln-reveal{opacity:0;transform:translateY(14px);will-change:opacity,transform}
+html.ln-js .ln-lp .ln-reveal.is-in,
+html.ln-shown .ln-lp .ln-reveal{opacity:1;transform:none}
 
 @media (prefers-reduced-motion:reduce){
   .ln-lp *,.ln-lp *::before,.ln-lp *::after{
     animation-duration:.01ms!important;transition-duration:.01ms!important}
-  .ln-lp .ln-reveal{opacity:1;transform:none}
+  html.ln-js .ln-lp .ln-reveal{opacity:1;transform:none}
 }

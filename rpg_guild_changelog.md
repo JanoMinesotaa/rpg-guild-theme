@@ -63,6 +63,13 @@ obsłużyć bez przepisywania sekcji.
 i renderuje się od razu po wgraniu, a każdy da się nadpisać `image_picker`-em
 w edytorze bez pushu.
 
+**Wejście sekcji nie zależy od skryptu.** Karty i księga pojawiają się
+z krótkim wjazdem, ale ukrycie przed wjazdem działa tylko pod `html.ln-js`,
+który snippet stawia inline przed treścią. Bez skryptu treść stoi widoczna
+od początku, a po trzech sekundach bezpiecznik `ln-shown` pokazuje wszystko.
+(W pierwszej wersji skrypt nie był nigdzie wstawiony, więc karty i księga
+zostałyby niewidoczne - wyłapane przed pushem.)
+
 **Jak cofnąć:** wszystkie pliki są nowe, więc `git rm` tych ścieżek albo powrót
 do tagu `przed-lp-long-night` (`ebf2d46`). Na sklepie: odepnij szablon
 `long-night` od strony - sekcje przestają się renderować, nic innego nie zależy

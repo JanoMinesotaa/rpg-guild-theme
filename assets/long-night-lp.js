@@ -18,6 +18,10 @@
 (function () {
   "use strict";
 
+  /* Każda z czterech sekcji wstawia ten plik - wykonujemy się tylko raz. */
+  if (window.__lnLp) return;
+  window.__lnLp = true;
+
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   function wejscie(root) {
