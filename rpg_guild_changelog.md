@@ -10,6 +10,46 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-09-23
+
+### Rząd USP w koszyku - desktop przestał się łamać
+`dbeb77f` · `assets/base.css`
+
+Na desktopie tekst przy ikonach łamał się na dwie linie i rozjeżdżał układ.
+Dwie niezależne przyczyny:
+
+**1. Progi patrzyły na szerokość okna, a decyduje szerokość rzędu.**
+Z produktami w koszyku strona przechodzi na dwie kolumny i rząd USP dostaje
+znacznie mniej miejsca, niż sugeruje ekran:
+
+| okno | szerokość rzędu |
+|---|---|
+| 1749px | 1012px |
+| 1440px | 901px |
+| 1200px | **681px** |
+| 768px | **265px** |
+
+Reguła „od 1200px cztery kolumny" wywalała się dokładnie przy 1200 i 768.
+
+**2. Równe kolumny dawały każdemu USP tyle samo.** W koszyku zmieniono tekst -
+`VAT incl.` ustąpiło `Free shipping over 60 $/€`, które potrzebuje 257px.
+Przy kolumnie 232px łamało się na dwie linie, a `Made in EU` marnowało 100px.
+
+**Rozwiązanie:** flex z zawijaniem i `space-between`, **bez ani jednego progu**.
+Liczba USP w rzędzie wynika z realnie dostępnego miejsca, każdy zajmuje tyle,
+ile potrzebuje.
+
+Zmierzone na żywo z produktami w koszyku: rząd 1012 → 4 w rzędzie (odstępy
+82/83/83), 901 → 4 (46/45/46), 681 → 3+1 (44/44), 265 → po jednym.
+Wszędzie wysokość 25px, zero łamania, zero poziomego paska. Mobile nietknięte.
+
+**Dla dewelopera:** jeśli kiedyś dojdzie piąty USP albo dłuższy tekst - nic nie
+trzeba zmieniać. To był cały sens rezygnacji z progów.
+
+**Cofnięcie:** `git checkout przed-usp-flex-fix -- assets/base.css`
+
+---
+
 ## 2026-09-21
 
 ### Podmiana zdjęcia „Custom Production" na nową halę drukarek
