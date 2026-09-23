@@ -12648,6 +12648,9 @@ color: #54130F !important;
 color: #54130F !important;
 }
 
+/* ZAMKNIĘCIE .swym-storefront-layout-notification-message */
+} 
+
 /* ------------------------------------------------------------------
    Safari 26 (iOS): szklany pasek zamiast jednolitej bordowej belki.
 
@@ -12666,10 +12669,10 @@ color: #54130F !important;
    snippets/meta-tags.liquid assets/base.css
    ------------------------------------------------------------------ */
 
-/* Jednoznaczny kolor tla, gdy Safari nie ma czego probkowac. */
+/* Jednoznaczny kolor tla, gdy Safari nie ma czego probkowac. 
 html {
   background-color: var(--color-background, #F0E7D3);
-}
+} */
 
 /* Plywajace serduszko listy zyczen - trzymaj nad paskiem domowym. */
 .swym-heart {
@@ -12685,4 +12688,914 @@ html {
 /* Szuflada menu - zapas na dole, zeby ostatnia pozycja byla klikalna. */
 .menu-drawer {
   padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+
+/* DEFAULT - PRODUCT THEME - FIX */
+
+/* PRODUCT MAIN */
+.shopify-section[id$="__main"]:has(.product-information) {
+  max-width: 1480px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  padding-top: 32px !important;
+}
+
+.shopify-section[id$="__main"]:has(.product-information)
+  .product-information {
+  grid-template-columns: 1fr !important;
+}
+
+.shopify-section[id$="__main"]:has(.product-information)
+  .product-information__media {
+  margin-bottom: 20px !important;
+}
+
+@media (min-width: 768px) {
+  .shopify-section[id$="__main"]:has(.product-information) {
+    max-width: 1500px !important;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    padding-top: 50px !important;
+  }
+
+  .shopify-section[id$="__main"]:has(.product-information)
+    .product-information,
+  .shopify-section[id$="__main"]:has(.product-information)
+    .product-information__grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .shopify-section[id$="__main"]:has(.product-information) {
+    max-width: 1540px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    padding-top: 80px !important;
+  }
+}
+
+/* PRODUCT MAIN — VARIANTS 
+
+/* Treatment variant */
+.shopify-section[id$="__main"]:has(.product-information)
+fieldset:last-of-type .variant-option__button-label {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+/* Variant preview */
+.shopify-section[id$="__main"]:has(.product-information)
+fieldset:last-of-type
+.variant-option__button-label:nth-of-type(n+3)::after {
+  content: "" !important;
+  position: absolute !important;
+  width: 34px !important;
+  height: 34px !important;
+  left: auto !important;
+  right: -20px !important;
+  top: calc(100% - 16px) !important;
+  bottom: auto !important;
+  border-radius: 4px !important;
+  opacity: 0 !important;
+  transition: 0.2s !important;
+  z-index: 20 !important;
+  pointer-events: none !important;
+}
+
+/* Grey */
+.shopify-section[id$="__main"]:has(.product-information)
+fieldset:last-of-type
+.variant-option__button-label:nth-of-type(3)::after {
+  background: rgb(213, 213, 210) !important;
+}
+
+/* Black */
+.shopify-section[id$="__main"]:has(.product-information)
+fieldset:last-of-type
+.variant-option__button-label:nth-of-type(4)::after {
+  background: rgb(13, 13, 13) !important;
+}
+
+/* Red */
+.shopify-section[id$="__main"]:has(.product-information)
+fieldset:last-of-type
+.variant-option__button-label:nth-of-type(5)::after {
+  background: rgb(156, 17, 22) !important;
+}
+
+/* Drybrush */
+.shopify-section[id$="__main"]:has(.product-information)
+fieldset:last-of-type
+.variant-option__button-label:nth-of-type(6)::after {
+  background-color: transparent !important;
+  background-image: url("/cdn/shop/files/Search.png?v=1757527308") !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+/* Show preview on hover / selected */
+.shopify-section[id$="__main"]:has(.product-information)
+fieldset:last-of-type
+.variant-option__button-label:nth-of-type(n+3):hover::after,
+.shopify-section[id$="__main"]:has(.product-information)
+fieldset:last-of-type
+.variant-option__button-label:nth-of-type(n+3):has(input:checked)::after {
+  opacity: 1 !important;
+}
+
+.shopify-section[id$="__main"]:has(.product-information)
+fieldset:last-of-type
+.variant-option__button-label:nth-of-type(n+3):hover {
+  z-index: 30 !important;
+}
+
+
+/* PRODUCT MAIN — DIVIDER */
+.shopify-section[id$="__main"]:has(.product-information)
+.divider__line {
+  border-bottom-color: rgb(213, 177, 147) !important;
+}
+
+
+/* PRODUCT MAIN — ADD TO CART */
+.shopify-section[id$="__main"]:has(.product-information)
+.add-to-cart-icon {
+  display: none !important;
+}
+
+/* PRODUCT MAIN — DELIVERY / POLICIES ORDER */
+.shopify-section[id$="__main"]:has(.product-information)
+.product-details .group-block-content
+.shopify-app-block[id*="delivery_timer"] {
+  order: 7 !important;
+}
+
+.shopify-section[id$="__main"]:has(.product-information)
+.product-details .group-block-content
+.policies-flex {
+  order: 8 !important;
+}
+
+/* PRODUCT TABS */
+
+.shopify-section[id*="__product_tabs_"] {
+  max-width: 1480px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  margin-top: 80px !important;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__pill {
+  color: rgb(48, 38, 30);
+  font-size: 18px;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__pill img {
+  width: 32px;
+  height: 32px;
+}
+
+.shopify-section[id*="__product_tabs_"]
+.product-tabs__content-col h3:last-of-type:not(h3:first-of-type) {
+  color: rgb(48, 38, 30) !important;
+  font-size: 20px !important;
+  font-family: Raleway, sans-serif !important;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__table.rte img {
+  display: none;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__content {
+  align-items: flex-end;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__btn {
+  display: inline-flex !important;
+  width: unset !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__media img {
+  max-width: 264px;
+  margin-left: auto;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__media {
+  margin-bottom: -42px;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__table img {
+  max-width: 300px;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__table h2,
+.shopify-section[id*="__product_tabs_"] .product-tabs__table h2 > span {
+  font-size: 20px !important;
+  line-height: 1.35 !important;
+  text-align: left !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+.product-tabs__content .product-tabs__heading {
+  margin-top: 20px;
+  font-size: 24px !important;
+  line-height: 1.35 !important;
+  text-align: left !important;
+  font-weight: 400 !important;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__frame-inner {
+  padding: 20px;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__frame {
+  max-width: unset !important;
+  padding: 20px 0 !important;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__separator {
+  margin-top: 30px !important;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__nav {
+  padding: 0 !important;
+  margin: 0 0 0 10px !important;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__ribbon {
+  display: none;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__nav button {
+  background-color: rgb(234, 223, 199) !important;
+  border-radius: 4px 4px 0 0 !important;
+  color: rgb(48, 38, 30) !important;
+  font-size: 18px !important;
+  height: 48px !important;
+  font-family: Rosarivo, serif !important;
+  font-weight: 300 !important;
+  border: 1px solid rgb(213, 177, 147) !important;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__nav .is-active {
+  background-color: rgb(84, 19, 15) !important;
+  color: rgb(240, 231, 211) !important;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__table p,
+.shopify-section[id*="__product_tabs_"] .product-tabs__table ul li {
+  font-size: 16px !important;
+}
+
+.shopify-section[id*="__product_tabs_"] .product-tabs__pills {
+  overflow-x: auto;
+  max-width: calc(100vw - 80px);
+  padding-bottom: 10px;
+  column-gap: 40px;
+  flex-wrap: nowrap !important;
+}
+
+
+/* ABOUT */
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_about_"] .product-tabs__content {
+  display: block !important;
+}
+
+
+/* SCALE */
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_scale_"] .product-tabs__content {
+  align-items: flex-start !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_scale_"] .product-tabs__frame-inner {
+  grid-template-columns: .65fr .35fr;
+  grid-template-rows: auto auto auto auto;
+  display: grid;
+  column-gap: 32px;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_scale_"] .product-tabs__pills {
+  grid-area: 1 / 1 / 2 / 3;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_scale_"] .product-tabs__frame-inner > div:nth-of-type(2) {
+  grid-area: 2 / 1 / 3 / 3;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_scale_"] .product-tabs__frame-inner > div:nth-of-type(3) {
+  grid-area: 4 / 1 / 5 / 3;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_scale_"] .product-tabs__content {
+  grid-area: 3 / 1 / 4 / 3;
+}
+
+
+/* TREATMENT */
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_treatment_"] .product-tabs__media img {
+  max-width: 480px !important;
+  margin: auto auto 40px !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_treatment_"] .product-tabs__content {
+  align-items: flex-start !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_treatment_"] .tab-image {
+  border-radius: 4px;
+  border: 1px solid rgb(82, 18, 15);
+  border-bottom-width: 2px;
+  padding: 0 10px;
+}
+
+
+/* PRODUCT TABS — BREAKPOINTS */
+
+@media (max-width: 480px) {
+  .shopify-section[id*="__product_tabs_"] .product-tabs__nav button {
+    font-size: 15.5px !important;
+    height: 42px !important;
+    padding: 0 10px !important;
+  }
+
+  .shopify-section[id*="__product_tabs_"] .product-tabs__nav {
+    gap: 5px;
+    margin-left: 0 !important;
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 370px) {
+  .shopify-section[id*="__product_tabs_"] .product-tabs__nav button {
+    font-size: 14px !important;
+  }
+}
+
+@media (min-width: 400px) {
+  .shopify-section[id*="__product_tabs_"] .product-tabs__nav {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 479px) {
+  .shopify-section[id*="__product_tabs_"]
+  [id*="-tab_scale_"] > div > div {
+    grid-template-columns: 1fr !important;
+  }
+
+  .shopify-section[id*="__product_tabs_"]
+  [id*="-tab_scale_"] > div > div > div {
+    grid-column: 1 / 3 !important;
+  }
+}
+
+@media (min-width: 480px) {
+  .shopify-section[id*="__product_tabs_"]
+  [id*="-tab_scale_"] .product-tabs__frame-inner > div:nth-of-type(3) {
+    display: block !important;
+  }
+
+  .shopify-section[id*="__product_tabs_"]
+  [id*="-tab_scale_"] .product-tabs__frame-inner > div:nth-of-type(4) {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .shopify-section[id*="__product_tabs_"] {
+    max-width: 1500px !important;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    margin-top: 80px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .shopify-section[id*="__product_tabs_"] {
+    max-width: 1540px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    margin-top: 120px !important;
+  }
+
+  .shopify-section[id*="__product_tabs_"]
+  [id*="-tab_scale_"] .product-tabs__frame-inner > div:nth-of-type(3) {
+    grid-area: 3 / 1 / 4 / 2 !important;
+  }
+
+  .shopify-section[id*="__product_tabs_"]
+  [id*="-tab_scale_"] .product-tabs__content {
+    grid-area: 3 / 2 / 4 / 3 !important;
+    align-items: flex-start !important;
+  }
+
+  .shopify-section[id*="__product_tabs_"]
+  [id*="-tab_scale_"] .product-tabs__ribbon {
+    grid-area: 4 / 1 / 5 / 3 !important;
+    margin-top: 20px !important;
+  }
+
+  .shopify-section[id*="__product_tabs_"]
+  [id*="-tab_treatment_"] .product-tabs__content {
+    grid-template-columns: 1fr !important;
+    row-gap: 40px !important;
+    margin-top: 40px !important;
+  }
+
+  .shopify-section[id*="__product_tabs_"]
+  [id*="-tab_treatment_"] .tab-image {
+    margin-top: -100px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .shopify-section[id*="__product_tabs_"] .product-tabs__pills {
+    overflow-x: hidden;
+    max-width: unset;
+    column-gap: unset;
+  }
+}
+
+
+/* PRODUCT TABS — FERA REVIEWS */
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-reviews-header-title {
+  font-size: 32px !important;
+  color: rgb(82, 18, 15) !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-reviews-header-summary {
+  display: none !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-reviews-header {
+  display: flex !important;
+  gap: 20px !important;
+  align-items: center !important;
+  border: none !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-btn--primary {
+  position: relative;
+  font-family: Rosarivo, serif !important;
+  background-color: rgb(240, 231, 211) !important;
+  font-size: 14px !important;
+  border: 1px solid rgb(149, 104, 75) !important;
+  border-bottom-width: 8px !important;
+  height: 50px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  flex: unset !important;
+  color: rgb(47, 37, 29) !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-btn--primary:hover {
+  color: rgb(149, 103, 75) !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-btn--primary .fera-icon {
+  display: none !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-btn--primary .fera-text {
+  display: flex !important;
+  color: rgb(47, 37, 29) !important;
+  font-size: 14px !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-reviews-masonry-item {
+  flex-grow: 1;
+  border: 1px solid rgb(84, 19, 15) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 22px 14px !important;
+  margin-top: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-reviews-masonry-item .fera-review-content {
+  padding: 0 !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-heading {
+  color: rgb(48, 38, 30);
+  font-size: 20px !important;
+  font-family: Rosarivo, serif !important;
+  font-weight: 400 !important;
+  line-height: 1.35 !important;
+  order: 3;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-body {
+  font-size: 18px !important;
+  color: rgb(48, 38, 30) !important;
+  order: 4;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-customer-name {
+  color: rgb(48, 38, 30);
+  font-size: 16px !important;
+  font-weight: 400 !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-customer {
+  order: 2;
+  margin-bottom: 10px;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-date-val {
+  color: rgb(96, 73, 54);
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  text-transform: lowercase !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-customer-source {
+  display: none;
+}
+
+
+/* Fera — newer markup */
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-reviews-body-items > div {
+  background-color: rgb(238, 226, 201) !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: 1px solid rgb(93, 19, 9) !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-media-carousel {
+  display: none !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-ratingAndDate b {
+  background-color: rgb(255, 194, 26) !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-ratingAndDate {
+  margin-bottom: 5px !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-customer-display-name-text {
+  color: rgb(47, 37, 29) !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-customer-flare-icon {
+  width: 19px !important;
+  height: 19px !important;
+  margin-top: -4px !important;
+  margin-left: 5px !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-verification-icon-bg {
+  fill: rgb(82, 18, 15) !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-verification-icon-stroke {
+  fill: transparent !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-customer-display-location,
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-truncatedText-showMore {
+  color: rgb(95, 72, 53) !important;
+  font-size: 16px !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-truncatedText--truncated {
+  color: rgb(47, 37, 29) !important;
+  font-size: 18px !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-product {
+  border-top: none !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-product-link {
+  background-color: rgb(214, 178, 149);
+  border: 1px solid rgb(95, 72, 53);
+  border-radius: 4px;
+  padding: 4px !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-product-image-container img,
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-product-image-container {
+  width: 69px !important;
+  min-width: 69px !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-product-image-container img {
+  object-fit: cover;
+  height: 87px !important;
+  border-radius: 4px !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-product-image-container {
+  position: relative;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-product-image-container::after {
+  content: "";
+  background-image: url("/cdn/shop/files/card2.png?v=1754430694");
+  background-size: contain;
+  position: absolute !important;
+  width: 69px !important;
+  height: 87px !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-reviews-masonry .fera-review-content,
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-product {
+  padding: 18px !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-product-link-caption {
+  color: rgb(47, 37, 29) !important;
+  font-size: 18px !important;
+  font-family: Rosarivo, serif !important;
+  margin-bottom: 10px !important;
+  font-weight: 400 !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-product-name {
+  color: rgb(47, 37, 29) !important;
+  font-size: 16px !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-product-caret-container {
+  display: none !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review-product-text-container {
+  margin-left: 5px !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-reviews-body {
+  max-width: unset !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-review--for-product {
+  justify-content: space-between;
+  flex-direction: column;
+  display: flex;
+  min-height: 360px;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-widget-container {
+  margin-top: 20px !important;
+  margin-bottom: 0 !important;
+}
+
+.shopify-section[id*="__product_tabs_"]
+[id*="-tab_reviews_"] .fera-widget-footer {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 200px !important;
+}
+
+@media (min-width: 1358px) {
+  .shopify-section[id*="__product_tabs_"]
+  [id*="-tab_reviews_"] .fera-review--for-product {
+    transform: none !important;
+    width: 100% !important;
+    position: static !important;
+  }
+
+  .shopify-section[id*="__product_tabs_"]
+  [id*="-tab_reviews_"] .fera-reviews-body-items {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    display: grid !important;
+  }
+}
+
+@media (max-width: 479px) {
+  .shopify-section[id*="__product_tabs_"]
+  [id*="-tab_reviews_"] .fera-widget-footer {
+    max-width: unset !important;
+    width: 100% !important;
+  }
+}
+/* YOU MAY ALSO LIKE */
+
+.shopify-section[id$="__section_LN3dwL"] .btn-2 {
+  display: none !important;
+}
+
+.shopify-section[id$="__section_YTtm4Q"] {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .shopify-section[id$="__section_YTtm4Q"] {
+    display: flex !important;
+  }
+
+  .shopify-section[id$="__section_YTtm4Q"] > div > div > div {
+    grid-column: 1 !important;
+    margin-bottom: 20px !important;
+  }
+
+  .shopify-section[id$="__section_YTtm4Q"] > div > div {
+    width: calc(100vw - 40px) !important;
+  }
+}
+
+
+.shopify-section[id$="__section_Jp6wHP"] {
+  position: relative !important;
+}
+
+.shopify-section[id$="__section_Jp6wHP"] > div {
+  padding-top: 40px !important;
+}
+
+.shopify-section[id$="__section_Jp6wHP"] > div > div > div > div {
+  gap: 40px !important;
+}
+
+@media (max-width: 767px) {
+  .shopify-section[id$="__section_Jp6wHP"]
+  > div > div > div > div > div:first-of-type {
+    order: 2 !important;
+  }
+
+  .shopify-section[id$="__section_Jp6wHP"]
+  > div > div > div > div {
+    padding-bottom: 15px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .shopify-section[id$="__section_Jp6wHP"]
+  .hero-guild > div > div > div > div:first-of-type {
+    flex: 1 1 50% !important;
+    gap: 120px !important;
+  }
+}
+
+@media (min-width: 1152px) {
+  .shopify-section[id$="__section_Jp6wHP"]
+  > div > div > div > div {
+    align-items: center !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .shopify-section[id$="__section_Jp6wHP"]
+  > div > div > div > div {
+    gap: 20px !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  .shopify-section[id$="__section_Jp6wHP"]
+  > div > div > div > div {
+    gap: 40px !important;
+  }
+}
+
+@media (min-width: 1680px) {
+  .shopify-section[id$="__section_Jp6wHP"]
+  > div > div > div > div {
+    gap: 80px !important;
+  }
+}
+
+/* Welcome to our Guild section */
+
+.shopify-section[id*="__section_f94DFM"]
+> .section-wrapper.hero-guild {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+@media (min-width: 768px) {
+  .shopify-section[id*="__section_f94DFM"]
+  > .section-wrapper.hero-guild {
+    max-width: 1500px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .shopify-section[id*="__section_f94DFM"]
+  > .section-wrapper.hero-guild {
+    max-width: 1540px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+}
+
+/* CHARACTER SHEET - PRODUCT THEME - FIX */
+
+/* Explore our DnD Character Sheets */
+.shopify-section[id$="__product_list_Ww4jxV"] {
+  max-width: 1480px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+@media (min-width: 768px) {
+  .shopify-section[id$="__product_list_Ww4jxV"] {
+    max-width: 1500px !important;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .shopify-section[id$="__product_list_Ww4jxV"] {
+    max-width: 1540px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+}
+
+/* Character Sheet — Product Tabs */
+@media (min-width: 1024px) {
+  .shopify-section[id$="__product_tabs_RQXq6J"] {
+    max-width: 1480px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
 }

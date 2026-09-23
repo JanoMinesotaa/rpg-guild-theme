@@ -14,11 +14,11 @@
     "header_announcements_Hp7Wcj": {
       "type": "header-announcements",
       "blocks": {
-        "announcement_UWgc7f": {
+        "announcement_9xjeXf": {
           "type": "_announcement",
           "settings": {
-            "text": "Check our Free Mini of the Month!",
-            "link": "shopify://products/free-dnd-mini-of-the-month",
+            "text": "FREE SHIPPING OVER 60 $/€",
+            "link": "shopify://collections/customers-favourites-dnd-miniatures",
             "font": "var(--font-body--family)",
             "font_size": "1.125rem",
             "weight": "",
@@ -27,11 +27,11 @@
           },
           "blocks": {}
         },
-        "announcement_9xjeXf": {
+        "announcement_UWgc7f": {
           "type": "_announcement",
           "settings": {
-            "text": "Hundreds of new Miniatures!",
-            "link": "shopify://collections/new-collection",
+            "text": "CHECK OUT OUR FREE MINI OF THE MONTH!",
+            "link": "shopify://products/free-dnd-mini-of-the-month",
             "font": "var(--font-body--family)",
             "font_size": "1.125rem",
             "weight": "",
@@ -42,8 +42,8 @@
         }
       },
       "block_order": [
-        "announcement_UWgc7f",
-        "announcement_9xjeXf"
+        "announcement_9xjeXf",
+        "announcement_UWgc7f"
       ],
       "name": "t:names.announcement_bar",
       "settings": {
