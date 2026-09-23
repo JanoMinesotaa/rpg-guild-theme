@@ -1,0 +1,209 @@
+{%- comment -%}
+  THE LONG NIGHT · landing sezonu - 1/4 · AFISZ
+  ---------------------------------------------------------------------------
+  Pierwsza z czterech sekcji, z których składa się landing. Każda jest osobnym
+  plikiem, żeby podmiana afisza przy przejściu sezonu do następnego aktu NIE
+  dotykała sekcji z zapisem na listy (4/4), pod którą siedzi Edrone.
+
+  AKT JEDZIE Z USTAWIENIA, nie z adresu. W prototypie przełączał go parametr
+  ?act=1|2|3 i liczył to JavaScript; tutaj wybór aktu jest w schemacie, więc
+  właściwy kadr jest już w wyrenderowanym HTML-u. Dwa zyski: przeglądarka
+  pobiera JEDEN kadr zamiast trzech (oszczędność ~0,8 MB) i nie ma mignięcia
+  złego kadru przed startem skryptu.
+
+  TEKST JEST W USTAWIENIACH, NIGDY W MARKUPIE. Pola text / inline_richtext
+  Shopify wystawia w Translate & Adapt jako treść motywu. Tekst wpisany
+  w Custom Liquid albo wypalony w grafice NIE jest tłumaczalny.
+
+  Sekcja maluje własną noc (--ln-night). Poniżej afisza landing jest jedną
+  nieprzerwaną nocą aż do stopki - kolor niosą wyłącznie kadry, nie tła sekcji.
+
+  Górna belka (herb + powrót do sklepu) jest DOMYŚLNIE WYŁĄCZONA: na sklepie
+  nad sekcją stoi nagłówek motywu i dwie nawigacje jedna nad drugą to szum.
+  Włącz ją tylko wtedy, gdy landing dostanie szablon bez nagłówka.
+{%- endcomment -%}
+
+{% render 'long-night-lp-base' %}
+
+{%- liquid
+  assign act = section.settings.act | default: '1'
+
+  case act
+    when '2'
+      assign frame = section.settings.image_act_2
+      assign frame_fallback = 'ln-lp-poster-2.webp'
+    when '3'
+      assign frame = section.settings.image_act_3
+      assign frame_fallback = 'ln-lp-poster-3.webp'
+    else
+      assign frame = section.settings.image_act_1
+      assign frame_fallback = 'ln-lp-poster-1.webp'
+  endcase
+
+  assign shop_url = section.settings.shop_link | default: routes.root_url
+-%}
+
+{% style %}
+  #LnPoster-{{ section.id }}{
+    display:grid;grid-template-rows:auto 1fr auto;
+    min-block-size:min(100svh,56rem);
+    background:var(--ln-night);
+    overflow:clip;isolation:isolate;
+    padding-block-start:{{ section.settings.padding_top }}px;
+    padding-block-end:{{ section.settings.padding_bottom }}px;
+  }
+  /* Kadr aktu, w którym sezon aktualnie stoi. Faza księżyca w kadrze zgadza
+     się z fazą na karcie pod spodem: sierp w październiku, pełnia
+     w listopadzie, zaćmienie w grudniu. */
+  #LnPoster-{{ section.id }} .ln-poster__img{
+    position:absolute;inset:0;inline-size:100%;block-size:100%;
+    object-fit:cover;object-position:50% 32%;z-index:0}
+  #LnPoster-{{ section.id }} .ln-poster__veil{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(to bottom,rgba(14,14,14,.82) 0%,rgba(14,14,14,.08) 28%,
+      rgba(14,14,14,.42) 58%,rgba(14,14,14,.88) 86%,var(--ln-night) 100%)}
+
+  #LnPoster-{{ section.id }} .ln-poster__top{
+    position:relative;z-index:2;
+    display:flex;align-items:center;justify-content:space-between;gap:var(--space-md);
+    inline-size:min(100%,var(--page-max));margin-inline:auto;
+    padding:var(--space-lg) var(--page-gutter)}
+  #LnPoster-{{ section.id }} .ln-poster__mark{
+    display:inline-flex;align-items:center;gap:var(--space-sm);min-block-size:44px;
+    color:var(--lp-ink);text-decoration:none}
+  #LnPoster-{{ section.id }} .ln-poster__mark img{inline-size:2rem}
+  #LnPoster-{{ section.id }} .ln-poster__mark span{
+    font-family:var(--ln-font-display);font-size:var(--text-base);letter-spacing:.24em;
+    text-transform:uppercase;white-space:nowrap}
+  #LnPoster-{{ section.id }} .ln-poster__link{
+    min-block-size:44px;display:inline-flex;align-items:center;font-weight:700;
+    font-size:var(--text-xs);letter-spacing:.18em;text-transform:uppercase;
+    color:var(--lp-ink-soft);text-decoration:none;
+    border-block-end:1px solid rgba(205,134,130,.45);white-space:nowrap}
+  #LnPoster-{{ section.id }} .ln-poster__link:hover{
+    color:var(--lp-ink);border-block-end-color:var(--ln-moon)}
+
+  #LnPoster-{{ section.id }} .ln-poster__type{
+    position:relative;z-index:2;align-self:center;
+    display:grid;justify-items:center;text-align:center;
+    gap:var(--space-md);padding-block:var(--space-2xl)}
+  #LnPoster-{{ section.id }} .ln-poster__type h1{
+    font-size:clamp(3.4rem,1rem + 10.5vw,11rem);line-height:.86;letter-spacing:-.04em;
+    color:var(--ln-parchment);max-inline-size:8ch;text-shadow:0 0 5rem rgba(14,14,14,.9)}
+  /* Miara dobrana tak, żeby zdanie siadło w DWÓCH wierszach na szerokim ekranie -
+     przy 34ch łamało się na cztery i rozbijało kadr afisza. */
+  #LnPoster-{{ section.id }} .ln-poster__lede{
+    font-size:var(--text-lg);line-height:1.45;color:var(--ln-cream);
+    max-inline-size:min(58ch,100%);text-shadow:0 0 2rem rgba(14,14,14,.9)}
+  #LnPoster-{{ section.id }} .ln-poster__rule{
+    inline-size:8rem;block-size:2px;background:var(--ln-moon)}
+{% endstyle %}
+
+<div class="ln-lp ln-poster" id="LnPoster-{{ section.id }}" data-act="{{ act }}" {{ section.shopify_attributes }}>
+
+  {%- if frame != blank -%}
+    {{ frame | image_url: width: 1800 | image_tag:
+        class: 'ln-poster__img',
+        alt: '',
+        widths: '750,900,1200,1500,1800',
+        sizes: '100vw',
+        fetchpriority: 'high',
+        decoding: 'async' }}
+  {%- else -%}
+    <img class="ln-poster__img" src="{{ frame_fallback | asset_url }}" alt=""
+         width="900" height="1600" fetchpriority="high" decoding="async">
+  {%- endif -%}
+
+  <div class="ln-poster__veil"></div>
+
+  {%- if section.settings.show_topbar -%}
+    <div class="ln-poster__top">
+      <a class="ln-poster__mark" href="{{ shop_url }}">
+        {%- if section.settings.crest != blank -%}
+          {{ section.settings.crest | image_url: width: 128 | image_tag: alt: '', widths: '64,96,128' }}
+        {%- else -%}
+          <img src="{{ 'ln-lp-crest.webp' | asset_url }}" alt="" width="1103" height="1200">
+        {%- endif -%}
+        <span>{{ section.settings.brand }}</span>
+      </a>
+      <a class="ln-poster__link" href="{{ shop_url }}">{{ section.settings.shop_label }}</a>
+    </div>
+  {%- else -%}
+    <div></div>
+  {%- endif -%}
+
+  <div class="ln-wrap ln-poster__type">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ln-label">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    <h1>{{ section.settings.heading }}</h1>
+    <span class="ln-poster__rule" aria-hidden="true"></span>
+    {%- if section.settings.lede != blank -%}
+      <p class="ln-poster__lede">{{ section.settings.lede }}</p>
+    {%- endif -%}
+  </div>
+
+  <div></div>
+
+  <span class="ln-lp__grain" aria-hidden="true"></span>
+</div>
+
+{% schema %}
+{
+  "name": "The Long Night · afisz",
+  "tag": "section",
+  "class": "ln-lp-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Sekcja 1 z 4 landingu sezonu. Wybór aktu przestawia kadr afisza. Kolejne sekcje (karty, księga) mają własny wybór aktu - ustaw je tak samo."
+    },
+    {
+      "type": "select",
+      "id": "act",
+      "label": "Bieżący akt",
+      "options": [
+        { "value": "1", "label": "Akt I · październik" },
+        { "value": "2", "label": "Akt II · listopad" },
+        { "value": "3", "label": "Akt III · grudzień" }
+      ],
+      "default": "1"
+    },
+    { "type": "header", "content": "Kadry aktów" },
+    {
+      "type": "paragraph",
+      "content": "Puste pole = kadr wgrany razem z sekcją. Wgraj własny tylko wtedy, gdy chcesz go zmienić."
+    },
+    { "type": "image_picker", "id": "image_act_1", "label": "Kadr · akt I" },
+    { "type": "image_picker", "id": "image_act_2", "label": "Kadr · akt II" },
+    { "type": "image_picker", "id": "image_act_3", "label": "Kadr · akt III" },
+    { "type": "header", "content": "Treść" },
+    { "type": "text", "id": "eyebrow", "label": "Nadtytuł", "default": "October - December 2026" },
+    { "type": "inline_richtext", "id": "heading", "label": "Tytuł", "default": "The Long Night" },
+    {
+      "type": "inline_richtext",
+      "id": "lede",
+      "label": "Zdanie wprowadzające",
+      "default": "Three moons over the Guild. Three acts, one season - and when the last one sets, we close the gates."
+    },
+    { "type": "header", "content": "Górna belka" },
+    {
+      "type": "paragraph",
+      "content": "Domyślnie wyłączona: nad sekcją stoi nagłówek motywu. Włącz tylko na szablonie bez nagłówka."
+    },
+    { "type": "checkbox", "id": "show_topbar", "label": "Pokaż górną belkę", "default": false },
+    { "type": "image_picker", "id": "crest", "label": "Herb" },
+    { "type": "text", "id": "brand", "label": "Nazwa przy herbie", "default": "RPG Guild" },
+    { "type": "text", "id": "shop_label", "label": "Etykieta powrotu", "default": "Back to shop" },
+    { "type": "url", "id": "shop_link", "label": "Powrót do sklepu" },
+    { "type": "header", "content": "Odstępy" },
+    {
+      "type": "paragraph",
+      "content": "Afisz jest kadrem na całą wysokość - odstępy zostaw na 0, chyba że świadomie chcesz pas nocy nad albo pod nim."
+    },
+    { "type": "range", "id": "padding_top", "label": "Odstęp u góry", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "Odstęp u dołu", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 0 }
+  ],
+  "presets": [{ "name": "The Long Night · afisz" }]
+}
+{% endschema %}

@@ -1,0 +1,416 @@
+{%- comment -%}
+  THE LONG NIGHT · landing sezonu - 3/4 · KSIĘGA AKTÓW
+  ---------------------------------------------------------------------------
+  Warstwa szczegółu: zdanie aktu, mechanika i wejścia w incentives. Karty nad
+  nią (sekcja 2/4) są tylko drzwiami, więc akt nie powtarza się dwa razy.
+
+  SEZON ODKRYWA SIĘ PO KOLEI: zamknięte jest wszystko PO bieżącym akcie.
+  W październiku zasłonięte są wpisy II i III, w listopadzie już tylko III,
+  w grudniu nic. Zamknięcie liczy LIQUID, nie JavaScript - dzięki temu nie ma
+  mignięcia odsłoniętej treści przed startem skryptu, a treść zamkniętego aktu
+  nie jedzie do przeglądarki jako czytelny tekst w DOM-ie.
+
+  Cały wygląd zamknięcia siedzi w JEDNEJ klasie `.is-locked`: rozmycie,
+  wygaszenie i pieczęć z datą otwarcia (treść pieczęci jedzie z `data-opens`,
+  więc nie potrzebuje własnego elementu).
+
+  Rozmywa się WSZYSTKO POZA przyciskiem: on ma zostać ostry i klikalny, bo
+  z zamkniętego aktu prowadzi do zapisu na listy. Dlatego blok NIE dostaje
+  `inert` - ten odciąłby także przycisk - tylko rozmyte części dostają
+  `aria-hidden`. I dlatego selektor rozmycia wyłącza `.ln-entry__doors`,
+  czyli kontener przycisków, a nie pojedyncze `.ln-cta`: po opakowaniu
+  przycisków w kontener selektor na samym `.ln-cta` zaczął łapać kontener
+  i rozmywał cały rząd.
+
+  Zamknięty akt ZWIJA trzy przyciski do jednego. Trzy identyczne "Send word
+  when it opens" obok siebie nic nie wnoszą, a trzy linki do incentives,
+  których jeszcze nie ma, prowadziłyby donikąd.
+
+  Przycisk otwartego aktu pojawia się TYLKO wtedy, gdy ma i etykietę, i adres.
+  Pusty adres dałby przycisk prowadzący donikąd, a to gorsze niż jego brak.
+
+  Zakładka zamkniętego aktu prowadzi na `#ln-signal` - to identyfikator
+  sekcji 4/4. Jest zapisany na sztywno po obu stronach, bo adres kotwicy
+  w polu tekstowym byłby tłumaczalny i na rynkach de/fr dostałby własną,
+  starszą kopię wartości.
+{%- endcomment -%}
+
+{% render 'long-night-lp-base' %}
+
+{%- liquid
+  assign act = section.settings.act | default: '1'
+  assign act_i = act | plus: 0
+-%}
+
+{% style %}
+  /* Żadna sekcja poniżej afisza nie ma własnego tła ani nakładki - grunt jest
+     jedną nieprzerwaną nocą od kart do stopki, a kolor niosą wyłącznie kadry.
+     Góra księgi celowo mniejsza niż dół: między kartami a nagłówkiem sekcji
+     stało 18 rem pustki i czytało się to jak dziura, a nie oddech. */
+  #LnBook-{{ section.id }}{
+    position:relative;background:var(--ln-night);color:var(--lp-ink);
+    padding-block:calc(var(--space-3xl) + {{ section.settings.padding_top }}px)
+                 calc(var(--space-4xl) + 2rem + {{ section.settings.padding_bottom }}px)}
+  #LnBook-{{ section.id }} .ln-wrap{position:relative;z-index:2}
+
+  #LnBook-{{ section.id }} .ln-book__head{
+    max-inline-size:46ch;display:grid;gap:var(--space-md);padding-block-end:var(--space-2xl)}
+  #LnBook-{{ section.id }} .ln-book__head h2{
+    font-size:clamp(2rem,1.1rem + 3.2vw,3.4rem);line-height:1.04;color:var(--ln-parchment)}
+  #LnBook-{{ section.id }} .ln-book__head p{color:var(--lp-ink-soft)}
+
+  /* Cień idzie filtrem na rodzicu, nie box-shadow na figure. */
+  #LnBook-{{ section.id }} .ln-plate{position:relative;display:block;margin:0}
+  #LnBook-{{ section.id }} .ln-plate img{inline-size:100%}
+
+  #LnBook-{{ section.id }} .ln-entry{
+    position:relative;display:grid;gap:var(--space-xl);grid-template-columns:minmax(0,1fr);
+    padding-block:var(--space-2xl);align-items:center}
+  /* Włos rozdzielający wpisy gaśnie na obu końcach - twarda linia przez całą
+     szerokość była jedynym prostym cięciem, jakie zostało na stronie. */
+  #LnBook-{{ section.id }} .ln-entry::before{
+    content:"";position:absolute;inset-block-start:0;inset-inline:0;block-size:1px;
+    background:linear-gradient(90deg,transparent 0,rgba(205,134,130,.26) 16%,
+      rgba(205,134,130,.26) 84%,transparent 100%)}
+  @media (min-width:60rem){
+    /* Kolumny równe, bo przy 5fr/6fr plansza po lewej wychodziła węższa niż
+       te po prawej - a mają być identyczne. */
+    #LnBook-{{ section.id }} .ln-entry{
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--space-3xl)}
+    #LnBook-{{ section.id }} .ln-entry.is-flipped .ln-entry__plate{order:2}
+  }
+  /* Trzy plansze mają jeden format, niezależnie od proporcji oryginału -
+     inaczej kwadratowy nagrobek i pionowa pełnia rozjeżdżają rytm strony.
+     Kadrowanie robi object-fit, nie skalowanie obrazka. Dolna krawędź jest
+     czysta i prosta: rozdarcie maską kropli wyleciało, bo ciągnęło w dół to,
+     co akurat było na dole kadru - na jasnych spodach wychodziły białe sople. */
+  #LnBook-{{ section.id }} .ln-entry__plate{
+    rotate:1.2deg;aspect-ratio:4/5;inline-size:min(100%,26rem);justify-self:center;
+    filter:drop-shadow(0 1.1rem 2.6rem rgba(0,0,0,.7))}
+  #LnBook-{{ section.id }} .ln-entry__plate img{
+    inline-size:100%;block-size:100%;object-fit:cover}
+  #LnBook-{{ section.id }} .ln-entry.is-flipped .ln-entry__plate{rotate:-1.4deg}
+
+  #LnBook-{{ section.id }} .ln-entry__body{display:grid;gap:var(--space-sm);justify-items:start}
+  #LnBook-{{ section.id }} .ln-entry__no{
+    font-family:var(--ln-font-display);font-size:clamp(2.2rem,1.4rem + 2.6vw,3.4rem);
+    line-height:1;color:var(--ln-moon)}
+  #LnBook-{{ section.id }} .ln-entry__name{
+    font-size:clamp(1.6rem,1.1rem + 1.6vw,2.4rem);line-height:1.1;color:var(--ln-parchment)}
+  #LnBook-{{ section.id }} .ln-entry__name em{font-style:italic;color:var(--ln-moon)}
+  #LnBook-{{ section.id }} .ln-entry__when{
+    font-weight:700;font-size:var(--text-xs);letter-spacing:.18em;text-transform:uppercase;
+    color:var(--lp-ink-quiet)}
+  #LnBook-{{ section.id }} .ln-entry__line{
+    font-family:var(--ln-font-display);font-size:var(--text-xl);line-height:1.3;
+    color:var(--ln-cream);max-inline-size:26ch}
+  #LnBook-{{ section.id }} .ln-entry__what{
+    display:grid;gap:var(--space-2xs);margin:var(--space-xs) 0 0;padding:0;list-style:none}
+  #LnBook-{{ section.id }} .ln-entry__what li{
+    position:relative;padding-inline-start:1.9rem;font-size:var(--text-base);
+    color:var(--lp-ink-soft)}
+  /* Bullet to kość k20 z design systemu sklepu - ten sam znak, co w rzędzie
+     zaufania w stopce. Oryginalny icon-footer-asset.svg waży 1,7 MB, bo jest
+     trasowany, więc tu siedzi jego rasteryzacja do 128 px: 11 kB. */
+  #LnBook-{{ section.id }} .ln-entry__what li::before{
+    content:"";position:absolute;inset-inline-start:0;inset-block-start:.15em;
+    inline-size:1.15em;block-size:1.15em;
+    background:url({{ 'ln-lp-d20.webp' | asset_url }}) no-repeat center/contain}
+  #LnBook-{{ section.id }} .ln-entry__doors{
+    display:flex;flex-wrap:wrap;gap:var(--space-xs);margin-block-start:var(--space-md)}
+
+  /* ── AKTY, KTÓRE JESZCZE NIE RUSZYŁY ─────────────────────────────── */
+  #LnBook-{{ section.id }} .ln-entry.is-locked .ln-entry__plate,
+  #LnBook-{{ section.id }} .ln-entry.is-locked .ln-entry__body > *:not(.ln-entry__doors){
+    filter:blur(10px) saturate(.72);opacity:.4;user-select:none;
+    transition:filter var(--dur-long) var(--ease-out),opacity var(--dur-long) var(--ease-out)}
+  /* Pieczęć i przycisk stoją RAZEM na środku wpisu, jeden pod drugim: para
+     jest wyśrodkowana względem siebie. Wcześniej pieczęć wisiała na środku,
+     a przycisk zostawał w kolumnie tekstu i czytały się jak dwa niezwiązane
+     elementy. Przycisk siedzi NAD pieczęcią, żeby dało się go kliknąć. */
+  #LnBook-{{ section.id }} .ln-entry.is-locked .ln-entry__doors{
+    position:absolute;z-index:4;
+    inset-block-start:50%;inset-inline-start:50%;
+    translate:-50% calc(-50% + 1.75rem);
+    inline-size:max-content;max-inline-size:min(90%,26rem);
+    justify-content:center;margin:0}
+  #LnBook-{{ section.id }} .ln-entry.is-locked::after{
+    content:attr(data-opens);position:absolute;z-index:3;
+    inset-block-start:50%;inset-inline-start:50%;
+    translate:-50% calc(-50% - 1.75rem);
+    padding:var(--space-sm) var(--space-lg);white-space:nowrap;
+    font-family:var(--ln-font-body);font-weight:700;font-size:var(--text-xs);
+    letter-spacing:.24em;text-transform:uppercase;color:var(--lp-ink);
+    background:rgba(14,14,14,.86);border:1px solid rgba(233,46,74,.55);
+    box-shadow:0 1rem 2.5rem rgba(0,0,0,.6)}
+  @media (prefers-reduced-motion:reduce){
+    #LnBook-{{ section.id }} .ln-entry.is-locked .ln-entry__plate,
+    #LnBook-{{ section.id }} .ln-entry.is-locked .ln-entry__body > *:not(.ln-entry__doors){
+      transition:none}
+  }
+{% endstyle %}
+
+<div class="ln-lp ln-book" id="LnBook-{{ section.id }}" data-act="{{ act }}" {{ section.shopify_attributes }}>
+  <div class="ln-wrap">
+
+    {%- if section.settings.heading != blank or section.settings.eyebrow != blank -%}
+      <header class="ln-book__head ln-reveal">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ln-label">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2>{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.lede != blank -%}
+          <p>{{ section.settings.lede }}</p>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign no = block.settings.act_no | default: '1'
+        assign no_i = no | plus: 0
+        assign locked = false
+        if no_i > act_i
+          assign locked = true
+        endif
+
+        assign flipped = false
+        assign parzystosc = forloop.index | modulo: 2
+        if parzystosc == 1
+          assign flipped = true
+        endif
+
+        case no
+          when '2'
+            assign plate_fallback = 'ln-lp-plate-2.webp'
+            assign plate_w = 825
+            assign plate_h = 1024
+          when '3'
+            assign plate_fallback = 'ln-lp-plate-3.webp'
+            assign plate_w = 1024
+            assign plate_h = 1024
+          else
+            assign plate_fallback = 'ln-lp-plate-1.webp'
+            assign plate_w = 1024
+            assign plate_h = 1024
+        endcase
+
+      -%}
+
+      {%- capture doors -%}
+        {%- if locked -%}
+          <a class="ln-cta ln-cta--sm" href="#ln-signal">{{ section.settings.locked_cta }}</a>
+        {%- else -%}
+          {%- if block.settings.cta_1_label != blank and block.settings.cta_1_link != blank -%}
+            <a class="ln-cta ln-cta--sm" href="{{ block.settings.cta_1_link }}">{{ block.settings.cta_1_label }}</a>
+          {%- endif -%}
+          {%- if block.settings.cta_2_label != blank and block.settings.cta_2_link != blank -%}
+            <a class="ln-cta ln-cta--sm" href="{{ block.settings.cta_2_link }}">{{ block.settings.cta_2_label }}</a>
+          {%- endif -%}
+          {%- if block.settings.cta_3_label != blank and block.settings.cta_3_link != blank -%}
+            <a class="ln-cta ln-cta--sm" href="{{ block.settings.cta_3_link }}">{{ block.settings.cta_3_label }}</a>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endcapture -%}
+
+      <article
+        class="ln-entry ln-reveal{% if flipped %} is-flipped{% endif %}{% if locked %} is-locked{% endif %}"
+        {% if locked %}data-opens="{{ block.settings.opens | escape }}" aria-label="{{ block.settings.opens | escape }}"{% endif %}
+        {{ block.shopify_attributes }}
+      >
+        <figure class="ln-plate ln-entry__plate"{% if locked %} aria-hidden="true"{% endif %}>
+          {%- if block.settings.plate != blank -%}
+            {{ block.settings.plate | image_url: width: 1024 | image_tag:
+                alt: block.settings.plate_alt, widths: '416,640,832,1024',
+                sizes: '(min-width: 60rem) 26rem, 100vw', loading: 'lazy' }}
+          {%- else -%}
+            <img src="{{ plate_fallback | asset_url }}" alt="{{ block.settings.plate_alt | escape }}"
+                 width="{{ plate_w }}" height="{{ plate_h }}" loading="lazy" decoding="async">
+          {%- endif -%}
+        </figure>
+
+        <div class="ln-entry__body">
+          {%- if block.settings.numeral != blank -%}
+            <p class="ln-entry__no"{% if locked %} aria-hidden="true"{% endif %}>{{ block.settings.numeral }}</p>
+          {%- endif -%}
+          <h3 class="ln-entry__name"{% if locked %} aria-hidden="true"{% endif %}>{{ block.settings.name }}</h3>
+          {%- if block.settings.when != blank -%}
+            <p class="ln-entry__when"{% if locked %} aria-hidden="true"{% endif %}>{{ block.settings.when }}</p>
+          {%- endif -%}
+          {%- if block.settings.line != blank -%}
+            <p class="ln-entry__line"{% if locked %} aria-hidden="true"{% endif %}>{{ block.settings.line }}</p>
+          {%- endif -%}
+
+          {%- if block.settings.what_1 != blank or block.settings.what_2 != blank or block.settings.what_3 != blank -%}
+            <ul class="ln-entry__what"{% if locked %} aria-hidden="true"{% endif %}>
+              {%- if block.settings.what_1 != blank -%}<li>{{ block.settings.what_1 }}</li>{%- endif -%}
+              {%- if block.settings.what_2 != blank -%}<li>{{ block.settings.what_2 }}</li>{%- endif -%}
+              {%- if block.settings.what_3 != blank -%}<li>{{ block.settings.what_3 }}</li>{%- endif -%}
+            </ul>
+          {%- endif -%}
+        </div>
+
+        {%- if doors != blank -%}
+          <div class="ln-entry__doors">{{ doors }}</div>
+        {%- endif -%}
+      </article>
+    {%- endfor -%}
+
+  </div>
+  <span class="ln-lp__grain" aria-hidden="true"></span>
+</div>
+
+{% schema %}
+{
+  "name": "The Long Night · księga",
+  "tag": "section",
+  "class": "ln-lp-section",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Sekcja 3 z 4 landingu sezonu. Wpisy aktów PO bieżącym są zamykane: rozmyte, z pieczęcią i jednym przyciskiem prowadzącym na zapis na listy."
+    },
+    {
+      "type": "select",
+      "id": "act",
+      "label": "Bieżący akt",
+      "info": "Wpisy o wyższym numerze niż ten są zamknięte.",
+      "options": [
+        { "value": "1", "label": "Akt I · październik" },
+        { "value": "2", "label": "Akt II · listopad" },
+        { "value": "3", "label": "Akt III · grudzień" }
+      ],
+      "default": "1"
+    },
+    { "type": "header", "content": "Nagłówek sekcji" },
+    { "type": "text", "id": "eyebrow", "label": "Nadtytuł", "default": "The season" },
+    { "type": "inline_richtext", "id": "heading", "label": "Nagłówek", "default": "Three acts, three moons, multiple incentives!" },
+    { "type": "inline_richtext", "id": "lede", "label": "Zdanie pod nagłówkiem", "default": "Explore our seasonal promotions and learn more about how they work." },
+    { "type": "header", "content": "Zamknięty akt" },
+    {
+      "type": "text",
+      "id": "locked_cta",
+      "label": "Napis na przycisku zamkniętego aktu",
+      "info": "Prowadzi na sekcję zapisu na listy.",
+      "default": "Send word when it opens"
+    },
+    { "type": "header", "content": "Odstępy" },
+    {
+      "type": "paragraph",
+      "content": "Dodają się do rytmu landingu. Zostaw na 0, żeby zachować zatwierdzone odstępy."
+    },
+    { "type": "range", "id": "padding_top", "label": "Odstęp u góry", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "Odstęp u dołu", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 0 }
+  ],
+  "blocks": [
+    {
+      "type": "entry",
+      "name": "Wpis aktu",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "select",
+          "id": "act_no",
+          "label": "Numer aktu",
+          "info": "Decyduje o domyślnej planszy i o tym, czy wpis jest zamknięty.",
+          "options": [
+            { "value": "1", "label": "I" },
+            { "value": "2", "label": "II" },
+            { "value": "3", "label": "III" }
+          ],
+          "default": "1"
+        },
+        { "type": "image_picker", "id": "plate", "label": "Plansza", "info": "Puste = plansza wgrana razem z sekcją." },
+        { "type": "text", "id": "plate_alt", "label": "Opis planszy dla czytników ekranu", "default": "A gravestone under a rising blood moon, half of it in shadow, red sky behind." },
+        { "type": "text", "id": "numeral", "label": "Liczba rzymska", "default": "I" },
+        { "type": "inline_richtext", "id": "name", "label": "Nazwa aktu", "default": "Blood Moon Rising" },
+        { "type": "text", "id": "when", "label": "Termin", "default": "1 - 31 October" },
+        { "type": "inline_richtext", "id": "line", "label": "Jedno zdanie", "default": "The moon opens one eye, and the dark starts moving." },
+        { "type": "text", "id": "opens", "label": "Napis na pieczęci", "info": "Widoczny tylko wtedy, gdy akt jest zamknięty.", "default": "Opens 1 October" },
+        { "type": "header", "content": "Mechanika" },
+        { "type": "inline_richtext", "id": "what_1", "label": "Punkt 1", "default": "Spooky Collection, 5% off" },
+        { "type": "inline_richtext", "id": "what_2", "label": "Punkt 2", "default": "Big Terrain Sale, 15% off" },
+        { "type": "inline_richtext", "id": "what_3", "label": "Punkt 3", "default": "A character sheet over $100" },
+        {
+          "type": "header",
+          "content": "Wejścia w incentives"
+        },
+        {
+          "type": "paragraph",
+          "content": "Przycisk pojawia się tylko wtedy, gdy ma i napis, i adres. Adres wybieraj z listy - wpisany ręcznie pełny link gubi rynek klienta."
+        },
+        { "type": "text", "id": "cta_1_label", "label": "Przycisk 1 · napis", "default": "Spooky Collection" },
+        { "type": "url", "id": "cta_1_link", "label": "Przycisk 1 · adres" },
+        { "type": "text", "id": "cta_2_label", "label": "Przycisk 2 · napis", "default": "Big Terrain Sale" },
+        { "type": "url", "id": "cta_2_link", "label": "Przycisk 2 · adres" },
+        { "type": "text", "id": "cta_3_label", "label": "Przycisk 3 · napis", "default": "Character sheet" },
+        { "type": "url", "id": "cta_3_link", "label": "Przycisk 3 · adres" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "The Long Night · księga",
+      "blocks": [
+        {
+          "type": "entry",
+          "settings": {
+            "act_no": "1",
+            "plate_alt": "A gravestone under a rising blood moon, half of it in shadow, red sky behind.",
+            "numeral": "I",
+            "name": "Blood Moon Rising",
+            "when": "1 - 31 October",
+            "line": "The moon opens one eye, and the dark starts moving.",
+            "opens": "Opens 1 October",
+            "what_1": "Spooky Collection, 5% off",
+            "what_2": "Big Terrain Sale, 15% off",
+            "what_3": "A character sheet over $100",
+            "cta_1_label": "Spooky Collection",
+            "cta_2_label": "Big Terrain Sale",
+            "cta_3_label": "Character sheet"
+          }
+        },
+        {
+          "type": "entry",
+          "settings": {
+            "act_no": "2",
+            "plate_alt": "Two dragons facing each other under a full blood moon dripping blood.",
+            "numeral": "II",
+            "name": "Blood Moon &middot; <em>Black Friday</em>",
+            "when": "1 - 30 November &middot; peak 27 - 30",
+            "line": "The moon is fresh in blood. The Guild let it strive!",
+            "opens": "Opens 1 November",
+            "what_1": "Custom Bundle: 10 minis &minus;10%, 20 &minus;20%, 50 &minus;30%",
+            "what_2": "The 75 mm option arrives",
+            "what_3": "Gift Collection, 10% off",
+            "cta_1_label": "Custom Bundle",
+            "cta_2_label": "The 75 mm option",
+            "cta_3_label": "Gift Collection"
+          }
+        },
+        {
+          "type": "entry",
+          "settings": {
+            "act_no": "3",
+            "plate_alt": "A bat with spread wings silhouetted against an eclipse ringed with fire.",
+            "numeral": "III",
+            "name": "The Last Moon",
+            "when": "1 - 31 December",
+            "line": "One eclipse, and the Guild closes the gates&hellip;",
+            "opens": "Opens 1 December",
+            "what_1": "Every miniature, 10% off",
+            "what_2": "Mystery Box and Terrains, 20% off",
+            "what_3": "Custom Miniature",
+            "cta_1_label": "Every miniature",
+            "cta_2_label": "Mystery Box &amp; Terrains",
+            "cta_3_label": "Custom Miniature"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

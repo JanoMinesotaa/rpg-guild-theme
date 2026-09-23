@@ -1,0 +1,136 @@
+/* THE LONG NIGHT · landing sezonu - WARSTWA WSPÓLNA CZTERECH SEKCJI
+ * ---------------------------------------------------------------------------
+ * Ten plik jest jedynym miejscem, w którym żyją tokeny kampanii i prymitywy
+ * powtarzające się w każdej sekcji landingu (przycisk, miara strony, nadtytuł,
+ * wejście sekcji). Dzięki temu podmiana pojedynczej sekcji - afisza albo księgi,
+ * kiedy sezon przechodzi do następnego aktu - NIE dotyka sekcji z zapisem na
+ * listy, pod którą siedzi Edrone.
+ *
+ * WSZYSTKO JEST ZAMKNIĘTE W `.ln-lp`, także tokeny. Żadna reguła i żadna
+ * zmienna nie wychodzi poza sekcje landingu, więc reszta sklepu jest nietknięta.
+ * Klasy mają przedrostek `ln-`, bo `.wrap`, `.label`, `.cta` czy `.form`
+ * z prototypu zderzyłyby się z motywem.
+ *
+ * Hexy kampanii są ZASTANE - te same, co w 02-tokens/long-night.tokens.css
+ * i w 10-lp-sezon/tokens.css. Nie przeliczać na OKLCH: rozjedzie się
+ * z zatwierdzonymi eksportami w 04-export.
+ *
+ * @font-face dla Rosarivo NIE jest tutaj - potrzebuje `asset_url`, więc siedzi
+ * w snippets/long-night-lp-base.liquid, który wstawia też ten arkusz.
+ */
+
+.ln-lp{
+  /* Grunty kampanii */
+  --ln-night:#0E0E0E;
+  --ln-blood:#54130F;
+  --ln-blood-deep:#5D1309;
+  --ln-blood-950:#280703;
+  --ln-moon:#E92E4A;
+  --ln-red-200:#CD8682;
+  --ln-red-600:#76281D;
+  --ln-parchment:#F0E7D3;
+  --ln-cream:#E9DCBD;
+  --ln-leather:#D5B193;
+
+  /* Srebro okuć - ten sam metal, co rama herbu. Okuwa każdy przycisk. */
+  --ln-silver:#BDB9B2;
+  --ln-silver-hi:#DAD6CE;
+
+  /* Vault - tylko tam, gdzie mowa o czymś darmowym */
+  --vault-gold:#B8862B;
+  --vault-copper:#9C5A2E;
+
+  /* Tekst na nocy */
+  --lp-ink:#F0E7D3;
+  --lp-ink-soft:#D9CDB6;
+  --lp-ink-quiet:#A7937A;
+
+  --lp-glow:0 0 60px rgba(233,46,74,.45), 0 0 140px rgba(84,19,15,.55);
+
+  /* Typografia */
+  --ln-font-display:"Rosarivo","Iowan Old Style",Georgia,serif;
+  --ln-font-body:"Raleway",ui-sans-serif,system-ui,sans-serif;
+
+  --text-xs:.75rem; --text-sm:.8125rem; --text-base:1rem; --text-md:1.125rem;
+  --text-lg:1.375rem; --text-xl:1.75rem; --text-2xl:2.25rem; --text-3xl:3rem;
+
+  /* Skala 4 pt */
+  --space-2xs:.25rem; --space-xs:.5rem; --space-sm:.75rem; --space-md:1rem;
+  --space-lg:1.5rem; --space-xl:2.5rem; --space-2xl:4rem; --space-3xl:6rem; --space-4xl:9rem;
+
+  --page-max:78rem;
+  --page-gutter:clamp(1.25rem,4vw,3.5rem);
+
+  /* Ruch */
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-in-out:cubic-bezier(.65,0,.35,1);
+  --dur-micro:120ms; --dur-short:220ms; --dur-long:520ms;
+
+  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+
+  position:relative;
+  color:var(--lp-ink);
+  font-family:var(--ln-font-body);
+  font-weight:500;
+  font-size:var(--text-md);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+.ln-lp,.ln-lp *,.ln-lp *::before,.ln-lp *::after{box-sizing:border-box}
+
+/* Ziarno. W prototypie było jedną warstwą `position:fixed` na całą stronę;
+   w motywie każda sekcja niesie swoje, bo warstwa fixed przykryłaby też
+   nagłówek i stopkę sklepu. Przy kryciu .05 różnica jest niewidoczna -
+   ziarno po prostu jedzie razem ze stroną zamiast stać. */
+.ln-lp__grain{position:absolute;inset:0;z-index:30;pointer-events:none;
+  background-image:var(--grain);opacity:.05}
+
+.ln-lp h1,.ln-lp h2,.ln-lp h3{font-family:var(--ln-font-display);font-weight:400;font-style:normal;
+  letter-spacing:-.02em;overflow-wrap:anywhere;min-width:0;margin:0}
+.ln-lp p{margin:0}
+.ln-lp img{display:block;max-width:100%;height:auto}
+
+.ln-lp .ln-wrap{inline-size:min(100%,var(--page-max));margin-inline:auto;
+  padding-inline:var(--page-gutter)}
+.ln-lp .ln-label{font-weight:700;font-size:var(--text-xs);letter-spacing:.3em;
+  text-transform:uppercase;color:var(--ln-red-200)}
+.ln-lp .ln-skip{position:absolute;inline-size:1px;block-size:1px;margin:-1px;
+  clip-path:inset(50%);overflow:hidden}
+.ln-lp a:focus-visible,.ln-lp button:focus-visible,.ln-lp input:focus-visible{
+  outline:2px solid var(--ln-moon);outline-offset:3px}
+
+/* Srebrna obwódka na KAŻDYM przycisku - ten sam metal, co na ramie herbu.
+   Dwa cienkie cienie wewnętrzne robią fazę: jaśniejszy u góry, ciemniejszy
+   u dołu. Bez nich obwódka czyta się jak płaska ramka, a nie jak okucie.
+   Jeden przycisk na cały landing: wariant z bordowym tłem wyleciał, bo
+   mnożył style tej samej roli. */
+.ln-lp .ln-cta{display:inline-flex;align-items:center;min-block-size:48px;
+  padding:0 var(--space-lg);
+  border:2px solid var(--ln-silver);border-radius:0;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34),inset 0 -1px 0 rgba(0,0,0,.28);
+  font-family:var(--ln-font-body);
+  font-weight:700;font-size:var(--text-sm);letter-spacing:.14em;text-transform:uppercase;
+  white-space:nowrap;text-decoration:none;color:var(--ln-night);background:var(--ln-parchment);
+  transition:background var(--dur-short) var(--ease-out),color var(--dur-short) var(--ease-out),
+             border-color var(--dur-short) var(--ease-out)}
+.ln-lp .ln-cta:hover{background:var(--ln-moon);color:var(--ln-night);border-color:var(--ln-silver-hi)}
+/* Wariant mniejszy - trzy przyciski na akt muszą zmieścić się w kolumnie,
+   więc schodzą z wysokości, wagi i kroju liter, ale nie z okucia. */
+.ln-lp .ln-cta--sm{min-block-size:38px;padding:0 var(--space-md);font-size:var(--text-xs);
+  letter-spacing:.1em;border-width:1px}
+/* display z .ln-cta bije domyślne [hidden]{display:none} z UA, więc przy
+   zwijaniu przycisków zamkniętego aktu trzeba to powiedzieć wprost. */
+.ln-lp .ln-cta[hidden]{display:none}
+
+/* Wejście sekcji - jedyny ruch wjazdowy na stronie. Klasę `is-in` dokłada
+   long-night-lp.js; ma bezpiecznik czasowy, więc strona nigdy nie zostaje pusta. */
+.ln-lp .ln-reveal{opacity:0;transform:translateY(14px);will-change:opacity,transform;
+  transition:opacity var(--dur-long) var(--ease-out),transform var(--dur-long) var(--ease-out)}
+.ln-lp .ln-reveal.is-in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  .ln-lp *,.ln-lp *::before,.ln-lp *::after{
+    animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .ln-lp .ln-reveal{opacity:1;transform:none}
+}

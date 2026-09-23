@@ -1,0 +1,164 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    },
+    "ln_poster": {
+      "type": "long-night-lp-poster",
+      "settings": {
+        "act": "1",
+        "eyebrow": "October - December 2026",
+        "heading": "The Long Night",
+        "lede": "Three moons over the Guild. Three acts, one season - and when the last one sets, we close the gates.",
+        "show_topbar": false,
+        "brand": "RPG Guild",
+        "shop_label": "Back to shop",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "ln_doors": {
+      "type": "long-night-lp-doors",
+      "blocks": {
+        "act_1": {
+          "type": "act",
+          "settings": {
+            "act_no": "1",
+            "numeral": "I",
+            "name": "Blood Moon Rising",
+            "when": "October",
+            "line": "The moon opens one eye, and the dark starts moving."
+          }
+        },
+        "act_2": {
+          "type": "act",
+          "settings": {
+            "act_no": "2",
+            "numeral": "II",
+            "name": "Blood Moon &middot; <em>Black Friday</em>",
+            "when": "November",
+            "line": "The moon is fresh in blood. The Guild let it strive!"
+          }
+        },
+        "act_3": {
+          "type": "act",
+          "settings": {
+            "act_no": "3",
+            "numeral": "III",
+            "name": "The Last Moon",
+            "when": "December",
+            "line": "One eclipse, and the Guild closes the gates&hellip;"
+          }
+        }
+      },
+      "block_order": ["act_1", "act_2", "act_3"],
+      "settings": {
+        "act": "1",
+        "heading": "The three acts",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "ln_book": {
+      "type": "long-night-lp-book",
+      "blocks": {
+        "entry_1": {
+          "type": "entry",
+          "settings": {
+            "act_no": "1",
+            "plate_alt": "A gravestone under a rising blood moon, half of it in shadow, red sky behind.",
+            "numeral": "I",
+            "name": "Blood Moon Rising",
+            "when": "1 - 31 October",
+            "line": "The moon opens one eye, and the dark starts moving.",
+            "opens": "Opens 1 October",
+            "what_1": "Spooky Collection, 5% off",
+            "what_2": "Big Terrain Sale, 15% off",
+            "what_3": "A character sheet over $100",
+            "cta_1_label": "Spooky Collection",
+            "cta_2_label": "Big Terrain Sale",
+            "cta_3_label": "Character sheet"
+          }
+        },
+        "entry_2": {
+          "type": "entry",
+          "settings": {
+            "act_no": "2",
+            "plate_alt": "Two dragons facing each other under a full blood moon dripping blood.",
+            "numeral": "II",
+            "name": "Blood Moon &middot; <em>Black Friday</em>",
+            "when": "1 - 30 November &middot; peak 27 - 30",
+            "line": "The moon is fresh in blood. The Guild let it strive!",
+            "opens": "Opens 1 November",
+            "what_1": "Custom Bundle: 10 minis &minus;10%, 20 &minus;20%, 50 &minus;30%",
+            "what_2": "The 75 mm option arrives",
+            "what_3": "Gift Collection, 10% off",
+            "cta_1_label": "Custom Bundle",
+            "cta_2_label": "The 75 mm option",
+            "cta_3_label": "Gift Collection"
+          }
+        },
+        "entry_3": {
+          "type": "entry",
+          "settings": {
+            "act_no": "3",
+            "plate_alt": "A bat with spread wings silhouetted against an eclipse ringed with fire.",
+            "numeral": "III",
+            "name": "The Last Moon",
+            "when": "1 - 31 December",
+            "line": "One eclipse, and the Guild closes the gates&hellip;",
+            "opens": "Opens 1 December",
+            "what_1": "Every miniature, 10% off",
+            "what_2": "Mystery Box and Terrains, 20% off",
+            "what_3": "Custom Miniature",
+            "cta_1_label": "Every miniature",
+            "cta_2_label": "Mystery Box &amp; Terrains",
+            "cta_3_label": "Custom Miniature"
+          }
+        }
+      },
+      "block_order": ["entry_1", "entry_2", "entry_3"],
+      "settings": {
+        "act": "1",
+        "eyebrow": "The season",
+        "heading": "Three acts, three moons, multiple incentives!",
+        "lede": "Explore our seasonal promotions and learn more about how they work.",
+        "locked_cta": "Send word when it opens",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "ln_signal": {
+      "type": "long-night-lp-signal",
+      "settings": {
+        "eyebrow": "The letters",
+        "heading": "A lot happens in the dark.",
+        "lede": "Openings, drops and prices move all season - and most of them do not wait for anyone.",
+        "note": "One address, three months, everything the Guild opens. Walk away from the letters whenever you like.",
+        "field_label": "Your email",
+        "placeholder": "you@table.example",
+        "button": "Send word",
+        "button_sending": "Sending",
+        "msg_idle": "",
+        "msg_success": "You are on the list. Watch for the first letter.",
+        "msg_error": "That address is missing something. Check it and try again.",
+        "show_consent": false,
+        "consent_text": "I agree to receive marketing emails and accept the",
+        "consent_link_label": "privacy policy",
+        "show_seam": true,
+        "footer_color": "#551310",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ln_poster",
+    "ln_doors",
+    "ln_book",
+    "ln_signal"
+  ]
+}

@@ -1,0 +1,257 @@
+{%- comment -%}
+  THE LONG NIGHT · landing sezonu - 2/4 · TRZY KARTY AKTÓW
+  ---------------------------------------------------------------------------
+  Karty wjeżdżają NA afisz: sekcja podciąga się ujemnym marginesem, a własną
+  noc maluje dopiero poniżej tego zakładu - stąd `--ln-lift` użyte dwa razy,
+  raz ze znakiem minus. Jedna zmienna, więc obie wartości nie mogą się
+  rozjechać.
+
+  PODZIAŁ RÓL, żeby akt nie powtarzał się dwa razy na stronie:
+  karta to DRZWI (nazwa, termin, jedno zdanie), a mechanika i wejście w akt
+  siedzą wyłącznie w księdze (sekcja 3/4).
+
+  KARTY NIE SĄ ZAMYKANE. Zamyka się księga, czyli warstwa szczegółu - karty
+  są zapowiedzią i nawigacją całego sezonu, więc widać wszystkie trzy przez
+  cały czas. Bieżący akt rozpoznaje krwiste tło, krawędź w kolorze księżyca
+  i mocniejsza poświata wokół tarczy.
+
+  Faza księżyca jest NAKLEJONA na róg karty - siedzi okrakiem na krawędzi,
+  bez obwódki: obwódka obcięłaby strugi pod pełnią i zamknęła pierścień
+  zaćmienia w kole, którego tam nie ma. Dlatego karta nie przycina.
+{%- endcomment -%}
+
+{% render 'long-night-lp-base' %}
+
+{%- liquid
+  assign act = section.settings.act | default: '1'
+-%}
+
+{% style %}
+  #LnDoors-{{ section.id }}{
+    --ln-lift:clamp(4rem,7vw,9rem);
+    position:relative;z-index:4;
+    margin-block-start:calc(var(--ln-lift) * -1);
+    padding-block-start:{{ section.settings.padding_top }}px;
+    padding-block-end:calc(var(--space-2xl) + {{ section.settings.padding_bottom }}px);
+    overflow-x:clip}
+  /* Noc zaczyna się DOPIERO pod zakładem - nad nim ma być widać afisz.
+     Jeden piksel w dół, żeby na styku z księgą nie było włosowej szpary. */
+  #LnDoors-{{ section.id }}::before{
+    content:"";position:absolute;z-index:0;inset-inline:0;
+    inset-block-start:var(--ln-lift);inset-block-end:-1px;
+    background:var(--ln-night)}
+  #LnDoors-{{ section.id }} .ln-wrap{position:relative;z-index:2}
+
+  #LnDoors-{{ section.id }} .ln-doors__grid{
+    display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-3xl)}
+  /* stretch, nie end: karty mają jedną wysokość i jedną linię górną, więc
+     księżyce siedzą w poziomym rzędzie zamiast na schodkach. */
+  @media (min-width:60rem){
+    #LnDoors-{{ section.id }} .ln-doors__grid{
+      grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-xl);align-items:stretch}
+  }
+
+  /* Karta nie przycina - księżyc wystaje poza jej obrys i tak ma zostać. */
+  #LnDoors-{{ section.id }} .ln-door{
+    overflow:visible;position:relative;display:grid;align-content:start;
+    gap:var(--space-sm);justify-items:start;
+    padding:var(--space-xl) var(--space-lg) var(--space-lg);
+    background:rgba(14,14,14,.9);border-block-start:3px solid var(--ln-blood);
+    box-shadow:0 1.5rem 3.5rem rgba(0,0,0,.6)}
+  /* Bez podnoszenia bieżącej karty - rząd ma stać równo. Akt rozpoznaje
+     krwiste tło, krawędź w kolorze księżyca, pełna nieprzezroczystość
+     i mocniejsza poświata wokół fazy. */
+  #LnDoors-{{ section.id }} .ln-door.is-current{
+    background:rgba(40,7,3,.94);border-block-start-color:var(--ln-moon)}
+  #LnDoors-{{ section.id }} .ln-door:not(.is-current){opacity:.82}
+  #LnDoors-{{ section.id }} .ln-door:not(.is-current):hover{opacity:1}
+
+  /* Ten sam rozmiar tarczy we wszystkich trzech - translate liczy się od
+     własnej wielkości, więc większa tarcza siadała wyżej niż sąsiednie.
+     Bieżący akt różni się samą poświatą. */
+  #LnDoors-{{ section.id }} .ln-door__phase{
+    position:absolute;z-index:5;inset-block-start:0;inset-inline-end:0;
+    translate:38% -38%;inline-size:clamp(4.2rem,6vw,5.8rem);
+    filter:drop-shadow(0 .5rem 1.2rem rgba(0,0,0,.75)) drop-shadow(0 0 1.8rem rgba(233,46,74,.45))}
+  #LnDoors-{{ section.id }} .ln-door.is-current .ln-door__phase{
+    filter:drop-shadow(0 .5rem 1.4rem rgba(0,0,0,.8)) drop-shadow(0 0 2.8rem rgba(233,46,74,.75))}
+  /* Pełnia ma pod tarczą strugi, więc jest wyższa - przesunięcie liczone tak,
+     żeby środek tarczy usiadł dokładnie tam, co u pozostałych dwóch. */
+  #LnDoors-{{ section.id }} .ln-door__phase--drip{translate:38% -27%}
+
+  #LnDoors-{{ section.id }} .ln-door__no{
+    font-family:var(--ln-font-display);font-size:var(--text-2xl);line-height:1;color:var(--ln-moon)}
+  /* Dwa wiersze na stałe: bez tego jednowierszowe "The Last Moon" podciąga
+     termin i zdanie o linijkę względem dwóch pozostałych kart. */
+  #LnDoors-{{ section.id }} .ln-door__name{
+    font-size:var(--text-xl);line-height:1.12;color:var(--ln-parchment);
+    max-inline-size:15ch;min-block-size:2.24em}
+  /* jedyna kursywa na stronie - nazwa aktu II */
+  #LnDoors-{{ section.id }} .ln-door__name em{font-style:italic;color:var(--ln-moon)}
+  #LnDoors-{{ section.id }} .ln-door__when{
+    font-weight:700;font-size:var(--text-xs);letter-spacing:.18em;text-transform:uppercase;
+    color:var(--lp-ink-quiet)}
+  #LnDoors-{{ section.id }} .ln-door__line{
+    font-family:var(--ln-font-display);font-size:var(--text-lg);line-height:1.28;
+    color:var(--ln-cream);max-inline-size:24ch}
+{% endstyle %}
+
+<div class="ln-lp ln-doors" id="LnDoors-{{ section.id }}" data-act="{{ act }}" {{ section.shopify_attributes }}>
+  {%- if section.settings.heading != blank -%}
+    <h2 class="ln-skip">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+
+  <div class="ln-wrap ln-doors__grid">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign no = block.settings.act_no | default: '1'
+        assign is_current = false
+        if no == act
+          assign is_current = true
+        endif
+
+        case no
+          when '2'
+            assign moon_fallback = 'ln-lp-moon-2.webp'
+            assign moon_w = 413
+            assign moon_h = 560
+          when '3'
+            assign moon_fallback = 'ln-lp-moon-3.webp'
+            assign moon_w = 560
+            assign moon_h = 560
+          else
+            assign moon_fallback = 'ln-lp-moon-1.webp'
+            assign moon_w = 560
+            assign moon_h = 560
+        endcase
+
+        assign moon_class = 'ln-door__phase'
+        if no == '2'
+          assign moon_class = 'ln-door__phase ln-door__phase--drip'
+        endif
+      -%}
+
+      <article class="ln-door ln-reveal{% if is_current %} is-current{% endif %}" {{ block.shopify_attributes }}>
+        {%- if block.settings.moon != blank -%}
+          {{ block.settings.moon | image_url: width: 560 | image_tag:
+              class: moon_class, alt: '', widths: '280,420,560', loading: 'lazy' }}
+        {%- else -%}
+          <img class="{{ moon_class }}" src="{{ moon_fallback | asset_url }}" alt=""
+               width="{{ moon_w }}" height="{{ moon_h }}" loading="lazy" decoding="async">
+        {%- endif -%}
+
+        {%- if block.settings.numeral != blank -%}
+          <p class="ln-door__no">{{ block.settings.numeral }}</p>
+        {%- endif -%}
+        <h3 class="ln-door__name">{{ block.settings.name }}</h3>
+        {%- if block.settings.when != blank -%}
+          <p class="ln-door__when">{{ block.settings.when }}</p>
+        {%- endif -%}
+        {%- if block.settings.line != blank -%}
+          <p class="ln-door__line">{{ block.settings.line }}</p>
+        {%- endif -%}
+      </article>
+    {%- endfor -%}
+  </div>
+
+  <span class="ln-lp__grain" aria-hidden="true"></span>
+</div>
+
+{% schema %}
+{
+  "name": "The Long Night · karty",
+  "tag": "section",
+  "class": "ln-lp-section",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Sekcja 2 z 4 landingu sezonu. Karty podciągają się na afisz, więc muszą stać bezpośrednio pod nim. Żadna karta nie jest zamykana - zamyka się dopiero księga."
+    },
+    {
+      "type": "select",
+      "id": "act",
+      "label": "Bieżący akt",
+      "options": [
+        { "value": "1", "label": "Akt I · październik" },
+        { "value": "2", "label": "Akt II · listopad" },
+        { "value": "3", "label": "Akt III · grudzień" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Nagłówek dla czytników ekranu",
+      "info": "Niewidoczny na stronie. Porządkuje strukturę nagłówków.",
+      "default": "The three acts"
+    },
+    { "type": "header", "content": "Odstępy" },
+    { "type": "range", "id": "padding_top", "label": "Odstęp u góry", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "Odstęp u dołu", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 0 }
+  ],
+  "blocks": [
+    {
+      "type": "act",
+      "name": "Karta aktu",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "select",
+          "id": "act_no",
+          "label": "Numer aktu",
+          "info": "Decyduje o domyślnej fazie księżyca i o tym, która karta jest podświetlona.",
+          "options": [
+            { "value": "1", "label": "I" },
+            { "value": "2", "label": "II" },
+            { "value": "3", "label": "III" }
+          ],
+          "default": "1"
+        },
+        { "type": "image_picker", "id": "moon", "label": "Faza księżyca", "info": "Puste = faza wgrana razem z sekcją." },
+        { "type": "text", "id": "numeral", "label": "Liczba rzymska", "default": "I" },
+        { "type": "inline_richtext", "id": "name", "label": "Nazwa aktu", "default": "Blood Moon Rising" },
+        { "type": "text", "id": "when", "label": "Termin", "default": "October" },
+        { "type": "inline_richtext", "id": "line", "label": "Jedno zdanie", "default": "The moon opens one eye, and the dark starts moving." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "The Long Night · karty",
+      "blocks": [
+        {
+          "type": "act",
+          "settings": {
+            "act_no": "1",
+            "numeral": "I",
+            "name": "Blood Moon Rising",
+            "when": "October",
+            "line": "The moon opens one eye, and the dark starts moving."
+          }
+        },
+        {
+          "type": "act",
+          "settings": {
+            "act_no": "2",
+            "numeral": "II",
+            "name": "Blood Moon &middot; <em>Black Friday</em>",
+            "when": "November",
+            "line": "The moon is fresh in blood. The Guild let it strive!"
+          }
+        },
+        {
+          "type": "act",
+          "settings": {
+            "act_no": "3",
+            "numeral": "III",
+            "name": "The Last Moon",
+            "when": "December",
+            "line": "One eclipse, and the Guild closes the gates&hellip;"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

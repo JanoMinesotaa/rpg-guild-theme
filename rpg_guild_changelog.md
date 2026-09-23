@@ -12,6 +12,70 @@ Konwencja: najnowsze na górze.
 
 ## 2026-09-23
 
+### Landing sezonu The Long Night - cztery sekcje, arkusz, skrypt i szablon
+`assets/long-night-lp.css` · `assets/long-night-lp.js` ·
+`snippets/long-night-lp-base.liquid` ·
+`sections/long-night-lp-{poster,doors,book,signal}.liquid` ·
+`templates/page.long-night.json` · 12 assetów `assets/ln-lp-*.webp`
+
+Przeniesienie zatwierdzonego prototypu landingu sezonu (październik - grudzień
+2026) z warsztatu do motywu. **Same nowe pliki - żaden istniejący plik motywu
+nie został ruszony.** `long-night-hero.liquid` i `long-night-season.liquid`
+zostają nietknięte; ta druga dalej stoi na `templates/page.bundle.json`.
+
+**Dlaczego cztery sekcje, a nie jedna.** Pod sekcją zapisu na listy ma usiąść
+Edrone, więc ona ma się nie zmieniać. Afisz i księga zmieniają się co miesiąc,
+gdy sezon przechodzi do następnego aktu. Osobne pliki znaczą, że podmiana
+afisza nie dotyka formularza.
+
+| Plik | Rola |
+|---|---|
+| `long-night-lp-poster` | afisz - kadr aktu, tytuł, zdanie wprowadzające |
+| `long-night-lp-doors` | trzy karty aktów, podciągnięte na afisz |
+| `long-night-lp-book` | księga - mechanika aktów, zamykanie nieruszonych |
+| `long-night-lp-signal` | zapis na listy, natywny `form 'customer'` |
+
+**Warstwa wspólna w jednym miejscu.** `long-night-lp.css` trzyma tokeny
+kampanii i prymitywy (przycisk, miara strony, nadtytuł, wejście sekcji);
+wstawia go snippet `long-night-lp-base`, renderowany przez każdą z czterech
+sekcji. Zmiana przycisku to jedna edycja, nie cztery. Wszystko - łącznie
+z tokenami - jest zamknięte w klasie `.ln-lp`, więc nic nie wychodzi poza
+landing. Klasy dostały przedrostek `ln-`, bo `.wrap`, `.cta` czy `.form`
+z prototypu zderzyłyby się z motywem.
+
+**Akt liczy Liquid, nie JavaScript.** W prototypie stan sezonu jechał
+z `?act=` i wyliczał go skrypt. Tutaj akt jest ustawieniem sekcji, więc
+właściwy kadr i zamknięte wpisy są już w wyrenderowanym HTML-u: przeglądarka
+pobiera jeden kadr afisza zamiast trzech (~0,8 MB mniej), nie ma mignięcia
+odsłoniętej treści, a treść zamkniętego aktu nie jedzie do DOM-u jako
+czytelny tekst.
+
+**Formularz jest natywny** - `{% form 'customer' %}` z `contact[email]`
+i tagiem `newsletter`, czyli droga, którą Shopify zapisuje subskrybenta
+i z której bierze go Edrone. Skrypt nie przechwytuje submitu; dokłada tylko
+podpowiedź przy literówce i napis "wysyłam". Gdy padnie, formularz działa.
+
+**Tekst w ustawieniach, nie w markupie** - pola `text` / `inline_richtext`
+Translate & Adapt wystawia jako treść motywu, więc rynki de i fr da się
+obsłużyć bez przepisywania sekcji.
+
+**Obrazy dwutorowo:** 12 plików `ln-lp-*.webp` (2,1 MB) leży w assetach
+i renderuje się od razu po wgraniu, a każdy da się nadpisać `image_picker`-em
+w edytorze bez pushu.
+
+**Jak cofnąć:** wszystkie pliki są nowe, więc `git rm` tych ścieżek albo powrót
+do tagu `przed-lp-long-night` (`ebf2d46`). Na sklepie: odepnij szablon
+`long-night` od strony - sekcje przestają się renderować, nic innego nie zależy
+od tych plików.
+
+`theme check`: zero uwag na nowych plikach. Jedyne, co się odzywa, to
+`OrphanedSnippet` na `long-night-lp-base` - fałszywy alarm, ta kontrola sypie
+się w tym motywie na 109 snippetów, w tym na `add-to-cart-button`
+i `breadcrumbs`.
+
+---
+
+
 ### Rząd USP w koszyku - desktop przestał się łamać
 `dbeb77f` · `assets/base.css`
 

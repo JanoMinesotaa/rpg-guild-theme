@@ -1,0 +1,28 @@
+{%- comment -%}
+  THE LONG NIGHT · landing sezonu - PODKŁAD WSPÓLNY
+  ---------------------------------------------------------------------------
+  Renderuje go KAŻDA z czterech sekcji landingu, w pierwszej linii szablonu.
+  Robi dwie rzeczy i nic więcej:
+
+    1. wstawia arkusz `long-night-lp.css` - tokeny kampanii i prymitywy
+       (przycisk, miara strony, nadtytuł, wejście sekcji);
+    2. deklaruje Rosarivo, bo `@font-face` potrzebuje `asset_url`, a plik CSS
+       w assets nie umie go policzyć.
+
+  Cztery identyczne <link> do tego samego adresu przeglądarka pobiera RAZ,
+  więc powtórzenie nic nie kosztuje. To jest cena niezależności sekcji:
+  podmiana afisza albo księgi przy zmianie aktu nie rusza sekcji z zapisem
+  na listy, pod którą siedzi Edrone.
+
+  Raleway jest już w motywie (400/500/700) - nie dublujemy go.
+{%- endcomment -%}
+
+{{ 'long-night-lp.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  @font-face{
+    font-family:"Rosarivo";
+    src:url({{ 'Rosarivo-Regular.ttf' | asset_url }}) format("truetype");
+    font-weight:400;font-style:normal;font-display:swap;
+  }
+{% endstyle %}
