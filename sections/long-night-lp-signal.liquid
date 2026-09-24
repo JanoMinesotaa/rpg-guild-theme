@@ -41,7 +41,7 @@
   #LnSignal-{{ section.id }} .ln-signal__inner{
     position:relative;
     padding-block:calc(var(--space-4xl) + 2rem + {{ section.settings.padding_top }}px)
-                 calc(var(--space-4xl) + 2rem + {{ section.settings.padding_bottom }}px)}
+                 calc(var(--space-xl) + {{ section.settings.padding_bottom }}px)}
   #LnSignal-{{ section.id }} .ln-signal__art{
     position:absolute;z-index:0;inset-block-start:50%;inset-inline-start:50%;
     translate:-50% -54%;inline-size:min(52rem,86%);opacity:.36;
@@ -111,7 +111,10 @@
      górę pasa, więc czerwień i krew zostają tylko przy rwanej krawędzi,
      a wyżej jest nasza noc. */
   #LnSignal-{{ section.id }} .ln-signal__foot{
-    display:block;inline-size:100%;block-size:auto;margin-block-start:-1px;
+    display:block;inline-size:100%;block-size:auto;
+    /* Pas podciągnięty o swoją przezroczystą górę (30% wysokości obrazu
+       2400x347, czyli 4,3vw), żeby krawędź krwi stała tuż pod formularzem. */
+    position:relative;margin-block-start:-4.3vw;
     -webkit-mask:linear-gradient(to bottom,transparent 0,transparent 30%,#000 55%);
     mask:linear-gradient(to bottom,transparent 0,transparent 30%,#000 55%)}
 
@@ -210,13 +213,16 @@
       {%- endif -%}
     </div>
 
-    <span class="ln-lp__grain" aria-hidden="true"></span>
   </div>
 
   {%- if section.settings.show_foot -%}
     <img class="ln-signal__foot" src="{{ 'ln-lp-foot.webp' | asset_url }}" alt="" aria-hidden="true"
          width="2400" height="347" loading="lazy" decoding="async">
   {%- endif -%}
+
+  {%- comment -%} Ziarno na CAŁEJ sekcji: gdy leżało tylko nad treścią, pas
+     z krwią miał czystą czerń i strona pokazywała dwa odcienie czerni. {%- endcomment -%}
+  <span class="ln-lp__grain" aria-hidden="true"></span>
 
   {%- if section.settings.show_seam -%}
     <div class="ln-signal__seam" aria-hidden="true"><span class="ln-signal__tear"></span></div>
