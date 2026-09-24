@@ -134,7 +134,7 @@
         "eyebrow": "The season",
         "heading": "Three acts, three moons, multiple incentives!",
         "lede": "Explore our seasonal promotions and learn more about how they work.",
-        "locked_cta": "Send word when it opens",
+        "locked_cta": "Get notified",
         "padding_top": 0,
         "padding_bottom": 0
       }
@@ -145,20 +145,22 @@
         "eyebrow": "The letters",
         "heading": "A lot happens in the dark.",
         "lede": "Openings, drops and prices move all season - and most of them do not wait for anyone.",
-        "note": "One address, three months, everything the Guild opens. Walk away from the letters whenever you like.",
         "field_label": "Your email",
         "placeholder": "you@table.example",
         "button": "Send word",
         "button_sending": "Sending",
         "msg_success": "You are on the list. Watch for the first letter.",
         "msg_error": "That address is missing something. Check it and try again.",
-        "show_consent": false,
-        "consent_text": "I agree to receive marketing emails and accept the",
-        "consent_link_label": "privacy policy",
+        "show_consent": true,
+        "consent_text": "I want to receive commercial messages and accept the",
+        "consent_link_label": "Privacy Policy",
         "show_seam": false,
         "footer_color": "#551310",
         "padding_top": 0,
-        "padding_bottom": 0
+        "padding_bottom": 0,
+        "show_foot": true,
+        "name_label": "Your first name",
+        "name_placeholder": "Your name"
       }
     }
   },

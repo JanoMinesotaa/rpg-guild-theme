@@ -68,20 +68,22 @@
     margin-block-start:var(--space-xs)}
 
   #LnSignal-{{ section.id }} .ln-form{
-    display:grid;gap:var(--space-sm);inline-size:min(100%,34rem);justify-items:center}
+    display:grid;gap:var(--space-sm);inline-size:min(100%,44rem);justify-items:center}
   #LnSignal-{{ section.id }} .ln-form label{
     position:absolute;inline-size:1px;block-size:1px;margin:-1px;clip-path:inset(50%);overflow:hidden}
   #LnSignal-{{ section.id }} .ln-form__row{
     display:grid;gap:var(--space-sm);grid-template-columns:minmax(0,1fr);inline-size:100%}
   @media (min-width:38rem){
-    #LnSignal-{{ section.id }} .ln-form__row{grid-template-columns:minmax(0,1fr) auto}
+    #LnSignal-{{ section.id }} .ln-form__row{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr) auto}
   }
-  #LnSignal-{{ section.id }} .ln-form input[type="email"]{
+  #LnSignal-{{ section.id }} .ln-form input[type="email"],
+  #LnSignal-{{ section.id }} .ln-form input[type="text"]{
     min-block-size:56px;padding:var(--space-sm) var(--space-lg);font-family:var(--ln-font-body);
     font-size:var(--text-base);color:var(--lp-ink);background:rgba(14,14,14,.66);
     border:1px solid rgba(205,134,130,.4);border-radius:0;text-align:center}
   @media (min-width:38rem){
-    #LnSignal-{{ section.id }} .ln-form input[type="email"]{text-align:start}
+    #LnSignal-{{ section.id }} .ln-form input[type="email"],
+    #LnSignal-{{ section.id }} .ln-form input[type="text"]{text-align:start}
   }
   #LnSignal-{{ section.id }} .ln-form input::placeholder{color:var(--lp-ink-quiet)}
   #LnSignal-{{ section.id }} .ln-form input:hover{border-color:var(--ln-red-200)}
@@ -99,6 +101,14 @@
     display:flex;align-items:flex-start;gap:var(--space-xs);
     font-size:var(--text-sm);color:var(--lp-ink-soft);text-align:start}
   #LnSignal-{{ section.id }} .ln-form__consent a{color:var(--ln-red-200)}
+
+  /* Koniec strony: dół banneru bundli (wycięty poniżej tekstu). Maska chowa
+     górę pasa, więc czerwień i krew zostają tylko przy rwanej krawędzi,
+     a wyżej jest nasza noc. */
+  #LnSignal-{{ section.id }} .ln-signal__foot{
+    display:block;inline-size:100%;block-size:auto;margin-block-start:-1px;
+    -webkit-mask:linear-gradient(to bottom,transparent 0,transparent 30%,#000 55%);
+    mask:linear-gradient(to bottom,transparent 0,transparent 30%,#000 55%)}
 
   /* Rwana krawędź i pas oddechu w kolorze stopki. */
   #LnSignal-{{ section.id }} .ln-signal__seam{
@@ -142,8 +152,17 @@
 
       {%- form 'customer', class: 'ln-form' -%}
         <input type="hidden" name="contact[tags]" value="newsletter">
-        <label for="LnSignalEmail-{{ section.id }}">{{ section.settings.field_label }}</label>
         <div class="ln-form__row">
+          <label for="LnSignalEmail-{{ section.id }}">{{ section.settings.field_label }}</label>
+          <label for="LnSignalName-{{ section.id }}">{{ section.settings.name_label }}</label>
+          <input
+            id="LnSignalName-{{ section.id }}"
+            type="text"
+            name="contact[first_name]"
+            autocomplete="given-name"
+            placeholder="{{ section.settings.name_placeholder | escape }}"
+            required
+          >
           <input
             id="LnSignalEmail-{{ section.id }}"
             type="email"
@@ -164,8 +183,7 @@
           <div class="ln-form__consent">
             <input type="checkbox" id="LnSignalConsent-{{ section.id }}" name="consent" required>
             <label for="LnSignalConsent-{{ section.id }}" style="position:static;inline-size:auto;block-size:auto;margin:0;clip-path:none">
-              {{ section.settings.consent_text }}
-              <a href="{{ shop.privacy_policy.url }}" target="_blank" rel="noopener">{{ section.settings.consent_link_label }}</a>
+              {{ section.settings.consent_text }} <a href="{{ shop.privacy_policy.url }}" target="_blank" rel="noopener">{{ section.settings.consent_link_label }}</a>.
             </label>
           </div>
         {%- endif -%}
@@ -190,6 +208,11 @@
     <span class="ln-lp__grain" aria-hidden="true"></span>
   </div>
 
+  {%- if section.settings.show_foot -%}
+    <img class="ln-signal__foot" src="{{ 'ln-lp-foot.webp' | asset_url }}" alt="" aria-hidden="true"
+         width="2400" height="347" loading="lazy" decoding="async">
+  {%- endif -%}
+
   {%- if section.settings.show_seam -%}
     <div class="ln-signal__seam" aria-hidden="true"><span class="ln-signal__tear"></span></div>
   {%- endif -%}
@@ -212,6 +235,8 @@
     { "type": "inline_richtext", "id": "note", "label": "Nota pod formularzem", "default": "One address, three months, everything the Guild opens. Walk away from the letters whenever you like." },
     { "type": "image_picker", "id": "art", "label": "Kadr za nagłówkiem", "info": "Puste = skrzynia wgrana razem z sekcją." },
     { "type": "header", "content": "Formularz" },
+    { "type": "text", "id": "name_label", "label": "Etykieta pola imienia dla czytników ekranu", "default": "Your first name" },
+    { "type": "text", "id": "name_placeholder", "label": "Podpowiedź w polu imienia", "default": "Your name" },
     { "type": "text", "id": "field_label", "label": "Etykieta pola dla czytników ekranu", "default": "Your email" },
     { "type": "text", "id": "placeholder", "label": "Podpowiedź w polu", "default": "you@table.example" },
     { "type": "text", "id": "button", "label": "Napis na przycisku", "default": "Send word" },
@@ -225,14 +250,15 @@
       "content": "Wyłączona, bo zatwierdzony projekt jej nie ma. Sklep sprzedaje na rynki de i fr - rozstrzygnij przed publikacją, czy ma tu być, tak jak jest w bloku email-signup motywu."
     },
     { "type": "checkbox", "id": "show_consent", "label": "Pokaż pole zgody", "default": false },
-    { "type": "inline_richtext", "id": "consent_text", "label": "Treść zgody", "default": "I agree to receive marketing emails and accept the" },
-    { "type": "text", "id": "consent_link_label", "label": "Napis linku do polityki", "default": "privacy policy" },
+    { "type": "inline_richtext", "id": "consent_text", "label": "Treść zgody", "default": "I want to receive commercial messages and accept the" },
+    { "type": "text", "id": "consent_link_label", "label": "Napis linku do polityki", "default": "Privacy Policy" },
     { "type": "header", "content": "Zejście w stopkę" },
     {
       "type": "paragraph",
       "content": "Rwana krawędź i pas w kolorze stopki. Wyłącz, jeśli pod tą sekcją stanie jeszcze coś innego niż stopka sklepu."
     },
-    { "type": "checkbox", "id": "show_seam", "label": "Zakończ rwaną krawędzią", "default": true },
+    { "type": "checkbox", "id": "show_foot", "label": "Zakończ dołem banneru z krwią", "default": true },
+    { "type": "checkbox", "id": "show_seam", "label": "Zakończ rwaną krawędzią w kolorze stopki sklepu", "default": false },
     { "type": "color", "id": "footer_color", "label": "Kolor stopki", "info": "Górny wiersz pikseli natywnej stopki sklepu.", "default": "#551310" },
     { "type": "header", "content": "Odstępy" },
     { "type": "range", "id": "padding_top", "label": "Odstęp u góry", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 0 },

@@ -41,6 +41,9 @@
     inset-block-start:var(--ln-lift);inset-block-end:-1px;
     background:var(--ln-night)}
   #LnDoors-{{ section.id }} .ln-wrap{position:relative;z-index:2}
+  /* Ziarno kart zaczyna się dopiero pod zakładem. Nad nim leży już ziarno
+     afisza - dwie warstwy jedna na drugiej rozjaśniały pas pod kartami. */
+  #LnDoors-{{ section.id }} .ln-lp__grain{inset-block-start:var(--ln-lift)}
 
   #LnDoors-{{ section.id }} .ln-doors__grid{
     display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-3xl)}

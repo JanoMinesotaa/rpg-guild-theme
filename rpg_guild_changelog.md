@@ -12,6 +12,22 @@ Konwencja: najnowsze na górze.
 
 ## 2026-09-23
 
+### Landing The Long Night - poprawki po przeglądzie Jana
+`sections/long-night-lp-{doors,book,signal}.liquid` · `templates/page.long-night.json` ·
+`assets/ln-lp-foot.webp`
+
+- **Jaśniejszy pas pod kartami** - w miejscu, gdzie karty zachodzą na afisz,
+  leżały dwie warstwy ziarna (afisza i kart). Ziarno kart zaczyna się teraz
+  dopiero pod zakładem.
+- **Formularz zbiera imię** (`contact[first_name]`) obok e-maila.
+- **Zgoda z linkiem do Privacy Policy** włączona (wymagana), zastępuje notę pod
+  formularzem.
+- **„Send word when it opens" → „Get notified"** na przyciskach zamkniętych aktów.
+- **Koniec strony: dół banneru bundli** (`04-export/banners/bundles-shop-rosarivo-en-alpha`,
+  wycięty poniżej tekstu, wariant z kroplami). Maska chowa górę pasa, więc
+  czerwień i krew są tylko przy rwanej krawędzi. Stary pas w kolorze stopki
+  zostaje jako przełącznik, domyślnie wyłączony.
+
 ### Landing The Long Night bez menu i stopki sklepu
 `sections/long-night-lp-poster.liquid` · `templates/page.long-night.json`
 
