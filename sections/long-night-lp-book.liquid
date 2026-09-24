@@ -119,6 +119,17 @@
     content:"";position:absolute;inset-inline-start:0;inset-block-start:.15em;
     inline-size:1.15em;block-size:1.15em;
     background:url({{ 'ln-lp-d20.webp' | asset_url }}) no-repeat center/contain}
+  /* Link w tekście listy (wariant A, wybór Jana): pergamin jaśniejszy od listy,
+     podkreślenie w kolorze księżyca, na najechanie cały link krwisty.
+     Zaczepione o ID sekcji - poza księgą landingu nie działa nigdzie. */
+  #LnBook-{{ section.id }} .ln-entry__what a,
+  #LnBook-{{ section.id }} .ln-entry__line a{
+    color:var(--ln-parchment);text-decoration:underline;
+    text-decoration-color:var(--ln-moon);text-decoration-thickness:1px;
+    text-underline-offset:.28em;
+    transition:color var(--dur-short) var(--ease-out)}
+  #LnBook-{{ section.id }} .ln-entry__what a:hover,
+  #LnBook-{{ section.id }} .ln-entry__line a:hover{color:var(--ln-moon)}
   #LnBook-{{ section.id }} .ln-entry__doors{
     display:flex;flex-wrap:wrap;gap:var(--space-xs);margin-block-start:var(--space-md)}
 
@@ -253,11 +264,13 @@
               {%- if block.settings.what_3 != blank -%}<li>{{ block.settings.what_3 }}</li>{%- endif -%}
             </ul>
           {%- endif -%}
-        </div>
 
-        {%- if doors != blank -%}
-          <div class="ln-entry__doors">{{ doors }}</div>
-        {%- endif -%}
+          {%- comment -%} Przyciski MUSZĄ siedzieć w kolumnie tekstu - poza nią
+             siatka wpisu robiła z nich trzecią kolumnę i grafika spadała niżej. {%- endcomment -%}
+          {%- if doors != blank -%}
+            <div class="ln-entry__doors">{{ doors }}</div>
+          {%- endif -%}
+        </div>
       </article>
     {%- endfor -%}
 
