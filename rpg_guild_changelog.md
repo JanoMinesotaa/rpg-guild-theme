@@ -12,6 +12,18 @@ Konwencja: najnowsze na górze.
 
 ## 2026-09-23
 
+### Strona „The Long Night" dostała szablon `long-night` `[poza repo]`
+Admin API, `pageUpdate` · strona `gid://shopify/Page/165409587466`
+(`/pages/the-long-night-rpg-guild-sale-season`)
+
+`templateSuffix`: `page` → `long-night`. Strona **zostaje niepublikowana**,
+publicznie zwraca 404. Ukrytej strony nie da się podejrzeć nawet zalogowanym,
+więc do sprawdzania wyglądu służy dowolna opublikowana strona z parametrem
+`?view=long-night`, np. `/pages/cookies?view=long-night`.
+
+**Jak cofnąć:** w panelu przy stronie przestaw szablon na `page` albo
+`pageUpdate` z `templateSuffix: "page"`.
+
 ### Landing sezonu The Long Night - cztery sekcje, arkusz, skrypt i szablon
 `assets/long-night-lp.css` · `assets/long-night-lp.js` ·
 `snippets/long-night-lp-base.liquid` ·
