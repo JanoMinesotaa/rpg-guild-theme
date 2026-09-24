@@ -81,6 +81,12 @@
   /* Pełnia ma pod tarczą strugi, więc jest wyższa - przesunięcie liczone tak,
      żeby środek tarczy usiadł dokładnie tam, co u pozostałych dwóch. */
   #LnDoors-{{ section.id }} .ln-door__phase--drip{translate:38% -27%}
+  /* Na jednej kolumnie karta sięga krawędzi marginesu strony, a tarcza wystaje
+     z niej o 38% swojej szerokości - sekcja ją ucinała. Karta cofa się
+     z prawej dokładnie o tyle, ile wystaje księżyc. */
+  @media (max-width:59.99rem){
+    #LnDoors-{{ section.id }} .ln-door{margin-inline-end:calc(clamp(4.2rem,6vw,5.8rem) * .38)}
+  }
 
   #LnDoors-{{ section.id }} .ln-door__no{
     font-family:var(--ln-font-display);font-size:var(--text-2xl);line-height:1;color:var(--ln-moon)}

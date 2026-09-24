@@ -53,7 +53,10 @@
                  calc(var(--space-4xl) + 2rem + {{ section.settings.padding_bottom }}px)}
   #LnBook-{{ section.id }} .ln-wrap{position:relative;z-index:2}
 
+  /* div, nie <header>: motyw ma globalny styl dla znacznika header, który
+     ścinał wysokość nagłówka księgi - tekst wylewał się pod linię wpisu. */
   #LnBook-{{ section.id }} .ln-book__head{
+    block-size:auto;max-block-size:none;
     max-inline-size:46ch;display:grid;gap:var(--space-md);padding-block-end:var(--space-2xl)}
   #LnBook-{{ section.id }} .ln-book__head h2{
     font-size:clamp(2rem,1.1rem + 3.2vw,3.4rem);line-height:1.04;color:var(--ln-parchment)}
@@ -154,7 +157,7 @@
   <div class="ln-wrap">
 
     {%- if section.settings.heading != blank or section.settings.eyebrow != blank -%}
-      <header class="ln-book__head ln-reveal">
+      <div class="ln-book__head ln-reveal">
         {%- if section.settings.eyebrow != blank -%}
           <p class="ln-label">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
@@ -164,7 +167,7 @@
         {%- if section.settings.lede != blank -%}
           <p>{{ section.settings.lede }}</p>
         {%- endif -%}
-      </header>
+      </div>
     {%- endif -%}
 
     {%- for block in section.blocks -%}
