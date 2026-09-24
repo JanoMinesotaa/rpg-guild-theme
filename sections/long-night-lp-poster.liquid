@@ -41,9 +41,13 @@
 {%- endcomment -%}
 {%- if section.settings.hide_shop_chrome -%}
   {% style %}
+    /* `#MainContent ~` podnosi wagę do poziomu ID: motyw ma własną regułę
+       #shopify-section-...{display:flex !important} od 1280px, która
+       z samą klasą wygrywała i pokazywała rząd zaufania na dużych ekranach. */
     #header-group,
     .breadcrumbs,
-    .shopify-section-group-footer-group{display:none !important}
+    .shopify-section-group-footer-group,
+    #MainContent ~ .shopify-section-group-footer-group{display:none !important}
   {% endstyle %}
 {%- endif -%}
 
