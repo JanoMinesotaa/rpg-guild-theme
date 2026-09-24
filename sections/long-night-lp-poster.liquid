@@ -25,6 +25,28 @@
 
 {% render 'long-night-lp-base' %}
 
+{%- comment -%}
+  RAMA SKLEPU NA LANDINGU. Gdy przełącznik jest włączony, chowamy trzy
+  elementy z layout/theme.liquid - i NIC poza nimi:
+    #header-group                       pasek promocji, nagłówek z menu, separator
+    .breadcrumbs                        pas z okruszkiem "Home"
+    .shopify-section-group-footer-group rząd zaufania i stopka
+  Sprawdzone na żywym sklepie 2026-09-24: każdy selektor łapie wyłącznie te
+  elementy, a żadna sekcja landingu nie siedzi w środku któregoś z nich.
+
+  Reguła istnieje TYLKO na stronie, na której renderuje się ta sekcja, i tylko
+  przy włączonym przełączniku. Domyślnie jest WYŁĄCZONY, więc wstawienie afisza
+  na inną stronę nie schowa tam menu. Skrypty z theme.liquid (cookies, Edrone,
+  analityka, aplikacje) ładują się bez zmian - chowamy wygląd, nie kod.
+{%- endcomment -%}
+{%- if section.settings.hide_shop_chrome -%}
+  {% style %}
+    #header-group,
+    .breadcrumbs,
+    .shopify-section-group-footer-group{display:none !important}
+  {% endstyle %}
+{%- endif -%}
+
 {%- liquid
   assign act = section.settings.act | default: '1'
 
@@ -186,10 +208,18 @@
       "label": "Zdanie wprowadzające",
       "default": "Three moons over the Guild. Three acts, one season - and when the last one sets, we close the gates."
     },
+    { "type": "header", "content": "Rama sklepu" },
+    {
+      "type": "checkbox",
+      "id": "hide_shop_chrome",
+      "label": "Ukryj menu i stopkę sklepu",
+      "info": "Chowa pasek promocji, menu, pas z okruszkiem i stopkę - tylko na stronie z tą sekcją. Przy włączonym włącz też górną belkę, żeby było jak wrócić do sklepu.",
+      "default": false
+    },
     { "type": "header", "content": "Górna belka" },
     {
       "type": "paragraph",
-      "content": "Domyślnie wyłączona: nad sekcją stoi nagłówek motywu. Włącz tylko na szablonie bez nagłówka."
+      "content": "Włącz, gdy menu sklepu jest ukryte - to wtedy jedyna droga powrotu do sklepu."
     },
     { "type": "checkbox", "id": "show_topbar", "label": "Pokaż górną belkę", "default": false },
     { "type": "image_picker", "id": "crest", "label": "Herb" },

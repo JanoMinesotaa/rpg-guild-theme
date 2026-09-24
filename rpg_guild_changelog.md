@@ -12,6 +12,24 @@ Konwencja: najnowsze na górze.
 
 ## 2026-09-23
 
+### Landing The Long Night bez menu i stopki sklepu
+`sections/long-night-lp-poster.liquid` · `templates/page.long-night.json`
+
+Afisz dostał przełącznik **„Ukryj menu i stopkę sklepu"** (domyślnie wyłączony,
+włączony tylko w szablonie `page.long-night`). Chowa `display:none` trzy
+elementy z `layout/theme.liquid`: `#header-group` (pasek promocji, menu,
+separator), `.breadcrumbs` (pas „Home") i `.shopify-section-group-footer-group`
+(rząd zaufania, stopka). Sprawdzone na żywym sklepie: selektory łapią tylko te
+elementy, żadna sekcja landingu nie siedzi w środku.
+
+**Nie jest to osobny layout**, celowo: skrypty z `theme.liquid` (cookies,
+Edrone, analityka, aplikacje) ładują się bez zmian - chowamy wygląd, nie kod.
+Reguła istnieje tylko na stronie, na której renderuje się afisz. Na landingu
+włączona jest też górna belka afisza (herb + „Back to shop"), a rwana krawędź
+na końcu zapisu jest wyłączona, bo bez stopki prowadziłaby do pustego pasa.
+
+**Jak cofnąć:** w edytorze, na afiszu, odznacz „Ukryj menu i stopkę sklepu".
+
 ### Strona „The Long Night" dostała szablon `long-night` `[poza repo]`
 Admin API, `pageUpdate` · strona `gid://shopify/Page/165409587466`
 (`/pages/the-long-night-rpg-guild-sale-season`)
