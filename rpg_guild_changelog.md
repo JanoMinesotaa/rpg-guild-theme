@@ -28,6 +28,16 @@ Reguła istnieje tylko na stronie, na której renderuje się afisz. Na landingu
 włączona jest też górna belka afisza (herb + „Back to shop"), a rwana krawędź
 na końcu zapisu jest wyłączona, bo bez stopki prowadziłaby do pustego pasa.
 
+**Pułapka przy pushu:** sekcja i szablon poszły jednym pushem, szablon doszedł
+pierwszy i Shopify sprawdził go względem STAREGO schematu afisza - nieznane
+jeszcze `hide_shop_chrome` zostało po cichu wycięte, bez błędu. Pomógł drugi
+push samego szablonu. Zasada: nowe ustawienie sekcji → najpierw sekcja, potem
+szablon, i sprawdzenie treści szablonu na serwerze.
+
+**Zweryfikowane na żywo:** na landingu menu, pas „Home" i stopka mają
+`display:none`, Edrone się ładuje. Na stronie głównej i `/pages/cookies`
+menu i stopka bez zmian, arkusz landingu nie jest tam w ogóle wczytywany.
+
 **Jak cofnąć:** w edytorze, na afiszu, odznacz „Ukryj menu i stopkę sklepu".
 
 ### Strona „The Long Night" dostała szablon `long-night` `[poza repo]`
