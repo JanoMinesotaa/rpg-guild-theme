@@ -60,7 +60,7 @@ def commity(od, do):
         )
     return wynik
 
-def zbuduj_tresc(lista, od, repo):
+def zbuduj_tresc(lista, od, do, repo):
     dni = (do - od).days
     if dni <= 1:
         naglowek = f"Zmiany w motywie RPG Guild - {od:%d.%m.%Y}"
@@ -140,7 +140,7 @@ def main():
         return 1
 
     repo = os.environ.get("GITHUB_REPOSITORY", "JanoMinesotaa/rpg-guild-theme")
-    tresc = zbuduj_tresc(lista, od, repo)
+    tresc = zbuduj_tresc(lista, od, do, repo)
 
     wiadomosc = EmailMessage()
     wiadomosc["Subject"] = f"RPG Guild - zmiany w motywie {od:%d.%m.%Y} ({len(lista)} commitow)"
