@@ -12,6 +12,35 @@ Konwencja: najnowsze na górze.
 
 ## 2026-09-30
 
+### Strona bundli po niemiecku i francusku `[poza repo]`
+Admin API, `translationsRegister` · zasób `OnlineStoreThemeJsonTemplate/page.bundle`
+(motyw `182160195850`) i strona `gid://shopify/Page/165072371978`
+
+Szablon strony bundli **nie miał żadnego tłumaczenia DE ani FR** - na `/de-de/` i `/fr-fr/`
+cała strona szła po angielsku. Zarejestrowane 29 pól na język: baner (nadtytuł, hasło, dwa
+rzędy wstępu - teksty zatwierdzone w `05-banners/app.js`), nagłówek i opis kreatora, cała
+sekcja The Long Night (nadtytuł, hasło, przycisk, trzy akty), „Shop other:”, tytuł FAQ i trzy
+pytania z odpowiedziami. Do tego tytuł strony (karta przeglądarki i Google). `handle` celowo
+bez tłumaczenia, żeby nie zmieniać adresów.
+
+Konwencja: DE na „du”, FR na „vous”, „Guild” zostaje jako nazwa. W FR twarde spacje przed
+`? ! :` i w `5 000`, `38 mm`, `10 %`. Pominięte: wyłączony stary baner i pola techniczne
+(`custom_class`, paddingi).
+
+Sprawdzone na żywo: wszystkie nowe teksty obecne na `/de-de/` i `/fr-fr/`.
+
+**Nie przetłumaczone i nie da się tego zrobić przez API Shopify:** aplikacja kreatora
+(EB Easy Bundle Builder, Skai Lama). Jej napisy („Your Bundle:”, „Add To Cart”, „Choose the size
+of your mini”) i nawet tytuły produktów idą po angielsku, choć produkty mają tłumaczenia DE/FR -
+aplikacja ma wyłączony tryb wielojęzyczny. Włącza się go w panelu aplikacji:
+Design Control Panel → Language → Multiple Language.
+
+**Uwaga na przyszłość:** po zmianie tekstu EN w edytorze tłumaczenie nie aktualizuje się
+samo - zostaje stara wersja oznaczona jako nieaktualna (`outdated`) i trzeba ją odświeżyć.
+
+**Jak cofnąć:** `translationsRemove` z tymi kluczami dla `de` i `fr` albo ręcznie
+w Translate & Adapt (Motyw → szablon `page.bundle`).
+
 ### Strona bundli: baner akt II z żywym tekstem, sekcja sezonu na mobile, przycisk z landingu
 `9ab44c1` · `sections/long-night-hero.liquid`, `sections/long-night-season.liquid`,
 `templates/page.bundle.json`
