@@ -12,6 +12,37 @@ Konwencja: najnowsze na górze.
 
 ## 2026-09-30
 
+### Cofnięcie przeceny -3% na katalogu `[poza repo]`
+
+**Co:** przywrócono ceny sprzed przeceny -3% z 2026-08-28 i wyczyszczono `compareAtPrice`.
+634 produkty, 11 064 warianty. Suma cen 206 142,36 -> 212 507,50 (+3,09%).
+
+**Gdzie:** Shopify Admin API, mutacja `productVariantsBulkUpdate`. Nie dotyczy kodu motywu.
+Uruchomione skryptem `shopify_discount_3pct.py rollback` ze źródłem `discount_rollback.jsonl`.
+
+**Dlaczego:** decyzja Jana - powrót do cen bazowych.
+
+**Skutek uboczny:** kolekcja "Miniatures on sale" filtruje po `Compare at price is set`,
+więc te 634 produkty z niej wypadły.
+
+**Weryfikacja:** przed operacją 25 losowych wariantów zgadzało się co do grosza ze stanem
+po przecenie (nikt ich nie ruszał od sierpnia). Po operacji 150 losowych wariantów: 150/150
+z ceną bazową i pustym `compareAtPrice`. Skrypt: 634/634 produktów, 0 błędów.
+
+**Uwaga:** pierwsze uruchomienie zostało przerwane po ~73% (110/150 w próbce). Skrypt jest
+idempotentny, więc powtórzenie dokończyło resztę bez skutków ubocznych.
+
+**Jak cofnąć:** `python3 shopify_discount_3pct.py run` nałoży przecenę od nowa
+(pomija warianty, które już mają `compareAtPrice`, więc nie zrobi rabatu na rabat).
+
+**Uwierzytelnianie:** nowa apka dev `Price Manager` (scope `write_products`),
+dane w `~/.secrets/rpg-guild-shopify.env`. Stare wpisy w `~/.zshrc` wskazują na apkę
+bez ważnej instalacji i dają HTTP 401 - do usunięcia.
+
+---
+
+## 2026-09-30
+
 ### Hero kolekcji Spooky Miniatures w stylu The Long Night
 `sections/long-night-collection-hero.liquid` · `templates/collection.spooky-collection.json` ·
 `assets/ln-mini-pumpkin-knight-duotone.webp` · `assets/long-night-hero-frame-mobile.webp`
