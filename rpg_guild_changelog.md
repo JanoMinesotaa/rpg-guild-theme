@@ -12,6 +12,54 @@ Konwencja: najnowsze na górze.
 
 ## 2026-09-30
 
+### Strona bundli: baner akt II z żywym tekstem, sekcja sezonu na mobile, przycisk z landingu
+`9ab44c1` · `sections/long-night-hero.liquid`, `sections/long-night-season.liquid`,
+`templates/page.bundle.json`
+
+Makieta zaakceptowana przez Jana: `Black Friday 2026/05-banners/bundle-page-mobile.html`.
+
+**Baner.** Obraz z wypalonym tekstem (`section_6kDNaa`, tło
+`bundles-shop-rosarivo-en-alpha.webp`) jest w szablonie **wyłączony, nie usunięty**.
+Na jego miejscu stoi `hero_longNightBundle` (sekcja `long-night-hero`): tekst w ustawieniach,
+więc DE i FR idą przez Translate & Adapt zamiast przez osobne grafiki. Nadtytuł
+„Act II · Blood Moon · Black Friday · November”, księżyc ociekający krwią na osi nad
+nadtytułem, bez herbu. Na mobile rama pionowa `long-night-hero-frame-mobile.webp` - wcześniej
+telefon dostawał szeroki obraz przycięty `cover`, który ucinał hasło z obu boków.
+W „pre‑made” jest dywiz niełamiący (U+2011), inaczej wiersz łamał się na „pre-”.
+
+Sekcja `long-night-hero` dostała trzy ustawienia: *Mobile: rama pionowa z motywu*,
+*Układ znaków* (herb i księżyc w rogach / sam księżyc nad nadtytułem), *Faza księżyca*.
+Domyślne wartości zachowują kadr wyjściowy. Sekcja nie była wcześniej użyta w żadnym szablonie.
+
+**Sekcja The Long Night.** Desktop bez zmian poza przyciskiem. Przycisk jest 1:1 z landingu
+sezonu (`.ln-cta`: pergamin, srebrne okucie z fazą, hover w czerwieni księżyca) na desktopie
+i mobile. Bieżący akt: II. Mobile (poniżej 750 px) zamiast awaryjnego stosu kafli: oś pionowa,
+księżyc 64 px po lewej, tekst po prawej, **bez plam krwi** (decyzja Jana). Wysokość sekcji
+na telefonie spadła z ok. 1680 px do ok. 700 px.
+
+Dwie rzeczy, które nie są oczywiste:
+- **Oś biegnie pod księżycami, a nie przez nie.** Przygaszenie aktu idzie na tekst i sam
+  księżyc, nie na cały kafel - półprzezroczysty kafel pokazywał linię osi przez tarczę.
+  Pod tarczą leży krążek pergaminu, nad i pod nią 8 px przerwy. Pełne pole pergaminu
+  wycinało prostokąt z tła, więc tylko krążek i wąski pasek.
+- **Opakowanie `.ln__orb` na desktopie ma `display:contents`** - istnieje tylko dla osi mobilnej.
+
+Pionowa nitka nad i pod księżycem zaćmienia jest w samym pliku
+`long-night-moon-eclipse.webp`, nie w kodzie.
+
+Szablon edytowany na wersji pobranej ze sklepu tego samego dnia (commit `9c6b21c`,
+zdania aktów zmienione wcześniej w edytorze zachowane). Push: najpierw sekcje, potem szablon,
+treść szablonu sprawdzona na serwerze. Zweryfikowane na żywo na en, `/de-de/` i `/fr-fr/`
+(1440 px i 390 px).
+
+**Do zrobienia:** tłumaczenia DE i FR nowego baneru w Translate & Adapt (Motyw → szablon
+`page.bundle`). Zatwierdzone teksty są w `Black Friday 2026/05-banners/app.js` (`BUNDLE`).
+CTA sekcji dalej celuje w Mystery Box, bo landing sezonu jest niepublikowany.
+
+**Jak cofnąć:** w edytorze szablonu strony bundli włącz stary baner i wyłącz
+„The Long Night · hero”; akt bieżący przestaw w sekcji sezonu. Kod: tag
+`przed-bundle-mobile-akt2`.
+
 ### Tiamat - dokończenie cofnięcia przeceny `[poza repo]`
 
 **Co:** produkt `Tiamat 5e | DnD Tiamat Queen of Dragons Miniature`
