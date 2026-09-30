@@ -12,6 +12,28 @@ Konwencja: najnowsze na górze.
 
 ## 2026-09-30
 
+### Tiamat - dokończenie cofnięcia przeceny `[poza repo]`
+
+**Co:** produkt `Tiamat 5e | DnD Tiamat Queen of Dragons Miniature`
+(`gid://shopify/Product/8539037827338`), 12 wariantów: `price` <- `compareAtPrice`,
+`compareAtPrice` -> null. Przykład: 124,45 / 128,30 -> 128,30 / brak.
+
+**Dlaczego osobno:** tego produktu NIE było w `discount_rollback.jsonl`, mimo że przecena
+-3% go objęła (stosunki cen wynosiły dokładnie 0,97). Główny rollback go pominął, bo skrypt
+cofa wyłącznie to, co znajdzie w pliku. Zgłoszone przez Jana po weryfikacji na sklepie.
+
+**Jak cofnąć:** `tiamat_rollback.json` w katalogu projektu trzyma stan sprzed zmiany
+(wszystkie 12 wariantów z cenami i compareAtPrice).
+
+**Weryfikacja:** pełny skan katalogu po operacji - 6626 produktów, 0 z ustawionym
+`compareAtPrice`. Kolekcja "Miniatures on sale" pokazywała jeszcze chwilę `1`,
+bo smart collection przelicza się z opóźnieniem.
+
+**Wniosek na przyszłość:** po każdej masowej operacji cenowej sprawdzać cały katalog
+skanem, a nie ufać kompletności pliku rollback.
+
+---
+
 ### Cofnięcie przeceny -3% na katalogu `[poza repo]`
 
 **Co:** przywrócono ceny sprzed przeceny -3% z 2026-08-28 i wyczyszczono `compareAtPrice`.
