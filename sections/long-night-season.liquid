@@ -119,6 +119,8 @@
     transition:transform var(--dur-mid) var(--ease-out);
   }
   #LongNight-{{ uid }} .ln__act:hover .ln__moon{transform:translateY(-.5cqw)}
+  /* Opakowanie ksiezyca jest potrzebne tylko osi mobilnej */
+  #LongNight-{{ uid }} .ln__orb{display:contents}
 
   #LongNight-{{ uid }} .ln__no{
     margin:var(--s-3) 0 0;font-weight:700;font-size:.8333cqw;letter-spacing:.2em;
@@ -139,16 +141,23 @@
     color:var(--sh-fg);max-inline-size:24ch;
   }
 
+  /* Przycisk 1:1 z landingu sezonu (.ln-lp .ln-cta w long-night-lp.css):
+     pergamin, srebrne okucie z faza, hover w czerwieni ksiezyca. Decyzja
+     Jana 30.09 - ten sam przycisk tu i na landingu. */
   #LongNight-{{ uid }} .ln__cta{
-    margin-block-start:var(--s-8);display:inline-block;
-    font-weight:700;font-size:.8333cqw;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--ln-blood);text-decoration:none;border:1px solid var(--ln-blood);
-    padding:var(--s-3) var(--s-6);white-space:nowrap;
-    transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out);
+    margin-block-start:var(--s-8);display:inline-flex;align-items:center;justify-content:center;
+    min-block-size:48px;padding:0 1.5rem;
+    border:2px solid #BDB9B2;border-radius:0;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.34),inset 0 -1px 0 rgba(0,0,0,.28);
+    font-family:Raleway,ui-sans-serif,system-ui,sans-serif;
+    font-weight:700;font-size:.8125rem;line-height:1;letter-spacing:.14em;text-transform:uppercase;
+    color:#0E0E0E;background:var(--ln-parchment);text-decoration:none;white-space:nowrap;
+    transition:background 220ms cubic-bezier(.16,1,.3,1),color 220ms cubic-bezier(.16,1,.3,1),
+               border-color 220ms cubic-bezier(.16,1,.3,1);
   }
-  #LongNight-{{ uid }} .ln__cta:hover{background:var(--ln-blood);color:var(--ln-parchment)}
-  #LongNight-{{ uid }} .ln__cta:focus-visible{outline:2px solid var(--ln-blood);outline-offset:3px}
-  #LongNight-{{ uid }} .ln__cta:active{background:var(--ln-red-600);color:var(--ln-parchment)}
+  #LongNight-{{ uid }} .ln__cta:hover,
+  #LongNight-{{ uid }} .ln__cta:active{background:#E92E4A;color:#0E0E0E;border-color:#DAD6CE}
+  #LongNight-{{ uid }} .ln__cta:focus-visible{outline:2px solid #E92E4A;outline-offset:3px}
 
   @media (prefers-reduced-motion:reduce){
     #LongNight-{{ uid }} .ln__act,
@@ -158,23 +167,70 @@
     #LongNight-{{ uid }} .ln__act:hover .ln__moon{transform:none}
   }
 
-  /* Ponizej 750px kolumny schodza w jedna - mobilny kadr sezonu jest
-     osobnym zadaniem, to jest bezpieczny fallback, nie projekt. */
+  /* ── MOBILE (ponizej 750px) ──────────────────────────────────────────
+     Makieta: Black Friday 2026/05-banners/bundle-page-mobile.html,
+     zaakceptowana przez Jana 30.09.2026.
+     - os aktow w pionie: ksiezyc 64px po lewej, tekst po prawej,
+       cienka linia laczy ksiezyce i biegnie POD nimi (przerwa 8px nad
+       i pod tarcza + krazek pergaminu pod tarcza),
+     - BEZ krwi: plamy i welon tylko na desktopie,
+     - przygaszenie aktu na tekscie i ksiezycu, nie na calym kaflu -
+       polprzezroczysty kafel pokazywal os przez tarcze.
+     Wymiary w px, bo cqw bez kontenera liczy sie od viewportu. */
   @media screen and (max-width:749px){
     #LongNight-{{ uid }}{container-type:normal}
-    #LongNight-{{ uid }} .ln__acts{grid-template-columns:1fr;gap:28px;max-inline-size:none}
-    #LongNight-{{ uid }} .ln__kicker,
-    #LongNight-{{ uid }} .ln__no,
-    #LongNight-{{ uid }} .ln__when,
-    #LongNight-{{ uid }} .ln__cta{font-size:14px}
-    #LongNight-{{ uid }} .ln__title{font-size:34px}
-    #LongNight-{{ uid }} .ln__name{font-size:22px}
-    #LongNight-{{ uid }} .ln__line{font-size:16px;max-inline-size:32ch}
-    #LongNight-{{ uid }} .ln__moon{inline-size:84px}
-    #LongNight-{{ uid }} .ln__stain--l,
-    #LongNight-{{ uid }} .ln__stain--r{inline-size:120%;block-size:60%}
-    #LongNight-{{ uid }} .ln__act::after{inline-size:0}
-    #LongNight-{{ uid }} .ln__act[aria-current="true"]::after{inline-size:48px}
+    #LongNight-{{ uid }} .ln__stain,
+    #LongNight-{{ uid }} .ln__veil{display:none}
+    #LongNight-{{ uid }} .ln__inner{padding-inline:20px}
+
+    #LongNight-{{ uid }} .ln__kicker{font-size:12px;line-height:1.3}
+    #LongNight-{{ uid }} .ln__title{margin-block-start:8px;font-size:40px}
+
+    #LongNight-{{ uid }} .ln__acts{
+      position:relative;margin:28px 0 0;max-inline-size:360px;
+      display:flex;flex-direction:column;gap:6px;text-align:start;
+    }
+    #LongNight-{{ uid }} .ln__acts::before{
+      content:"";position:absolute;inset-inline-start:32px;inset-block:44px;inline-size:1px;
+      background:linear-gradient(var(--ln-blood),color-mix(in oklab,var(--ln-blood) 25%,transparent));
+      opacity:.45;
+    }
+    #LongNight-{{ uid }} .ln__act{
+      padding:12px 0;display:grid;grid-template-columns:64px 1fr;column-gap:18px;align-items:center;
+      text-align:start;opacity:1;
+    }
+    #LongNight-{{ uid }} .ln__acts > li + li .ln__act{padding-block-start:4px}
+    #LongNight-{{ uid }} .ln__act:hover{opacity:1}
+    #LongNight-{{ uid }} .ln__act > span:not(.ln__orb),
+    #LongNight-{{ uid }} .ln__moon{opacity:.55;transition:opacity var(--dur-mid) var(--ease-out)}
+    #LongNight-{{ uid }} .ln__act[aria-current="true"] > span,
+    #LongNight-{{ uid }} .ln__act[aria-current="true"] .ln__moon{opacity:1}
+    #LongNight-{{ uid }} .ln__act::after{display:none}
+
+    #LongNight-{{ uid }} .ln__orb{
+      display:block;grid-row:1 / span 4;position:relative;z-index:1;padding-block:8px;
+    }
+    #LongNight-{{ uid }} .ln__orb::before{
+      content:"";position:absolute;z-index:-1;inset-block:0;inset-inline-start:calc(50% - 1.5px);
+      inline-size:3px;
+      background:linear-gradient(var(--ln-parchment) 0 8px,transparent 8px calc(100% - 8px),var(--ln-parchment) calc(100% - 8px));
+    }
+    #LongNight-{{ uid }} .ln__orb::after{
+      content:"";position:absolute;z-index:-1;inset:8px 0;border-radius:50%;background:var(--ln-parchment);
+    }
+    #LongNight-{{ uid }} .ln__moon{display:block;inline-size:64px;block-size:64px;object-fit:contain}
+    #LongNight-{{ uid }} .ln__moon--drip{object-position:top}
+    #LongNight-{{ uid }} .ln__act:hover .ln__moon{transform:none}
+
+    #LongNight-{{ uid }} .ln__no{margin:0;font-size:11px;line-height:1.3}
+    #LongNight-{{ uid }} .ln__name{margin:2px 0 0;font-size:22px;line-height:1.12}
+    #LongNight-{{ uid }} .ln__when{margin:2px 0 0;font-size:11px;line-height:1.3}
+    #LongNight-{{ uid }} .ln__line{margin:6px 0 0;font-size:15px;line-height:1.5;max-inline-size:none}
+    #LongNight-{{ uid }} .ln__act[aria-current="true"] .ln__line::after{
+      content:"";display:block;inline-size:40px;block-size:2px;margin-block-start:10px;background:var(--ln-blood);
+    }
+
+    #LongNight-{{ uid }} .ln__cta{margin-block-start:28px}
   }
 {% endstyle %}
 
@@ -211,14 +267,20 @@
               aria-current="{{ is_now }}"
               {{ block.shopify_attributes }}
             >
-              <img
-                class="ln__moon"
-                src="{{ moon_file | asset_url }}"
-                alt=""
-                width="480"
-                height="480"
-                loading="lazy"
-              >
+              {%- comment -%}
+                .ln__orb na desktopie nie istnieje (display:contents), na mobile
+                trzyma przerwę w osi i krążek pergaminu pod tarczą.
+              {%- endcomment -%}
+              <span class="ln__orb">
+                <img
+                  class="ln__moon ln__moon--{{ block.settings.phase }}"
+                  src="{{ moon_file | asset_url }}"
+                  alt=""
+                  width="480"
+                  height="{% if block.settings.phase == 'drip' %}650{% else %}480{% endif %}"
+                  loading="lazy"
+                >
+              </span>
               {%- if block.settings.label != blank -%}
                 <span class="ln__no">{{ block.settings.label }}</span>
               {%- endif -%}

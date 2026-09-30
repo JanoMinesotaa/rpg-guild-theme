@@ -13,18 +13,36 @@
   proporcje warsztatu przy każdej szerokości ekranu - dokładnie tak, jak
   podgląd w 05-banners robi to przez transform: scale().
 
-  Mobile: osobny hero jest do zrobienia. Póki "Obraz - mobile" jest pusty,
-  telefon dostaje ten sam kadr proporcjonalnie zmniejszony (nic się nie psuje,
-  jest po prostu mały). Po wgraniu kadru mobilnego sekcja przechodzi na
-  proporcję 375 × 669 i mobilne stopnie pisma z warsztatu.
+  Mobile: poniżej 750 px sekcja przechodzi na ramę pionową 750 × 1338
+  (proporcja 375 × 669) i mobilne stopnie pisma z makiety
+  05-banners/bundle-page-mobile.html. Rama to wgrany "Obraz - mobile" albo,
+  gdy pusty i włączona jest rama z motywu, long-night-hero-frame-mobile.webp.
+
+  Układ znaków (30.09.2026): "corners" = herb w lewym i księżyc w prawym rogu
+  (kadr wyjściowy), "top" = sam księżyc na osi nad nadtytułem, bez herbu.
 {%- endcomment -%}
 
 {%- liquid
   assign frame = section.settings.image
   assign frame_mobile = section.settings.image_mobile
   assign has_mobile = false
-  if frame_mobile != blank
+  if frame_mobile != blank or section.settings.mobile_frame_default
     assign has_mobile = true
+  endif
+
+  assign layout = section.settings.mark_layout | default: 'corners'
+  assign phase = section.settings.moon_phase | default: 'classic'
+  if phase == 'classic'
+    assign moon_file = 'long-night-moon.png'
+    assign moon_w = 300
+    assign moon_h = 300
+  else
+    assign moon_file = 'long-night-moon-' | append: phase | append: '.webp'
+    assign moon_w = 480
+    assign moon_h = 480
+    if phase == 'drip'
+      assign moon_h = 650
+    endif
   endif
 -%}
 
@@ -88,6 +106,22 @@
   }
   #LongNightHero-{{ section.id }} .ln-hero__mark--left { inset-inline-start: var(--mark-x); }
   #LongNightHero-{{ section.id }} .ln-hero__mark--right { inset-inline-end: var(--mark-x); }
+
+  /* Układ "top": jeden księżyc na osi kadru, nad nadtytułem. Okno treści
+     schodzi niżej, żeby zrobić mu miejsce. Wymiary z makiety 1920 × 892:
+     księżyc 124 × 160 px, poświata 40 px. */
+  {%- if layout == 'top' -%}
+    #LongNightHero-{{ section.id }} { --win-t: 29%; --win-b: 19%; }
+  {%- endif -%}
+  #LongNightHero-{{ section.id }} .ln-hero__mark--top {
+    inset-block-start: 10%;
+    inset-inline-start: 50%;
+    translate: -50% 0;
+    inline-size: 6.4583cqw;
+    block-size: 8.3333cqw;
+    object-position: top center;
+    filter: drop-shadow(0 0 2.0833cqw rgba(233, 46, 74, 0.5));
+  }
 
   #LongNightHero-{{ section.id }} .ln-hero__type {
     position: absolute;
@@ -172,25 +206,33 @@
   #LongNightHero-{{ section.id }} .ln-hero__cta:hover { background: var(--ln-moon); }
 
   {%- if has_mobile -%}
-    /* Kadr mobilny wgrany - przechodzimy na 375 × 669 i mobilne stopnie */
+    /* Rama pionowa - przechodzimy na 375 × 669 i mobilne stopnie z makiety
+       05-banners/bundle-page-mobile.html (1cqw = 3,75 px przy 375). */
     @media screen and (max-width: 749px) {
       #LongNightHero-{{ section.id }} {
         aspect-ratio: 375 / 669;
-        --win-t: 14%;
-        --win-b: 22%;
-        --win-x: 7.5%;
+        --win-t: 44cqw;
+        --win-b: 36cqw;
+        --win-x: 8cqw;
         --mark-x: 11%;
         --mark-y: 17%;
         --mark-size: 14.4cqw;
       }
       #LongNightHero-{{ section.id }} .ln-hero__frame--desktop { display: none; }
       #LongNightHero-{{ section.id }} .ln-hero__frame--mobile { display: block; }
-      #LongNightHero-{{ section.id }} .ln-hero__type { gap: 4.2667cqw; }
-      /* Francuski nadtytuł jest najdłuższy i przy .2em łamał się na dwa wiersze */
-      #LongNightHero-{{ section.id }} .ln-hero__kicker { font-size: 2.5333cqw; letter-spacing: 0.1em; }
-      #LongNightHero-{{ section.id }} .ln-hero__head { font-size: 9.0667cqw; max-inline-size: 16ch; padding-block-start: 2.1333cqw; }
-      #LongNightHero-{{ section.id }} .ln-hero__sub { font-size: 4cqw; max-inline-size: 34ch; }
-      #LongNightHero-{{ section.id }} .ln-hero__sub--2 { margin-block-start: 2.6667cqw; padding-block-start: 3.7333cqw; max-inline-size: 32ch; }
+      #LongNightHero-{{ section.id }} .ln-hero__mark--top {
+        inset-block-start: 21cqw;
+        inline-size: 17cqw;
+        block-size: 22cqw;
+        filter: none;
+      }
+      #LongNightHero-{{ section.id }} .ln-hero__type { gap: 4.2cqw; }
+      /* Nadtytuł łamie się na dwa zrównoważone wiersze zamiast maleć -
+         przy aktualnym "Act II · ... · November" to czytelniejsze. */
+      #LongNightHero-{{ section.id }} .ln-hero__kicker { font-size: 2.9cqw; line-height: 1.6; letter-spacing: 0.16em; text-wrap: balance; }
+      #LongNightHero-{{ section.id }} .ln-hero__head { font-size: 9.8cqw; max-inline-size: none; padding-block-start: 0; }
+      #LongNightHero-{{ section.id }} .ln-hero__sub { font-size: 4.2cqw; line-height: 1.5; max-inline-size: 30ch; }
+      #LongNightHero-{{ section.id }} .ln-hero__sub--2 { margin-block-start: 1.6cqw; padding-block-start: 4.6cqw; max-inline-size: 28ch; }
     }
   {%- endif -%}
 {% endstyle %}
@@ -220,7 +262,7 @@
     >
   {%- endif -%}
 
-  {%- if has_mobile -%}
+  {%- if frame_mobile != blank -%}
     {{
       frame_mobile
       | image_url: width: 1200
@@ -231,13 +273,24 @@
         loading: 'eager',
         alt: ''
     }}
+  {%- elsif has_mobile -%}
+    <img
+      src="{{ 'long-night-hero-frame-mobile.webp' | asset_url }}"
+      alt=""
+      class="ln-hero__frame ln-hero__frame--mobile"
+      width="750"
+      height="1338"
+      loading="eager"
+    >
   {%- endif -%}
 
   {%- comment -%}
     Znaki narożne są ozdobą, nie treścią - stąd surowy <img> z aria-hidden
     zamiast image_tag (filtr nie przyjmuje atrybutów z myślnikiem).
   {%- endcomment -%}
-  {%- if section.settings.mark_left != blank -%}
+  {%- if layout == 'top' -%}
+    {%- comment -%} Układ "top" nie ma herbu - tylko księżyc niżej. {%- endcomment -%}
+  {%- elsif section.settings.mark_left != blank -%}
     <img
       src="{{ section.settings.mark_left | image_url: width: 300 }}"
       srcset="{{ section.settings.mark_left | image_url: width: 300 }} 1x, {{ section.settings.mark_left | image_url: width: 600 }} 2x"
@@ -260,25 +313,32 @@
     >
   {%- endif -%}
 
+  {%- liquid
+    if layout == 'top'
+      assign moon_class = 'ln-hero__mark ln-hero__mark--top'
+    else
+      assign moon_class = 'ln-hero__mark ln-hero__mark--right'
+    endif
+  -%}
   {%- if section.settings.mark_right != blank -%}
     <img
       src="{{ section.settings.mark_right | image_url: width: 300 }}"
       srcset="{{ section.settings.mark_right | image_url: width: 300 }} 1x, {{ section.settings.mark_right | image_url: width: 600 }} 2x"
       alt=""
       aria-hidden="true"
-      class="ln-hero__mark ln-hero__mark--right"
+      class="{{ moon_class }}"
       width="{{ section.settings.mark_right.width }}"
       height="{{ section.settings.mark_right.height }}"
       loading="eager"
     >
   {%- else -%}
     <img
-      src="{{ 'long-night-moon.png' | asset_url }}"
+      src="{{ moon_file | asset_url }}"
       alt=""
       aria-hidden="true"
-      class="ln-hero__mark ln-hero__mark--right"
-      width="300"
-      height="300"
+      class="{{ moon_class }}"
+      width="{{ moon_w }}"
+      height="{{ moon_h }}"
       loading="eager"
     >
   {%- endif -%}
@@ -327,7 +387,39 @@
       "type": "image_picker",
       "id": "image_mobile",
       "label": "Obraz - mobile (375 × 669)",
-      "info": "Zostaw puste, dopóki nie zrobimy osobnego hero mobilnego."
+      "info": "Puste = rama pionowa z motywu (long-night-hero-frame-mobile.webp), jeśli włączona niżej."
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_frame_default",
+      "label": "Mobile: rama pionowa z motywu",
+      "info": "Wyłączone i pusty obraz mobile = telefon dostaje kadr desktopowy pomniejszony.",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "mark_layout",
+      "label": "Układ znaków",
+      "options": [
+        { "value": "corners", "label": "Herb i księżyc w rogach" },
+        { "value": "top", "label": "Sam księżyc nad nadtytułem" }
+      ],
+      "default": "corners"
+    },
+    {
+      "type": "select",
+      "id": "moon_phase",
+      "label": "Faza księżyca",
+      "info": "Działa, gdy \"Znak prawy - księżyc\" jest pusty. Faza idzie za aktem.",
+      "options": [
+        { "value": "classic", "label": "Klasyczny (kadr wyjściowy)" },
+        { "value": "rising", "label": "Rosnący - akt I" },
+        { "value": "drip", "label": "Pełnia ociekająca - akt II" },
+        { "value": "full", "label": "Pełnia" },
+        { "value": "last", "label": "Ostatni" },
+        { "value": "eclipse", "label": "Zaćmienie - akt III" }
+      ],
+      "default": "classic"
     },
     {
       "type": "image_picker",

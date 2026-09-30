@@ -378,7 +378,8 @@
         "gradient_direction": "to top",
         "padding-block-start": 0,
         "padding-block-end": 0
-      }
+      },
+      "disabled": true
     },
     "section_9DNaRd": {
       "type": "section",
@@ -742,7 +743,7 @@
       "settings": {
         "kicker": "October - December 2026",
         "heading": "The Long Night",
-        "current_act": 1,
+        "current_act": 2,
         "blood_strength": 62,
         "cta_label": "See the whole season",
         "cta_link": "shopify://pages/dnd-mystery-box",
@@ -1347,11 +1348,24 @@
         "padding-block-start": 72,
         "padding-block-end": 40
       }
+    },
+    "hero_longNightBundle": {
+      "type": "long-night-hero",
+      "settings": {
+        "mobile_frame_default": true,
+        "mark_layout": "top",
+        "moon_phase": "drip",
+        "kicker": "ACT II · BLOOD MOON · BLACK FRIDAY · NOVEMBER",
+        "heading": "Build the party you actually need.",
+        "body": "Pick any miniatures from our 5,000+ catalogue - no pre‑made bundles or fixed sets.",
+        "body_2": "The bigger the party, the bigger the discount. Create a bundle of 20 and pay for 14!"
+      }
     }
   },
   "order": [
     "main",
     "section_6kDNaa",
+    "hero_longNightBundle",
     "section_9DNaRd",
     "17891285356cd42f64",
     "section_longNightSeason",
