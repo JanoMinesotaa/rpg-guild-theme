@@ -12,6 +12,11 @@ on:
   schedule:
     - cron: "7 6 * * *"
   workflow_dispatch:       # mozliwosc odpalenia recznie, do testu
+    inputs:
+      dni:
+        description: "Ile dni wstecz objac raportem (test wysylki gdy wczoraj nie bylo commitow)"
+        required: false
+        default: "1"
 
 jobs:
   raport:
@@ -37,4 +42,5 @@ jobs:
           MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
           MAIL_TO: ${{ secrets.MAIL_TO }}
           MAIL_CC: ${{ secrets.MAIL_CC }}
+          DNI_WSTECZ: ${{ github.event.inputs.dni || '1' }}
         run: python3 .github/scripts/dziennik_maila.py

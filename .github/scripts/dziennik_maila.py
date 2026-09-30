@@ -22,11 +22,21 @@ def polecenie(*args):
     return subprocess.run(args, capture_output=True, text=True, check=True).stdout
 
 def zakres_wczoraj():
-    """Poczatek i koniec poprzedniego dnia w czasie lokalnym runnera (TZ=Europe/Warsaw)."""
+    """Poczatek i koniec raportowanego okresu w czasie lokalnym runnera.
+
+    Domyslnie poprzedni dzien kalendarzowy. Zmienna DNI_WSTECZ pozwala
+    poszerzyc okno przy recznym uruchomieniu - sluzy do testu wysylki,
+    gdy wczoraj akurat nie bylo commitow. Nie zmienia zachowania cronu,
+    bo tam DNI_WSTECZ nie jest ustawiane.
+    """
+    try:
+        dni = max(1, int(os.environ.get("DNI_WSTECZ", "1")))
+    except ValueError:
+        dni = 1
     teraz = datetime.now()
     dzis = teraz.replace(hour=0, minute=0, second=0, microsecond=0)
-    wczoraj = dzis - timedelta(days=1)
-    return wczoraj, dzis
+    poczatek = dzis - timedelta(days=dni)
+    return poczatek, dzis
 
 def commity(od, do):
     surowe = polecenie(
@@ -51,7 +61,11 @@ def commity(od, do):
     return wynik
 
 def zbuduj_tresc(lista, od, repo):
-    naglowek = f"Zmiany w motywie RPG Guild - {od:%d.%m.%Y}"
+    dni = (do - od).days
+    if dni <= 1:
+        naglowek = f"Zmiany w motywie RPG Guild - {od:%d.%m.%Y}"
+    else:
+        naglowek = f"Zmiany w motywie RPG Guild - {od:%d.%m} do {do - timedelta(days=1):%d.%m.%Y}"
     linie = [naglowek, "=" * len(naglowek), ""]
     linie.append(f"Commitow: {len(lista)}")
     linie.append(f"Repozytorium: https://github.com/{repo}")
