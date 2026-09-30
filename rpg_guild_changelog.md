@@ -30,6 +30,11 @@ W szablonie kolekcji nowa sekcja stoi przed dotychczasowym hero, a stare hero
 Szablon edytowany na wersji pobranej ze sklepu 2026-09-30 (zmiany z panelu z tego
 samego ranka zachowane).
 
+**Poprawka tego samego dnia:** tło sekcji przezroczyste (poza rwanymi
+krawędziami ramy widać stronę; ziarno zostaje w samej ramie). Mobile według
+`05-banners/spooky-collection-mobile.html`: rama pionowa 750 x 1338, bez
+nadtytułu, kości jako suwak w bok jak dotychczasowy `.kosci-slider`.
+
 **Jak cofnąć:** w edytorze szablonu kolekcji włącz stare hero i wyłącz „The Long
 Night · kolekcja". Kod: tag `przed-spooky-hero` (`adf049f`).
 

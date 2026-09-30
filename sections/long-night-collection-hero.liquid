@@ -31,7 +31,9 @@
 {% style %}
   #LnColHero-{{ section.id }}{
     position:relative;container-type:inline-size;overflow:clip;
-    aspect-ratio:1920/892;background:var(--ln-night)}
+    aspect-ratio:1920/892}
+  /* Tło sekcji PRZEZROCZYSTE: poza rwanymi krawędziami ramy widać stronę.
+     Ziarno siedzi w samej ramie, więc sekcja nie dokłada własnego. */
   #LnColHero-{{ section.id }} .ln-ch__frame{position:absolute;inset:0;z-index:1;
     background:url({{ 'long-night-hero-frame.webp' | asset_url }}) center/cover no-repeat}
   #LnColHero-{{ section.id }} .ln-ch__pool{position:absolute;z-index:2;right:2.08%;top:10.1%;
@@ -64,30 +66,28 @@
     inset-block-start:.05em;inline-size:1.15em;block-size:1.15em;
     background:url({{ 'ln-lp-d20.webp' | asset_url }}) center/contain no-repeat}
 
-  /* Telefon: kolumna na ramie mobilnej - tekst u góry, figurka pod nim. */
+  /* Telefon: kadr z 05-banners/spooky-collection-mobile.html na ramie pionowej
+     750 x 1338 (okno treści 7-82% wysokości). Skala w cqw szerokości ekranu.
+     Bez nadtytułu. Kości to suwak w bok, jak dotychczasowy .kosci-slider. */
+  #LnColHero-{{ section.id }} .ln-ch__art{display:contents}
   @media (max-width:749px){
-    #LnColHero-{{ section.id }}{aspect-ratio:auto;display:flex;flex-direction:column;
-      padding:20vw 7vw 26vw}
-    #LnColHero-{{ section.id }} .ln-ch__frame{
-      background-image:url({{ 'long-night-hero-frame-mobile.webp' | asset_url }})}
-    #LnColHero-{{ section.id }} .ln-ch__type{position:relative;inset:auto;inline-size:auto;gap:12px}
-    #LnColHero-{{ section.id }} .ln-ch__kicker{font-size:11px;letter-spacing:.14em}
-    #LnColHero-{{ section.id }} .ln-ch__head{font-size:40px}
-    #LnColHero-{{ section.id }} .ln-ch__sub{font-size:15px}
-    #LnColHero-{{ section.id }} .ln-ch__usp{flex-wrap:wrap;gap:10px 20px;inline-size:auto;
-      margin-top:4px;padding-top:14px}
-    #LnColHero-{{ section.id }} .ln-ch__usp li{font-size:13px;padding-inline-start:22px}
-    #LnColHero-{{ section.id }} .ln-ch__art{position:relative;z-index:3;align-self:center;
-      margin-top:24px;block-size:62vw;inline-size:100%}
-    #LnColHero-{{ section.id }} .ln-ch__pool{inset:auto;inset-inline:0;inset-block-end:18vw;
-      inline-size:auto;block-size:80vw}
-    #LnColHero-{{ section.id }} .ln-ch__moon{inline-size:30vw;inset-inline-end:auto;
-      inset-inline-start:8vw;inset-block-start:0}
-    #LnColHero-{{ section.id }} .ln-ch__fig{inset-inline-end:50%;translate:50% 0;
-      inset-block-end:0;block-size:100%}
-  }
-  @media (min-width:750px){
-    #LnColHero-{{ section.id }} .ln-ch__art{display:contents}
+    #LnColHero-{{ section.id }}{aspect-ratio:750/1338}
+    #LnColHero-{{ section.id }} .ln-ch__frame{background:url({{ 'long-night-hero-frame-mobile.webp' | asset_url }}) center/100% 100% no-repeat}
+    #LnColHero-{{ section.id }} .ln-ch__kicker{display:none}
+    #LnColHero-{{ section.id }} .ln-ch__type{inset-inline:8cqw 0;inset-block:17cqw auto;inline-size:auto;gap:2.6cqw}
+    #LnColHero-{{ section.id }} .ln-ch__head{font-size:11.2cqw;line-height:1;margin-inline-end:8cqw}
+    #LnColHero-{{ section.id }} .ln-ch__sub{font-size:3.85cqw;line-height:1.45;max-inline-size:none;margin-inline-end:8cqw}
+    #LnColHero-{{ section.id }} .ln-ch__usp{inline-size:auto;max-inline-size:100%;gap:4.8cqw;
+      margin:.6cqw 0 0;padding:3.2cqw 40px 10px 0;overflow-x:auto;scrollbar-width:none;
+      -webkit-overflow-scrolling:touch;border-top:0;
+      background:linear-gradient(color-mix(in oklab,var(--ln-moon) 38%,transparent),color-mix(in oklab,var(--ln-moon) 38%,transparent)) top left/calc(100% - 8cqw) 1px no-repeat}
+    #LnColHero-{{ section.id }} .ln-ch__usp::-webkit-scrollbar{display:none}
+    #LnColHero-{{ section.id }} .ln-ch__usp li{flex:none;font-size:3.3cqw;padding-inline-start:5.4cqw}
+    #LnColHero-{{ section.id }} .ln-ch__pool{inset-inline:6cqw;inset-block:auto 22%;inline-size:auto;block-size:44%}
+    #LnColHero-{{ section.id }} .ln-ch__moon{inline-size:30cqw;inset-inline:5cqw auto;inset-block:auto 36%;
+      filter:drop-shadow(0 0 6cqw rgba(233,46,74,.45))}
+    #LnColHero-{{ section.id }} .ln-ch__fig{inset-inline-end:10cqw;inset-block-end:21%;block-size:37%;
+      filter:drop-shadow(0 3cqw 4cqw rgba(0,0,0,.85))}
   }
 {% endstyle %}
 
@@ -128,7 +128,6 @@
     {%- endif -%}
   </div>
 
-  <span class="ln-lp__grain" aria-hidden="true"></span>
 </div>
 
 {% schema %}
