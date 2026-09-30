@@ -10,6 +10,44 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-09-24
+
+### Automat raportowania nie wysyłał maili - naprawione `[poza repo]`
+`.github/workflows/dziennik-zmian.yml`, hook `post-commit`
+
+Kontrola wykazała dwie usterki, obie ciche.
+
+**1. Harmonogram GitHuba nie trzyma godziny, a bramka to dusiła.**
+Workflow miał dwa crony (06:00 i 07:00 UTC) i wysyłał tylko wtedy, gdy lokalna
+godzina wynosiła równo 8 - po to, by nie wysłać dwóch maili dziennie. GitHub
+odpalił oba przebiegi 23.09 dopiero o **12:00 i 14:00** czasu polskiego, więc
+bramka uznała je za zdublowane i **nie wysłała nic**. Od uruchomienia automatu
+nie poszedł ani jeden zaplanowany mail - wyszły tylko trzy ręczne testy z 22.09.
+
+Poprawka: **jeden cron `7 6 * * *`, zero bramek**. Lepiej dostać raport
+z opóźnieniem niż nie dostać go wcale. Minuta celowo nie jest równa - o pełnych
+godzinach kolejka GitHuba jest najdłuższa.
+
+Harmonogram GitHuba jest best-effort. Opóźnienie rzędu godzin jest normalne
+i nie da się go wyeliminować na darmowym planie.
+
+**2. Dziewięć commitów siedziało lokalnie i nigdy nie trafiło na GitHub.**
+Prace nad landingiem The Long Night (23.09 19:08 → 24.09 10:46) były
+zacommitowane, ale niewypchnięte. Workflow czyta historię **na GitHubie**, nie
+na dysku - więc te zmiany nie istniały ani dla dewelopera, ani dla raportu.
+
+Poprawka: hook `post-commit` w repozytorium pcha na `origin main` po każdym
+commicie. Działa tylko na `main`, pomija stan rebase/merge/cherry-pick i nigdy
+nie przerywa commita, nawet gdy push padnie. Hook jest lokalny (`.git/hooks/`),
+więc nie wersjonuje się - przy klonowaniu repo na inną maszynę trzeba go założyć
+ponownie.
+
+**Dla dewelopera:** jeśli mail przyjdzie później niż rano, to jest kolejka
+GitHuba, nie awaria. Jeśli nie przyjdzie wcale mimo commitów - sprawdź zakładkę
+Actions.
+
+---
+
 ## 2026-09-23
 
 ### Landing The Long Night - poprawki po przeglądzie Jana

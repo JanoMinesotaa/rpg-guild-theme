@@ -1,13 +1,16 @@
 name: Dzienny raport zmian
 
-# GitHub Actions zna tylko UTC, a 8:00 w Polsce to 06:00 UTC latem (CEST)
-# i 07:00 UTC zima (CET). Dlatego workflow odpala sie DWA RAZY, a wysylka
-# jest bramkowana sprawdzeniem lokalnej godziny w strefie Europe/Warsaw.
-# Dzieki temu mail wychodzi o 8:00 czasu polskiego przez caly rok, raz dziennie.
+# JEDEN cron, bez bramki godzinowej. Poprzednia wersja miala dwa crony
+# (06:00 i 07:00 UTC) i wysylala tylko wtedy, gdy lokalna godzina wynosila 8.
+# To nie zadzialalo ani razu: harmonogram GitHuba jest best-effort i 23.09
+# odpalil zadania dopiero o 12:00 i 14:00 czasu polskiego, wiec bramka zdusila
+# obie wysylki. Lepiej wyslac raport z opoznieniem niz nie wyslac go wcale.
+#
+# 06:07 UTC to 08:07 latem (CEST) i 07:07 zima (CET). Minuta celowo nie jest
+# rowna - o pelnych godzinach kolejka GitHuba jest najdluzsza.
 on:
   schedule:
-    - cron: "0 6 * * *"   # 08:00 CEST (lato)
-    - cron: "0 7 * * *"   # 08:00 CET  (zima)
+    - cron: "7 6 * * *"
   workflow_dispatch:       # mozliwosc odpalenia recznie, do testu
 
 jobs:
@@ -21,20 +24,12 @@ jobs:
         with:
           fetch-depth: 0   # bez tego git log nie widzi historii
 
-      - name: Sprawdz, czy to wlasciwa godzina lokalna
-        id: brama
+      - name: Pokaz, o ktorej naprawde wystartowalo
         run: |
-          GODZINA=$(date +%H)
-          echo "Lokalna godzina (Europe/Warsaw): $GODZINA"
-          if [ "$GODZINA" = "08" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "wysylac=tak" >> "$GITHUB_OUTPUT"
-          else
-            echo "wysylac=nie" >> "$GITHUB_OUTPUT"
-            echo "To drugie z dwoch uruchomien - pomijam, zeby nie wyslac dwoch maili."
-          fi
+          echo "Lokalna godzina (Europe/Warsaw): $(date '+%H:%M')"
+          echo "Harmonogram GitHuba jest best-effort - opoznienie jest normalne."
 
       - name: Zbierz zmiany i wyslij maila
-        if: steps.brama.outputs.wysylac == 'tak'
         env:
           MAIL_SERVER: ${{ secrets.MAIL_SERVER }}
           MAIL_PORT: ${{ secrets.MAIL_PORT }}
