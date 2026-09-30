@@ -10,6 +10,31 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-09-30
+
+### Hero kolekcji Spooky Miniatures w stylu The Long Night
+`sections/long-night-collection-hero.liquid` · `templates/collection.spooky-collection.json` ·
+`assets/ln-mini-pumpkin-knight-duotone.webp` · `assets/long-night-hero-frame-mobile.webp`
+
+Nowa sekcja hero dla kolekcji sezonu: rama rozbryzg / przełom z banneru bundli
+(`long-night-hero-frame.webp`, już w motywie), tekst po lewej, figurka po prawej,
+kości w jednym rzędzie - układ dotychczasowych hero kolekcji. Figurka (dyniowy
+rycerz) wycięta z tła Recraftem i przepuszczona przez duotone TLN
+(`03-assets/tools/texture.py`, gamma 1.8, lift .18). Za nią sierp księżyca aktu I
+w lustrze i kałuża nocy. Tekst w ustawieniach (tłumaczalny), pusty nagłówek =
+tytuł kolekcji. Skala w `cqw` z kanwy 1920 x 892, poniżej 750 px kolumna na ramie
+mobilnej. Warsztat: `05-banners/spooky-collection.html`.
+
+W szablonie kolekcji nowa sekcja stoi przed dotychczasowym hero, a stare hero
+(`section_tJEjwT`, sklonowane z Aarakocry) jest **wyłączone, nie usunięte**.
+Szablon edytowany na wersji pobranej ze sklepu 2026-09-30 (zmiany z panelu z tego
+samego ranka zachowane).
+
+**Jak cofnąć:** w edytorze szablonu kolekcji włącz stare hero i wyłącz „The Long
+Night · kolekcja". Kod: tag `przed-spooky-hero` (`adf049f`).
+
+---
+
 ## 2026-09-24
 
 ### Automat raportowania nie wysyłał maili - naprawione `[poza repo]`

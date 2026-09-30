@@ -1,0 +1,163 @@
+{%- comment -%}
+  THE LONG NIGHT · hero kolekcji
+  ---------------------------------------------------------------------------
+  Hero dla kolekcji grających w sezonie The Long Night (pierwsza: Spooky
+  Miniatures). Tło to ta sama rama rozbryzg / przełom co baner strony bundli
+  (long-night-hero-frame.webp), układ jak dotychczasowe hero kolekcji na
+  sklepie: tekst po lewej, figurka po prawej, kości w jednym rzędzie.
+
+  Figurka w duotone TLN (noc + księżyc, raster półtonowy) - efekt jest w pliku,
+  nie w CSS: 03-assets/tools/texture.py. Za nią sierp krwawego księżyca aktu
+  i kałuża nocy, bez której czerwona figurka zlewa się z krwawym tłem.
+
+  TEKST W USTAWIENIACH, NIE W OBRAZIE - Translate & Adapt widzi go jako treść
+  motywu. Pusty nagłówek = tytuł kolekcji.
+
+  Skala: kanwa projektowa 1920 x 892 (05-banners/spooky-collection.html),
+  stopnie przeliczone na cqw (1cqw = 19,2 px), więc kadr trzyma proporcje przy
+  każdej szerokości. Poniżej 750 px układ przechodzi w kolumnę na ramie
+  mobilnej. Tokeny i fonty z warstwy wspólnej landingu (long-night-lp-base).
+{%- endcomment -%}
+
+{% render 'long-night-lp-base' %}
+
+{%- liquid
+  assign heading = section.settings.heading
+  if heading == blank and collection
+    assign heading = collection.title
+  endif
+-%}
+
+{% style %}
+  #LnColHero-{{ section.id }}{
+    position:relative;container-type:inline-size;overflow:clip;
+    aspect-ratio:1920/892;background:var(--ln-night)}
+  #LnColHero-{{ section.id }} .ln-ch__frame{position:absolute;inset:0;z-index:1;
+    background:url({{ 'long-night-hero-frame.webp' | asset_url }}) center/cover no-repeat}
+  #LnColHero-{{ section.id }} .ln-ch__pool{position:absolute;z-index:2;right:2.08%;top:10.1%;
+    inline-size:42.7cqw;block-size:78.5%;pointer-events:none;
+    background:radial-gradient(closest-side,rgba(14,14,14,.92) 0%,rgba(14,14,14,.7) 45%,rgba(14,14,14,0) 100%)}
+  /* Sierp nad lewym ramieniem, w lustrze - jasna strona patrzy w wolne pole. */
+  #LnColHero-{{ section.id }} .ln-ch__moon{position:absolute;z-index:2;inline-size:13.02cqw;
+    inset-inline-end:29.17%;inset-block-start:16.8%;transform:scaleX(-1);
+    filter:drop-shadow(0 0 2.6cqw rgba(233,46,74,.45))}
+  #LnColHero-{{ section.id }} .ln-ch__fig{position:absolute;z-index:3;inset-inline-end:10.42%;
+    inset-block-end:21.3%;block-size:66.1%;inline-size:auto;max-inline-size:none;
+    filter:drop-shadow(0 1.35cqw 1.56cqw rgba(0,0,0,.85))}
+
+  #LnColHero-{{ section.id }} .ln-ch__type{position:absolute;z-index:4;inset-inline-start:9%;
+    inset-block:24% 30%;inline-size:46%;display:flex;flex-direction:column;justify-content:center;gap:.833cqw}
+  #LnColHero-{{ section.id }} .ln-ch__kicker{font:700 max(11px,.99cqw)/1.2 var(--ln-font-body);
+    letter-spacing:.2em;text-transform:uppercase;color:var(--ln-red-200);margin:0}
+  #LnColHero-{{ section.id }} .ln-ch__head{font-family:var(--ln-font-display);font-weight:400;
+    font-size:4.583cqw;line-height:1.02;letter-spacing:-.014em;color:var(--ln-parchment);margin:0}
+  #LnColHero-{{ section.id }} .ln-ch__sub{font:500 max(14px,1.198cqw)/1.48 var(--ln-font-body);
+    color:#D9CDB6;margin:0;max-inline-size:40ch}
+  #LnColHero-{{ section.id }} .ln-ch__sub em{color:var(--ln-moon);font-style:italic}
+  /* Kości w jednym rzędzie, jak w dotychczasowych hero kolekcji. */
+  #LnColHero-{{ section.id }} .ln-ch__usp{display:flex;flex-wrap:nowrap;gap:1.77cqw;
+    margin:.52cqw 0 0;padding:.9375cqw 0 0;list-style:none;inline-size:max-content;
+    border-top:1px solid color-mix(in oklab,var(--ln-moon) 38%,transparent)}
+  #LnColHero-{{ section.id }} .ln-ch__usp li{position:relative;white-space:nowrap;
+    padding-inline-start:1.67cqw;font:600 max(12px,.99cqw)/1.3 var(--ln-font-body);color:var(--ln-parchment)}
+  #LnColHero-{{ section.id }} .ln-ch__usp li::before{content:"";position:absolute;inset-inline-start:0;
+    inset-block-start:.05em;inline-size:1.15em;block-size:1.15em;
+    background:url({{ 'ln-lp-d20.webp' | asset_url }}) center/contain no-repeat}
+
+  /* Telefon: kolumna na ramie mobilnej - tekst u góry, figurka pod nim. */
+  @media (max-width:749px){
+    #LnColHero-{{ section.id }}{aspect-ratio:auto;display:flex;flex-direction:column;
+      padding:20vw 7vw 26vw}
+    #LnColHero-{{ section.id }} .ln-ch__frame{
+      background-image:url({{ 'long-night-hero-frame-mobile.webp' | asset_url }})}
+    #LnColHero-{{ section.id }} .ln-ch__type{position:relative;inset:auto;inline-size:auto;gap:12px}
+    #LnColHero-{{ section.id }} .ln-ch__kicker{font-size:11px;letter-spacing:.14em}
+    #LnColHero-{{ section.id }} .ln-ch__head{font-size:40px}
+    #LnColHero-{{ section.id }} .ln-ch__sub{font-size:15px}
+    #LnColHero-{{ section.id }} .ln-ch__usp{flex-wrap:wrap;gap:10px 20px;inline-size:auto;
+      margin-top:4px;padding-top:14px}
+    #LnColHero-{{ section.id }} .ln-ch__usp li{font-size:13px;padding-inline-start:22px}
+    #LnColHero-{{ section.id }} .ln-ch__art{position:relative;z-index:3;align-self:center;
+      margin-top:24px;block-size:62vw;inline-size:100%}
+    #LnColHero-{{ section.id }} .ln-ch__pool{inset:auto;inset-inline:0;inset-block-end:18vw;
+      inline-size:auto;block-size:80vw}
+    #LnColHero-{{ section.id }} .ln-ch__moon{inline-size:30vw;inset-inline-end:auto;
+      inset-inline-start:8vw;inset-block-start:0}
+    #LnColHero-{{ section.id }} .ln-ch__fig{inset-inline-end:50%;translate:50% 0;
+      inset-block-end:0;block-size:100%}
+  }
+  @media (min-width:750px){
+    #LnColHero-{{ section.id }} .ln-ch__art{display:contents}
+  }
+{% endstyle %}
+
+<div class="ln-lp ln-ch" id="LnColHero-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="ln-ch__frame" aria-hidden="true"></div>
+
+  <div class="ln-ch__type">
+    {%- if section.settings.kicker != blank -%}
+      <p class="ln-ch__kicker">{{ section.settings.kicker }}</p>
+    {%- endif -%}
+    <h1 class="ln-ch__head">{{ heading }}</h1>
+    {%- if section.settings.sub != blank -%}
+      <p class="ln-ch__sub">{{ section.settings.sub }}</p>
+    {%- endif -%}
+    {%- if section.settings.usp_1 != blank or section.settings.usp_2 != blank or section.settings.usp_3 != blank -%}
+      <ul class="ln-ch__usp">
+        {%- if section.settings.usp_1 != blank -%}<li>{{ section.settings.usp_1 }}</li>{%- endif -%}
+        {%- if section.settings.usp_2 != blank -%}<li>{{ section.settings.usp_2 }}</li>{%- endif -%}
+        {%- if section.settings.usp_3 != blank -%}<li>{{ section.settings.usp_3 }}</li>{%- endif -%}
+      </ul>
+    {%- endif -%}
+  </div>
+
+  <div class="ln-ch__art">
+    <div class="ln-ch__pool" aria-hidden="true"></div>
+    {%- if section.settings.show_moon -%}
+      <img class="ln-ch__moon" src="{{ 'ln-lp-moon-1.webp' | asset_url }}" alt="" aria-hidden="true"
+           width="560" height="560" decoding="async">
+    {%- endif -%}
+    {%- if section.settings.figure != blank -%}
+      {{ section.settings.figure | image_url: width: 1200 | image_tag:
+          class: 'ln-ch__fig', alt: section.settings.figure_alt, widths: '400,600,900,1200',
+          fetchpriority: 'high' }}
+    {%- else -%}
+      <img class="ln-ch__fig" src="{{ 'ln-mini-pumpkin-knight-duotone.webp' | asset_url }}"
+           alt="{{ section.settings.figure_alt | escape }}" width="617" height="680"
+           fetchpriority="high" decoding="async">
+    {%- endif -%}
+  </div>
+
+  <span class="ln-lp__grain" aria-hidden="true"></span>
+</div>
+
+{% schema %}
+{
+  "name": "The Long Night · kolekcja",
+  "tag": "section",
+  "class": "ln-lp-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Hero kolekcji w stylu The Long Night: rama bundli, tekst po lewej, figurka w duotone po prawej. Pusty nagłówek = tytuł kolekcji."
+    },
+    { "type": "text", "id": "kicker", "label": "Nadtytuł", "default": "Act I · Blood Moon Rising · October" },
+    { "type": "inline_richtext", "id": "heading", "label": "Nagłówek", "info": "Puste = tytuł kolekcji." },
+    {
+      "type": "inline_richtext",
+      "id": "sub",
+      "label": "Zdanie pod nagłówkiem",
+      "default": "Pumpkin knights, restless dead and things that knock after midnight - <em>hand-detailed</em> for your Halloween table."
+    },
+    { "type": "header", "content": "Kości" },
+    { "type": "text", "id": "usp_1", "label": "Punkt 1", "default": "10% off all October" },
+    { "type": "text", "id": "usp_2", "label": "Punkt 2", "default": "Easy to Paint" },
+    { "type": "text", "id": "usp_3", "label": "Punkt 3", "default": "Hand Detailed" },
+    { "type": "header", "content": "Figurka" },
+    { "type": "image_picker", "id": "figure", "label": "Figurka (PNG z przezroczystością, duotone)", "info": "Puste = dyniowy rycerz wgrany razem z sekcją." },
+    { "type": "text", "id": "figure_alt", "label": "Opis figurki dla czytników ekranu", "default": "Pumpkin-headed knight miniature with a cleaver and a spiked gauntlet." },
+    { "type": "checkbox", "id": "show_moon", "label": "Krwawy księżyc za figurką", "default": true }
+  ],
+  "presets": [{ "name": "The Long Night · kolekcja" }]
+}
+{% endschema %}
