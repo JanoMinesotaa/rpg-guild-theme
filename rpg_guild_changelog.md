@@ -12,6 +12,23 @@ Konwencja: najnowsze na górze.
 
 ## 2026-10-01
 
+### Progi Custom Bundle 10 / 20 / 50 na stronie bundli
+`6860568` · `templates/page.bundle.json` + tłumaczenia DE/FR `[poza repo]`
+
+Decyzja Jana: obowiązują progi z landingu sezonu - 10 minis −10%, 20 −20%, 50 −30%.
+Strona bundli mówiła co innego (5 / 10 / 20 za −10 / −15 / −30%), więc zmienione:
+- baner: „Create a bundle of 20 and pay for 14!” → „Create a bundle of 50 and pay for 35!”,
+- FAQ „How does the bundle discount work?”: nowe progi.
+
+DE i FR obu pól odświeżone przez `translationsRegister` (stare tłumaczenia stały się nieaktualne
+po zmianie EN). Copy baneru w warsztacie (`05-banners/app.js`) też poprawione, żeby kolejny
+eksport nie przywrócił starej liczby. Sprawdzone na żywo na en, `/de-de/`, `/fr-fr/`.
+
+**Poza motywem, po stronie Jana:** progi w aplikacji kreatora (EB Easy Bundle Builder) - to ona
+liczy rabat i wyświetla „Add 5 product(s) to save 10%!”. Tekst strony i cena muszą się zgadzać.
+
+**Jak cofnąć:** tag `przed-progi-bundle-10-20-50` + przywrócenie poprzednich tłumaczeń DE/FR.
+
 ### Landing The Long Night i marquee strony głównej po niemiecku i francusku `[poza repo]`
 Admin API, `translationsRegister` · zasoby `OnlineStoreThemeJsonTemplate/page.long-night`,
 `Page/165409587466` (tytuł landingu), `OnlineStoreThemeJsonTemplate/index` (marquee)
@@ -31,9 +48,7 @@ Pełna lista tłumaczeń w trzech kolumnach: `Black Friday 2026/10-lp-sezon/tlum
 Sprawdzone na żywo: landing przez `/de-de/pages/cookies?view=long-night` i `/fr-fr/...`
 (strona jest nieopublikowana), marquee na `/de-de/` i `/fr-fr/`.
 
-**Otwarte:** progi Custom Bundle się rozjeżdżają - landing obiecuje 10 / 20 / 50 minis
-(−10 / −20 / −30%), FAQ strony bundli i aplikacja liczą 5 / 10 / 20 (−10 / −15 / −30%).
-Tłumaczenie oddaje EN wiernie, więc po korekcie EN trzeba odświeżyć też DE i FR.
+Rozjazd progów Custom Bundle rozstrzygnięty tego samego dnia na 10 / 20 / 50 - patrz wpis wyżej.
 
 **Jak cofnąć:** `translationsRemove` dla `de` i `fr` na tych zasobach albo ręcznie
 w Translate & Adapt.
