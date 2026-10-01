@@ -12,6 +12,32 @@ Konwencja: najnowsze na górze.
 
 ## 2026-10-01
 
+### Landing The Long Night i marquee strony głównej po niemiecku i francusku `[poza repo]`
+Admin API, `translationsRegister` · zasoby `OnlineStoreThemeJsonTemplate/page.long-night`,
+`Page/165409587466` (tytuł landingu), `OnlineStoreThemeJsonTemplate/index` (marquee)
+
+Landing sezonu nie miał żadnego tłumaczenia DE ani FR. Zarejestrowane 64 pola na język we
+wszystkich czterech sekcjach: afisz, trzy akty, księga sezonu (daty, „Opens”, oferty, napisy
+przycisków, opisy alternatywne ilustracji) i zapis na listy (etykiety, placeholdery, komunikaty,
+zgoda z linkiem do Privacy Policy). Do tego tytuł strony. Pominięte celowo: `RPG Guild`, cyfry
+rzymskie i linki `shopify://`. Nazwy aktów i zdania aktów identyczne jak na stronie bundli.
+
+Marquee strony głównej: nowa pozycja `text_yiim4D` („100 $/€ = Free Character Sheets”, link
+poprawiony przez Jana na `/products/dnd-character-sheets-all-13-in-color`) w formacie sąsiednich
+pozycji: „100 $ oder € = Gratis-Charakterbögen”, „100 $ ou € = Fiches de personnage gratuites”.
+
+Pełna lista tłumaczeń w trzech kolumnach: `Black Friday 2026/10-lp-sezon/tlumaczenia-de-fr.md`.
+
+Sprawdzone na żywo: landing przez `/de-de/pages/cookies?view=long-night` i `/fr-fr/...`
+(strona jest nieopublikowana), marquee na `/de-de/` i `/fr-fr/`.
+
+**Otwarte:** progi Custom Bundle się rozjeżdżają - landing obiecuje 10 / 20 / 50 minis
+(−10 / −20 / −30%), FAQ strony bundli i aplikacja liczą 5 / 10 / 20 (−10 / −15 / −30%).
+Tłumaczenie oddaje EN wiernie, więc po korekcie EN trzeba odświeżyć też DE i FR.
+
+**Jak cofnąć:** `translationsRemove` dla `de` i `fr` na tych zasobach albo ręcznie
+w Translate & Adapt.
+
 ### Podmiana filmow w banerze strony glownej - pazdziernik `[poza repo]`
 
 **Co:** sekcja `hero_XFBPJU`, ustawienie `video_1`. Wrzesniowe filmy zastapione
@@ -112,9 +138,8 @@ zdania aktów zmienione wcześniej w edytorze zachowane). Push: najpierw sekcje,
 treść szablonu sprawdzona na serwerze. Zweryfikowane na żywo na en, `/de-de/` i `/fr-fr/`
 (1440 px i 390 px).
 
-**Do zrobienia:** tłumaczenia DE i FR nowego baneru w Translate & Adapt (Motyw → szablon
-`page.bundle`). Zatwierdzone teksty są w `Black Friday 2026/05-banners/app.js` (`BUNDLE`).
-CTA sekcji dalej celuje w Mystery Box, bo landing sezonu jest niepublikowany.
+Tłumaczenia DE i FR baneru zrobione tego samego dnia - patrz wpis „Strona bundli po niemiecku
+i francusku”. CTA sekcji dalej celuje w Mystery Box, bo landing sezonu jest niepublikowany.
 
 **Jak cofnąć:** w edytorze szablonu strony bundli włącz stary baner i wyłącz
 „The Long Night · hero”; akt bieżący przestaw w sekcji sezonu. Kod: tag
