@@ -1158,7 +1158,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>It applies itself as you build. Five minis take 10% off, ten take 15%, and twenty take 30% - no code to enter, and the total updates with every mini you add.</p><p></p>",
+                        "text": "<p>It applies itself as you build. Ten minis take 10% off, twenty take 20%, and fifty take 30% - no code to enter, and the total updates with every mini you add.</p><p></p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -1358,7 +1358,7 @@
         "kicker": "ACT II · BLOOD MOON · BLACK FRIDAY · NOVEMBER",
         "heading": "Build the party you actually need.",
         "body": "Pick any miniatures from our 5,000+ catalogue - no pre‑made bundles or fixed sets.",
-        "body_2": "The bigger the party, the bigger the discount. Create a bundle of 20 and pay for 14!"
+        "body_2": "The bigger the party, the bigger the discount. Create a bundle of 50 and pay for 35!"
       }
     }
   },
