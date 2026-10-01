@@ -607,6 +607,25 @@
               },
               "blocks": {}
             },
+            "button_RKPYkx": {
+              "type": "button",
+              "name": "t:names.button",
+              "disabled": true,
+              "settings": {
+                "label": "The Long Night (Season SALE)",
+                "link": "shopify://pages/the-long-night-rpg-guild-sale-season",
+                "open_in_new_tab": false,
+                "custom_class": "btn-2",
+                "style_class": "button",
+                "anchor": "",
+                "append_anchor_to_link": false,
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            },
             "group_PBhphT": {
               "type": "group",
               "name": "t:names.group",
@@ -886,6 +905,7 @@
             "group_tXRh6i",
             "text_afRaXi",
             "button_TCN69m",
+            "button_RKPYkx",
             "group_PBhphT"
           ]
         },
@@ -948,32 +968,8 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/Nowy_projekt_cornelius.webp",
-                "link": "shopify://products/wizard-5e-mage-miniature",
-                "image_ratio": "adapt",
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fill",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "image_VP7Ewk": {
-              "type": "image",
-              "name": "t:names.image",
-              "disabled": true,
-              "settings": {
-                "image": "shopify://shop_images/Nowy_design_skeletonking.webp",
-                "link": "shopify://products/orc-5e-snowman-christmas-toy-inspector-miniature",
+                "image": "shopify://shop_images/5_cf6c1e22-dd76-4bf2-8328-f4678c3b6b33.webp",
+                "link": "shopify://products/undead-5e-pumpkinhead-sickle-miniature",
                 "image_ratio": "adapt",
                 "width": "fill",
                 "custom_width": 100,
@@ -995,8 +991,8 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/Nowy_projekt_serra.webp",
-                "link": "shopify://products/5e-rogue-assassin-miniature",
+                "image": "shopify://shop_images/2_8610a96a-aee5-475a-85a9-26ae8edd4672.webp",
+                "link": "shopify://products/pumpkin-5e-plant-monstrosity-miniature",
                 "image_ratio": "adapt",
                 "width": "fill",
                 "custom_width": 100,
@@ -1018,8 +1014,8 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/Nowy_projekt_artizak.webp",
-                "link": "shopify://products/dragonborn-5e-sorcerer-wizard-miniature",
+                "image": "shopify://shop_images/4_34401a90-a757-4d08-8b3c-deeee6921e9b.webp",
+                "link": "shopify://products/undead-5e-pumpkinhead-sword-miniature",
                 "image_ratio": "adapt",
                 "width": "fill",
                 "custom_width": 100,
@@ -1041,8 +1037,8 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/Nowy_projekt_kadna.webp",
-                "link": "shopify://products/moon-goddess-sorcerer-5e-miniature",
+                "image": "shopify://shop_images/3_dfee4221-ac18-4d38-bffe-321a84140f25.webp",
+                "link": "shopify://products/pumpkin-5e-feast-monster-miniature",
                 "image_ratio": "adapt",
                 "width": "fill",
                 "custom_width": 100,
@@ -1064,8 +1060,8 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/Nowy_projekt_brekken.webp",
-                "link": "shopify://products/5e-bard-brekken-human-miniature",
+                "image": "shopify://shop_images/1_059b4356-1dbb-4b06-b793-a45126129e6c.webp",
+                "link": "shopify://products/mimic-5e-pumpkin-aberration-miniature",
                 "image_ratio": "adapt",
                 "width": "fill",
                 "custom_width": 100,
@@ -1086,6 +1082,7 @@
             "image_wy8yAh": {
               "type": "image",
               "name": "t:names.image",
+              "disabled": true,
               "settings": {
                 "image": "shopify://shop_images/Nowy_projekt_-_dannis.webp",
                 "link": "shopify://products/wizard-5e-henry-dannis-miniature",
@@ -1109,6 +1106,7 @@
             "image_KqHbnm": {
               "type": "image",
               "name": "t:names.image",
+              "disabled": true,
               "settings": {
                 "image": "shopify://shop_images/Nowy_projekt_sairena.webp",
                 "link": "shopify://products/elf-5e-ranger-sairena-miniature",
@@ -1132,6 +1130,7 @@
             "image_w6c3TK": {
               "type": "image",
               "name": "t:names.image",
+              "disabled": true,
               "settings": {
                 "image": "shopify://shop_images/Nowy_projekt_Lydia.webp",
                 "link": "shopify://products/female-paladin-5e-fighter-miniature",
@@ -1155,6 +1154,7 @@
             "image_P3WHh6": {
               "type": "image",
               "name": "t:names.image",
+              "disabled": true,
               "settings": {
                 "image": "shopify://shop_images/Nowy_projekt_kitarlia.webp",
                 "link": "shopify://products/sorcerer-5e-female-mage-miniature",
@@ -1178,7 +1178,6 @@
           },
           "block_order": [
             "image_6FYNeX",
-            "image_VP7Ewk",
             "image_wjyjen",
             "image_zFkEFK",
             "image_rymnUW",
@@ -1367,6 +1366,14 @@
     "collection_selector_iTdWid": {
       "type": "collection-selector",
       "blocks": {
+        "collection_TyXgpN": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "spooky-miniatures",
+            "custom_name": "Spooky Minis"
+          }
+        },
         "collection_gcRKtr": {
           "type": "collection",
           "settings": {
@@ -1418,6 +1425,7 @@
         }
       },
       "block_order": [
+        "collection_TyXgpN",
         "collection_gcRKtr",
         "collection_CMw8y3",
         "collection_8XY4tC",
@@ -1658,7 +1666,7 @@
         "open_in_new_tab": false,
         "media_type_1": "video",
         "image_1": "shopify://shop_images/Frame_1244831324.png",
-        "video_1": "shopify://files/videos/RPG Banner Film Sept 2026 ENG.mp4",
+        "video_1": "shopify://files/videos/Stronka RPG Banner film 10_2026_ENG.mp4",
         "media_type_2": "image",
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -1701,7 +1709,7 @@
           "settings": {
             "enable_custom_font": false,
             "custom_class": "c",
-            "text": "<p><strong>0 $ or € </strong>= <a href=\"/products/potion-5e-dnd-health-potion-accessory\" target=\"_blank\" title=\"/products/potion-5e-dnd-health-potion-accessory\">Free Potion</a></p>",
+            "text": "<p><strong>0 $/€ </strong>= <a href=\"/products/potion-5e-dnd-health-potion-accessory\" target=\"_blank\" title=\"/products/potion-5e-dnd-health-potion-accessory\">Free Potion</a></p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -1739,7 +1747,7 @@
           "settings": {
             "enable_custom_font": false,
             "custom_class": "c",
-            "text": "<p><strong>15 $ or € </strong>= <a href=\"/products/free-dnd-mini-of-the-month\" target=\"_blank\" title=\"/products/free-dnd-mini-of-the-month\">Free Mini of the Month</a></p>",
+            "text": "<p><strong>15 $/€ </strong>= <a href=\"/products/free-dnd-mini-of-the-month\" target=\"_blank\" title=\"/products/free-dnd-mini-of-the-month\">Free Mini of the Month</a></p>",
             "width": "100%",
             "max_width": "none",
             "alignment": "left",
@@ -1777,7 +1785,7 @@
           "settings": {
             "enable_custom_font": false,
             "custom_class": "c",
-            "text": "<p><strong>60 $ or €</strong> = Free Worldwide Shipment<br/></p>",
+            "text": "<p><strong>60 $/€</strong> = Free Worldwide Shipment<br/></p>",
             "width": "100%",
             "max_width": "none",
             "alignment": "left",
@@ -1815,7 +1823,45 @@
           "settings": {
             "enable_custom_font": false,
             "custom_class": "c",
-            "text": "<p><strong>75 $ or € </strong>= <a href=\"/products/random-free-miniature\" target=\"_blank\" title=\"/products/random-free-miniature\">Random Free Miniature</a></p>",
+            "text": "<p><strong>75 $/€ </strong>= <a href=\"/products/random-free-miniature\" target=\"_blank\" title=\"/products/random-free-miniature\">Random Free Miniature</a></p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "icon_gemCEq": {
+          "type": "icon",
+          "settings": {
+            "icon": "eye",
+            "image_upload": "shopify://shop_images/icon-footer-asset.svg",
+            "width": 42,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        },
+        "text_yiim4D": {
+          "type": "text",
+          "settings": {
+            "enable_custom_font": false,
+            "custom_class": "c",
+            "text": "<p><strong>100 $/€ </strong>= <a href=\"/products/dnd-character-sheets-all-13-in-color\" target=\"_blank\" title=\"DnD Character Sheets (all 13 in color)\">Free Character Sheets</a></p>",
             "width": "100%",
             "max_width": "none",
             "alignment": "left",
@@ -1846,7 +1892,9 @@
         "icon_zmFXJa",
         "text_NL3n8Y",
         "icon_7qGHkc",
-        "text_dLBzNT"
+        "text_dLBzNT",
+        "icon_gemCEq",
+        "text_yiim4D"
       ],
       "name": "t:names.marquee_section",
       "settings": {
@@ -6134,6 +6182,45 @@
                     "text_CXta7n"
                   ]
                 },
+                "accordion_row_gOVsLZ": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Why do your miniatures cost more than mass-produced ones?",
+                    "open_by_default": false
+                  },
+                  "blocks": {
+                    "text_Pocrvt": {
+                      "type": "text",
+                      "settings": {
+                        "enable_custom_font": false,
+                        "custom_class": "c",
+                        "text": "<p>Because nothing here is cast in advance. Every figure is printed on demand in resin and hand-detailed. That takes five to seven working days, and with weekends inside that window a parcel can leave the Guild on the tenth or eleventh day. Shipping from the EU comes on top. A mass-produced mini is cheaper because it was made before anyone wanted it. What you pay for here is the one character your player has been describing for a year.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-subheading--family)",
+                        "font_size": "1.25rem",
+                        "line_height": "loose",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_Pocrvt"
+                  ]
+                },
                 "accordion_row_AAdqhn": {
                   "type": "_accordion-row",
                   "settings": {
@@ -6335,45 +6422,6 @@
                   },
                   "block_order": [
                     "text_dwemnA"
-                  ]
-                },
-                "accordion_row_gOVsLZ": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Why do your miniatures cost more than mass-produced ones?",
-                    "open_by_default": false
-                  },
-                  "blocks": {
-                    "text_Pocrvt": {
-                      "type": "text",
-                      "settings": {
-                        "enable_custom_font": false,
-                        "custom_class": "c",
-                        "text": "<p>Because nothing here is cast in advance. Every figure is printed on demand in resin and hand-detailed. That takes five to seven working days, and with weekends inside that window a parcel can leave the Guild on the tenth or eleventh day. Shipping from the EU comes on top. A mass-produced mini is cheaper because it was made before anyone wanted it. What you pay for here is the one character your player has been describing for a year.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-subheading--family)",
-                        "font_size": "1.25rem",
-                        "line_height": "loose",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_Pocrvt"
                   ]
                 }
               },
