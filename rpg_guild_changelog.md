@@ -10,6 +10,37 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-01
+
+### Podmiana filmow w banerze strony glownej - pazdziernik `[poza repo]`
+
+**Co:** sekcja `hero_XFBPJU`, ustawienie `video_1`. Wrzesniowe filmy zastapione
+pazdziernikowymi w trzech jezykach:
+
+| Jezyk | Z | Na |
+|---|---|---|
+| EN | RPG Banner Film Sept 2026 ENG.mp4 | Stronka RPG Banner film 10_2026_ENG.mp4 |
+| DE | RPG Banner Film Sept 2026 DE.mp4 | Stronka RPG Banner film 10_2026_DE.mp4 |
+| FR | RPG Banner Film Sept 2026 FR.mp4 | Stronka RPG Banner film 10_2026_FR.mp4 |
+
+**Gdzie:** EN w `templates/index.json` motywu live, DE i FR jako tlumaczenia zasobu
+`OnlineStoreThemeJsonTemplate/index`. Skrypt `shopify_rpg_movie.py run`.
+
+**Weryfikacja:** odczyt z API po operacji - wszystkie trzy wartosci wskazuja na wlasciwe
+pliki, FR na plik z FR w nazwie (wrzesniowa pulapka nie wrocila).
+
+**Uwaga o kluczu tlumaczenia:** pelny klucz ma sufiks digest, np.
+`section.index.json.hero_XFBPJU.video_1:25npjs2877mvn`. Dopasowanie po samym
+`section.index.json.hero_XFBPJU.video_1` nie zadziala - trzeba porownywac prefiksem.
+
+**Cofniecie:** `rpg_movie_rollback.json` istnieje, ale wrzesniowe pliki zostaly
+skasowane ze Shopify przez `run`. Powrot wymaga ponownego wgrania ich z dysku.
+
+**Uwierzytelnianie:** apka dev `/rpg-movie`, scope `write_files, write_themes,
+write_translations`. To NIE jest `Price Manager` (ten ma tylko `write_products`).
+
+---
+
 ## 2026-09-30
 
 ### Strona bundli po niemiecku i francusku `[poza repo]`
