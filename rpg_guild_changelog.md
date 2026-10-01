@@ -38,6 +38,36 @@ Tłumaczenie oddaje EN wiernie, więc po korekcie EN trzeba odświeżyć też DE
 **Jak cofnąć:** `translationsRemove` dla `de` i `fr` na tych zasobach albo ręcznie
 w Translate & Adapt.
 
+### Przecena -15% na kolekcjach terrain `[poza repo]`
+
+**Co:** 117 produktow, 1338 wariantow. `compareAtPrice` = dotychczasowa cena,
+`price` = cena x 0,85. Suma cen 10 455,73 -> 8 886,68 (-15,01%).
+
+**Zakres:** unia czterech kolekcji - `dnd-terrain` (117), `dnd-terrain-tiles` (100),
+`modular-dnd-terrain-sets` (14), `modular-dnd-terrain-starter-sets` (3).
+Kolekcja `dnd-terrain` pokrywa pozostale trzy, stad 117 unikalnych produktow.
+
+**Swiadomie pominiete:** kolekcja `Terrain Elements` (`dnd-terrain-elements-miniatures`,
+74 produkty / 1332 warianty) - na wyrazne zyczenie Jana. Przed operacja sprawdzono
+przeciecie zbiorow: 0 wspolnych produktow. Po operacji potwierdzono: 0 wariantow
+z `compareAtPrice`.
+
+**Narzedzie:** `shopify_discount_terrain.py` - kopia sprawdzonego `shopify_discount_3pct.py`
+ze zmieniona stawka (0.85), lista kolekcji i nazwami plikow.
+
+**Weryfikacja:** probka 100 wariantow po operacji - 100/100 zgodnych z planem.
+
+**Jak cofnac:** `python3 shopify_discount_terrain.py rollback`, czyta
+`terrain_discount_rollback.jsonl`. NIE kasowac tego pliku.
+
+**Skutek uboczny:** kolekcja "Miniatures on sale" filtruje po `Compare at price is set`,
+wiec te 117 produktow sie w niej pojawi.
+
+**Uwierzytelnianie:** apka `Price Manager` (`write_products`),
+klucze w `~/.secrets/rpg-guild-shopify.env`.
+
+---
+
 ### Podmiana filmow w banerze strony glownej - pazdziernik `[poza repo]`
 
 **Co:** sekcja `hero_XFBPJU`, ustawienie `video_1`. Wrzesniowe filmy zastapione
