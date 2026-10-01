@@ -9,55 +9,6 @@
  */
 {
   "sections": {
-    "section_longNightSeason": {
-      "type": "long-night-season",
-      "blocks": {
-        "act_1": {
-          "type": "act",
-          "settings": {
-            "phase": "rising",
-            "label": "Act I",
-            "name": "Blood Moon Rising",
-            "when": "October",
-            "line": "The moon opens one eye, and the dark starts moving."
-          }
-        },
-        "act_2": {
-          "type": "act",
-          "settings": {
-            "phase": "drip",
-            "label": "Act II",
-            "name": "Blood Moon · Black Friday",
-            "when": "November",
-            "line": "The moon is fresh in blood. The Guild let it strive!"
-          }
-        },
-        "act_3": {
-          "type": "act",
-          "settings": {
-            "phase": "eclipse",
-            "label": "Act III",
-            "name": "The Last Moon",
-            "when": "December",
-            "line": "One eclipse, and the Guild closes the gates…"
-          }
-        }
-      },
-      "block_order": [
-        "act_1",
-        "act_2",
-        "act_3"
-      ],
-      "settings": {
-        "kicker": "October - December 2026",
-        "heading": "The Long Night",
-        "current_act": 1,
-        "blood_strength": 62,
-        "cta_label": "See the whole season",
-        "padding_top": 40,
-        "padding_bottom": 40
-      }
-    },
     "main": {
       "type": "product-information",
       "blocks": {
@@ -832,6 +783,56 @@
       "name": "Product Tabs",
       "settings": {
         "frame_padding": 18
+      }
+    },
+    "section_longNightSeason": {
+      "type": "long-night-season",
+      "blocks": {
+        "act_1": {
+          "type": "act",
+          "settings": {
+            "phase": "rising",
+            "label": "Act I",
+            "name": "Blood Moon Rising",
+            "when": "October",
+            "line": "The moon opens one eye, and the dark starts moving."
+          }
+        },
+        "act_2": {
+          "type": "act",
+          "settings": {
+            "phase": "drip",
+            "label": "Act II",
+            "name": "Blood Moon · Black Friday",
+            "when": "November",
+            "line": "The moon is fresh in blood. The Guild let it strive!"
+          }
+        },
+        "act_3": {
+          "type": "act",
+          "settings": {
+            "phase": "eclipse",
+            "label": "Act III",
+            "name": "The Last Moon",
+            "when": "December",
+            "line": "One eclipse, and the Guild closes the gates…"
+          }
+        }
+      },
+      "block_order": [
+        "act_1",
+        "act_2",
+        "act_3"
+      ],
+      "settings": {
+        "kicker": "October - December 2026",
+        "heading": "The Long Night",
+        "current_act": 1,
+        "blood_strength": 62,
+        "cta_label": "See the whole season",
+        "cta_link": "shopify://pages/the-long-night-rpg-guild-sale-season",
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
     "section_LN3dwL": {
@@ -3284,88 +3285,6 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "accordion_row_BeU9AL": {
-                  "type": "_accordion-row",
-                  "name": "t:names.accordion_dash_row",
-                  "settings": {
-                    "heading": "There's been an issue with my order, can you help?",
-                    "open_by_default": false
-                  },
-                  "blocks": {
-                    "text_f8aLBF": {
-                      "type": "text",
-                      "name": "t:names.text",
-                      "settings": {
-                        "enable_custom_font": false,
-                        "custom_class": "c",
-                        "text": "<p>Absolutely! Whether your order was delayed in shipment, a miniature arrived damaged, or a piece is missing - feel encouraged to contact us. We offer <strong>hassle-free refunds within 30 days</strong>, no questions asked. In most cases, it simply means sending you the missing part or replacing anything you’re not fully satisfied with.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-subheading--family)",
-                        "font_size": "1.25rem",
-                        "line_height": "loose",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_f8aLBF"
-                  ]
-                },
-                "accordion_row_yVrk3W": {
-                  "type": "_accordion-row",
-                  "name": "t:names.accordion_dash_row",
-                  "settings": {
-                    "heading": "Is RPG Guild focused only on D2C, or do you also work with businesses?",
-                    "open_by_default": false
-                  },
-                  "blocks": {
-                    "text_wLaXwR": {
-                      "type": "text",
-                      "name": "t:names.text",
-                      "settings": {
-                        "enable_custom_font": false,
-                        "custom_class": "c",
-                        "text": "<p><strong>We are open to a variety of B2B opportunities and requests!</strong> If you're looking for a reliable partner visit our B2B page and contact us for more details :)</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-subheading--family)",
-                        "font_size": "1.25rem",
-                        "line_height": "loose",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_wLaXwR"
-                  ]
-                },
                 "accordion_row_QlRnnY": {
                   "type": "_accordion-row",
                   "settings": {
@@ -3520,6 +3439,88 @@
                   },
                   "block_order": [
                     "text_OEtfzj"
+                  ]
+                },
+                "accordion_row_BeU9AL": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_dash_row",
+                  "settings": {
+                    "heading": "There's been an issue with my order, can you help?",
+                    "open_by_default": false
+                  },
+                  "blocks": {
+                    "text_f8aLBF": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "enable_custom_font": false,
+                        "custom_class": "c",
+                        "text": "<p>Absolutely! Whether your order was delayed in shipment, a miniature arrived damaged, or a piece is missing - feel encouraged to contact us. We offer <strong>hassle-free refunds within 30 days</strong>, no questions asked. In most cases, it simply means sending you the missing part or replacing anything you’re not fully satisfied with.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-subheading--family)",
+                        "font_size": "1.25rem",
+                        "line_height": "loose",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_f8aLBF"
+                  ]
+                },
+                "accordion_row_yVrk3W": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_dash_row",
+                  "settings": {
+                    "heading": "Is RPG Guild focused only on D2C, or do you also work with businesses?",
+                    "open_by_default": false
+                  },
+                  "blocks": {
+                    "text_wLaXwR": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "enable_custom_font": false,
+                        "custom_class": "c",
+                        "text": "<p><strong>We are open to a variety of B2B opportunities and requests!</strong> If you're looking for a reliable partner visit our B2B page and contact us for more details :)</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-subheading--family)",
+                        "font_size": "1.25rem",
+                        "line_height": "loose",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_wLaXwR"
                   ]
                 }
               },
