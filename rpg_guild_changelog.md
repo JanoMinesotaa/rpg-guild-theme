@@ -53,6 +53,32 @@ Rozjazd progów Custom Bundle rozstrzygnięty tego samego dnia na 10 / 20 / 50 -
 **Jak cofnąć:** `translationsRemove` dla `de` i `fr` na tych zasobach albo ręcznie
 w Translate & Adapt.
 
+### Przecena Undead -5% i Spooky -10% `[poza repo]`
+
+**Co:** dwie przeceny przez `compareAtPrice`, nalozone w kolejnosci Spooky -> Undead.
+
+| Kolekcja | Rabat | Produkty | Warianty |
+|---|---|---|---|
+| `spooky-miniatures` | -10% | 12 | 210 |
+| `undead-5e` | -5% | 628 z 637 | 9876 |
+
+**Przeciecie:** 9 produktow nalezy do obu kolekcji. Decyzja Jana: wyzszy rabat wygrywa.
+Zrealizowane przez kolejnosc - najpierw Spooky -10%, potem Undead -5%, ktory pominal
+warianty majace juz `compareAtPrice`. Stad 628 zamiast 637 produktow w drugim przebiegu.
+
+**Weryfikacja po operacji:** Undead 10086 wariantow - 9924 z -5%, 162 z -10%
+(te 9 wspolnych), 0 bez przeceny. Spooky 210 wariantow - wszystkie -10%.
+
+**Przerwanie w trakcie:** pierwszy przebieg Undead zatrzymal sie na 350/628. Wznowiony,
+dokonczyl 228. UWAGA: ponowny `run` nadpisuje plik rollback wylacznie produktami jeszcze
+nieprzecenionymi - przed wznowieniem zrobiono kopie i po zakonczeniu przywrocono pelna
+liste 628 pozycji.
+
+**Jak cofnac:** `shopify_discount_spooky.py rollback` i `shopify_discount_undead.py rollback`.
+Pliki: `spooky_discount_rollback.jsonl`, `undead_discount_rollback.jsonl`. Nie kasowac.
+
+---
+
 ### Przecena -15% na kolekcjach terrain `[poza repo]`
 
 **Co:** 117 produktow, 1338 wariantow. `compareAtPrice` = dotychczasowa cena,
