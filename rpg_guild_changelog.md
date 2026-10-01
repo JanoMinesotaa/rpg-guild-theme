@@ -12,6 +12,26 @@ Konwencja: najnowsze na górze.
 
 ## 2026-10-01
 
+### Kolekcja Spooky Miniatures po niemiecku i francusku `[poza repo]`
+Admin API, `translationsRegister` · zasób `OnlineStoreThemeJsonTemplate/collection.spooky-collection`
+
+Szablon kolekcji (sklonowany z Aarakocry) miał **zero** tłumaczeń DE i FR - cała strona poza
+tytułem i opisem kolekcji szła po angielsku. Zarejestrowane 42 pola na język:
+- 35 przejętych 1:1 z `collection.aarakocra-5e` (dopasowanie po digeście treści EN): FAQ,
+  „Guild definition”, nagłówki listy produktów, promo Mystery Box, „Start your first quest”,
+- 7 nowych: hero The Long Night (nadtytuł aktu I, opis, trzy USP, opis alternatywny figurki)
+  i „All Spooky Miniatures:”. Terminy jak w Aarakocrze („Leicht zu bemalen”, „Facile à peindre”),
+  nazwa aktu jak na landingu, nagłówek zgodny z istniejącym tytułem kolekcji
+  („Gruselige Miniaturen”, „Miniatures effrayantes”).
+
+Tytuł, opis i tytuł SEO samej kolekcji miały już tłumaczenia - bez zmian.
+Sprawdzone na żywo w surowym HTML `/de-de/` i `/fr-fr/collections/spooky-miniatures`.
+
+**Na przyszłość:** szablon sklonowany z innego nie dziedziczy tłumaczeń oryginału. Po każdym
+klonie trzeba je przenieść (dopasowanie po digeście działa, bo klucze różnią się tylko nazwą szablonu).
+
+**Jak cofnąć:** `translationsRemove` dla `de` i `fr` na tym zasobie albo w Translate & Adapt.
+
 ### Strona główna, hero: przycisk „The Long Night (Season SALE)”
 `ef58fca` · `templates/index.json` (sekcja `section_mxgRNK`) + tłumaczenia DE/FR `[poza repo]`
 
