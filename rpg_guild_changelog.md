@@ -12,6 +12,41 @@ Konwencja: najnowsze na górze.
 
 ## 2026-10-01
 
+### Strona główna, hero: przycisk „The Long Night (Season SALE)”
+`ef58fca` · `templates/index.json` (sekcja `section_mxgRNK`) + tłumaczenia DE/FR `[poza repo]`
+
+Drugi przycisk obok „Your perfect miniature” (desktop od 1200 px), pod nim poniżej 1200 px,
+pełna szerokość poniżej 480 px. Wygląd 1:1 z przyciskiem landingu sezonu (`.ln-cta`:
+pergamin, srebrne okucie, Raleway wersalikami, hover w czerwieni księżyca), jedyna różnica:
+zaokrąglenie 100px jak pierwszy przycisk. Link ustawia Jan.
+
+**Zero zmian globalnych - żaden plik motywu nie był ruszany.**
+- Przycisk to blok Jana `button_RKPYkx` (był wyłączony): włączony, `custom_class`
+  `btn-2` → `ln-hero-cta`. `.btn-2` ma w `base.css` 10 właściwości z `!important`
+  (bordowe tło, Rosarivo, `width:100%`), więc przycisk by je dziedziczył.
+- Styl siedzi w bloku `custom_liquid_lnHeroCta` (typ `custom-liquid`) w tej samej kolumnie.
+  Selektory przypięte do ID bloków (`__button_RKPYkx`, `__group_TGQ4iB`), nie do klas -
+  ID nie podlega tłumaczeniu. Pusty kontener bloku chowa się sam (`:has`), więc nie dodaje odstępu.
+- Układ obok siebie (grid) działa tylko w tej kolumnie i tylko gdy przycisk TLN jest włączony.
+  Próg 1200 px, bo kolumna ma 55vw, a francuska etykieta potrzebuje 587 px obok pierwszego
+  przycisku - przy 768 px przyciski rozpychały tytuł.
+- Pierwszego przycisku celowo nie przeniesiono do nowej grupy: `base.css` (linie 177, 1578)
+  celuje w pełną klasę `button--AZTUxMk5hbnNXQk1pW__button_TCN69m`, którą przeniesienie by zmieniło.
+
+Sprawdzone przed wdrożeniem symulacją na żywej stronie (pomiar położenia wszystkich elementów
+hero przed i po, 8 szerokości): od 1200 px nic poza nowym przyciskiem się nie przesuwa, poniżej
+przesuwa się tylko „Main Collections” o wysokość przycisku. Po wdrożeniu: en, `/de-de/`,
+`/fr-fr/` przy 1440 i 390 px.
+
+Etykieta DE „Die Lange Nacht (Saison-SALE)”, FR „La Longue Nuit (Soldes de saison)”.
+
+**Uwaga przy testach:** przeglądarka testowa z polskiego IP bywa przekierowywana na rynek
+angielski i pokazuje angielskie etykiety także pod `/de-de/`. Tłumaczenia sprawdzać w surowym
+HTML (`lang="de"`), nie po zrzucie.
+
+**Jak cofnąć:** w edytorze wyłącz przycisk „The Long Night” i blok „The Long Night - styl
+przycisku”. Kod: tag `przed-hero-tln-button`.
+
 ### Progi Custom Bundle 10 / 20 / 50 na stronie bundli
 `6860568` · `templates/page.bundle.json` + tłumaczenia DE/FR `[poza repo]`
 
