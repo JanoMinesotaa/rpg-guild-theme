@@ -12,6 +12,40 @@ Konwencja: najnowsze na górze.
 
 ## 2026-10-01
 
+### Sekcja The Long Night na wszystkich stronach produktu
+`6f1475d` · 10 szablonów `templates/product*.json` + tłumaczenia DE/FR `[poza repo]`
+
+Sekcja sezonu (`long-night-season`, ta sama co na stronie bundli) stoi teraz na każdej stronie
+produktu: pod ramą z zakładkami i paskiem „For DnD & Pathfinder Fans…”, nad „You may also like”
+(w Character Sheet i Gift Card 2 nad „Explore our DnD Character Sheets 5e!”). Szablony:
+domyślny, `dnd-dice`, `dnd-terrain`, `dnd-tiles`, `gift-card`, `gift-card-2`,
+`mystery-box-product-page`, `pre-made-terrain-sets`, `starter-set-terrains`, `character-sheet`.
+
+**Kod motywu bez zmian** - sekcja już była na sklepie, style ma zamknięte w ID sekcji. Do każdego
+szablonu doszedł jeden wpis `section_longNightSeason` (kopia ze strony bundli) i jedno miejsce
+w `order`, zaraz po `product_tabs_*`. Diff: same dopisania, zero usuniętych linii; każdy plik
+po parsowaniu = stary + jedna sekcja.
+
+Ustawienia: **akt I podświetlony** (decyzja Jana - październik), padding 40/40, link przycisku
+pusty przy wdrożeniu - ustawia go Jan w edytorze (część szablonów ma już
+`shopify://pages/the-long-night-rpg-guild-sale-season`, reszta czeka i do tego czasu ma `#`).
+
+Tłumaczenia: 15 pól na język na szablon (nadtytuł, hasło, napis przycisku, trzy akty), przeniesione
+ze strony bundli przez `translationsRegister`, dopasowane po digeście treści EN.
+
+Sprawdzone na żywo w surowym HTML (`?view=<szablon>`): 10 szablonów × en, `/de-de/`, `/fr-fr/` -
+miejsce, akt I, teksty w języku rynku. Odstępy na 390 i 1440 px identyczne z zaakceptowaną
+wizualizacją (96 px od ramy do nadtytułu, sekcja 678 / 582 px).
+
+**Na marginesie:** przy pullu wyszło, że szablony `t-character-sheet`, `test-2`
+i `testowy-theme-product` zostały usunięte w panelu - zapisane w repo jako pull (`4b2d47b`).
+
+**Uwaga przy testach:** `Accept-Language` w zapytaniu powoduje przekierowanie na rynek `en-pl` -
+sprawdzając tłumaczenia przez `curl`/`urllib`, nie wysyłać tego nagłówka.
+
+**Jak cofnąć:** w edytorze każdego szablonu produktu ukryj albo usuń sekcję
+„The Long Night · sezon”. Kod: tag `przed-tln-produkty`.
+
 ### Kolekcja Spooky Miniatures po niemiecku i francusku `[poza repo]`
 Admin API, `translationsRegister` · zasób `OnlineStoreThemeJsonTemplate/collection.spooky-collection`
 
