@@ -12,6 +12,16 @@ Konwencja: najnowsze na górze.
 
 ## 2026-10-02
 
+### Grafika kruka na czarnym tle do maili The Long Night w Plikach sklepu `[poza repo]`
+Admin API, `stagedUploadsCreate` + `fileCreate` · Ustawienia → Pliki, `ln-ic-raven-night.png`
+
+Sekcja maila „Kruk · pomoc” (pomoc w doborze rozmiaru i malowaniu) ma być zawsze na czarnym tle, a nie na
+pergaminie (decyzja Jana, 02.10.2026). Nowa grafika kruka na nocy, adres dopisany do
+`Black Friday 2026/11-edrone/obrazy/cdn.json`. Sprawdzone: adres zwraca 200. Przy okazji przebudowany mail
+o sezonie w edrone i dwie nowe propozycje popupu sezonu - to pliki lokalne, sklepu nie dotyczą.
+
+**Jak cofnąć:** Ustawienia → Pliki, `ln-ic-raven-night.png`, usuń (sekcja kruka w mailach straci obraz).
+
 ### 48 grafik do maili i popupów The Long Night w Plikach sklepu `[poza repo]`
 Admin API, `stagedUploadsCreate` + `fileCreate` · Ustawienia → Pliki, nazwy `ln-*.jpg` / `ln-*.png`
 
