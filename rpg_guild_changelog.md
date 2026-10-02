@@ -10,6 +10,27 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-02
+
+### 48 grafik do maili i popupów The Long Night w Plikach sklepu `[poza repo]`
+Admin API, `stagedUploadsCreate` + `fileCreate` · Ustawienia → Pliki, nazwy `ln-*.jpg` / `ln-*.png`
+
+Maile edrone wklejane jako HTML nie pokazywały obrazów, bo miały zastępczy adres `EDRONE-URL/...`
+(zrzut Jana z edytora edrone, 02.10.2026). Wszystkie grafiki maili i popupów (hero, księżyce aktów,
+ikony ofert, rwane krawędzie, ikony sociali, plansze z moodboardu TLN) są teraz w Plikach sklepu
+i mają stałe adresy `cdn.shopify.com/.../files/ln-*`. Pliki są niewidoczne dla klientów, służą tylko
+jako hosting obrazów. Mapa plik → adres: `Black Friday 2026/11-edrone/obrazy/cdn.json`.
+Sprawdzone: wszystkie 48 adresów zwraca 200, w HTML maili nie został żaden `EDRONE-URL/`.
+
+Dwie nowe ikony ofert (ruina wieży do DnD Terrain, zwój ze stalówką do Character Sheets)
+wygenerowane w Recrafcie i wycięte lokalnie (`03-assets/elements/icons/ic-tower.png`, `ic-scroll.png`).
+
+**Uwaga na przyszłość:** ponowne wgranie pliku o tej samej nazwie da w Plikach nową nazwę z sufiksem -
+po zmianie grafiki trzeba odczytać nowy adres i zaktualizować `cdn.json`.
+
+**Jak cofnąć:** Ustawienia → Pliki, filtr `ln-`, usuń zaznaczone (maile z tymi adresami przestaną
+pokazywać obrazy).
+
 ## 2026-10-01
 
 ### Sekcja The Long Night na wszystkich stronach produktu
