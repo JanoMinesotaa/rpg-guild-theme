@@ -103,13 +103,13 @@
 
 
 {% if request.path == "/collections/all" %}
-<title>All DnD 5e Miniatures - Heroes, Monsters, NPCs and more | RPG Guild | RPG Guild</title>
+<title>All DnD 5e Miniatures - Heroes, Monsters, NPCs | RPG Guild</title>
 {% else %}
 <title>
   {{ page_title }}
-  {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-  {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-  {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  {%- if current_tags %} - tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+  {%- if current_page != 1 %} - Page {{ current_page }}{% endif -%}
+  {%- unless page_title contains shop.name %} - {{ shop.name }}{% endunless -%}
 </title>
 {% endif %}
 

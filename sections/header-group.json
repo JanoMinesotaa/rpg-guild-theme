@@ -14,6 +14,20 @@
     "header_announcements_Hp7Wcj": {
       "type": "header-announcements",
       "blocks": {
+        "announcement_wG68fm": {
+          "type": "_announcement",
+          "name": "t:names.announcement",
+          "settings": {
+            "text": "EXPLORE THE LONG NIGHT SEASON",
+            "link": "shopify://pages/the-long-night-rpg-guild-sale-season",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        },
         "announcement_9xjeXf": {
           "type": "_announcement",
           "settings": {
@@ -30,7 +44,7 @@
         "announcement_UWgc7f": {
           "type": "_announcement",
           "settings": {
-            "text": "CHECK OUT OUR FREE MINI OF THE MONTH!",
+            "text": "CHECK OUT OUR <span style=\"text-decoration:underline\">FREE</span> MINI OF THE MONTH!",
             "link": "shopify://products/free-dnd-mini-of-the-month",
             "font": "var(--font-body--family)",
             "font_size": "1.125rem",
@@ -42,6 +56,7 @@
         }
       },
       "block_order": [
+        "announcement_wG68fm",
         "announcement_9xjeXf",
         "announcement_UWgc7f"
       ],

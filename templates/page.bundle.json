@@ -341,6 +341,7 @@
         "group_9UQUPi",
         "group_4cmrbF"
       ],
+      "disabled": true,
       "name": "Hero",
       "settings": {
         "custom_class": "hero-spacer title-lg hero-bg-bundles",
@@ -378,8 +379,21 @@
         "gradient_direction": "to top",
         "padding-block-start": 0,
         "padding-block-end": 0
-      },
-      "disabled": true
+      }
+    },
+    "hero_longNightBundle": {
+      "type": "long-night-hero",
+      "settings": {
+        "mobile_frame_default": true,
+        "mark_layout": "top",
+        "moon_phase": "drip",
+        "kicker": "ACT II · BLOOD MOON · BLACK FRIDAY · NOVEMBER",
+        "heading": "Build the party you actually need.",
+        "body": "Pick any miniatures from our 5,000+ catalogue - no pre‑made bundles or fixed sets.",
+        "body_2": "The bigger the party, the bigger the discount. Create a bundle of 50 and pay for 35!",
+        "cta_label": "",
+        "cta_link": ""
+      }
     },
     "section_9DNaRd": {
       "type": "section",
@@ -746,7 +760,7 @@
         "current_act": 2,
         "blood_strength": 62,
         "cta_label": "See the whole season",
-        "cta_link": "shopify://pages/dnd-mystery-box",
+        "cta_link": "shopify://pages/the-long-night-rpg-guild-sale-season",
         "padding_top": 40,
         "padding_bottom": 40
       }
@@ -1347,18 +1361,6 @@
         "reflection_opacity": 75,
         "padding-block-start": 72,
         "padding-block-end": 40
-      }
-    },
-    "hero_longNightBundle": {
-      "type": "long-night-hero",
-      "settings": {
-        "mobile_frame_default": true,
-        "mark_layout": "top",
-        "moon_phase": "drip",
-        "kicker": "ACT II · BLOOD MOON · BLACK FRIDAY · NOVEMBER",
-        "heading": "Build the party you actually need.",
-        "body": "Pick any miniatures from our 5,000+ catalogue - no pre‑made bundles or fixed sets.",
-        "body_2": "The bigger the party, the bigger the discount. Create a bundle of 50 and pay for 35!"
       }
     }
   },

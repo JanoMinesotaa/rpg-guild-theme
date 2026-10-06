@@ -10474,7 +10474,8 @@ main.collection {
   & .hero--no-blocks-auto-height > div {
     margin-top: 0 !important;
   }
-  & > div:nth-of-type(2) {
+  &:not(:has(> .shopify-section[id$="__main"])) > div:nth-of-type(2),
+  &:has(> .shopify-section[id$="__main"]) > .shopify-section[id$="__main"] {
       max-width: 1540px !important;
       margin-left: auto !important;
       margin-right: auto !important;
@@ -10571,7 +10572,8 @@ main.collection {
       }
   }
   /* SLIDER */
-    & > div:nth-of-type(3):not(.sales-custom):not(.ui-test-product-list) {
+    &:not(:has(> .shopify-section[id$="__main"])) > div:nth-of-type(3):not(.sales-custom):not(.ui-test-product-list),
+    &:has(> .shopify-section[id$="__main"]) > .shopify-section:has(> .section-wrapper.spacer.spacing.hero-guild.reset-grid) {
       & > div > div > div > div {
         align-items: center !important;
         gap: 40px !important;
@@ -13603,4 +13605,27 @@ fieldset:last-of-type
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
+}
+/* FAQ dividers */
+
+.faq .accordion accordion-custom::after {
+  content: none !important;
+  display: none !important;
+}
+
+.faq .accordion accordion-custom:not(:last-of-type) .details {
+  border-bottom: none !important;
+  background-image: linear-gradient(
+    90deg,
+    rgb(133, 108, 84) 0%,
+    rgba(133, 108, 84, 0.3) 100%
+  ) !important;
+  background-repeat: no-repeat !important;
+  background-position: left bottom !important;
+  background-size: 100% 1px !important;
+}
+
+.faq .accordion accordion-custom:last-of-type .details {
+  border-bottom: none !important;
+  background-image: none !important;
 }

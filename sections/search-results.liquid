@@ -5,6 +5,136 @@
   type="module"
 ></script>
 
+{% javascript %}
+(() => {
+  if (window.__rpgSearchLoadMoreBound) return;
+  window.__rpgSearchLoadMoreBound = true;
+
+  document.addEventListener('click', async (event) => {
+    const btn = event.target.closest('.SearchLoadMoreProducts');
+
+    if (btn) {
+      const root = btn.closest('[section-id]');
+      const grid = root?.querySelector('ul.product-grid');
+      const hideBtn = root?.querySelector('.SearchHideExtraProducts');
+
+      if (!grid) return;
+
+      const url = btn.dataset.nextUrl;
+
+      if (!url) {
+        btn.hidden = true;
+        return;
+      }
+
+      btn.disabled = true;
+
+      const originalText = btn.textContent;
+      btn.textContent = 'Loading...';
+
+      try {
+        const response = await fetch(url, {
+          credentials: 'same-origin'
+        });
+
+        const html = await response.text();
+
+        const doc = new DOMParser().parseFromString(
+          html,
+          'text/html'
+        );
+
+        const sectionId = btn.dataset.sectionId;
+
+        const fetchedSection = doc.getElementById(
+          `shopify-section-${sectionId}`
+        );
+
+        const fetchedGrid =
+          fetchedSection?.querySelector('ul.product-grid');
+
+        if (!fetchedGrid) {
+          throw new Error(
+            'Nie znaleziono product grid na następnej stronie.'
+          );
+        }
+
+        const newItems = [
+          ...fetchedGrid.querySelectorAll(
+            ':scope > li.product-grid__item'
+          )
+        ];
+
+        newItems.forEach((li) => {
+          li.setAttribute('data-loaded', 'extra');
+          grid.appendChild(li);
+        });
+
+        if (hideBtn && newItems.length) {
+          hideBtn.hidden = false;
+        }
+
+        const nextBtn =
+          fetchedSection.querySelector(
+            '.SearchLoadMoreProducts'
+          );
+
+        btn.dataset.nextUrl =
+          nextBtn?.dataset.nextUrl || '';
+
+        if (!btn.dataset.nextUrl) {
+          /* jeśli ostatnia strona — zostaw Collapse,
+             ale schowaj Show more */
+          btn.hidden = true;
+        } else {
+          /* jeśli są kolejne strony — zostają oba przyciski */
+          btn.hidden = false;
+          btn.disabled = false;
+          btn.textContent = originalText;
+        }
+      } catch (error) {
+        console.error(error);
+
+        btn.hidden = false;
+        btn.disabled = false;
+        btn.textContent = 'Try again';
+      }
+
+      return;
+    }
+
+    const hideBtn = event.target.closest(
+      '.SearchHideExtraProducts'
+    );
+
+    if (!hideBtn) return;
+
+    const root = hideBtn.closest('[section-id]');
+    const grid = root?.querySelector('ul.product-grid');
+    const showBtn = root?.querySelector(
+      '.SearchLoadMoreProducts'
+    );
+
+    grid
+      ?.querySelectorAll(
+        'li.product-grid__item[data-loaded="extra"]'
+      )
+      .forEach((el) => el.remove());
+
+    if (showBtn) {
+      showBtn.dataset.nextUrl =
+        showBtn.dataset.firstNextUrl || '';
+
+      showBtn.hidden = false;
+      showBtn.disabled = false;
+      showBtn.textContent = 'Show more';
+    }
+
+    hideBtn.hidden = true;
+  });
+})();
+{% endjavascript %}
+
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
   class="asd section product-grid-container spacing-style color-{{ section.settings.color_scheme }}"
@@ -48,6 +178,32 @@
         paginate: paginate,
         title: title
       %}
+
+        {% if search.results_count > 0 and paginate.pages > 1 and paginate.next %}
+          <div
+            class="product-grid__load-more"
+            style="display:flex;justify-content:center;gap:16px;margin-block:var(--padding-lg);"
+          >
+            <button
+              class="LoadMoreProducts SearchLoadMoreProducts"
+              type="button"
+              data-next-url="{{ paginate.next.url | escape }}"
+              data-first-next-url="{{ paginate.next.url | escape }}"
+              data-section-id="{{ section.id }}"
+            >
+              Show more
+            </button>
+
+            <button
+              class="HideExtraProducts SearchHideExtraProducts"
+              type="button"
+              hidden
+            >
+              Collapse
+            </button>
+          </div>
+      {% endif %}
+
     {% endpaginate %}
   </div>
 </div>

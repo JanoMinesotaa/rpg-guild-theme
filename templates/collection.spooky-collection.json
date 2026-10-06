@@ -112,6 +112,19 @@
         "padding-block-end": 0
       }
     },
+    "ln_col_hero": {
+      "type": "long-night-collection-hero",
+      "settings": {
+        "kicker": "Act I · Blood Moon Rising · October",
+        "heading": "",
+        "sub": "Pumpkin knights, restless dead and things that knock after midnight - <em>hand-detailed</em> for your Halloween session.",
+        "usp_1": "October Exclusive",
+        "usp_2": "Easy to Paint",
+        "usp_3": "Hand Detailed",
+        "figure_alt": "Pumpkin-headed knight miniature with a cleaver and a spiked gauntlet.",
+        "show_moon": true
+      }
+    },
     "section_tJEjwT": {
       "type": "section",
       "blocks": {
@@ -774,6 +787,7 @@
       "block_order": [
         "group_RTNHjc"
       ],
+      "disabled": true,
       "name": "Hero",
       "settings": {
         "custom_class": "hero-spacer title-lg hero-bg-11",
@@ -811,8 +825,7 @@
         "gradient_direction": "to top",
         "padding-block-start": 0,
         "padding-block-end": 0
-      },
-      "disabled": true
+      }
     },
     "main": {
       "type": "main-collection",
@@ -1021,16 +1034,16 @@
         "padding-block-end": 0,
         "show_bestsellers": true,
         "bestsellers_heading": "Guild's choice:",
-        "bestseller_1": "owlin-5e-archer-fighter-miniature",
-        "bestseller_2": "pirate-captain-aarakocra-5e-miniature",
-        "bestseller_3": "ranger-aarakockra-5e-assasin-miniature",
+        "bestseller_1": "tiamat-5e-the-dragon-queen-miniature",
+        "bestseller_2": "undead-5e-knight-miniature",
+        "bestseller_3": "pumpkinhead-5e-halloween-undead-miniature",
         "show_promo_banner": true,
         "promo_image": "shopify://shop_images/Mystery_box_promo_banner.png",
         "promo_heading": "Can't decide? Let the universe choose for you!",
         "promo_text": "Pick our Mystery box and draw from 5k+ miniatures",
         "promo_link": "https://rpgguild.shop/collections/dnd-mystery-box",
         "promo_button_text": "Learn more",
-        "other_products_heading": "Every DnD Aarakocra 5e Miniature:"
+        "other_products_heading": "All Spooky Miniatures:"
       }
     },
     "section_DzpkzB": {
@@ -3761,6 +3774,45 @@
                     "text_Mmzw9Y"
                   ]
                 },
+                "accordion_row_mwHlgs": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Why do your miniatures cost more than mass-produced ones?",
+                    "open_by_default": false
+                  },
+                  "blocks": {
+                    "text_XWdTtA": {
+                      "type": "text",
+                      "settings": {
+                        "enable_custom_font": false,
+                        "custom_class": "c",
+                        "text": "<p>Because nothing here is cast in advance. Every figure is printed on demand in resin and hand-detailed. That takes five to seven working days, and with weekends inside that window a parcel can leave the Guild on the tenth or eleventh day. Shipping from the EU comes on top. A mass-produced mini is cheaper because it was made before anyone wanted it. What you pay for here is the one character your player has been describing for a year.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-subheading--family)",
+                        "font_size": "1.25rem",
+                        "line_height": "loose",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_XWdTtA"
+                  ]
+                },
                 "accordion_row_KiNPrL": {
                   "type": "_accordion-row",
                   "settings": {
@@ -3963,45 +4015,6 @@
                   "block_order": [
                     "text_xLVChG"
                   ]
-                },
-                "accordion_row_mwHlgs": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Why do your miniatures cost more than mass-produced ones?",
-                    "open_by_default": false
-                  },
-                  "blocks": {
-                    "text_XWdTtA": {
-                      "type": "text",
-                      "settings": {
-                        "enable_custom_font": false,
-                        "custom_class": "c",
-                        "text": "<p>Because nothing here is cast in advance. Every figure is printed on demand in resin and hand-detailed. That takes five to seven working days, and with weekends inside that window a parcel can leave the Guild on the tenth or eleventh day. Shipping from the EU comes on top. A mass-produced mini is cheaper because it was made before anyone wanted it. What you pay for here is the one character your player has been describing for a year.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-subheading--family)",
-                        "font_size": "1.25rem",
-                        "line_height": "loose",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_XWdTtA"
-                  ]
                 }
               },
               "block_order": [
@@ -4091,19 +4104,6 @@
         "reflection_opacity": 75,
         "padding-block-start": 72,
         "padding-block-end": 0
-      }
-    },
-    "ln_col_hero": {
-      "type": "long-night-collection-hero",
-      "settings": {
-        "kicker": "Act I · Blood Moon Rising · October",
-        "heading": "",
-        "sub": "Pumpkin knights, restless dead and things that knock after midnight - <em>hand-detailed</em> for your Halloween table.",
-        "usp_1": "10% off all October",
-        "usp_2": "Easy to Paint",
-        "usp_3": "Hand Detailed",
-        "figure_alt": "Pumpkin-headed knight miniature with a cleaver and a spiked gauntlet.",
-        "show_moon": true
       }
     }
   },
