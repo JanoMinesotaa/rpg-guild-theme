@@ -10,6 +10,36 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-06
+
+### Sekcja The Long Night na kolekcjach 5e - test na dwóch szablonach
+`60a5378` · `templates/collection.aarakocra-5e.json`, `templates/collection.aberration-5e.json`
++ tłumaczenia DE/FR `[poza repo]`
+
+Pierwszy etap wdrożenia sekcji sezonu (`long-night-season`) na szablonach kolekcji z „5e”
+w nazwie (57 szablonów). Decyzja Jana: najpierw dwa szablony na żywo do sprawdzenia, potem reszta.
+Miejsce: **zaraz pod sekcją „Guild”**, nad CTA / „Headline + text + CTA”.
+
+**Kod motywu bez zmian.** Do każdego szablonu doszedł jeden wpis `section_longNightSeason`
+(kopia 1:1 z `product.json`: akt I podświetlony, link do landingu sezonu, padding 40/40)
+i jedno miejsce w `order` po sekcji „Guild”. Diff: 51 dopisanych linii na plik, zero usuniętych.
+
+Przed pushem: pull całego motywu z live (commit `955592b` - zmiany z panelu od 03.10),
+sprawdzenie, że oba szablony na serwerze są identyczne z pullem, tag cofnięcia, push tylko tych
+dwóch plików. Shopify CLI było uszkodzone (pakiet bez polecenia, poranny pull padał
+„brak Shopify CLI”) - przeinstalowane, wersja 4.8.5.
+
+Tłumaczenia: 15 pól na język na szablon (nadtytuł, hasło, napis przycisku, trzy akty),
+przeniesione z `product.json` przez `translationsRegister`, dopasowane po digeście treści EN.
+
+Sprawdzone na żywo: sekcja w HTML obu kolekcji na en, `/de-de/` i `/fr-fr/` (teksty w języku
+rynku), zrzuty 1440 i 390 px - sekcja przylega do „Guild” i CTA.
+
+**Jak cofnąć:** w edytorze obu szablonów ukryj albo usuń sekcję „The Long Night · sezon”.
+Kod: tag `przed-tln-kolekcje-5e`.
+
+---
+
 ## 2026-10-02
 
 ### Grafika kruka na czarnym tle do maili The Long Night w Plikach sklepu `[poza repo]`
