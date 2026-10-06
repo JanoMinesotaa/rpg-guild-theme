@@ -12,6 +12,30 @@ Konwencja: najnowsze na górze.
 
 ## 2026-10-06
 
+### Sekcja The Long Night na kolekcjach terrain (4 szablony)
+`e1a10da` · `templates/collection.dnd-terrain-master.json`, `collection.dnd-terrain-pre-made-sets.json`,
+`collection.dnd-terrain-tiles.json`, `collection.dnd.terrain-starter-set.json` + tłumaczenia DE/FR `[poza repo]`
+
+Po kolekcjach 5e Jan zlecił to samo dla terrain. Sekcja sezonu stoi zaraz pod „Guild”:
+
+| Szablon | Kolekcja | Pod sekcją |
+|---|---|---|
+| `dnd-terrain-master` | `/collections/dnd-terrain` | Guild, nad filmem „Movie” |
+| `dnd-terrain-pre-made-sets` | `/collections/modular-dnd-terrain-sets` | Guild, nad CTA |
+| `dnd-terrain-tiles` | `/collections/dnd-terrain-tiles` | Guild, nad „Sign Up” |
+| `dnd.terrain-starter-set` | `/collections/modular-dnd-terrain-starter-sets` | Guild, nad CTA |
+
+Piąty szablon terrain (`terrain-5e` → Terrain Elements) dostał sekcję wcześniej, razem z kolekcjami 5e.
+
+Ta sama kopia `section_longNightSeason` z `product.json`, kod motywu bez zmian, diff +204 / -0.
+Szablony na serwerze sprawdzone przed zmianą (= repo). Wstawienie skryptem `shopify_tln_insert.py`
+(folder projektu), tłumaczenia `shopify_tln_translations.py` - 120 wpisów, kontrola 4/4 kompletne.
+Sprawdzone na żywo: wszystkie 4 kolekcje × en, `/de-de/`, `/fr-fr/` - sekcja jest, tekst w języku
+rynku. `dnd-terrain` ma inny układ niż reszta (strona-wizytówka z filmem) - zrzuty 1440 i 390 px OK.
+
+**Jak cofnąć:** tag `przed-tln-kolekcje-terrain` i push tych 4 szablonów albo ukrycie sekcji
+„The Long Night · sezon” w edytorze.
+
 ### Sekcja The Long Night na wszystkich kolekcjach 5e (57 szablonów)
 `4ef6c2b` · 55 kolejnych `templates/collection.*-5e.json` + tłumaczenia DE/FR `[poza repo]`
 
