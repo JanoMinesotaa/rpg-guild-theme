@@ -3183,6 +3183,56 @@
         "padding-block-end": 72
       }
     },
+    "section_longNightSeason": {
+      "type": "long-night-season",
+      "blocks": {
+        "act_1": {
+          "type": "act",
+          "settings": {
+            "phase": "rising",
+            "label": "Act I",
+            "name": "Blood Moon Rising",
+            "when": "October",
+            "line": "The moon opens one eye, and the dark starts moving."
+          }
+        },
+        "act_2": {
+          "type": "act",
+          "settings": {
+            "phase": "drip",
+            "label": "Act II",
+            "name": "Blood Moon · Black Friday",
+            "when": "November",
+            "line": "The moon is fresh in blood. The Guild let it strive!"
+          }
+        },
+        "act_3": {
+          "type": "act",
+          "settings": {
+            "phase": "eclipse",
+            "label": "Act III",
+            "name": "The Last Moon",
+            "when": "December",
+            "line": "One eclipse, and the Guild closes the gates…"
+          }
+        }
+      },
+      "block_order": [
+        "act_1",
+        "act_2",
+        "act_3"
+      ],
+      "settings": {
+        "kicker": "October - December 2026",
+        "heading": "The Long Night",
+        "current_act": 1,
+        "blood_strength": 62,
+        "cta_label": "See the whole season",
+        "cta_link": "shopify://pages/the-long-night-rpg-guild-sale-season",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
     "section_WpqYYg": {
       "type": "section",
       "blocks": {
@@ -4123,6 +4173,7 @@
     "section_tJEjwT",
     "main",
     "section_J3k7jx",
+    "section_longNightSeason",
     "section_WpqYYg",
     "section_DpQNeT",
     "section_Xih7EQ",
