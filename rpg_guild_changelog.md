@@ -12,6 +12,36 @@ Konwencja: najnowsze na górze.
 
 ## 2026-10-06
 
+### Sekcja The Long Night na wszystkich kolekcjach 5e (57 szablonów)
+`4ef6c2b` · 55 kolejnych `templates/collection.*-5e.json` + tłumaczenia DE/FR `[poza repo]`
+
+Po akceptacji testu na aarakocra-5e i aberration-5e (wpis niżej) Jan zlecił resztę: sekcja sezonu
+stoi teraz na **wszystkich 57 szablonach kolekcji z „5e” w nazwie**, zawsze zaraz pod sekcją
+„Guild” (w 40 szablonach nad „CTA”, w 17 nad „Headline + text + CTA”). Inne szablony kolekcji
+(terrain, sale, spooky, bestsellers itd.) bez zmian.
+
+Ta sama kopia `section_longNightSeason` z `product.json` (akt I, link do landingu sezonu, padding 40/40).
+**Kod motywu bez zmian**, diff: +2805 / -0. Przed zmianą 55 szablonów pobranych z serwera
+i porównanych z repo - identyczne, więc nic z edytora nie zostało nadpisane. Po pushu
+wszystkie 57 pobrane ponownie: identyczne z repo, sekcja pod „Guild” w każdym.
+
+Tłumaczenia: 1650 wpisów (55 szablonów × 15 pól × DE/FR) przez `translationsRegister`,
+dopasowane po digeście EN, skryptem `shopify_tln_translations.py` (folder projektu, apka
+`/rpg-movie`, tryby `plan` / `run` / `check`). Kontrola `check`: 57/57 kompletne.
+
+Sprawdzone na żywo: sekcja w HTML wszystkich 57 kolekcji (EN). Pięć szablonów jest podpiętych
+pod kolekcje o innym adresie niż nazwa szablonu: `bard-5e` → `/collections/5e-bard`,
+`npcs-5e` → `dnd-5e-npcs`, `paladin-5e` → `5e-paladin`, `rogue-5e` → `5e-rogue`,
+`terrain-5e` → `dnd-terrain-elements-miniatures`. DE/FR sprawdzone na próbce, także na
+kolekcjach z przetłumaczonym adresem (`/de-de/collections/magier-5e`, `/fr-fr/collections/magicien-5e`
+- stary adres odpowiada 301, to nie błąd).
+
+**Uwaga przy pushu wielu plików z zsh:** lista `--only` sklejona w jedną zmienną idzie jako jeden
+argument i CLI odrzuca polecenie (nic nie wysyła). Budować tablicę `args+=(--only plik)`.
+
+**Jak cofnąć:** tag `przed-tln-kolekcje-5e` (stan sprzed obu etapów) i push tych 57 szablonów,
+albo ukrycie sekcji „The Long Night · sezon” w edytorze danego szablonu.
+
 ### Sekcja The Long Night na kolekcjach 5e - test na dwóch szablonach
 `60a5378` · `templates/collection.aarakocra-5e.json`, `templates/collection.aberration-5e.json`
 + tłumaczenia DE/FR `[poza repo]`
