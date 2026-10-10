@@ -10,6 +10,52 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-10
+
+### Tłumaczenia DE/FR akapitu „500,000 minis forged" - homepage i B2B `[poza repo]`
+`templates/index.json`, `templates/page.b2b-wholesale.json` - tylko tłumaczenia, kod motywu i angielski bez zmian
+
+Angielski na żywym sklepie mówi od jakiegoś czasu **500,000 minis forged in just 3 years**
+(podbite w edytorze, lokalna kopia repo ma tu jeszcze 300,000). Tłumaczenia zostały z tyłu
+i Shopify trzymał je jako `outdated`, ale dalej je wyświetlał - czyli klient niemiecki
+i francuski widział inną liczbę niż angielski.
+
+| Gdzie | Język | Było | Jest |
+|---|---|---|---|
+| Homepage (`index`) | DE | 150.000 | **500.000** |
+| Homepage (`index`) | FR | 300 000 | **500 000** |
+| B2B Wholesale | DE | 300.000 | **500.000** |
+| B2B Wholesale | FR | 300 000 | **500 000** |
+
+Poza liczbą, w tym samym przebiegu:
+
+- **FR na B2B był ucięty** - brakowało całego bloku zaufania („Trusted by tabletop
+  businesses worldwide" + linia z liczbami). Dopisany po francusku.
+- **DE na homepage** miał zepsute odstępy (`<p> Mit`, `</strong> ,`, `lassen</strong> .`) - wyczyszczone.
+
+Klucze (zasób `OnlineStoreThemeJsonTemplate`, motyw `182160195850`):
+
+- `section.index.json.section_WMcpBJ.group_KzPg9U__group_GjUFif__text_T6MgGR.text:14r9gq3pvd2v9`
+- `section.page.b2b-wholesale.json.section_eBAPy.group_WMyYJT__text_A4eaJ7.text:37gz0ar88k22j`
+
+Wpisane przez `translationsRegister` z aktualnym `translatableContentDigest`, więc pola
+nie są już `outdated`. Zweryfikowane na żywo: `/de-de`, `/fr-fr`, `/de-de/pages/b2b-wholesale`,
+`/fr-fr/pages/b2b-wholesale`.
+
+**Jak cofnąć:** poprzednie wartości leżą w `rpg_tln_500k_rollback.json` w katalogu projektu
+(`~/Documents/Claude ✴️/Projects/RPG Guild 🛡️/`) - wpisać je z powrotem tym samym
+`translationsRegister` albo wkleić w Translate & Adapt.
+
+### Do decyzji Jana - nie zmienione
+
+Angielski na B2B sam sobie przeczy: nagłówek mówi `500,000 minis forged in just 3 years`,
+a linia zaufania dwa akapity niżej `300,000+ miniatures produced`. Tłumaczenia trzymają się
+angielskiego (DE `Über 300.000 produzierte Miniaturen`, FR `Plus de 300 000 figurines produites`),
+bo zmiana tej liczby to zmiana obietnicy marketingowej, nie tłumaczenia. Jeśli ma być 500,000+ -
+trzeba podbić angielski w edytorze i te dwa tłumaczenia razem z nim.
+
+---
+
 ## 2026-10-06
 
 ### Sekcja The Long Night na kolekcjach terrain (4 szablony)
