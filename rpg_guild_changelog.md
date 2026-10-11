@@ -10,6 +10,44 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-11
+
+### Linia zaufania na B2B: 300,000+ → 500,000+ miniatures (EN + DE + FR)
+`templates/page.b2b-wholesale.json` + tłumaczenia DE/FR `[poza repo]`
+
+Domknięcie sprzeczności zgłoszonej dzień wcześniej: nagłówek mówił
+`500,000 minis forged in just 3 years`, a linia zaufania niżej `300,000+ miniatures produced`.
+Jan zdecydował podbić niższą liczbę.
+
+| Gdzie | Język | Było | Jest |
+|---|---|---|---|
+| B2B, linia zaufania | EN | 300,000+ miniatures produced | **500,000+ miniatures produced** |
+| B2B, linia zaufania | DE | Über 300.000 produzierte Miniaturen | **Über 500.000 produzierte Miniaturen** |
+| B2B, linia zaufania | FR | Plus de 300 000 figurines produites | **Plus de 500 000 figurines produites** |
+
+Angielski wszedł przez `themeFilesUpsert` na jednym ciągu znaków - **bez pushowania
+lokalnej kopii szablonu**, bo push nadpisuje zmiany z edytora. Przed podmianą pobrany
+żywy plik i porównany z repo: jedyną różnicą było `300,000 → 500,000` w nagłówku
+(podbite kiedyś w edytorze). JSON zwalidowany przed wysyłką, długość pliku bez zmian.
+
+Po zmianie EN zmienił się `translatableContentDigest`, więc DE/FR zostały wpisane
+na nowo nowym digestem - nie są `outdated`.
+
+Repo zrównane z produkcją: `templates/index.json` i `templates/page.b2b-wholesale.json`
+zapisane z żywego sklepu (diff: po jednej linii w każdym - liczba w nagłówku).
+Wcześniej repo mówiło 300,000, a sklep 500,000 - przy następnym pushu szablonu
+sklep cofnąłby się do 300,000.
+
+Weryfikacja na żywo - `/pages/b2b-wholesale`, `/de-de/pages/b2b-wholesale`,
+`/fr-fr/pages/b2b-wholesale`, `/de-de`, `/fr-fr`: nigdzie nie ma już 300,000.
+
+**Jak cofnąć:** EN - podmienić ciąg `500,000+ miniatures produced` z powrotem
+w pliku szablonu (albo `git revert` tego commita i push samego szablonu, gdy repo
+jest świeże). DE/FR - wartości przed zmianą w `rpg_tln_500k_rollback.json`
+w katalogu projektu, klucz `przed_po_podbiciu_en`.
+
+---
+
 ## 2026-10-10
 
 ### Tłumaczenia DE/FR akapitu „500,000 minis forged" - homepage i B2B `[poza repo]`
@@ -46,7 +84,7 @@ nie są już `outdated`. Zweryfikowane na żywo: `/de-de`, `/fr-fr`, `/de-de/pag
 (`~/Documents/Claude ✴️/Projects/RPG Guild 🛡️/`) - wpisać je z powrotem tym samym
 `translationsRegister` albo wkleić w Translate & Adapt.
 
-### Do decyzji Jana - nie zmienione
+### Do decyzji Jana - nie zmienione *(rozstrzygnięte 2026-10-11, patrz wpis wyżej)*
 
 Angielski na B2B sam sobie przeczy: nagłówek mówi `500,000 minis forged in just 3 years`,
 a linia zaufania dwa akapity niżej `300,000+ miniatures produced`. Tłumaczenia trzymają się
