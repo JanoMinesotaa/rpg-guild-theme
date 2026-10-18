@@ -48,7 +48,7 @@ jako argument; plumbing API importuje z `shopify_discount_undead.py`, nie kopiuj
 oraz `shopify_discount_dragon.py` (kopia skryptu undead, zmienione: kolekcja, nazwy
 plików, docstring).
 
-### OTWARTE: 9 produktów straciło przecenę spooky -10%
+### ZAMKNIĘTE: 9 produktów chwilowo straciło przecenę spooky -10%
 
 Zdjęcie przeceny z Undead 5e ruszyło **wszystkie** warianty tej kolekcji, a 9 produktów
 miało w niej nie rabat undead -5%, tylko spooky -10%. Te **162 warianty** stoją teraz na
@@ -74,6 +74,19 @@ Skrypt nie liczy cen - wpisuje z powrotem dokładnie to, co było w
 `undead_5e_restore_rollback.jsonl`. Po tym Undead Dragon Rider i Skeleton Dragon
 znów mają przekreślenie, więc przy ewentualnym ponownym `shopify_discount_dragon.py run`
 zabezpieczenie skryptu pominie je samo.
+
+**Naprawione tego samego dnia.** Pierwsze uruchomienie padło na `HTTP 401: Invalid API key`
+- w shellu Jana siedział stary `SHOPIFY_ACCESS_TOKEN`, a `get_token()` bierze go przed
+`SHOPIFY_CLIENT_ID`/`SECRET`. Zapis nie przeszedł w ogóle (sprawdzone: 0 ze 162 wariantów).
+`shopify_przywroc_spooky.py` usuwa teraz tę zmienną, gdy ma klucze aplikacji.
+Drugie uruchomienie: 162 ze 162 wariantów przywrócone, 0 braków.
+
+**Stan końcowy, sprawdzony na żywo wariant po wariancie - 0 rozjechanych:**
+
+| Kolekcja | Warianty | Rozkład |
+|---|---|---|
+| Undead 5e | 10 086 | 9 853 bez przeceny · 162 spooky -10% · 71 Dragon -5% |
+| Dragon 5e | 2 372 | 2 306 Dragon -5% · 66 spooky -10% |
 
 ---
 
