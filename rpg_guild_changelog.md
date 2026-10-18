@@ -10,6 +10,73 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-18
+
+### Ceny: zdjęta przecena z Undead 5e, nałożona -5% na Dragon 5e `[poza repo]`
+Zmiany przez Admin API (`productVariantsBulkUpdate`), kod motywu bez zmian.
+Skrypty i pliki cofnięcia w katalogu projektu, nie w repo.
+
+| Kolekcja | Produkty | Warianty | Co się stało |
+|---|---|---|---|
+| Undead 5e | 637 | 10 086 | zdjęta przecena: `price = compareAtPrice`, przekreślenie usunięte |
+| Dragon 5e | 337 | 2 306 | przecena **-5%**: `compareAtPrice` = stara cena, `price` = stara × 0,95 |
+
+Rabat -5% to ta sama wartość, co w `shopify_discount_undead.py` (`DISCOUNT = 0.95`).
+Uwaga dla czytającego: docstring tamtego skryptu mówi „-3%", ale stała w kodzie to 0,95
+i ceny na sklepie też pokazywały -5% (9,50 → 9,03). Nowy `shopify_discount_dragon.py`
+ma docstring poprawiony.
+
+**Dlaczego powrót z `compareAtPrice`, a nie z `undead_discount_rollback.jsonl`:**
+plik znał 9 924 warianty, a kolekcja ma ich 10 086 - 162 doszły po 1 października.
+Przed zapisem sprawdzone, że dla wszystkich 9 924 znanych `compareAtPrice` był
+identyczny z ceną zapisaną w pliku (0 rozjechanych), więc nic nie zostało utracone,
+a te 162 też wróciły.
+
+71 wariantów leży w obu kolekcjach („Undead 5e | DnD Undead Pope of the Damned" i inne).
+Najpierw wróciły do ceny bazowej, potem dostały -5% z Dragona. To jest zamierzone -
+Jan prosił o -5% na wszystkich produktach Dragon 5e.
+
+**Pliki cofnięcia:**
+
+- `undead_5e_restore_rollback.jsonl` - stan Undead sprzed zdjęcia przeceny (`price` + `compareAtPrice`).
+  Powrót: `shopify_restore_from_compare_at.py undo undead-5e`.
+- `dragon_discount_rollback.jsonl` - ceny Dragona sprzed -5%.
+  Powrót: `shopify_discount_dragon.py rollback`.
+
+**Nowe skrypty:** `shopify_restore_from_compare_at.py` (ogólny, bierze handle kolekcji
+jako argument; plumbing API importuje z `shopify_discount_undead.py`, nie kopiuje)
+oraz `shopify_discount_dragon.py` (kopia skryptu undead, zmienione: kolekcja, nazwy
+plików, docstring).
+
+### OTWARTE: 9 produktów straciło przecenę spooky -10%
+
+Zdjęcie przeceny z Undead 5e ruszyło **wszystkie** warianty tej kolekcji, a 9 produktów
+miało w niej nie rabat undead -5%, tylko spooky -10%. Te **162 warianty** stoją teraz na
+cenie sprzed spooky, bez przekreślenia - czyli są **droższe** niż przed 18.10.
+
+Dotknięte: Undead Knight, Undead Dragon Rider, Cursed Tombs Ghost, Skeleton King,
+Pumpkinhead, Skeleton Riders, Spooky Ghosts Set, Skeleton Dragon, Vampire Baron.
+
+Dwa z nich (Undead Dragon Rider, Skeleton Dragon) są też w Dragon 5e - zostały
+**wyłączone** z przeceny -5% przez `SKIP_PRODUCT_IDS` w `shopify_discount_dragon.py`,
+żeby nie zabetonować złej ceny. Dlatego Dragon ma 2 306, a nie 2 342 przecenionych wariantów.
+
+Naprawa jest gotowa i przetestowana na podglądzie, ale **zapis został zablokowany**
+przez tryb auto Claude Code. Do uruchomienia ręcznie:
+
+```
+cd ~/Documents/Claude\ ✴️/Projects/RPG\ Guild\ 🛡️
+set -a && . ~/.secrets/rpg-guild-shopify.env && set +a
+python3 shopify_przywroc_spooky.py run
+```
+
+Skrypt nie liczy cen - wpisuje z powrotem dokładnie to, co było w
+`undead_5e_restore_rollback.jsonl`. Po tym Undead Dragon Rider i Skeleton Dragon
+znów mają przekreślenie, więc przy ewentualnym ponownym `shopify_discount_dragon.py run`
+zabezpieczenie skryptu pominie je samo.
+
+---
+
 ## 2026-10-11
 
 ### Linia zaufania na B2B: 300,000+ → 500,000+ miniatures (EN + DE + FR)
