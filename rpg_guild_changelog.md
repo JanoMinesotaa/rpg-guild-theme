@@ -12,6 +12,15 @@ Konwencja: najnowsze na górze.
 
 ## 2026-10-27
 
+### [poza repo] Plik `rpg-guild-logo-mail.png` w Content > Files (logo do maili)
+- **Co:** logo RPG Guild 219x240 px, `gid://shopify/MediaImage/51420845572362`, adres `https://cdn.shopify.com/s/files/1/0689/3204/3018/files/rpg-guild-logo-mail.png`.
+- **Dlaczego:** publiczny adres logo do maila edrone po SPIEL Essen (`Black Friday 2026/11-edrone/maile/essen-2026/`).
+- **Jak cofnąć:** usunąć plik w Content > Files (najpierw z maili, które go używają).
+
+### [poza repo] Zaplanowana zmiana cen na 1.11.2026 (Val Town `janstarosta/rpg-guild-ceny-1-11`)
+- **Co:** 1.11 od 00:01 zdejmuje przeceny (dragon-5e, spooky, terrain) i daje `companions-5e` -5%. Zapas: launchd `pl.rpgguild.ceny-1-11` na Macu Jana.
+- **Jak cofnąć:** zrzuty w blobach vala (`snap-restore`, `snap-companions`) i w `~/.local/share/rpg-guild-1-11/` (`job.py undo`).
+
 ### Landing The Long Night: akt przełącza się sam z daty (1.11 akt II, 1.12 akt III)
 Pliki: `sections/long-night-lp-poster.liquid`, `sections/long-night-lp-doors.liquid`,
 `sections/long-night-lp-book.liquid`, `assets/long-night-lp.js`. Szablon `page.long-night.json` bez zmian.
