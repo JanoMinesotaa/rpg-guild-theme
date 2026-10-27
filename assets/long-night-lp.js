@@ -22,6 +22,21 @@
   if (window.__lnLp) return;
   window.__lnLp = true;
 
+  /* Bezpiecznik zmiany aktu (27.10.2026). Akt liczy serwer z daty, ale Shopify
+   * mógł podać stronę z cache wyrenderowaną przed północą. Jeśli kalendarz mówi
+   * już o wyższym akcie niż HTML, przeładowujemy RAZ z parametrem `ln`, który
+   * omija cache. Parametr w adresie = nie próbujemy drugi raz (zero pętli). */
+  (function () {
+    var root = document.querySelector(".ln-lp[data-act-auto]");
+    if (!root || /[?&]ln=/.test(location.search)) return;
+    var now = Date.now(), want = 1;
+    if (now >= Date.UTC(2026, 10, 30, 23)) want = 3;      /* 1.12 00:00 CET */
+    else if (now >= Date.UTC(2026, 9, 31, 23)) want = 2;  /* 1.11 00:00 CET */
+    if (want > (parseInt(root.getAttribute("data-act"), 10) || 1)) {
+      location.replace(location.pathname + (location.search ? location.search + "&" : "?") + "ln=" + want + location.hash);
+    }
+  })();
+
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   function wejscie(root) {

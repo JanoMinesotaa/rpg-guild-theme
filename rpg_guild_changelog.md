@@ -10,6 +10,31 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-27
+
+### Landing The Long Night: akt przełącza się sam z daty (1.11 akt II, 1.12 akt III)
+Pliki: `sections/long-night-lp-poster.liquid`, `sections/long-night-lp-doors.liquid`,
+`sections/long-night-lp-book.liquid`, `assets/long-night-lp.js`. Szablon `page.long-night.json` bez zmian.
+
+**Co:** afisz, drzwi i księga liczą akt z daty serwera (czas sklepu, CET): od 1.11 00:00
+co najmniej akt II, od 1.12 00:00 akt III. Ręczne ustawienie „Bieżący akt” jest dolną granicą.
+Nowy przełącznik w każdej z trzech sekcji: „Przełączaj akt automatycznie wg daty”, domyślnie włączony.
+W `long-night-lp.js` bezpiecznik: gdy strona przyjdzie z cache wyrenderowana przed północą,
+przeładowuje się RAZ z parametrem `?ln=<akt>` (z parametrem nie próbuje drugi raz - zero pętli).
+
+**Dlaczego:** przejście aktu o północy bez ręcznego przestawiania i bez działającego komputera.
+Wpis aktu II w księdze przestaje być rozmyty i zamknięty o 00:00 1.11.
+
+**Testy (27.10):** kopia motywu 195810165002 - z progiem przestawionym na dziś akt II we wszystkich
+sekcjach (wpis III jedyny zamknięty, kadr afisza 2); z prawdziwymi datami akt I jak na live;
+bezpiecznik JS 7/7 przypadków w Node (granica 23:59:59/00:00, brak pętli, UTM zachowane).
+
+**Jak cofnąć:** w edytorze wyłączyć „Przełączaj akt automatycznie wg daty” w trzech sekcjach
+(natychmiast, bez kodu) albo przywrócić pliki z poprzedniego commita. Kopia plików sprzed zmiany:
+`Black Friday 2026/13-social/auto-akt/live-przed-zmiana-27-10/` w katalogu projektu.
+
+---
+
 ## 2026-10-18
 
 ### Ceny: zdjęta przecena z Undead 5e, nałożona -5% na Dragon 5e `[poza repo]`

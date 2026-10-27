@@ -53,6 +53,18 @@
 
 {%- liquid
   assign act = section.settings.act | default: '1'
+  # AKT Z DATY (27.10.2026). Przy włączonym `auto_act` akt nigdy nie jest niższy niż
+  # wynika z kalendarza sezonu: od 1.11 00:00 akt II, od 1.12 00:00 akt III (czas
+  # sklepu, CET). Ręczny wybór aktu zostaje dolną granicą. Liczy serwer Shopify przy
+  # renderze - nie trzeba nic przestawiać o północy ani mieć włączonego komputera.
+  if section.settings.auto_act
+    assign ln_now = 'now' | date: '%Y%m%d%H%M' | plus: 0
+    if ln_now >= 202612010000
+      assign act = '3'
+    elsif ln_now >= 202611010000 and act == '1'
+      assign act = '2'
+    endif
+  endif
 
   case act
     when '2'
@@ -125,7 +137,7 @@
     inline-size:8rem;block-size:2px;background:var(--ln-moon)}
 {% endstyle %}
 
-<div class="ln-lp ln-poster" id="LnPoster-{{ section.id }}" data-act="{{ act }}" {{ section.shopify_attributes }}>
+<div class="ln-lp ln-poster" id="LnPoster-{{ section.id }}" data-act="{{ act }}"{% if section.settings.auto_act %} data-act-auto{% endif %} {{ section.shopify_attributes }}>
 
   {%- if frame != blank -%}
     {{ frame | image_url: width: 1800 | image_tag:
@@ -194,6 +206,13 @@
         { "value": "3", "label": "Akt III · grudzień" }
       ],
       "default": "1"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_act",
+      "label": "Przełączaj akt automatycznie wg daty",
+      "info": "Od 1.11 00:00 akt II, od 1.12 00:00 akt III (czas sklepu). Wybór powyżej jest wtedy minimum.",
+      "default": true
     },
     { "type": "header", "content": "Kadry aktów" },
     {
