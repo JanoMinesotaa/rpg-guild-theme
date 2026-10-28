@@ -44,6 +44,54 @@ bezpiecznik JS 7/7 przypadków w Node (granica 23:59:59/00:00, brak pętli, UTM 
 
 ---
 
+## 2026-10-28 (druga tura)
+
+### Karuzela sąsiadów - pięć poprawek po pierwszym teście
+`sections/karuzela-sasiedzi.liquid` · `templates/product.test-default-product.json`
+
+Uwagi Jana po obejrzeniu wdrożenia. Wszystko dalej tylko na szablonie
+`test-default-product`.
+
+| co | przed | po |
+|---|---|---|
+| kafelków w oknie | 8,6 (stałe 76 px) | **dokładnie 5** (125 px desktop, 61 px telefon) |
+| czas obiegu | 56 s | **110 s** |
+| start ruchu | od razu przy ładowaniu | po 0,9 s, pasek wchodzi płynnie |
+| pierwsze 5 obrazków | `loading="lazy"` | `loading="eager"` |
+| okruszki | po prawej, 57 px wysokości | **do lewej, w linii ze zdjęciem**, 39 px |
+| odstęp menu → zdjęcie | 291 px | **270 px** |
+
+**Szerokość kafelka liczona od okna, nie od toru.** `container-type: inline-size`
+na oknie plus `flex: 0 0 calc((100cqw - 32px) / 5)` daje zawsze pięć sztuk,
+niezależnie od szerokości ekranu. Pętla zostaje bez szwu, bo jedna lista to
+zawsze `N * (kafelek + 8 px)`, a tor przesuwa się o `-50%`.
+
+**Dziwna animacja przy ładowaniu** brała się z leniwych obrazków nad zgięciem -
+wskakiwały pojedynczo już w ruchu. Teraz pierwsza piątka ładuje się zwykle,
+a cały pasek pojawia się z 450 ms opóźnieniem, gdy jest już czym wypełnić kadr.
+
+**Okruszki** nie były wyrównane przez `text-align` tylko przez `display: flex`
+z `justify-content: flex-end` - stąd `justify-content: flex-start` w nadpisaniu.
+Dalej tylko na stronach z tą sekcją (`body:has(.sasiedzi-sekcja)`).
+
+**Pustka nad zdjęciem** pochodziła z reguły
+`.shopify-section[id$="__main"]:has(.product-information)`, która ustawia
+`padding-block-start: 80px` z `!important`. Przy karuzeli ten odstęp lądował pod
+nią zamiast pod okruszkami. Nadpisany na 14 px selektorem o wyższej
+szczegółowości, oddech daje teraz `padding-block-start: 16px` samej karuzeli.
+
+**Zmierzone na żywo po poprawkach:** okruszki, karuzela i zdjęcie na jednej
+krawędzi (40 px desktop, 20 px telefon), kolejność na telefonie okruszki (158) →
+karuzela (253) → zdjęcie (363), 22 z 22 obrazków wczytane, zero przewijania
+w bok, animacja `running` 110 s.
+
+**Zostaje do decyzji:** 270 px od menu do zdjęcia to w większości sam pasek
+(~170 px). Przy pięciu kafelkach na szerokości 656 px kafelek ma 125 px i to jest
+geometryczne minimum. Mniej miejsca = więcej kafelków w rzędzie: 6 daje 104 px,
+7 daje 89 px. Na telefonie pięć sztuk to 61 px na kafelek - dość mało.
+
+---
+
 ## 2026-10-28
 
 ### Karuzela „sąsiadów z kolekcji" nad zdjęciem - test na jednym szablonie

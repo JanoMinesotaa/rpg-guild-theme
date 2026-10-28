@@ -26,14 +26,24 @@
   {%- for p in col.products limit: 30 -%}
     {%- if p.id != product.id and ile < limit -%}
       {%- assign ile = ile | plus: 1 -%}
+      {%- comment -%}
+        Pierwsze pięć kafelków jest widoczne od razu, więc ładujemy je zwykle.
+        Leniwe ładowanie nad zgięciem powodowało, że obrazki wskakiwały
+        pojedynczo w trakcie ruchu i wyglądało to jak zacinająca się animacja.
+      {%- endcomment -%}
+      {%- if ile <= 5 -%}
+        {%- assign ladowanie = 'eager' -%}
+      {%- else -%}
+        {%- assign ladowanie = 'lazy' -%}
+      {%- endif -%}
       <li>
         <a class="sasiedzi__kafel" href="{{ p.url }}" aria-label="{{ p.title | escape }}" title="{{ p.title | escape }}">
           <span class="sasiedzi__fot">
             {%- if p.featured_media -%}
               {{
                 p.featured_media
-                | image_url: width: 200
-                | image_tag: loading: 'lazy', fetchpriority: 'low', widths: '152, 200', alt: ''
+                | image_url: width: 260
+                | image_tag: loading: ladowanie, fetchpriority: 'low', widths: '130, 200, 260', alt: ''
               }}
             {%- endif -%}
           </span>
@@ -92,22 +102,38 @@
   }
 
   .sasiedzi__tytul {
-    margin: 0 0 8px;
+    margin: 0 0 6px;
     font-size: 13px;
     line-height: 1.3;
     color: color-mix(in srgb, var(--color-foreground) 72%, var(--color-background));
   }
 
+  /* Pasek pojawia się chwilę po wejściu na stronę, już z wczytanymi kafelkami.
+     Bez tego widać było, jak obrazki wskakują jeden po drugim w ruchu. */
+  .sasiedzi {
+    opacity: 0;
+    animation: sasiedzi-wejscie 420ms cubic-bezier(0.16, 1, 0.3, 1) 450ms forwards;
+  }
+
+  @keyframes sasiedzi-wejscie {
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* container-type pozwala liczyć szerokość kafelka od szerokości okna,
+     a nie od toru, który jest celowo szerszy niż ekran. */
   .sasiedzi__okno {
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+    container-type: inline-size;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
   }
 
   .sasiedzi__tor {
     display: flex;
     width: max-content;
-    animation: sasiedzi-przesuw var(--czas, 56s) linear infinite;
+    animation: sasiedzi-przesuw var(--czas, 110s) linear 900ms infinite;
   }
 
   .sasiedzi__okno:hover .sasiedzi__tor,
@@ -129,8 +155,11 @@
     list-style: none;
   }
 
+  /* Zawsze dokładnie pięć kafelków w oknie: 5 * kafelek + 4 * 8 px odstępu = 100%.
+     Pętla zostaje bez szwu niezależnie od szerokości - jedna lista ma zawsze
+     N * (kafelek + 8 px), a tor przesuwa się o -50%, czyli o całą jedną listę. */
   .sasiedzi__lista > li {
-    flex: 0 0 76px;
+    flex: 0 0 calc((100cqw - 32px) / 5);
   }
 
   .sasiedzi__kafel {
@@ -189,13 +218,41 @@
     .sasiedzi__lista[aria-hidden='true'] {
       display: none;
     }
+
+    .sasiedzi {
+      opacity: 1;
+      animation: none;
+    }
+
+    .sasiedzi__lista > li {
+      flex-basis: 76px;
+    }
   }
 
-  /* Okruszki idą z layoutu, nie z sekcji, więc na telefonie równamy je do
-     krawędzi treści tylko na stronach, na których ta sekcja faktycznie jest. */
+  /* Okruszki renderuje layout, nie sekcja, więc stroimy je tylko na stronach,
+     na których ta sekcja faktycznie jest. Domyślnie wiszą po prawej w węższym
+     kontenerze niż treść i trzymają 16 px odstępu u góry i u dołu - przez to
+     na karcie produktu wyglądają, jakby należały do czegoś innego.
+     Tu: do lewej, w tej samej siatce co karuzela i zdjęcie, i ciaśniej. */
+  body:has(.sasiedzi-sekcja) .breadcrumbs {
+    justify-content: flex-start;
+    padding: 4px 40px 10px;
+    text-align: left;
+  }
+
+  /* Odstęp nad zdjęciem należy do wrappera sekcji hero i jest tam ustawiony
+     z !important (.shopify-section[id$="__main"]:has(.product-information)).
+     Przy karuzeli ten odstęp lądował POD nią zamiast pod okruszkami i robił
+     80 px pustki. Przenosimy go nad pasek: sekcja hero dostaje wąski odstęp,
+     a oddech daje padding-block-start samej karuzeli (ustawienie w schemacie).
+     Selektor musi być bardziej szczegółowy od tamtej reguły, stąd !important. */
+  .shopify-section:has(> .sasiedzi-sekcja) + .shopify-section[id$='__main'] {
+    padding-block-start: 14px !important;
+  }
+
   @media screen and (width < 750px) {
     body:has(.sasiedzi-sekcja) .breadcrumbs {
-      padding-inline: 20px;
+      padding: 4px 20px 8px;
     }
   }
 {% endstylesheet %}
@@ -230,10 +287,10 @@
       "id": "speed",
       "label": "Czas pełnego obiegu",
       "unit": "s",
-      "min": 20,
-      "max": 120,
-      "step": 4,
-      "default": 56
+      "min": 40,
+      "max": 240,
+      "step": 10,
+      "default": 110
     },
     {
       "type": "range",
@@ -241,9 +298,9 @@
       "label": "Odstęp u góry",
       "unit": "px",
       "min": 0,
-      "max": 60,
+      "max": 80,
       "step": 2,
-      "default": 0
+      "default": 16
     },
     {
       "type": "range",
