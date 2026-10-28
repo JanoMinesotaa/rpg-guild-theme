@@ -1,0 +1,261 @@
+{%- comment -%}
+  Karuzela produktów z tej samej kolekcji, nad zdjęciem na karcie produktu.
+
+  Renderowana serwerowo, bez JavaScriptu. Ruch robi jedna animacja CSS na torze
+  złożonym z dwóch identycznych list - przesunięcie o -50% to dokładnie szerokość
+  jednej listy, więc pętla nie ma szwu. Druga lista dostaje aria-hidden, żeby
+  czytnik ekranu czytał produkty raz.
+
+  Sekcja używa klasy section--page-width, czyli tej samej siatki co
+  product-information. Dzięki temu trafia w kolumnę zdjęcia bez liczenia pikseli.
+
+  Wstawiać jako pierwszą sekcję szablonu produktu, nad "main".
+{%- endcomment -%}
+
+{% liquid
+  assign col = section.settings.collection
+  unless col
+    assign col = product.collections.first
+  endunless
+
+  assign limit = section.settings.max_products
+  assign ile = 0
+%}
+
+{%- capture kafelki -%}
+  {%- for p in col.products limit: 30 -%}
+    {%- if p.id != product.id and ile < limit -%}
+      {%- assign ile = ile | plus: 1 -%}
+      <li>
+        <a class="sasiedzi__kafel" href="{{ p.url }}" aria-label="{{ p.title | escape }}" title="{{ p.title | escape }}">
+          <span class="sasiedzi__fot">
+            {%- if p.featured_media -%}
+              {{
+                p.featured_media
+                | image_url: width: 200
+                | image_tag: loading: 'lazy', fetchpriority: 'low', widths: '152, 200', alt: ''
+              }}
+            {%- endif -%}
+          </span>
+          <span class="sasiedzi__cena">{{ p.price_min | money }}</span>
+        </a>
+      </li>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if col and ile > 0 -%}
+  <div
+    class="spacing-style sasiedzi-sekcja"
+    style="{% render 'spacing-style', settings: section.settings %}"
+  >
+    <div class="sasiedzi">
+      <p class="sasiedzi__tytul">{{ section.settings.heading_prefix }} {{ col.title }}</p>
+      <div class="sasiedzi__okno">
+        <div class="sasiedzi__tor" style="--czas: {{ section.settings.speed }}s">
+          <ul class="sasiedzi__lista">{{ kafelki }}</ul>
+          <ul class="sasiedzi__lista" aria-hidden="true">{{ kafelki }}</ul>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  /* Nie używam klasy section--page-width, bo base.css ma na nią globalne
+     grid-template-columns: 1fr !important, a szerokość kontenera hero jest tam
+     wpisana twardo pod konkretne ID sekcji. Powtarzam więc te same wymiary
+     u siebie: 1540 max, 40 px na boki - to daje tę samą krawędź co zdjęcie. */
+  .sasiedzi-sekcja {
+    max-width: 1540px;
+    margin-inline: auto;
+    padding-inline: 40px;
+  }
+
+  /* Kolumna zdjęcia to połowa szerokości hero (siatka 680 + 680), ale samo
+     zdjęcie jest o 24 px węższe - tyle wynosi padding-inline-end kolumny media,
+     czyli połowa odstępu 48 px ustawionego w sekcji product-information.
+     Odejmujemy go, żeby karuzela kończyła się równo ze zdjęciem. */
+  .sasiedzi {
+    max-width: calc(50% - 24px);
+    min-width: 0;
+  }
+
+  @media screen and (width < 750px) {
+    .sasiedzi-sekcja {
+      padding-inline: 20px;
+    }
+
+    .sasiedzi {
+      max-width: none;
+    }
+  }
+
+  .sasiedzi__tytul {
+    margin: 0 0 8px;
+    font-size: 13px;
+    line-height: 1.3;
+    color: color-mix(in srgb, var(--color-foreground) 72%, var(--color-background));
+  }
+
+  .sasiedzi__okno {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+  }
+
+  .sasiedzi__tor {
+    display: flex;
+    width: max-content;
+    animation: sasiedzi-przesuw var(--czas, 56s) linear infinite;
+  }
+
+  .sasiedzi__okno:hover .sasiedzi__tor,
+  .sasiedzi__okno:focus-within .sasiedzi__tor {
+    animation-play-state: paused;
+  }
+
+  @keyframes sasiedzi-przesuw {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .sasiedzi__lista {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+    padding: 0 8px 0 0;
+    list-style: none;
+  }
+
+  .sasiedzi__lista > li {
+    flex: 0 0 76px;
+  }
+
+  .sasiedzi__kafel {
+    display: grid;
+    gap: 5px;
+    justify-items: center;
+    text-decoration: none;
+  }
+
+  .sasiedzi__fot {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    transition: border-color 420ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .sasiedzi__fot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .sasiedzi__kafel:hover .sasiedzi__fot {
+    border-color: var(--color-primary);
+    box-shadow: 0 8px 18px -10px color-mix(in srgb, var(--color-primary) 60%, transparent);
+  }
+
+  .sasiedzi__kafel:hover .sasiedzi__fot img {
+    transform: scale(1.07);
+  }
+
+  .sasiedzi__cena {
+    font-size: 12px;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--color-foreground) 72%, var(--color-background));
+  }
+
+  /* Bez ruchu: tor staje, duplikat znika, zostaje pasek do przewinięcia palcem. */
+  @media (prefers-reduced-motion: reduce) {
+    .sasiedzi__okno {
+      overflow-x: auto;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .sasiedzi__tor {
+      width: auto;
+      animation: none;
+    }
+
+    .sasiedzi__lista[aria-hidden='true'] {
+      display: none;
+    }
+  }
+
+  /* Okruszki idą z layoutu, nie z sekcji, więc na telefonie równamy je do
+     krawędzi treści tylko na stronach, na których ta sekcja faktycznie jest. */
+  @media screen and (width < 750px) {
+    body:has(.sasiedzi-sekcja) .breadcrumbs {
+      padding-inline: 20px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Sąsiedzi z kolekcji",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Kolekcja",
+      "info": "Puste = pierwsza kolekcja produktu."
+    },
+    {
+      "type": "text",
+      "id": "heading_prefix",
+      "label": "Słowo przed nazwą kolekcji",
+      "default": "More"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Ile produktów",
+      "min": 6,
+      "max": 20,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Czas pełnego obiegu",
+      "unit": "s",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Odstęp u góry",
+      "unit": "px",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Odstęp u dołu",
+      "unit": "px",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 14
+    }
+  ],
+  "presets": [{ "name": "Sąsiedzi z kolekcji" }]
+}
+{% endschema %}

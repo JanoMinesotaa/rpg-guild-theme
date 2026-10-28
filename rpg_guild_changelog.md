@@ -44,6 +44,71 @@ bezpiecznik JS 7/7 przypadków w Node (granica 23:59:59/00:00, brak pętli, UTM 
 
 ---
 
+## 2026-10-28
+
+### Karuzela „sąsiadów z kolekcji" nad zdjęciem - test na jednym szablonie
+`sections/karuzela-sasiedzi.liquid` (nowy plik) · `templates/product.test-default-product.json`
+
+Pasek innych miniatur z tej samej kolekcji, nad głównym zdjęciem na karcie produktu.
+Na razie **tylko szablon `test-default-product`**, czyli jeden produkt:
+[Owlin 5e | DnD Owlin Archer Miniature](https://rpgguild.shop/products/owlin-5e-archer-fighter-miniature).
+Pozostałe karty produktów bez zmian.
+
+**Bez JavaScriptu.** Ruch robi jedna animacja CSS na torze złożonym z dwóch identycznych
+list. Przesunięcie o `-50%` to dokładnie szerokość jednej listy, więc pętla nie ma szwu.
+Druga lista ma `aria-hidden="true"`, żeby czytnik ekranu czytał produkty raz. Najazd myszą
+i `:focus-within` zatrzymują ruch. Przy `prefers-reduced-motion: reduce` animacja znika,
+duplikat się chowa, a karuzela staje się zwykłym paskiem do przewinięcia.
+
+Zdjęcia kafelków w 200 px (kafelek ma 76 px), z `loading="lazy"` i `fetchpriority="low"` -
+nie konkurują z głównym zdjęciem produktu przy pierwszym renderze.
+
+**Skąd produkty:** `product.collections.first`, z pominięciem bieżącego produktu.
+Decyzja Jana - `complementary_products` i `related_products` są w tym sklepie puste
+(0 na 300 sprawdzonych produktów), więc kurowane powiązania renderowałyby się puste.
+W schemacie jest pole „Kolekcja" - puste znaczy „pierwsza kolekcja produktu".
+
+**Dlaczego nowa sekcja, a nie blok w `product-information`:** schemat tamtej sekcji
+przyjmuje wyłącznie bloki aplikacji (`blocks: [{"type": "@app"}]`), a `_product-media-gallery`
+nie przyjmuje bloków potomnych. Wstawienie tam własnego bloku wymagałoby edycji pliku
+wspólnego dla wszystkich szablonów produktu. Osobna sekcja tego nie wymaga - kod wspólny
+nietknięty.
+
+**Dlaczego własny kontener zamiast `section--page-width`:** `base.css` ma globalne
+`.section--page-width { grid-template-columns: 1fr !important }`, a szerokość kontenera
+hero jest tam wpisana twardo pod konkretne ID sekcji. Sekcja powtarza więc te same wymiary
+u siebie: `max-width: 1540px`, `padding-inline: 40px`, a pasek `calc(50% - 24px)` - te 24 px
+to `padding-inline-end` kolumny media, czyli połowa odstępu 48 px z `product-information`.
+
+**Okruszki na telefonie** równane do krawędzi treści (20 px zamiast 32 px), ale **tylko
+na stronach z tą sekcją** - selektor `body:has(.sasiedzi-sekcja)`. Sprawdzone: na zwykłej
+karcie produktu padding dalej wynosi 32 px.
+
+**Zmierzone na żywo** (Owlin, po wdrożeniu):
+
+| | |
+|---|---|
+| karuzela desktop | lewa 40 px, szerokość 656 px |
+| zdjęcie produktu | lewa 40 px, szerokość 656 px - równo co do piksela |
+| telefon 375 px | okruszki, etykieta i zdjęcie wszystkie na 20 px |
+| kolejność na telefonie | okruszki (158) → karuzela (259) → zdjęcie (403) |
+| animacja | `running`, 56 s na obieg |
+| przewijanie w bok | brak |
+| zwykła karta produktu | bez sekcji, padding okruszków 32 px, hero 1360/656 - bez zmian |
+
+`theme check` na nowym pliku czysto (jedna poprawka po drodze: tag `doc` działa tylko
+w snippetach i blokach, nie w sekcjach - zamieniony na `comment`).
+
+**Jak cofnąć:** usunąć sekcję `sasiedzi_karuzela` z szablonu albo wgrać kopię
+`rollback/product.test-default-product.PRZED-karuzela.json` z katalogu projektu.
+Plik sekcji można zostawić - bez wpisu w szablonie nic nie renderuje.
+
+**Do decyzji:** nagłówek mówi „More Aarakocra 5e", a okruszki nad nim „Humanoid 5e".
+Obie kolekcje są poprawne, ale biorą się z innej logiki - `collections.first` w Liquid
+kontra reguła okruszków. Jeśli mają być zgodne, trzeba wskazać, która wygrywa.
+
+---
+
 ## 2026-10-18
 
 ### Ceny: zdjęta przecena z Undead 5e, nałożona -5% na Dragon 5e `[poza repo]`
