@@ -262,6 +262,23 @@
     .shopify-section:has(> .sasiedzi-sekcja) + .shopify-section[id$='__main'] .product-details {
       margin-block-start: calc(-1 * (70px + (100% - 56px) / 5));
     }
+
+    /* Po podniesieniu prawa kolumna kończy się 48 px wyżej niż miniatury
+       galerii po lewej. Rozkładamy te 48 px po równo na osiem przerw między
+       blokami kolumny zakupowej: 24 px + 6 px = 30 px. Dolne krawędzie obu
+       kolumn siadają równo, a odstępy rosną delikatnie i równomiernie.
+
+       Uwaga: 6 px jest dobrane do tego produktu. Przy produkcie z inną liczbą
+       wariantów luz będzie inny, więc przy rozszerzaniu na kolejne szablony
+       trzeba to policzyć od nowa albo rozdzielać luz automatycznie.
+
+       Selektor celuje wyłącznie w kontener najwyższego poziomu. Szerszy
+       `.group-block-content` łapie też kontenery zagnieżdżone w blokach
+       i odstęp rośnie dwa razy - sprawdzone, dawało 96 px zamiast 48. */
+    .shopify-section:has(> .sasiedzi-sekcja) + .shopify-section[id$='__main']
+      .product-details > .group-block > .group-block-content {
+      row-gap: 30px;
+    }
   }
 
   @media screen and (width < 750px) {

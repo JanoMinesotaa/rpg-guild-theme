@@ -44,6 +44,35 @@ bezpiecznik JS 7/7 przypadków w Node (granica 23:59:59/00:00, brak pętli, UTM 
 
 ---
 
+## 2026-10-29
+
+### Dolne krawędzie kolumn hero wyrównane - desktop
+`sections/karuzela-sasiedzi.liquid`, dalej tylko szablon `test-default-product`
+
+Po podniesieniu prawej kolumny jej dół kończył się **48 px wyżej** niż miniatury
+galerii po lewej. Jan poprosił o delikatne zwiększenie wszystkich odstępów, żeby
+obie kolumny kończyły się równo.
+
+Kolumna zakupowa to flex w pionie z `row-gap: 24px` i ośmioma przerwami między
+blokami. 48 / 8 = 6 px na przerwę, więc `row-gap: 30px`.
+
+**Pierwsze podejście przestrzeliło o 20 px.** Selektor `.group-block-content`
+łapał nie tylko kontener najwyższego poziomu, ale też sześć zagnieżdżonych
+wewnątrz bloków - odstęp urósł dwa razy, 96 px zamiast 48. Poprawione na
+`.product-details > .group-block > .group-block-content`.
+
+**Zmierzone na żywo przy 1440 px:** dół lewej kolumny 1277 px, prawej 1271 px -
+różnica 6 px. Góra: etykieta paska i prawa kolumna rozjechane o 3 px. Jedno i drugie
+w granicach zaokrąglenia line-heightów.
+
+**Uwaga:** 6 px na przerwę jest dobrane do tego produktu. Przy produkcie z inną
+liczbą wariantów luz będzie inny - przy rozszerzaniu na kolejne szablony trzeba
+policzyć od nowa albo rozdzielać luz automatycznie.
+
+**Jak cofnąć:** usunąć regułę `row-gap: 30px` z sekcji.
+
+---
+
 ## 2026-10-28 (trzecia tura)
 
 ### Prawa kolumna hero wyrównana do karuzeli - desktop
