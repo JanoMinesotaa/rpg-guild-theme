@@ -44,6 +44,41 @@ bezpiecznik JS 7/7 przypadków w Node (granica 23:59:59/00:00, brak pętli, UTM 
 
 ---
 
+## 2026-10-28 (trzecia tura)
+
+### Prawa kolumna hero wyrównana do karuzeli - desktop
+`sections/karuzela-sasiedzi.liquid`, dalej tylko szablon `test-default-product`
+
+Po pokazaniu Janowi sześciu wariantów układu na makiecie wybrał ten: ocena i tytuł
+startują na tej samej wysokości co pasek rekomendacji po lewej, zamiast czekać na
+górną krawędź zdjęcia. Pustka w prawym górnym rogu hero znika.
+
+Prawa kolumna podnosi się ujemnym marginesem o wysokość paska. **Wysokość liczona,
+nie wpisana na sztywno:**
+
+```
+margin-block-start: calc(-1 * (70px + (100% - 56px) / 5))
+```
+
+70 px to części stałe (odstępy sekcji 16 + 14, etykieta 17 + 6, cena 12 + 5),
+a `(100% - 56px) / 5` to kafelek: procent w marginesie liczy się od szerokości
+kolumny, pasek jest od niej węższy o 24 px, do tego cztery odstępy po 8 px.
+Dzięki temu wyrównanie trzyma się na każdej szerokości ekranu, nie tylko na 1440.
+
+Reguła siedzi w `@media screen and (width >= 750px)` - **telefon bez zmian**,
+zgodnie z decyzją Jana.
+
+**Zmierzone na żywo przy 1440 px:** etykieta paska 262 px od góry strony, prawa
+kolumna 264 px - różnica 3 px, w granicach zaokrąglenia line-heightów.
+
+**Jak cofnąć:** usunąć blok `@media` z sekcji. Reszta układu zostaje bez zmian.
+
+**Uwaga na przyszłość:** gdyby etykieta paska kiedyś złamała się na dwie linie
+(dłuższa nazwa kolekcji przy wąskim oknie), stałe 70 px przestanie się zgadzać
+i prawa kolumna podniesie się o kilkanaście pikseli za mało.
+
+---
+
 ## 2026-10-28 (druga tura)
 
 ### Karuzela sąsiadów - pięć poprawek po pierwszym teście

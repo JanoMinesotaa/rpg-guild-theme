@@ -250,6 +250,20 @@
     padding-block-start: 14px !important;
   }
 
+  /* Prawa kolumna podnosi się o wysokość paska, żeby ocena i tytuł zaczynały
+     się na tej samej wysokości co karuzela po lewej. Tylko desktop.
+
+     Wysokość paska liczona, nie wpisana na sztywno: 70 px to stałe części
+     (odstępy sekcji 16 + 14, etykieta 17 + 6, cena 12 + 5), a kafelek to
+     (szerokość paska - 4 odstępy) / 5. Szerokość paska to szerokość kolumny
+     zakupowej minus 24 px, stąd (100% - 56px) / 5 - procent w marginesie
+     liczy się od szerokości kolumny. */
+  @media screen and (width >= 750px) {
+    .shopify-section:has(> .sasiedzi-sekcja) + .shopify-section[id$='__main'] .product-details {
+      margin-block-start: calc(-1 * (70px + (100% - 56px) / 5));
+    }
+  }
+
   @media screen and (width < 750px) {
     body:has(.sasiedzi-sekcja) .breadcrumbs {
       padding: 4px 20px 8px;
