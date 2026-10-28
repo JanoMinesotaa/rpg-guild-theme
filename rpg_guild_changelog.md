@@ -44,6 +44,38 @@ bezpiecznik JS 7/7 przypadków w Node (granica 23:59:59/00:00, brak pętli, UTM 
 
 ---
 
+## 2026-10-29 (druga tura)
+
+### Karuzela na telefonie: kafelki nie znikają, pętla policzona
+`sections/karuzela-sasiedzi.liquid`, dalej tylko szablon `test-default-product`
+
+Jan poprosił o upewnienie się, że na telefonie produkty nie znikają i że pętla
+jest nieskończona. Sprawdzone pomiarem na żywo, nie na oko.
+
+**Pętla.** Przy 320 px okna: kafelek 58 px, 22 kafelki, lista 721,53 px, tor
+1443,06 px, połowa toru 721,53 px - **szew wypada co do setnej piksela**.
+`animation-iteration-count` to `Infinity`, stan `running`. Tor próbkowany 24 razy
+co 500 ms: przesuwał się w każdej próbce (-313 → -389 px), czyli 6,3 px/s przy
+721,53 px na 110 s.
+
+**Znikające kafelki - znalezione i naprawione.** W ustalonym ruchu było czysto,
+ale przy pierwszym obiegu jeden kafelek pokazywał się jako puste pole: miał
+`loading="lazy"` i doczytywał się dopiero w momencie wjazdu w kadr. W karuzeli
+każdy kafelek prędzej czy później wjeżdża w kadr, więc leniwe ładowanie nie ma
+tu sensu - **wszystkie kafelki dostały `loading="eager"`**.
+
+Koszt okazał się mniejszy, niż się wydaje: **11 zapytań, nie 22**. Druga lista
+ma te same adresy, więc przeglądarka bierze ją z cache. Razem 126 KB, średnio
+11,5 KB na kafelek. Dla porównania pozostałe obrazy tej karty to 19 zapytań
+i 2187 KB - karuzela to około 5% wagi zdjęć na stronie. Wszystkie mają
+`fetchpriority="low"`, więc nie konkurują ze zdjęciem produktu.
+
+**Po zmianie, od pierwszej sekundy po załadowaniu:** 22 z 22 kafelków wczytane,
+0 kafelków z `loading="lazy"`, i w 20 próbkach co 500 ms **ani razu żadne puste
+pole w kadrze**.
+
+---
+
 ## 2026-10-29
 
 ### Dolne krawędzie kolumn hero wyrównane - desktop

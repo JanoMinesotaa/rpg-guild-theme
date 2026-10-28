@@ -27,15 +27,17 @@
     {%- if p.id != product.id and ile < limit -%}
       {%- assign ile = ile | plus: 1 -%}
       {%- comment -%}
-        Pierwsze pięć kafelków jest widoczne od razu, więc ładujemy je zwykle.
-        Leniwe ładowanie nad zgięciem powodowało, że obrazki wskakiwały
-        pojedynczo w trakcie ruchu i wyglądało to jak zacinająca się animacja.
+        Wszystkie kafelki ładujemy zwykle, nie leniwie. W karuzeli każdy kafelek
+        prędzej czy później wjeżdża w kadr, a leniwy dociąga się dopiero w tym
+        momencie - czyli pokazuje się na chwilę jako puste pole. Przy pięciu
+        eager i reszcie lazy było to widać na telefonie przy pierwszym obiegu.
+
+        Koszt jest mały: kafelek to ~8 KB w 200 px, a druga lista ma te same
+        adresy, więc przeglądarka bierze ją z cache i nie robi ani jednego
+        dodatkowego zapytania. Wszystkie mają fetchpriority="low", więc nie
+        konkurują ze zdjęciem produktu.
       {%- endcomment -%}
-      {%- if ile <= 5 -%}
-        {%- assign ladowanie = 'eager' -%}
-      {%- else -%}
-        {%- assign ladowanie = 'lazy' -%}
-      {%- endif -%}
+      {%- assign ladowanie = 'eager' -%}
       <li>
         <a class="sasiedzi__kafel" href="{{ p.url }}" aria-label="{{ p.title | escape }}" title="{{ p.title | escape }}">
           <span class="sasiedzi__fot">
