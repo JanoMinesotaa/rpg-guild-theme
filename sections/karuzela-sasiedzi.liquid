@@ -359,38 +359,39 @@
   }
 
   @media screen and (width >= 750px) {
+    /* Kolory wprost takie, jak przycisk wariantu na tej karcie produktu:
+       base.css ustawia tam #5D1309 na tle i #F1E4D9 na napisie, oba z
+       !important. Zmienna motywu --color-primary-button-background to #54130F,
+       czyli inny odcień czerwieni, więc trzymamy ten sam duet co przyciski
+       obok - inaczej strzałki odstawałyby kolorem od reszty karty.
+       Grubsza kreska ikony, bo caret motywu przy tej wielkości jest cienki. */
     .sasiedzi__strzalka {
+      --icon-stroke-width: 2px;
+
       position: absolute;
       inset-block-start: 50%;
       display: grid;
       place-items: center;
-      width: 22px;
-      height: 22px;
+      width: 32px;
+      height: 32px;
       padding: 0;
-      border: 1px solid var(--color-border);
+      border: 0;
       border-radius: 50%;
-      background: color-mix(in srgb, var(--color-background) 88%, transparent);
-      color: color-mix(in srgb, var(--color-foreground) 72%, var(--color-background));
-      opacity: 0.55;
+      background: #5d1309;
+      color: #f1e4d9;
+      box-shadow: 0 2px 8px -3px rgb(0 0 0 / 40%);
       translate: 0 -50%;
       cursor: pointer;
-      transition: opacity 260ms cubic-bezier(0.16, 1, 0.3, 1), border-color 260ms cubic-bezier(0.16, 1, 0.3, 1),
-        color 260ms cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .sasiedzi:hover .sasiedzi__strzalka,
-    .sasiedzi:focus-within .sasiedzi__strzalka {
-      opacity: 1;
+      transition: background-color 260ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .sasiedzi__strzalka:hover {
-      border-color: var(--color-primary);
-      color: var(--color-foreground);
+      background: color-mix(in srgb, #5d1309 86%, #f1e4d9);
     }
 
     .sasiedzi__strzalka svg {
-      width: 12px;
-      height: 12px;
+      width: 16px;
+      height: 16px;
     }
 
     /* Motyw ma caret skierowany w dół - obracamy go na boki. */

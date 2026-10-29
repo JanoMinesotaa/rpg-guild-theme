@@ -12,6 +12,46 @@ Konwencja: najnowsze na górze.
 
 ## 2026-10-29
 
+### Strzałki paska: większe i w kolorach przycisku wariantu
+`sections/karuzela-sasiedzi.liquid` · szablon bez zmian
+
+**Co:** 22 px → **32 px** (ikona 12 → 16 px), tło **`#5D1309`**, strzałka **`#F1E4D9`**,
+bez obrysu, miękki cień pod spodem, widoczne cały czas zamiast przygaszenia do 55%.
+Przy najechaniu tło delikatnie jaśnieje. Feedback: strzałki mają wyglądać jak przycisk
+wariantu „28mm" na karcie produktu.
+
+**Skąd dokładnie ten kolor.** `base.css` ustawia wybraną pigułkę wariantu na sztywno:
+`.variant-option__button-label:has(:checked) { background-color: #5D1309 !important;
+color: #F1E4D9 !important }`. Zmienna motywu `--color-primary-button-background` to
+`#54130F`, czyli **inny odcień czerwieni** - użycie jej dałoby strzałki odstające kolorem
+od przycisków obok. Dlatego w sekcji jest ten sam duet hexów co w `base.css`, z komentarzem
+dlaczego. Jeśli kiedyś czerwień w `base.css` się zmieni, trzeba zmienić i tu.
+
+Ikona dostała `--icon-stroke-width: 2px` lokalnie w przycisku - caret motywu jest przy
+tej wielkości za cienki na pełnym tle.
+
+**Zmierzone na żywo (desktop 1470 px):**
+
+| | |
+|---|---|
+| rozmiar | 32 × 32 px, ikona 16 px |
+| tło / ikona | `rgb(93, 19, 9)` / `rgb(241, 228, 217)` |
+| zgodność z pigułką „28mm" | **identyczne**, oba kolory co do wartości |
+| pozycja | lewy przy lewej krawędzi paska (0 px), prawy przy prawej (0 px), środek 1 px od środka zdjęcia |
+| klik „dalej" / „wstecz" | przesuwa o jeden kafelek / wraca dokładnie do poprzedniego stanu |
+| spoczynek paska | dalej równo na siatce (136 px) |
+| telefon 375 px | oba przyciski `display: none` - bez zmian |
+
+Wysokość sekcji bez zmian (przyciski dalej `position: absolute`), więc wyrównanie prawej
+kolumny karty produktu nietknięte.
+
+**Jak cofnąć:** `git checkout 32fbbd1 -- sections/karuzela-sasiedzi.liquid` (małe,
+przygaszone strzałki) i push tego pliku.
+
+---
+
+## 2026-10-29
+
 ### Pasek sąsiadów: strzałki prawo-lewo, tylko desktop
 `sections/karuzela-sasiedzi.liquid` · szablon bez zmian
 
