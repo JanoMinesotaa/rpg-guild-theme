@@ -1,17 +1,18 @@
 {%- comment -%}
   Karuzela produktów z tej samej kolekcji, nad zdjęciem na karcie produktu.
 
-  Pasek sam nie jeździ. Stoi i przewija się w bok palcem (telefon) albo gestem
-  i shift+kółkiem (desktop). Ruch to jedna podmiana: co kilka sekund jeden
-  kafelek będący w kadrze przechodzi płynnie w inny produkt z tej samej
-  kolekcji. Produkt na wejście bierze się z zapasu - kafelki w tym samym <ul>,
-  oznaczone klasą --zapas, wyjęte z układu i schowane przez visibility, z już
-  wczytanym obrazkiem, więc podmiana nigdy nie pokazuje pustego pola. Gdy
-  kolekcja nie ma więcej produktów, niż pasek już pokazuje, zapas jest pusty
-  i podmiana zamienia miejscami kafelek z kadru z kafelkiem spoza kadru.
+  Karuzela chodzi krokiem, nie ciągiem. Co kilka sekund pasek przesuwa się
+  płynnie o dokładnie jeden kafelek w lewo i z prawej strony wjeżdża kolejny
+  produkt z tej samej kolekcji. Kafelek, który wyjechał za lewą krawędź, wraca
+  na koniec rzędu, a pozycja przewinięcia jest w tym samym momencie pomniejszona
+  o jego szerokość - przeskok jest więc niewidoczny, a pętla nie ma końca.
 
-  Szerokość kafelka, siatka i wysokość paska bez zmian wobec wersji karuzelowej:
-  pięć kafelków w kadrze, krawędź równa ze zdjęciem produktu.
+  Ruch robi scrollBy po tym samym pasku, który przewija palec, więc gest
+  użytkownika i krok karuzeli nie walczą ze sobą: pasek jest zwykłym elementem
+  przewijanym w poziomie (telefon i desktop).
+
+  Szerokość kafelka i siatka bez zmian: pięć kafelków w kadrze, krawędź równa
+  ze zdjęciem produktu.
 
   Wstawiać jako pierwszą sekcję szablonu produktu, nad "main".
 {%- endcomment -%}
@@ -23,16 +24,6 @@
   endunless
 
   assign limit = section.settings.max_products
-
-  comment
-    Zapas to kafelki poza rzędem, gotowe do wejścia na pasek. Sześć sztuk
-    wystarcza: kafelek zdjęty z paska wraca na koniec kolejki, więc pula krąży
-    i ten sam produkt wraca najwcześniej po szóstej podmianie. Koszt to sześć
-    obrazków po ~11,5 KB w 260 px, czyli ~69 KB ponad to, co pasek ładował
-    wcześniej.
-  endcomment
-  assign zapas_ile = 6
-  assign pelna = limit | plus: zapas_ile
   assign ile = 0
 %}
 
@@ -42,16 +33,16 @@
       {%- continue -%}
     {%- endif -%}
     {%- assign ile = ile | plus: 1 -%}
-    {%- if ile > pelna -%}
+    {%- if ile > limit -%}
       {%- break -%}
     {%- endif -%}
     {%- comment -%}
-      Wszystkie kafelki ładujemy zwykle, nie leniwie - także te z zapasu.
-      Leniwy obrazek dociąga się dopiero przy wjeździe w kadr, czyli pokazałby
-      się na chwilę jako puste pole dokładnie w momencie podmiany. Wszystkie
-      mają fetchpriority="low", więc nie konkurują ze zdjęciem produktu.
+      Wszystkie kafelki ładujemy zwykle, nie leniwie. W karuzeli każdy kafelek
+      prędzej czy później wjeżdża w kadr, a leniwy dociąga się dopiero w tym
+      momencie - czyli pokazuje się na chwilę jako puste pole. Wszystkie mają
+      fetchpriority="low", więc nie konkurują ze zdjęciem produktu.
     {%- endcomment -%}
-    <li class="sasiedzi__poz{% if ile > limit %} sasiedzi__poz--zapas{% endif %}">
+    <li class="sasiedzi__poz">
       <a class="sasiedzi__kafel" href="{{ p.url }}" aria-label="{{ p.title | escape }}" title="{{ p.title | escape }}">
         <span class="sasiedzi__fot">
           {%- if p.featured_media -%}
@@ -93,55 +84,64 @@
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
       var przerwa = (parseFloat(okno.dataset.przerwa) || 3) * 1000;
-      var przygaszenie = 260;
       var mysz = window.matchMedia('(hover: hover)');
-      var wskaznik = 0;
-      var wskaznikPuli = 0;
-      var ostatniRuch = 0;
-      var poprzedni = null;
+      var ostatniGest = 0;
+      var naszRuch = 0;
+      var klatka = null;
       var timer;
 
+      // Zdarzenie scroll leci i od palca, i od nas. Zapamiętujemy tylko gest
+      // użytkownika - własny ruch karuzeli blokowałby inaczej kolejny krok.
       okno.addEventListener(
         'scroll',
         function () {
-          ostatniRuch = Date.now();
+          if (Date.now() - naszRuch > 1200) ostatniGest = Date.now();
         },
         { passive: true }
       );
 
-      // Trzy kubełki: co widać w całości, co jest w rzędzie ale poza kadrem,
-      // i co czeka w zapasie. Kafelek wchodzący do kadru bierzemy z zapasu,
-      // a gdy zapas jest pusty (kolekcja nie ma więcej produktów, niż pasek
-      // już pokazuje) - z kafelka poza kadrem. Wtedy podmiana jest zamianą
-      // miejscami: w kadrze widać nowy produkt, a ruch poza kadrem jest
-      // niewidoczny i nic się nie dubluje.
-      // Kafelki na styku krawędzi nie wpadają do żadnego kubełka - ani ich
-      // nie podmieniamy, ani nimi nie podmieniamy.
-      function podziel() {
-        var lewa = okno.scrollLeft;
-        var prawa = lewa + okno.clientWidth;
-        var kubelki = { kadr: [], poza: [], zapas: [] };
-        Array.prototype.forEach.call(lista.children, function (li) {
-          if (li.classList.contains('sasiedzi__poz--zapas')) {
-            kubelki.zapas.push(li);
-            return;
-          }
-          var od = li.offsetLeft;
-          var do_ = od + li.offsetWidth;
-          if (od >= lewa - 1 && do_ <= prawa + 1) kubelki.kadr.push(li);
-          else if (do_ <= lewa + 1 || od >= prawa - 1) kubelki.poza.push(li);
-        });
-        return kubelki;
+      // Gest użytkownika przerywa przesuw w pół drogi - palec ma zawsze
+      // pierwszeństwo przed karuzelą.
+      ['pointerdown', 'touchstart', 'wheel'].forEach(function (nazwa) {
+        okno.addEventListener(
+          nazwa,
+          function () {
+            if (klatka) {
+              cancelAnimationFrame(klatka);
+              klatka = null;
+            }
+            ostatniGest = Date.now();
+          },
+          { passive: true }
+        );
+      });
+
+      // Własny przesuw zamiast scrollBy z behavior: 'smooth'. Natywny trwa
+      // ~300 ms i w tym tempie krok wygląda na szarpnięcie; tu mamy 650 ms
+      // i tę samą krzywą, co reszta ruchu w sekcji.
+      function przesun(dystans) {
+        var od = okno.scrollLeft;
+        var poczatek = performance.now();
+        var czas = 650;
+        if (klatka) cancelAnimationFrame(klatka);
+        var krok_ = function (teraz) {
+          var x = Math.min(1, (teraz - poczatek) / czas);
+          var e = x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+          naszRuch = Date.now();
+          okno.scrollLeft = od + dystans * e;
+          klatka = x < 1 ? requestAnimationFrame(krok_) : null;
+        };
+        klatka = requestAnimationFrame(krok_);
       }
 
-      // Zamiana miejscami dwóch kafelków w rzędzie. Oba mają tę samą
-      // szerokość, więc ani rząd, ani pozycja przewinięcia nie drgną.
-      function zamien(a, b) {
-        var znacznik = document.createComment('');
-        lista.insertBefore(znacznik, b);
-        lista.insertBefore(b, a);
-        lista.insertBefore(a, znacznik);
-        lista.removeChild(znacznik);
+      // Krok to odległość między początkami dwóch sąsiednich kafelków, czyli
+      // szerokość kafelka plus odstęp. Mierzona z układu, żeby nie powtarzać
+      // w JS wyliczenia, które siedzi w CSS.
+      function krok() {
+        var a = lista.children[0];
+        var b = lista.children[1];
+        if (!a || !b) return 0;
+        return b.offsetLeft - a.offsetLeft;
       }
 
       function tyk() {
@@ -153,54 +153,27 @@
         if (document.hidden) return;
         if (mysz.matches && okno.matches(':hover')) return;
         if (okno.contains(document.activeElement)) return;
-        if (Date.now() - ostatniRuch < 1000) return;
+        if (Date.now() - ostatniGest < 1200) return;
 
-        var kubelki = podziel();
-        if (!kubelki.kadr.length) return;
+        var d = krok();
+        if (!d) return;
 
-        var zZapasu = kubelki.zapas.length > 0;
-        var pula = zZapasu
-          ? kubelki.zapas
-          : kubelki.poza.filter(function (li) {
-              // Kafelek zdjęty poprzednio pomijamy, żeby ten sam produkt nie
-              // wracał do kadru w następnym tyknięciu.
-              return li !== poprzedni;
-            });
-        if (!pula.length) return;
+        // Kafelek, który wyjechał za lewą krawędź, wraca na koniec rzędu,
+        // a pozycja przewinięcia maleje w tym samym momencie o jego szerokość.
+        // Kadr nie drga, przeskoku nie widać, a pętla nie ma końca.
+        var zabezpieczenie = lista.children.length;
+        while (okno.scrollLeft >= d - 0.5 && zabezpieczenie > 0) {
+          lista.appendChild(lista.firstElementChild);
+          okno.scrollLeft -= d;
+          zabezpieczenie -= 1;
+        }
 
-        var stary = kubelki.kadr[wskaznik % kubelki.kadr.length];
-        var nowy = zZapasu ? pula[0] : pula[wskaznikPuli % pula.length];
-        wskaznik += 1;
-        wskaznikPuli += 1;
-
-        stary.classList.add('sasiedzi__poz--gasnie');
-        setTimeout(function () {
-          nowy.classList.add('sasiedzi__poz--gasnie');
-
-          if (zZapasu) {
-            // Nowy wchodzi na miejsce starego, stary na koniec kolejki zapasu,
-            // więc ten sam produkt wraca najwcześniej po tylu podmianach,
-            // ile sztuk ma zapas.
-            lista.insertBefore(nowy, stary);
-            nowy.classList.remove('sasiedzi__poz--zapas');
-            lista.appendChild(stary);
-            stary.classList.add('sasiedzi__poz--zapas');
-          } else {
-            zamien(stary, nowy);
-          }
-
-          stary.classList.remove('sasiedzi__poz--gasnie');
-          poprzedni = stary;
-
-          // Dwie klatki: pierwsza maluje nowy kafelek jeszcze przezroczysty,
-          // druga uruchamia przejście. Bez tego przeglądarka scala obie zmiany
-          // w jedną klatkę i kafelek wskakuje bez przejścia.
-          requestAnimationFrame(function () {
-            requestAnimationFrame(function () {
-              nowy.classList.remove('sasiedzi__poz--gasnie');
-            });
-          });
-        }, przygaszenie);
+        // Krok kończy się zawsze na krawędzi kafelka. Jeśli palec zostawił
+        // pasek w pół kafelka, pierwszy krok po geście dociąga go z powrotem
+        // do siatki - inaczej ucięty kafelek zostawałby przy lewej krawędzi
+        // już na zawsze.
+        naszRuch = Date.now();
+        przesun(d - okno.scrollLeft);
       }
 
       timer = setInterval(tyk, przerwa);
@@ -281,13 +254,9 @@
   }
 
   /* Zawsze dokładnie pięć kafelków w kadrze: 5 * kafelek + 4 * 8 px odstępu = 100%.
-     Jedna zmienna --kafel obsługuje i kafelki w rzędzie, i te z zapasu - zapas
-     musi mieć tę samą szerokość, żeby przeglądarka wybrała z srcset ten sam
-     plik i po podmianie nie dociągała obrazka od nowa.
-     position: relative, bo od listy liczymy w JS offsetLeft kafelków. */
+     Szerokość w jednej zmiennej, bo JS liczy z niej krok karuzeli. */
   .sasiedzi__lista {
     --kafel: calc((100cqw - 32px) / 5);
-    position: relative;
     display: flex;
     width: max-content;
     gap: 8px;
@@ -298,23 +267,6 @@
 
   .sasiedzi__poz {
     flex: 0 0 var(--kafel);
-    transition: opacity 260ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  /* Zapas: kafelki gotowe do wejścia na pasek. Wyjęte z układu (position)
-     i schowane przez visibility, nie display: none - obrazek ma być wczytany,
-     zanim kafelek wejdzie w kadr. visibility zabiera je też z kolejności
-     tabulacji i z drzewa dostępności, więc czytnik czyta produkty raz. */
-  .sasiedzi__poz--zapas {
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    width: var(--kafel);
-    visibility: hidden;
-  }
-
-  .sasiedzi__poz--gasnie {
-    opacity: 0;
   }
 
   .sasiedzi__kafel {
@@ -357,7 +309,7 @@
     color: color-mix(in srgb, var(--color-foreground) 72%, var(--color-background));
   }
 
-  /* Bez ruchu: żadnych podmian (JS sam się nie uruchamia), pasek bez maski
+  /* Bez ruchu: karuzela nie rusza (JS sam się nie uruchamia), pasek bez maski
      i bez pojawiania się, kafelki w stałych 76 px - zostaje zwykły rząd
      do przewinięcia palcem. */
   @media (prefers-reduced-motion: reduce) {
@@ -463,7 +415,7 @@
     {
       "type": "range",
       "id": "interval",
-      "label": "Co ile sekund zmienia się kafelek",
+      "label": "Co ile sekund przesuwa się o kafelek",
       "unit": "s",
       "min": 2,
       "max": 12,
