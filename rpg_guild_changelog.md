@@ -10,6 +10,66 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-29
+
+### Pasek sąsiadów zamiast karuzeli: jeden kafelek zmienia się co 3 s
+`sections/karuzela-sasiedzi.liquid` · szablon `product.test-default-product` bez zmian
+
+**Co:** pasek nad zdjęciem produktu przestał jeździć. Stoi, przewija się w bok palcem
+albo gestem, a ruch to jedna podmiana - co 3 sekundy jeden kafelek **będący w kadrze**
+przechodzi płynnie (260 ms) w inny produkt z tej samej kolekcji. Prośba Jana z 29.10.
+
+**Co zostało bez zmian:** szerokość kafelka (pięć w kadrze, `calc((100cqw - 32px) / 5)`),
+siatka, krawędź równa ze zdjęciem, wysokość paska - a więc i wyliczenie, które podnosi
+prawą kolumnę karty produktu. Nagłówek, ceny, hover, maska na krawędziach też bez zmian.
+
+**Jak to działa teraz:**
+
+| | |
+|---|---|
+| ruch | `setInterval` co `interval` s (ustawienie w schemacie, domyślnie 3) |
+| co się zmienia | jeden kafelek w kadrze, po kolei; kafelki poza kadrem pomijane |
+| przejście | wygaszenie 260 ms → podmiana w DOM → wejście 260 ms |
+| przewijanie | `overflow-x: auto` na oknie, 12 kafelków przy 5 w kadrze |
+| zapas | 6 kafelków w tym samym `<ul>`, `position: absolute` + `visibility: hidden` |
+
+**Dlaczego tylko kafelek w kadrze.** Pasek ma 12 kafelków, a w kadrze widać 5. Gdyby
+podmiana szła po kolei przez cały rząd, 7 z 12 tyknięć zmieniałoby coś poza ekranem
+i pasek wyglądałby na zepsuty. JS liczy więc `offsetLeft` względem `scrollLeft` i bierze
+tylko te kafelki, które w całości mieszczą się w oknie.
+
+**Dlaczego zapas siedzi w tym samym `<ul>`, nie w drugiej liście.** Podmiana to jeden
+`insertBefore` - kafelek z zapasu wchodzi na miejsce starego, stary wraca na koniec
+kolejki. Kafelki zapasu są wyjęte z układu przez `position: absolute`, więc nie zmieniają
+szerokości rzędu ani pozycji przewinięcia, a `visibility: hidden` (nie `display: none`)
+zostawia obrazek wczytany - w momencie podmiany nigdy nie ma pustego pola. To ta sama
+pułapka, którą naprawialiśmy 28.10 przy `loading="lazy"`.
+
+**Zapas ma 6 sztuk.** Kafelek zdjęty z paska wraca na koniec kolejki, więc pula krąży
+i ten sam produkt wraca najwcześniej po szóstej podmianie. Koszt: 18 obrazków zamiast 11,
+czyli ~69 KB więcej (po ~11,5 KB w 260 px).
+
+**Kiedy pasek stoi:** karta w tle (`document.hidden`), kursor nad paskiem (tylko tam,
+gdzie jest `hover: hover` - na telefonie `:hover` zostaje po tapnięciu i zamroziłoby
+podmiany), focus w środku, oraz sekunda po ostatnim przewinięciu. Przy
+`prefers-reduced-motion: reduce` skrypt nie startuje w ogóle i zostaje zwykły rząd
+do przewinięcia.
+
+**Paska przewijania nie pokazujemy** (`scrollbar-width: none` + `::-webkit-scrollbar`).
+Na Windowsie zabrałby ~15 px wysokości, a od wysokości paska zależy wyrównanie prawej
+kolumny. Że pasek idzie dalej, podpowiada maska wyciemniająca krawędzie.
+
+**Schemat:** ustawienie „Czas pełnego obiegu" (`speed`) zniknęło, w jego miejsce
+„Co ile sekund zmienia się kafelek" (`interval`, 2-12 s, domyślnie 3). W szablonie
+na sklepie został nieużywany klucz `"speed": 110` - Shopify ignoruje nieznane klucze,
+`interval` bierze się z domyślnej wartości schematu.
+
+**Jak cofnąć:** `git checkout c55eeb4 -- sections/karuzela-sasiedzi.liquid` i push tego
+jednego pliku. Szablon nietknięty, więc nic poza tym nie trzeba ruszać. Kopia wersji
+sprzed zmiany (pobrana z live) leży też w scratchpadzie sesji.
+
+---
+
 ## 2026-10-27
 
 ### [poza repo] Plik `rpg-guild-logo-mail.png` w Content > Files (logo do maili)

@@ -1,13 +1,15 @@
 {%- comment -%}
   Karuzela produktów z tej samej kolekcji, nad zdjęciem na karcie produktu.
 
-  Renderowana serwerowo, bez JavaScriptu. Ruch robi jedna animacja CSS na torze
-  złożonym z dwóch identycznych list - przesunięcie o -50% to dokładnie szerokość
-  jednej listy, więc pętla nie ma szwu. Druga lista dostaje aria-hidden, żeby
-  czytnik ekranu czytał produkty raz.
+  Pasek sam nie jeździ. Stoi i przewija się w bok palcem (telefon) albo gestem
+  i shift+kółkiem (desktop). Ruch to jedna podmiana: co kilka sekund jeden
+  kafelek będący w kadrze przechodzi płynnie w inny produkt z tej samej
+  kolekcji. Kafelki do podmiany są w tym samym <ul>, oznaczone klasą --zapas,
+  wyjęte z układu i schowane przez visibility - obrazki wczytują się od razu,
+  więc podmiana nigdy nie pokazuje pustego pola.
 
-  Sekcja używa klasy section--page-width, czyli tej samej siatki co
-  product-information. Dzięki temu trafia w kolumnę zdjęcia bez liczenia pikseli.
+  Szerokość kafelka, siatka i wysokość paska bez zmian wobec wersji karuzelowej:
+  pięć kafelków w kadrze, krawędź równa ze zdjęciem produktu.
 
   Wstawiać jako pierwszą sekcję szablonu produktu, nad "main".
 {%- endcomment -%}
@@ -19,40 +21,48 @@
   endunless
 
   assign limit = section.settings.max_products
+
+  comment
+    Zapas to kafelki poza rzędem, gotowe do wejścia na pasek. Sześć sztuk
+    wystarcza: kafelek zdjęty z paska wraca na koniec kolejki, więc pula krąży
+    i ten sam produkt wraca najwcześniej po szóstej podmianie. Koszt to sześć
+    obrazków po ~11,5 KB w 260 px, czyli ~69 KB ponad to, co pasek ładował
+    wcześniej.
+  endcomment
+  assign zapas_ile = 6
+  assign pelna = limit | plus: zapas_ile
   assign ile = 0
 %}
 
 {%- capture kafelki -%}
-  {%- for p in col.products limit: 30 -%}
-    {%- if p.id != product.id and ile < limit -%}
-      {%- assign ile = ile | plus: 1 -%}
-      {%- comment -%}
-        Wszystkie kafelki ładujemy zwykle, nie leniwie. W karuzeli każdy kafelek
-        prędzej czy później wjeżdża w kadr, a leniwy dociąga się dopiero w tym
-        momencie - czyli pokazuje się na chwilę jako puste pole. Przy pięciu
-        eager i reszcie lazy było to widać na telefonie przy pierwszym obiegu.
-
-        Koszt jest mały: kafelek to ~8 KB w 200 px, a druga lista ma te same
-        adresy, więc przeglądarka bierze ją z cache i nie robi ani jednego
-        dodatkowego zapytania. Wszystkie mają fetchpriority="low", więc nie
-        konkurują ze zdjęciem produktu.
-      {%- endcomment -%}
-      {%- assign ladowanie = 'eager' -%}
-      <li>
-        <a class="sasiedzi__kafel" href="{{ p.url }}" aria-label="{{ p.title | escape }}" title="{{ p.title | escape }}">
-          <span class="sasiedzi__fot">
-            {%- if p.featured_media -%}
-              {{
-                p.featured_media
-                | image_url: width: 260
-                | image_tag: loading: ladowanie, fetchpriority: 'low', widths: '130, 200, 260', alt: ''
-              }}
-            {%- endif -%}
-          </span>
-          <span class="sasiedzi__cena">{{ p.price_min | money }}</span>
-        </a>
-      </li>
+  {%- for p in col.products limit: 40 -%}
+    {%- if p.id == product.id -%}
+      {%- continue -%}
     {%- endif -%}
+    {%- assign ile = ile | plus: 1 -%}
+    {%- if ile > pelna -%}
+      {%- break -%}
+    {%- endif -%}
+    {%- comment -%}
+      Wszystkie kafelki ładujemy zwykle, nie leniwie - także te z zapasu.
+      Leniwy obrazek dociąga się dopiero przy wjeździe w kadr, czyli pokazałby
+      się na chwilę jako puste pole dokładnie w momencie podmiany. Wszystkie
+      mają fetchpriority="low", więc nie konkurują ze zdjęciem produktu.
+    {%- endcomment -%}
+    <li class="sasiedzi__poz{% if ile > limit %} sasiedzi__poz--zapas{% endif %}">
+      <a class="sasiedzi__kafel" href="{{ p.url }}" aria-label="{{ p.title | escape }}" title="{{ p.title | escape }}">
+        <span class="sasiedzi__fot">
+          {%- if p.featured_media -%}
+            {{
+              p.featured_media
+              | image_url: width: 260
+              | image_tag: loading: 'eager', fetchpriority: 'low', widths: '130, 200, 260', alt: ''
+            }}
+          {%- endif -%}
+        </span>
+        <span class="sasiedzi__cena">{{ p.price_min | money }}</span>
+      </a>
+    </li>
   {%- endfor -%}
 {%- endcapture -%}
 
@@ -63,14 +73,96 @@
   >
     <div class="sasiedzi">
       <p class="sasiedzi__tytul">{{ section.settings.heading_prefix }} {{ col.title }}</p>
-      <div class="sasiedzi__okno">
-        <div class="sasiedzi__tor" style="--czas: {{ section.settings.speed }}s">
-          <ul class="sasiedzi__lista">{{ kafelki }}</ul>
-          <ul class="sasiedzi__lista" aria-hidden="true">{{ kafelki }}</ul>
-        </div>
+      <div class="sasiedzi__okno" id="Sasiedzi-{{ section.id }}" data-przerwa="{{ section.settings.interval }}">
+        <ul class="sasiedzi__lista">{{ kafelki }}</ul>
       </div>
     </div>
   </div>
+
+  <script>
+    (function () {
+      var okno = document.getElementById('Sasiedzi-{{ section.id }}');
+      if (!okno) return;
+
+      var lista = okno.querySelector('.sasiedzi__lista');
+      if (!lista) return;
+
+      // Przy wyłączonych animacjach pasek zostaje nieruchomy.
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var przerwa = (parseFloat(okno.dataset.przerwa) || 3) * 1000;
+      var przygaszenie = 260;
+      var mysz = window.matchMedia('(hover: hover)');
+      var wskaznik = 0;
+      var ostatniRuch = 0;
+      var timer;
+
+      okno.addEventListener(
+        'scroll',
+        function () {
+          ostatniRuch = Date.now();
+        },
+        { passive: true }
+      );
+
+      // Podmieniamy tylko kafelek, który widać - inaczej co drugie, trzecie
+      // tyknięcie zmieniałoby coś poza kadrem i pasek wyglądałby na martwy.
+      function wKadrze() {
+        var lewa = okno.scrollLeft;
+        var prawa = lewa + okno.clientWidth;
+        return Array.prototype.filter.call(lista.children, function (li) {
+          if (li.classList.contains('sasiedzi__poz--zapas')) return false;
+          return li.offsetLeft >= lewa - 1 && li.offsetLeft + li.offsetWidth <= prawa + 1;
+        });
+      }
+
+      function tyk() {
+        // Sekcja przeładowana w edytorze motywu - stary licznik gasi się sam.
+        if (!document.contains(okno)) {
+          clearInterval(timer);
+          return;
+        }
+        if (document.hidden) return;
+        if (mysz.matches && okno.matches(':hover')) return;
+        if (okno.contains(document.activeElement)) return;
+        if (Date.now() - ostatniRuch < 1000) return;
+
+        var nowy = lista.querySelector('.sasiedzi__poz--zapas');
+        if (!nowy) return;
+
+        var widoczne = wKadrze();
+        if (!widoczne.length) return;
+
+        var stary = widoczne[wskaznik % widoczne.length];
+        wskaznik += 1;
+
+        stary.classList.add('sasiedzi__poz--gasnie');
+        setTimeout(function () {
+          // Nowy wchodzi na miejsce starego, stary wraca na koniec kolejki
+          // zapasu. Oba mają tę samą szerokość, więc rząd ani pozycja
+          // przewinięcia nie drgną.
+          nowy.classList.add('sasiedzi__poz--gasnie');
+          lista.insertBefore(nowy, stary);
+          nowy.classList.remove('sasiedzi__poz--zapas');
+
+          lista.appendChild(stary);
+          stary.classList.add('sasiedzi__poz--zapas');
+          stary.classList.remove('sasiedzi__poz--gasnie');
+
+          // Dwie klatki: pierwsza maluje nowy kafelek jeszcze przezroczysty,
+          // druga uruchamia przejście. Bez tego przeglądarka scala obie zmiany
+          // w jedną klatkę i kafelek wskakuje bez przejścia.
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              nowy.classList.remove('sasiedzi__poz--gasnie');
+            });
+          });
+        }, przygaszenie);
+      }
+
+      timer = setInterval(tyk, przerwa);
+    })();
+  </script>
 {%- endif -%}
 
 {% stylesheet %}
@@ -123,45 +215,63 @@
     }
   }
 
-  /* container-type pozwala liczyć szerokość kafelka od szerokości okna,
-     a nie od toru, który jest celowo szerszy niż ekran. */
+  /* Pasek przewija się w bok: palcem na telefonie, gestem w bok albo
+     shift+kółkiem na desktopie. Paska przewijania nie pokazujemy - na Windowsie
+     zabrałby ~15 px wysokości, a od wysokości tego paska zależy wyrównanie
+     prawej kolumny karty produktu (wyliczenie niżej). Że pasek idzie dalej,
+     podpowiada maska wyciemniająca krawędzie.
+
+     container-type pozwala liczyć szerokość kafelka od szerokości okna,
+     a nie od listy, która jest celowo szersza niż ekran. */
   .sasiedzi__okno {
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
     container-type: inline-size;
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
     mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
   }
 
-  .sasiedzi__tor {
+  .sasiedzi__okno::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Zawsze dokładnie pięć kafelków w kadrze: 5 * kafelek + 4 * 8 px odstępu = 100%.
+     Jedna zmienna --kafel obsługuje i kafelki w rzędzie, i te z zapasu - zapas
+     musi mieć tę samą szerokość, żeby przeglądarka wybrała z srcset ten sam
+     plik i po podmianie nie dociągała obrazka od nowa.
+     position: relative, bo od listy liczymy w JS offsetLeft kafelków. */
+  .sasiedzi__lista {
+    --kafel: calc((100cqw - 32px) / 5);
+    position: relative;
     display: flex;
     width: max-content;
-    animation: sasiedzi-przesuw var(--czas, 110s) linear 900ms infinite;
-  }
-
-  .sasiedzi__okno:hover .sasiedzi__tor,
-  .sasiedzi__okno:focus-within .sasiedzi__tor {
-    animation-play-state: paused;
-  }
-
-  @keyframes sasiedzi-przesuw {
-    to {
-      transform: translateX(-50%);
-    }
-  }
-
-  .sasiedzi__lista {
-    display: flex;
     gap: 8px;
     margin: 0;
     padding: 0 8px 0 0;
     list-style: none;
   }
 
-  /* Zawsze dokładnie pięć kafelków w oknie: 5 * kafelek + 4 * 8 px odstępu = 100%.
-     Pętla zostaje bez szwu niezależnie od szerokości - jedna lista ma zawsze
-     N * (kafelek + 8 px), a tor przesuwa się o -50%, czyli o całą jedną listę. */
-  .sasiedzi__lista > li {
-    flex: 0 0 calc((100cqw - 32px) / 5);
+  .sasiedzi__poz {
+    flex: 0 0 var(--kafel);
+    transition: opacity 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Zapas: kafelki gotowe do wejścia na pasek. Wyjęte z układu (position)
+     i schowane przez visibility, nie display: none - obrazek ma być wczytany,
+     zanim kafelek wejdzie w kadr. visibility zabiera je też z kolejności
+     tabulacji i z drzewa dostępności, więc czytnik czyta produkty raz. */
+  .sasiedzi__poz--zapas {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    width: var(--kafel);
+    visibility: hidden;
+  }
+
+  .sasiedzi__poz--gasnie {
+    opacity: 0;
   }
 
   .sasiedzi__kafel {
@@ -204,30 +314,22 @@
     color: color-mix(in srgb, var(--color-foreground) 72%, var(--color-background));
   }
 
-  /* Bez ruchu: tor staje, duplikat znika, zostaje pasek do przewinięcia palcem. */
+  /* Bez ruchu: żadnych podmian (JS sam się nie uruchamia), pasek bez maski
+     i bez pojawiania się, kafelki w stałych 76 px - zostaje zwykły rząd
+     do przewinięcia palcem. */
   @media (prefers-reduced-motion: reduce) {
     .sasiedzi__okno {
-      overflow-x: auto;
       -webkit-mask-image: none;
       mask-image: none;
     }
 
-    .sasiedzi__tor {
-      width: auto;
-      animation: none;
-    }
-
-    .sasiedzi__lista[aria-hidden='true'] {
-      display: none;
+    .sasiedzi__lista {
+      --kafel: 76px;
     }
 
     .sasiedzi {
       opacity: 1;
       animation: none;
-    }
-
-    .sasiedzi__lista > li {
-      flex-basis: 76px;
     }
   }
 
@@ -317,13 +419,13 @@
     },
     {
       "type": "range",
-      "id": "speed",
-      "label": "Czas pełnego obiegu",
+      "id": "interval",
+      "label": "Co ile sekund zmienia się kafelek",
       "unit": "s",
-      "min": 40,
-      "max": 240,
-      "step": 10,
-      "default": 110
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 3
     },
     {
       "type": "range",
