@@ -12,6 +12,62 @@ Konwencja: najnowsze na górze.
 
 ## 2026-10-29
 
+### Pasek sąsiadów: strzałki prawo-lewo, tylko desktop
+`sections/karuzela-sasiedzi.liquid` · szablon bez zmian
+
+**Co:** dwa małe przyciski (22 px) na krawędziach paska, w pionie na środku figurek.
+Klik przesuwa pasek o jeden kafelek w swoją stronę, tą samą animacją co krok
+automatyczny, i restartuje odliczanie, żeby automat nie dołożył kroku zaraz po kliknięciu.
+Prośba Jana: „bardzo mała, minimalistyczna, ale funkcjonalna nawigacja".
+
+**Tylko desktop** (`width >= 750px`) - na telefonie pasek przewija się palcem i strzałki
+byłyby tylko zasłoną na figurkach. Na telefonie `display: none`.
+
+**Wygląd:** okrąg 22 px, obrys `--color-border`, tło `--color-background` 88%, ikona 12 px.
+W spoczynku `opacity: 0.55`, przy najechaniu na pasek albo focusie wewnątrz - pełna.
+Ikona to **ten sam `icon-caret.svg`, którego motyw używa w swoich karuzelach**, obrócony
+o 90°, a etykiety biorą się z gotowych tłumaczeń motywu (`accessibility.slideshow_previous`
+i `_next`), więc DE i FR działają bez dokładania kluczy.
+
+**Nie ruszają geometrii.** Przyciski są `position: absolute` w `.sasiedzi`, czyli poza
+układem - wysokość sekcji bez zmian, więc wyliczenie podnoszące prawą kolumnę karty
+produktu zostaje nietknięte. W pionie `top: 50%`: `.sasiedzi` to etykieta plus pasek,
+więc środek wypada **1 px** od środka zdjęcia kafelka, niezależnie od szerokości ekranu.
+
+**Krok wstecz to lustro kroku naprzód:** ostatni kafelek wraca na początek rzędu,
+a pozycja przewinięcia rośnie w tej samej chwili o jego szerokość - jest dokąd cofać,
+pętla działa w obie strony i nadal bez drugiej kopii listy.
+
+**Przy `prefers-reduced-motion: reduce`** karuzela dalej nie rusza sama, ale strzałki
+działają - z przeskokiem zamiast animacji. To ruch zamówiony klikiem, nie animacja tła.
+
+**Zmierzone na żywo (desktop 1470 px):**
+
+| | |
+|---|---|
+| przyciski | 22 × 22 px, lewy przy krawędzi paska (0 px), prawy przy prawej (0 px) |
+| środek w pionie | 1 px od środka zdjęcia kafelka |
+| klik „dalej" | kadr przesunięty dokładnie o jeden kafelek w lewo |
+| klik „wstecz" | kadr wrócił dokładnie do poprzedniego stanu |
+| automat po kliknięciu | odczekał pełne 3 s, nie dołożył kroku |
+| klawiatura | przycisk łapie focus, obrys 1 px, Enter przesuwa pasek |
+| telefon 375 px | oba przyciski `display: none` |
+| hover | `opacity` 0,55 → 1 |
+
+`theme check` 0 uwag.
+
+**Zaobserwowane przy okazji, nie nasze:** po dłuższym staniu na karcie produktu edrone
+montuje `#edrone-onsite-popup-iframe` na cały ekran (1470 × 900), który przejmuje
+najazd myszą i kliknięcia na stronie. Przy świeżym wejściu go nie ma. Warto sprawdzić
+w konfiguracji edrone, czy ta ramka ma prawo wisieć, gdy popup nic nie pokazuje.
+
+**Jak cofnąć:** `git checkout 1a647b2 -- sections/karuzela-sasiedzi.liquid` (karuzela
+krokowa bez strzałek) i push tego pliku.
+
+---
+
+## 2026-10-29
+
 ### Pasek sąsiadów: karuzela krokowa (poprawka po przenikaniu)
 `sections/karuzela-sasiedzi.liquid` · szablon bez zmian
 
@@ -160,6 +216,15 @@ jednego pliku. Szablon nietknięty, więc nic poza tym nie trzeba ruszać. Kopia
 sprzed zmiany (pobrana z live) leży też w scratchpadzie sesji.
 
 ---
+
+## 2026-10-29
+
+### [poza repo] Nowa mapa korzyści (treasure map) na stronach produktu: EN, DE, FR
+- **Co:** w bloku obrazka 9 szablonów produktu (`product`, `dnd-dice`, `dnd-terrain`, `dnd-tiles`, `gift-card`, `mystery-box-product-page`, `pre-made-terrain-sets`, `starter-set-terrains`, `test-default-product`) obraz `Obszar_roboczy_14_od_Janek_via_Slack_1.webp` (stara mapa, 60$ Free Delivery) zamieniony na `treasure-map-2026-en.png` (z „Over 100$/€ Spent, Free Character Sheet”). Tłumaczenia tego obrazka (Translate & Adapt): DE `treasure-map-2026-de.png`, FR `treasure-map-2026-fr.png` (wcześniej `Mapa_DE.png` / `Mapa_FR.png`).
+- **Jak:** pliki przez stagedUploads + fileCreate; szablony przez Asset API (Theme Access), podmiana jednej nazwy pliku; tłumaczenia przez `translationsRegister` z nowym digestem.
+- **Sprawdzone na żywo:** en-pl, /products (terrains), de-de, de-ch, fr-fr pokazują właściwą mapę.
+- **Jak cofnąć:** kopie szablonów i tłumaczeń sprzed zmiany w `automation/backups/2026-10-29-treasure-map/przed/` (wgrać z powrotem pliki szablonów, a w tłumaczeniach DE/FR wpisać `Mapa_DE.png` / `Mapa_FR.png`). Stare pliki zostały w Content > Files.
+- **Pułapka:** strony DE i FR to `/de-de/`, `/de-at/`, `/de-ch/`, `/fr-fr/`, `/fr-ch/` (nie `/de/`); z polskiego IP sklep przekierowuje na `/en-pl/`, więc do testów trzeba ustawić ciasteczko `localization=DE`/`FR`.
 
 ## 2026-10-27
 

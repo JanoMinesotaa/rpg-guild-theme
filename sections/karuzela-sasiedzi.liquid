@@ -69,6 +69,29 @@
       <div class="sasiedzi__okno" id="Sasiedzi-{{ section.id }}" data-przerwa="{{ section.settings.interval }}">
         <ul class="sasiedzi__lista">{{ kafelki }}</ul>
       </div>
+
+      {%- comment -%}
+        Nawigacja pokazywana tylko na desktopie - na telefonie pasek przewija
+        się palcem. Etykiety biorą się z tłumaczeń motywu, więc działają na
+        rynkach DE i FR bez dokładania własnych kluczy, a ikona to ten sam
+        caret, którego motyw używa w pozostałych karuzelach.
+      {%- endcomment -%}
+      <button
+        type="button"
+        class="sasiedzi__strzalka sasiedzi__strzalka--wstecz"
+        data-kierunek="wstecz"
+        aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+      >
+        {{- 'icon-caret.svg' | inline_asset_content -}}
+      </button>
+      <button
+        type="button"
+        class="sasiedzi__strzalka sasiedzi__strzalka--wprzod"
+        data-kierunek="wprzod"
+        aria-label="{{ 'accessibility.slideshow_next' | t }}"
+      >
+        {{- 'icon-caret.svg' | inline_asset_content -}}
+      </button>
     </div>
   </div>
 
@@ -80,8 +103,12 @@
       var lista = okno.querySelector('.sasiedzi__lista');
       if (!lista) return;
 
-      // Przy wyłączonych animacjach pasek zostaje nieruchomy.
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var korzen = okno.closest('.sasiedzi') || okno;
+      var strzalki = korzen.querySelectorAll('.sasiedzi__strzalka');
+
+      // Przy wyłączonych animacjach karuzela nie rusza sama i nie animuje
+      // przesuwu, ale strzałki dalej działają - to ruch zamówiony klikiem.
+      var bezRuchu = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       var przerwa = (parseFloat(okno.dataset.przerwa) || 3) * 1000;
       var mysz = window.matchMedia('(hover: hover)');
@@ -120,6 +147,10 @@
       // ~300 ms i w tym tempie krok wygląda na szarpnięcie; tu mamy 650 ms
       // i tę samą krzywą, co reszta ruchu w sekcji.
       function przesun(dystans) {
+        if (bezRuchu) {
+          okno.scrollLeft += dystans;
+          return;
+        }
         var od = okno.scrollLeft;
         var poczatek = performance.now();
         var czas = 650;
@@ -144,23 +175,13 @@
         return b.offsetLeft - a.offsetLeft;
       }
 
-      function tyk() {
-        // Sekcja przeładowana w edytorze motywu - stary licznik gasi się sam.
-        if (!document.contains(okno)) {
-          clearInterval(timer);
-          return;
-        }
-        if (document.hidden) return;
-        if (mysz.matches && okno.matches(':hover')) return;
-        if (okno.contains(document.activeElement)) return;
-        if (Date.now() - ostatniGest < 1200) return;
-
+      // Krok w prawo: kafelek, który wyjechał za lewą krawędź, wraca na koniec
+      // rzędu, a pozycja przewinięcia maleje w tym samym momencie o jego
+      // szerokość. Kadr nie drga, przeskoku nie widać, a pętla nie ma końca.
+      function wprzod() {
         var d = krok();
         if (!d) return;
 
-        // Kafelek, który wyjechał za lewą krawędź, wraca na koniec rzędu,
-        // a pozycja przewinięcia maleje w tym samym momencie o jego szerokość.
-        // Kadr nie drga, przeskoku nie widać, a pętla nie ma końca.
         var zabezpieczenie = lista.children.length;
         while (okno.scrollLeft >= d - 0.5 && zabezpieczenie > 0) {
           lista.appendChild(lista.firstElementChild);
@@ -169,14 +190,68 @@
         }
 
         // Krok kończy się zawsze na krawędzi kafelka. Jeśli palec zostawił
-        // pasek w pół kafelka, pierwszy krok po geście dociąga go z powrotem
-        // do siatki - inaczej ucięty kafelek zostawałby przy lewej krawędzi
-        // już na zawsze.
+        // pasek w pół kafelka, pierwszy krok po geście dociąga go do siatki -
+        // inaczej ucięty kafelek zostawałby przy lewej krawędzi już na zawsze.
         naszRuch = Date.now();
         przesun(d - okno.scrollLeft);
       }
 
-      timer = setInterval(tyk, przerwa);
+      // Krok w lewo to lustro tamtego: ostatni kafelek wraca na początek rzędu,
+      // a pozycja przewinięcia rośnie o jego szerokość, więc jest dokąd cofać.
+      function wstecz() {
+        var d = krok();
+        if (!d) return;
+
+        var zabezpieczenie = lista.children.length;
+        while (okno.scrollLeft < d + 0.5 && zabezpieczenie > 0) {
+          lista.insertBefore(lista.lastElementChild, lista.firstElementChild);
+          okno.scrollLeft += d;
+          zabezpieczenie -= 1;
+        }
+
+        var cel = (Math.ceil(okno.scrollLeft / d) - 1) * d;
+        if (cel >= okno.scrollLeft - 0.5) cel -= d;
+
+        naszRuch = Date.now();
+        przesun(cel - okno.scrollLeft);
+      }
+
+      function tyk() {
+        // Sekcja przeładowana w edytorze motywu - stary licznik gasi się sam.
+        if (!document.contains(okno)) {
+          clearInterval(timer);
+          return;
+        }
+        if (document.hidden) return;
+        if (mysz.matches && korzen.matches(':hover')) return;
+        if (korzen.contains(document.activeElement)) return;
+        if (Date.now() - ostatniGest < 1200) return;
+
+        wprzod();
+      }
+
+      Array.prototype.forEach.call(strzalki, function (przycisk) {
+        przycisk.addEventListener('click', function () {
+          if (przycisk.dataset.kierunek === 'wstecz') wstecz();
+          else wprzod();
+
+          // Odliczanie startuje od nowa, żeby krok automatyczny nie dołożył się
+          // zaraz po kliknięciu.
+          if (timer) {
+            clearInterval(timer);
+            timer = setInterval(tyk, przerwa);
+          }
+        });
+      });
+
+      // Pasek mieści się w całości w kadrze - nie ma czym nawigować.
+      if (okno.scrollWidth <= okno.clientWidth + 1) {
+        Array.prototype.forEach.call(strzalki, function (przycisk) {
+          przycisk.style.display = 'none';
+        });
+      }
+
+      if (!bezRuchu) timer = setInterval(tyk, przerwa);
     })();
   </script>
 {%- endif -%}
@@ -267,6 +342,73 @@
 
   .sasiedzi__poz {
     flex: 0 0 var(--kafel);
+  }
+
+  /* Nawigacja: tylko desktop, bo na telefonie pasek przewija się palcem.
+     Siedzi na krawędziach paska, w pionie na środku zdjęcia: .sasiedzi to
+     etykieta plus pasek, więc 50% wysokości wypada 0,4 px od środka kafelka
+     przy każdej szerokości ekranu. Przyciski są poza układem (position:
+     absolute), więc nie zmieniają wysokości sekcji - wyliczenie, które
+     wyrównuje prawą kolumnę karty produktu, zostaje nietknięte. */
+  .sasiedzi {
+    position: relative;
+  }
+
+  .sasiedzi__strzalka {
+    display: none;
+  }
+
+  @media screen and (width >= 750px) {
+    .sasiedzi__strzalka {
+      position: absolute;
+      inset-block-start: 50%;
+      display: grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      padding: 0;
+      border: 1px solid var(--color-border);
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--color-background) 88%, transparent);
+      color: color-mix(in srgb, var(--color-foreground) 72%, var(--color-background));
+      opacity: 0.55;
+      translate: 0 -50%;
+      cursor: pointer;
+      transition: opacity 260ms cubic-bezier(0.16, 1, 0.3, 1), border-color 260ms cubic-bezier(0.16, 1, 0.3, 1),
+        color 260ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .sasiedzi:hover .sasiedzi__strzalka,
+    .sasiedzi:focus-within .sasiedzi__strzalka {
+      opacity: 1;
+    }
+
+    .sasiedzi__strzalka:hover {
+      border-color: var(--color-primary);
+      color: var(--color-foreground);
+    }
+
+    .sasiedzi__strzalka svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* Motyw ma caret skierowany w dół - obracamy go na boki. */
+    .sasiedzi__strzalka--wstecz {
+      inset-inline-start: 0;
+    }
+
+    .sasiedzi__strzalka--wstecz svg {
+      rotate: 90deg;
+    }
+
+    .sasiedzi__strzalka--wprzod {
+      inset-inline-end: 0;
+    }
+
+    .sasiedzi__strzalka--wprzod svg {
+      rotate: -90deg;
+    }
   }
 
   .sasiedzi__kafel {
