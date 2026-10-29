@@ -12,8 +12,67 @@ Konwencja: najnowsze na górze.
 
 ## 2026-10-29
 
+### Pasek sąsiadów: karuzela krokowa (poprawka po przenikaniu)
+`sections/karuzela-sasiedzi.liquid` · szablon bez zmian
+
+**Co było nie tak:** wersja z przenikaniem (wpis niżej) zmieniała figurkę **w miejscu** -
+jedno zdjęcie wygasało, drugie się pojawiało. Jan: „to wygląda jak wygaszacz ekranu",
+miał zostać ruch poziomy karuzeli, tylko spokojny.
+
+**Co jest teraz:** co 3 sekundy pasek **przesuwa się płynnie o dokładnie jeden kafelek
+w lewo** (650 ms, ease-in-out kubiczny), z prawej wjeżdża kolejna figurka. Między krokami
+pasek stoi ~2,35 s.
+
+**Pętla bez szwu i bez drugiej listy.** Kafelek, który wyjechał za lewą krawędź, wraca na
+koniec rzędu, a `scrollLeft` maleje w tej samej chwili o jego szerokość. Operacja jest
+wizualnie zerowa, więc pętla nie ma końca - stara karuzela potrzebowała do tego kopii
+całej listy, ta nie potrzebuje. Kafelków tyle, ile mówi ustawienie (11 na tym produkcie),
+obrazków tyle samo co wcześniej.
+
+**Ruch idzie przez `scrollLeft` tego samego paska, który przewija palec**, więc gest
+i karuzela nie walczą: dotknięcie, kółko albo swipe natychmiast przerywa przesuw
+(`cancelAnimationFrame`) i wstrzymuje karuzelę na 1,2 s po ostatnim geście. Własna
+animacja zamiast `scrollBy({ behavior: 'smooth' })`, bo natywna trwa ~300 ms i krok
+wyglądał na szarpnięcie.
+
+**Krok zawsze kończy na krawędzi kafelka.** Jeśli palec zostawi pasek w pół kafelka,
+pierwszy krok po geście dociąga go do siatki - inaczej ucięty kafelek zostawałby przy
+lewej krawędzi na zawsze.
+
+**Usunięte:** zapas kafelków poza rzędem, klasy `--zapas` i `--gasnie`, całe przenikanie.
+Plik schudł o 87 linii. Ustawienie w schemacie nazywa się teraz „Co ile sekund przesuwa
+się o kafelek" (`interval`, 2-12 s, domyślnie 3).
+
+**Zmierzone na żywo:**
+
+| | desktop 1470 px | telefon 375 px |
+|---|---|---|
+| krok | zawsze dokładnie o jeden kafelek w lewo | to samo |
+| rytm | ~3,0 s (2,35 s stoi + 0,65 s przesuw) | 3069 / 3086 / 3127 ms |
+| krok w px | 136 (kafelek 127,8 + odstęp 8) | 69 (kafelek 60,6 + 8) |
+| spoczynek | 136 px, odchyłka od siatki 0,0 px (4 pomiary) | 69 px, odchyłka 0,0 px (5 pomiarów) |
+| po krzywym przewinięciu | 319 px → wraca na siatkę w jednym kroku | 185 px → 69 px |
+| płynność | max 29 px na klatkę, **zero skoków > 60 px** w 260 próbkach | - |
+| gest użytkownika | kółko w bok 136 → 386 px | swipe 69 → 270 px, strona nie drgnęła |
+| obrazki | 11/11, zero pustych pól | 11/11, zero pustych pól |
+
+Moment „kafelek wraca na koniec rzędu" jest niewidoczny: przy 260 próbkach co 50 ms żaden
+kafelek w kadrze nie przeskoczył o więcej, niż wynosi sam płynny przesuw. `theme check`
+0 uwag, konsola bez wzmianki o sekcji, zwykła karta produktu bez zmian (okruszki dalej
+`16px 32px`, do prawej).
+
+**Jak cofnąć:** `git checkout f187b73 -- sections/karuzela-sasiedzi.liquid` (wersja
+z przenikaniem) albo `git checkout c55eeb4 -- …` (stara karuzela ciągła) i push tego pliku.
+
+---
+
+## 2026-10-29
+
 ### Pasek sąsiadów zamiast karuzeli: jeden kafelek zmienia się co 3 s
 `sections/karuzela-sasiedzi.liquid` · szablon `product.test-default-product` bez zmian
+> **Nieaktualne od tego samego dnia** - przenikanie w miejscu zastąpione krokiem
+> karuzeli (wpis wyżej). Zostaje jako zapis, skąd wzięły się decyzje o siatce,
+> przewijaniu i ukrytym pasku przewijania - te obowiązują dalej.
 
 **Co:** pasek nad zdjęciem produktu przestał jeździć. Stoi, przewija się w bok palcem
 albo gestem, a ruch to jedna podmiana - co 3 sekundy jeden kafelek **będący w kadrze**
