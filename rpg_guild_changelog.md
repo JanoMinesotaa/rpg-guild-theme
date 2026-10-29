@@ -38,6 +38,14 @@ podmiana szła po kolei przez cały rząd, 7 z 12 tyknięć zmieniałoby coś po
 i pasek wyglądałby na zepsuty. JS liczy więc `offsetLeft` względem `scrollLeft` i bierze
 tylko te kafelki, które w całości mieszczą się w oknie.
 
+**Zapas bywa pusty i to jest przewidziane.** Kolekcja Owlina (Aarakocra 5e) ma 12
+produktów, więc po odjęciu bieżącego zostaje 11 kafelków i zapas wychodzi zerowy -
+pierwsza wersja po prostu by nie ruszyła. Gdy zapasu nie ma, podmiana bierze kafelek,
+który jest akurat **poza kadrem**, i zamienia się z nim miejscami: w kadrze widać nowy
+produkt, ruch poza kadrem jest niewidoczny, nic się nie dubluje i nie dochodzi ani
+jeden obrazek. Kafelek zdjęty w poprzednim tyknięciu jest pomijany, żeby ten sam
+produkt nie wracał od razu.
+
 **Dlaczego zapas siedzi w tym samym `<ul>`, nie w drugiej liście.** Podmiana to jeden
 `insertBefore` - kafelek z zapasu wchodzi na miejsce starego, stary wraca na koniec
 kolejki. Kafelki zapasu są wyjęte z układu przez `position: absolute`, więc nie zmieniają
@@ -63,6 +71,30 @@ kolumny. Że pasek idzie dalej, podpowiada maska wyciemniająca krawędzie.
 „Co ile sekund zmienia się kafelek" (`interval`, 2-12 s, domyślnie 3). W szablonie
 na sklepie został nieużywany klucz `"speed": 110` - Shopify ignoruje nieznane klucze,
 `interval` bierze się z domyślnej wartości schematu.
+
+**Zmierzone na żywo po wdrożeniu** (Owlin, motyw live):
+
+| | desktop 1470 px | telefon 375 px |
+|---|---|---|
+| podmiana | 4 na 13 s, odstępy 3010 / 3011 / 3008 ms | 4 na 13 s, odstępy 3016 / 3022 / 3009 ms |
+| ile kafelków naraz | zawsze 1 | zawsze 1 |
+| kafelek | 127,8 px, 5 w kadrze | 60,59 px, 5 w kadrze |
+| pasek | lewa 40 px, szer. 671 px, wys. 150 px | lewa 20 px, szer. 335 px, wys. 82 px |
+| przewijanie | 1494 / 671 px, gest w bok: 0 → 250 → 500 px | 755 / 335 px, swipe palcem: 0 → 179 px |
+| strona przy przewijaniu paska | nie drgnęła (`scrollY` 0) | nie drgnęła (`scrollY` 0) |
+| obrazki | 11/11 wczytanych, 0 pustych pól | 11/11 wczytanych, 0 pustych pól |
+| duplikaty w kadrze | brak (11 kafelków, 11 unikalnych) | brak |
+| kolejność | okruszki 158 → pasek 253 → zdjęcie 363 (telefon, bez zmian wobec 28.10) | |
+
+Pozycja przewinięcia przy podmianie **nie drgnęła** - 24 próbki co 500 ms przy
+`scrollLeft` 500 px dały stale 500. Pauza na hover działa: z kursorem nad paskiem
+zero podmian przez 12 s. Przy `prefers-reduced-motion: reduce` zero podmian przez 8 s,
+kafelek 76 px, pasek dalej przewijalny (924 / 671 px).
+
+Konsola: 4 błędy na desktopie i 5 na telefonie, wszystkie cudze i sprzed zmiany
+(gift-box-builder, dwa `cdnjs` font-awesome, `MissingRefError` w `header-menu`) -
+żaden nie dotyczy sekcji. Zwykła karta produktu (`aarakocra-5e-rogue-miniature`)
+bez paska, okruszki dalej `16px 32px` i do prawej - bez zmian.
 
 **Jak cofnąć:** `git checkout c55eeb4 -- sections/karuzela-sasiedzi.liquid` i push tego
 jednego pliku. Szablon nietknięty, więc nic poza tym nie trzeba ruszać. Kopia wersji

@@ -4,9 +4,11 @@
   Pasek sam nie jeździ. Stoi i przewija się w bok palcem (telefon) albo gestem
   i shift+kółkiem (desktop). Ruch to jedna podmiana: co kilka sekund jeden
   kafelek będący w kadrze przechodzi płynnie w inny produkt z tej samej
-  kolekcji. Kafelki do podmiany są w tym samym <ul>, oznaczone klasą --zapas,
-  wyjęte z układu i schowane przez visibility - obrazki wczytują się od razu,
-  więc podmiana nigdy nie pokazuje pustego pola.
+  kolekcji. Produkt na wejście bierze się z zapasu - kafelki w tym samym <ul>,
+  oznaczone klasą --zapas, wyjęte z układu i schowane przez visibility, z już
+  wczytanym obrazkiem, więc podmiana nigdy nie pokazuje pustego pola. Gdy
+  kolekcja nie ma więcej produktów, niż pasek już pokazuje, zapas jest pusty
+  i podmiana zamienia miejscami kafelek z kadru z kafelkiem spoza kadru.
 
   Szerokość kafelka, siatka i wysokość paska bez zmian wobec wersji karuzelowej:
   pięć kafelków w kadrze, krawędź równa ze zdjęciem produktu.
@@ -94,7 +96,9 @@
       var przygaszenie = 260;
       var mysz = window.matchMedia('(hover: hover)');
       var wskaznik = 0;
+      var wskaznikPuli = 0;
       var ostatniRuch = 0;
+      var poprzedni = null;
       var timer;
 
       okno.addEventListener(
@@ -105,15 +109,39 @@
         { passive: true }
       );
 
-      // Podmieniamy tylko kafelek, który widać - inaczej co drugie, trzecie
-      // tyknięcie zmieniałoby coś poza kadrem i pasek wyglądałby na martwy.
-      function wKadrze() {
+      // Trzy kubełki: co widać w całości, co jest w rzędzie ale poza kadrem,
+      // i co czeka w zapasie. Kafelek wchodzący do kadru bierzemy z zapasu,
+      // a gdy zapas jest pusty (kolekcja nie ma więcej produktów, niż pasek
+      // już pokazuje) - z kafelka poza kadrem. Wtedy podmiana jest zamianą
+      // miejscami: w kadrze widać nowy produkt, a ruch poza kadrem jest
+      // niewidoczny i nic się nie dubluje.
+      // Kafelki na styku krawędzi nie wpadają do żadnego kubełka - ani ich
+      // nie podmieniamy, ani nimi nie podmieniamy.
+      function podziel() {
         var lewa = okno.scrollLeft;
         var prawa = lewa + okno.clientWidth;
-        return Array.prototype.filter.call(lista.children, function (li) {
-          if (li.classList.contains('sasiedzi__poz--zapas')) return false;
-          return li.offsetLeft >= lewa - 1 && li.offsetLeft + li.offsetWidth <= prawa + 1;
+        var kubelki = { kadr: [], poza: [], zapas: [] };
+        Array.prototype.forEach.call(lista.children, function (li) {
+          if (li.classList.contains('sasiedzi__poz--zapas')) {
+            kubelki.zapas.push(li);
+            return;
+          }
+          var od = li.offsetLeft;
+          var do_ = od + li.offsetWidth;
+          if (od >= lewa - 1 && do_ <= prawa + 1) kubelki.kadr.push(li);
+          else if (do_ <= lewa + 1 || od >= prawa - 1) kubelki.poza.push(li);
         });
+        return kubelki;
+      }
+
+      // Zamiana miejscami dwóch kafelków w rzędzie. Oba mają tę samą
+      // szerokość, więc ani rząd, ani pozycja przewinięcia nie drgną.
+      function zamien(a, b) {
+        var znacznik = document.createComment('');
+        lista.insertBefore(znacznik, b);
+        lista.insertBefore(b, a);
+        lista.insertBefore(a, znacznik);
+        lista.removeChild(znacznik);
       }
 
       function tyk() {
@@ -127,27 +155,42 @@
         if (okno.contains(document.activeElement)) return;
         if (Date.now() - ostatniRuch < 1000) return;
 
-        var nowy = lista.querySelector('.sasiedzi__poz--zapas');
-        if (!nowy) return;
+        var kubelki = podziel();
+        if (!kubelki.kadr.length) return;
 
-        var widoczne = wKadrze();
-        if (!widoczne.length) return;
+        var zZapasu = kubelki.zapas.length > 0;
+        var pula = zZapasu
+          ? kubelki.zapas
+          : kubelki.poza.filter(function (li) {
+              // Kafelek zdjęty poprzednio pomijamy, żeby ten sam produkt nie
+              // wracał do kadru w następnym tyknięciu.
+              return li !== poprzedni;
+            });
+        if (!pula.length) return;
 
-        var stary = widoczne[wskaznik % widoczne.length];
+        var stary = kubelki.kadr[wskaznik % kubelki.kadr.length];
+        var nowy = zZapasu ? pula[0] : pula[wskaznikPuli % pula.length];
         wskaznik += 1;
+        wskaznikPuli += 1;
 
         stary.classList.add('sasiedzi__poz--gasnie');
         setTimeout(function () {
-          // Nowy wchodzi na miejsce starego, stary wraca na koniec kolejki
-          // zapasu. Oba mają tę samą szerokość, więc rząd ani pozycja
-          // przewinięcia nie drgną.
           nowy.classList.add('sasiedzi__poz--gasnie');
-          lista.insertBefore(nowy, stary);
-          nowy.classList.remove('sasiedzi__poz--zapas');
 
-          lista.appendChild(stary);
-          stary.classList.add('sasiedzi__poz--zapas');
+          if (zZapasu) {
+            // Nowy wchodzi na miejsce starego, stary na koniec kolejki zapasu,
+            // więc ten sam produkt wraca najwcześniej po tylu podmianach,
+            // ile sztuk ma zapas.
+            lista.insertBefore(nowy, stary);
+            nowy.classList.remove('sasiedzi__poz--zapas');
+            lista.appendChild(stary);
+            stary.classList.add('sasiedzi__poz--zapas');
+          } else {
+            zamien(stary, nowy);
+          }
+
           stary.classList.remove('sasiedzi__poz--gasnie');
+          poprzedni = stary;
 
           // Dwie klatki: pierwsza maluje nowy kafelek jeszcze przezroczysty,
           // druga uruchamia przejście. Bez tego przeglądarka scala obie zmiany
