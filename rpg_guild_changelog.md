@@ -10,6 +10,30 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-30 (wieczorem)
+
+### Cofnięcie 75mm z produktu testowego  `[poza repo]`
+Shopify Admin API, bez zmian w motywie
+
+**Co:** z produktu `Sorcerer 5e | DnD Female Moon Goddess Miniature`
+(ID `9734318752010`, SKU `KadnaChosen`) usunięte 6 wariantów 75mm.
+Produkt wrócił do 18 wariantów, rozmiary `28mm, 32mm, 38mm`.
+Wartość opcji „75mm" zniknęła sama, gdy padł ostatni wariant, który jej używał -
+nie trzeba było osobnego `productOptionUpdate`.
+
+**Dlaczego:** decyzja Jana - całe wdrożenie 75mm (ceny, pigułka, ikonka, tłumaczenia)
+ma wystartować dopiero 1.11.2026, więc produkt testowy nie może stać z 75mm przez
+dwa dni jako jedyny w sklepie.
+
+**Sprawdzone na żywo:** `/products/moon-goddess-sorcerer-5e-miniature.js` zwraca
+18 wariantów i trzy rozmiary.
+
+**Jak cofnąć cofnięcie:** nic nie trzeba - produkt wejdzie do wdrożenia masowego
+1.11 na równi z pozostałymi 592. Ceny sprzed usunięcia leżą w
+`automation/backups/75mm/PRZED-KadnaChosen-9734318752010.json`.
+
+---
+
 ## 2026-10-30
 
 ### Rozmiar 75mm - test na jednym produkcie DM Stash  `[poza repo]`
