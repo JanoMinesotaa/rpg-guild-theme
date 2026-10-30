@@ -10,6 +10,63 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-30 (noc)
+
+### Rozmiar 75mm: pigułka, ikonka z wymiarami, tłumaczenia DE i FR
+`snippets/informacja-75mm.liquid` (nowy) · `snippets/variant-main-picker.liquid` ·
+`locales/en.default.json` · `locales/de.json` · `locales/fr.json`
+oraz metapola produktów `[poza repo]`
+
+**Co:** pigułka wariantu `75mm` dostaje ciepły bursztyn zamiast pergaminu i oksbloodu,
+a obok niej staje ikonka informacji z dymkiem o wysokości miniatury.
+
+| element | kolor |
+|---|---|
+| wybrana pigułka + ikonka | `#95500C` |
+| obwódka | `#C58A30` |
+| napis na niewybranej | `#884609` |
+| tło niewybranej | `#EFD4A4` |
+
+**Jak celowany jest 75mm.** Przez `input[value='75mm']`, a nie przez `nth-of-type`.
+W `variant-main-picker.liquid` każdy `<input type="radio">` niesie `value` równe
+nazwie wartości opcji, więc selektor trafia dokładnie w tę pigułkę i nie rozjedzie się,
+gdy dojdzie piąty rozmiar albo zmieni się kolejność. Reguły z sekcji
+„PRODUCT MAIN — VARIANTS" w `base.css` celują w `fieldset:last-of-type`, czyli obróbkę -
+rozmiaru nie dotykają i nie ma kolizji.
+
+**Skąd wymiar.** Dwa nowe metapola produktu, `custom.wysokosc_75_cal`
+i `custom.wysokosc_75_cm`, wypełnione na 591 produktach ze źródła Jana
+(arkusz DM Stash, kolumna J). Centymetry przeliczone z cali razy 2,54, a nie
+z kolumny mm - arkusz ma tam wartości o około procent wyższe i dwie liczby
+w jednym zdaniu by się nie zgadzały. `Tenagor` i `The Absolver` mają w arkuszu
+`0,00` i `#ERROR!`, więc zostały bez metapola i dostaną dymek bez liczby.
+
+**Tłumaczenia.** Trzy klucze w `products.product`: `size_75_label`, `size_75_info`,
+`size_75_info_no_size`, w `en.default`, `de` i `fr`. Liczba wchodzi przez zmienne
+`{{ inch }}` i `{{ cm }}`, więc tłumaczy się samo zdanie, a nie 591 osobnych tekstów.
+Przecinek dziesiętny ustawia snippet: kropka po angielsku, przecinek po niemiecku
+i francusku.
+
+**Czemu CSS jest w snippecie, a nie w `base.css`.** Ma sens wyłącznie razem z tą
+pigułką, a koniec `base.css` jest martwy - niedomknięta reguła Swyma połyka wszystko,
+co się tam dopisze.
+
+**Nic nie widać do 1.11.** Ikonka renderuje się tylko wtedy, gdy produkt ma wartość
+opcji `75mm`, a dziś nie ma jej żaden produkt. Sprawdzone po wysyłce na
+`/products/moon-goddess-sorcerer-5e-miniature` w trzech wersjach językowych:
+selektor renderuje się normalnie (3 + 6 pigułek), `.rozmiar75` nie istnieje,
+styl się nie wstrzykuje, przycisk zakupu działa, konsola czysta.
+
+**Czego jeszcze nie widziałem na żywo:** samej pigułki 75mm i dymka na sklepie -
+do tego potrzebny jest produkt z wariantem 75mm, a te powstają dopiero 1.11.
+
+**Jak cofnąć:** `git checkout przed-75mm-motyw -- snippets/variant-main-picker.liquid
+locales/en.default.json locales/de.json locales/fr.json` i push tych plików;
+`snippets/informacja-75mm.liquid` usunąć z motywu. Metapola można zostawić -
+bez snippetu nic ich nie czyta.
+
+---
+
 ## 2026-10-30 (wieczorem)
 
 ### Cofnięcie 75mm z produktu testowego  `[poza repo]`
