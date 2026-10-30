@@ -1,0 +1,225 @@
+{%- comment -%}
+  Ikonka informacji przy pigułce 75mm w selektorze rozmiaru na karcie produktu.
+  Renderuje się wyłącznie wtedy, gdy produkt ma wartość opcji "75mm" - sprawdza to
+  variant-main-picker.liquid przed wywołaniem.
+
+  Wymiar bierze się z metapól produktu:
+    custom.wysokosc_75_cal  - wysokość w calach, liczba jako tekst, np. "4.92"
+    custom.wysokosc_75_cm   - wysokość w centymetrach, np. "12.5"
+  Gdy któregoś brakuje, dymek pokazuje samo zdanie o wymiarach na życzenie.
+
+  Przecinek dziesiętny: angielski ma kropkę, niemiecki i francuski przecinek.
+
+  Kolory 75mm są tu, a nie w base.css, bo mają sens tylko razem z tą pigułką.
+  Odcienie dobrane do pigułki wariantu z base.css (#5D1309 / #F1E4D9) - ciepły
+  bursztyn, nie mosiądz. Zmiana jednego koloru wymaga zmiany pozostałych trzech.
+
+  Przyjmuje: product - obiekt produktu
+{%- endcomment -%}
+
+{%- liquid
+  assign cal = product.metafields.custom.wysokosc_75_cal.value | default: '' | strip
+  assign cm = product.metafields.custom.wysokosc_75_cm.value | default: '' | strip
+  assign jezyk = request.locale.iso_code | slice: 0, 2
+
+  if jezyk == 'en'
+    assign przecinek = '.'
+  else
+    assign przecinek = ','
+  endif
+
+  if cal != blank and cm != blank
+    assign cal_tekst = cal | replace: '.', przecinek
+    assign cm_tekst = cm | replace: '.', przecinek
+    assign tresc = 'products.product.size_75_info' | t: inch: cal_tekst, cm: cm_tekst, email: shop.email
+  else
+    assign tresc = 'products.product.size_75_info_no_size' | t: email: shop.email
+  endif
+
+  assign dymek_id = 'Dymek75-' | append: product.id
+-%}
+
+<span class="rozmiar75" data-rozmiar-75>
+  <button
+    type="button"
+    class="rozmiar75__ikona"
+    aria-label="{{ 'products.product.size_75_label' | t }}"
+    aria-describedby="{{ dymek_id }}"
+    aria-expanded="false"
+  >
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+      <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4" />
+      <path d="M10 9v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M10 6.2h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+    </svg>
+  </button>
+  <span class="rozmiar75__dymek" role="tooltip" id="{{ dymek_id }}">{{ tresc }}</span>
+</span>
+
+{% style %}
+  /* --- pigułka 75mm: ciepły bursztyn zamiast pergaminu i oksbloodu --- */
+  .variant-option__button-label:has(input[value='75mm']) {
+    background-color: #efd4a4 !important;
+    border-color: #c58a30 !important;
+    color: #884609 !important;
+    font-weight: 500 !important;
+  }
+
+  .variant-option__button-label:has(input[value='75mm']):hover {
+    background-color: #eacb94 !important;
+  }
+
+  .variant-option__button-label:has(input[value='75mm']):has(:checked) {
+    background-color: #95500c !important;
+    border-color: #95500c !important;
+    color: #f1e4d9 !important;
+  }
+
+  /* --- ikonka informacji, w kolorze wybranej pigułki --- */
+  .rozmiar75 {
+    position: relative;
+    display: inline-flex;
+    margin-inline-start: 2px;
+  }
+
+  .rozmiar75__ikona {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: #95500c;
+    cursor: pointer;
+    transition: color 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .rozmiar75__ikona svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+  }
+
+  .rozmiar75__ikona:hover {
+    color: #7a4108;
+  }
+
+  .rozmiar75__ikona:focus-visible {
+    outline: 2px solid #c58a30;
+    outline-offset: 2px;
+  }
+
+  .rozmiar75__dymek {
+    position: absolute;
+    inset-block-end: calc(100% + 10px);
+    inset-inline-start: 50%;
+    z-index: 5;
+    width: max-content;
+    max-width: 280px;
+    padding: 12px 14px;
+    border: 1px solid #d5b193;
+    border-radius: 6px;
+    background: #f7efdd;
+    box-shadow: 0 8px 20px -10px rgb(48 38 30 / 55%);
+    color: #30261e;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.55;
+    text-align: start;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    translate: -50% 4px;
+    transition:
+      opacity 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      translate 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 180ms;
+  }
+
+  /* mostek przez przerwę, żeby kursor dojechał do adresu i dymek się nie zamknął */
+  .rozmiar75__dymek::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline: 0;
+    height: 10px;
+  }
+
+  .rozmiar75__dymek::after {
+    content: '';
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline-start: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 1px solid #d5b193;
+    border-bottom: 1px solid #d5b193;
+    background: #f7efdd;
+    rotate: 45deg;
+    translate: -50% -4px;
+  }
+
+  .rozmiar75__dymek a {
+    color: #95500c;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  .rozmiar75:hover .rozmiar75__dymek,
+  .rozmiar75:focus-within .rozmiar75__dymek,
+  .rozmiar75--otwarty .rozmiar75__dymek {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    translate: -50% 0;
+  }
+
+  @media screen and (width < 750px) {
+    .rozmiar75__dymek {
+      max-width: min(280px, calc(100vw - 48px));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rozmiar75__ikona,
+    .rozmiar75__dymek {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
+<script>
+  // Na telefonie nie ma hovera: dotknięcie otwiera i zamyka, dotknięcie obok zamyka.
+  // Jeden nasłuch na dokument, niezależnie od liczby pigułek na stronie.
+  (() => {
+    if (window.rozmiar75Gotowe) return;
+    window.rozmiar75Gotowe = true;
+
+    const zamknijWszystkie = (oprocz) => {
+      document.querySelectorAll('.rozmiar75--otwarty').forEach((el) => {
+        if (el === oprocz) return;
+        el.classList.remove('rozmiar75--otwarty');
+        el.querySelector('.rozmiar75__ikona')?.setAttribute('aria-expanded', 'false');
+      });
+    };
+
+    document.addEventListener('click', (zdarzenie) => {
+      const ikona = zdarzenie.target.closest('.rozmiar75__ikona');
+      if (!ikona) {
+        if (!zdarzenie.target.closest('.rozmiar75__dymek')) zamknijWszystkie(null);
+        return;
+      }
+      const opakowanie = ikona.closest('.rozmiar75');
+      const otwarty = opakowanie.classList.toggle('rozmiar75--otwarty');
+      ikona.setAttribute('aria-expanded', otwarty ? 'true' : 'false');
+      zamknijWszystkie(opakowanie);
+    });
+
+    document.addEventListener('keydown', (zdarzenie) => {
+      if (zdarzenie.key === 'Escape') zamknijWszystkie(null);
+    });
+  })();
+</script>

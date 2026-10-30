@@ -249,7 +249,10 @@
       "adding_to_cart": "Wird hinzugefügt...",
       "add_to_cart_error": "Fehler beim Hinzufügen zum Warenkorb",
       "sold_out": "Ausverkauft",
-      "unavailable": "Nicht verfügbar"
+      "unavailable": "Nicht verfügbar",
+      "size_75_label": "Über die Größe 75mm",
+      "size_75_info": "In 75-mm-Skalierung ist diese Miniatur etwa {{ inch }} Zoll ({{ cm }} cm) hoch. Genaue Maße? Schreiben Sie an <a href=\"mailto:{{ email }}\">{{ email }}</a>.",
+      "size_75_info_no_size": "Sie brauchen die genauen Maße dieser Miniatur in 75 mm? Schreiben Sie an <a href=\"mailto:{{ email }}\">{{ email }}</a>."
     }
   },
   "fields": {

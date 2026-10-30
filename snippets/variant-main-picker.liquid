@@ -107,6 +107,19 @@
                 {% render 'strikethrough-variant', product_option: product_option_value %}
               </label>
             {%- endfor -%}
+            {%- liquid
+              # Ikonka z wymiarami przy pigulce 75mm. Tylko produkty, ktore maja ten rozmiar.
+              assign ma_75mm = false
+              for wartosc_opcji in product_option.values
+                if wartosc_opcji.name == '75mm'
+                  assign ma_75mm = true
+                  break
+                endif
+              endfor
+            -%}
+            {%- if ma_75mm -%}
+              {% render 'informacja-75mm', product: product_resource %}
+            {%- endif -%}
             {% if option_id_attribute %}
               {% style %}
                 [data-option-id="{{ fieldset_id }}"] {
