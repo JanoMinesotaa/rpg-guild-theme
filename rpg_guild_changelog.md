@@ -10,6 +10,48 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-30
+
+### Rozmiar 75mm - test na jednym produkcie DM Stash  `[poza repo]`
+Shopify Admin API (MCP), bez zmian w motywie
+
+**Co:** do produktu `Sorcerer 5e | DnD Female Moon Goddess Miniature`
+(ID `9734318752010`, SKU `KadnaChosen`) doszła czwarta wartość opcji
+**„Choose the size of your mini" = 75mm** i 6 nowych wariantów:
+
+| wariant | cena USD |
+|---|---|
+| 75mm / Unassembled | 39,64 |
+| 75mm / Assembled | 43,64 |
+| 75mm / Primer - Grey | 51,64 |
+| 75mm / Primer - Black | 51,64 |
+| 75mm / Primer - Red | 51,64 |
+| 75mm / Drybrush | 51,64 |
+
+Produkt ma teraz 24 warianty zamiast 18. Ceny z pliku `Ceny wszystkie profile DM.csv`
+(kolumny W-AB). Nowe warianty dziedziczą ustawienia sąsiadów: `taxable: false`,
+`inventoryPolicy: DENY`, `tracked: false`, `requiresShipping: true`, waga 0 kg,
+bez ceny przekreślonej, SKU takie samo jak reszta produktu.
+
+**Dlaczego:** pierwszy produkt z listy 759 SKU DM Stash - test przed wdrożeniem
+masowym. Mutacja: `productVariantsBulkCreate`, wartość opcji 75mm tworzy się
+automatycznie przy pierwszym wariancie, który jej używa.
+
+**Motyw nietknięty.** Selektor wariantów renderuje opcje dynamicznie - jedyne
+miejsca z „32mm" w motywie to tekst FAQ w szablonach, nie lista rozmiarów.
+
+**Sprawdzone na żywo:** `rpgguild.shop/products/moon-goddess-sorcerer-5e-miniature`
+pokazuje cztery pigułki rozmiaru (28/32/38/75), wybór 75mm ustawia wariant
+`54030373388554` i cenę $39.64. Wszystkie 6 wariantów `available: true`
+w `/products/<handle>.js`.
+
+**Jak cofnąć:** `productVariantsBulkDelete` na sześciu ID
+(`54030373388554`, `...421322`, `...454090`, `...486858`, `...519626`, `...552394`),
+potem `productOptionUpdate` z `optionValuesToDelete` dla wartości 75mm.
+Stan sprzed zmiany: `automation/backups/75mm/PRZED-KadnaChosen-9734318752010.json`.
+
+---
+
 ## 2026-10-29
 
 ### Strzałki paska: większe i w kolorach przycisku wariantu
