@@ -10,6 +10,88 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-31 (wieczor, 3)
+
+### The Long Night (sezon): akt z daty - od 1.11 swieci akt II, we wszystkich miejscach i jezykach
+`sections/long-night-season.liquid` (jedyny plik).
+
+**Co:** dodany przelacznik `auto_act` (domyslnie wlaczony), ten sam wzorzec co
+w `long-night-lp-book`: akt nigdy nie jest nizszy niz wynika z kalendarza - od
+1.11 00:00 akt II, od 1.12 00:00 akt III (czas sklepu). Reczny `current_act`
+w szablonie zostaje dolna granica. Liczy serwer Shopify przy renderze, wiec
+nic nie trzeba przestawiac o polnocy.
+
+**Dlaczego jedna zmiana w sekcji, a nie 72 szablony:** sekcja siedzi w 73
+szablonach (kolekcje, produkty, `page.bundle`), w 72 z `current_act: 1`.
+Zmiana w sekcji obejmuje wszystkie naraz oraz DE i FR - wybor aktu to ustawienie
+liczbowe, nie tlumaczony tekst, wiec rynki de/fr czytaja ta sama wartosc.
+
+**Sprawdzone:** logika Liquid przeliczona dla 31.10, 1.11, 15.11 i 1.12 przy
+recznym akcie 1 i 2 (akt 1 -> 1 / 2 / 2 / 3). Przed 1.11 nic sie wizualnie nie zmienia.
+
+**Jak cofnac:** `git revert` commita tej zmiany i push pliku, albo wylaczyc
+`auto_act` w ustawieniach sekcji.
+
+---
+
+## 2026-10-31 (wieczor, 2) [poza repo]
+
+### Zdjecie w produkcie FREE Mini of the Month na 1.11.2026, 01:02 CET - Val Town
+val `janstarosta/rpg-guild-ceny-1-11`, nowy plik `foto.ts` (interval), cron
+`2-30 0 1 11 *` (UTC) = 01:02-01:30 CET 1 listopada. Produkt
+`free-dnd-mini-of-the-month` (ID 9772825706762).
+
+**Co:** dodaje `BadgeListopad2026.webp` jako PIERWSZE zdjecie produktu i zdejmuje
+`BadgePazdziernik2026.webp` (produkt zostaje z 4 zdjeciami). Nowy plik wgralem
+wczesniej do Shopify Files (ID `gid://shopify/MediaImage/51484809855242`, READY,
+na produkcie jeszcze nie widoczny). Alt nowego zdjecia: "FREE Mini of the Month November 2026".
+
+**Okna w Val Town:** ceny 00:01-00:59 CET, to zadanie 01:02-01:30 CET, baner
+01:05-01:59 CET, 75mm od 02:00 CET. Zadanie jest lekkie (kilka zapytan).
+
+**Zabezpieczenia:** idempotentne (nie dubluje zdjecia), czeka az nowe zdjecie bedzie
+READY, kontrola na koncu, stan w blobie `foto-state`, mail z wynikiem lub bledem.
+
+**Sprawdzone:** uruchomienie na sucho przed 1.11 (uprawnienie write_products OK,
+plik na CDN HTTP 200, stare zdjecie na produkcie znalezione). Sciezka zapisu NIE
+byla przetestowana na zywo.
+
+**Jak cofnac:** kopie obu zdjec sa w `Free-Mini-of-the-Month/`. Dodac stare zdjecie
+z powrotem w panelu produktu i zdjac nowe.
+
+---
+
+## 2026-10-31 (wieczor) [poza repo]
+
+### Podmiana filmow w banerze na 1.11.2026, 01:05 CET - Val Town
+val `janstarosta/rpg-guild-baner-1-11`, plik `main.ts` (interval), cron
+`5-59 0 1 11 *` (UTC) = 01:05-01:59 CET 1 listopada.
+
+**Co:** o 1.11 podmienia wskazania filmu w banerze strony glownej: EN w
+`templates/index.json` (`sections.hero_XFBPJU.settings.video_1`), DE i FR w
+tlumaczeniach tego klucza. Pliki mp4 wgralem wczesniej do Shopify Files
+(komenda `upload` w `shopify_rpg_movie.py`, status READY, baner bez zmian):
+EN `RPG Banner Film Nov 2026 (1).mp4`, DE `RPG Banner Film Nov 2026.mp4`,
+FR `RPG Banner Film Nov 2026 (2).mp4`.
+
+**Okna w Val Town (zeby sie nie gryzly):** ceny 00:01-00:59 CET, ten val
+01:05-01:59 CET, 75mm od 02:00 CET.
+
+**Zabezpieczenia:** kolejnosc EN, potem digest i DE/FR; idempotentny; stan i
+punkt cofniecia (poprzednie wskazania) w blobie `baner-state`; mail z wynikiem
+albo z bledem. Starych filmow NIE kasuje, wiec cofniecie jest mozliwe.
+
+**Sprawdzone:** uruchomienie na sucho przed 1.11 - uprawnienia
+(write_files, write_themes, write_translations) OK, 3 pliki READY, obecne
+wskazania odczytane (`Stronka RPG Banner film 10_2026_ENG/DE/FR.mp4`).
+Sciezka zapisu NIE byla przetestowana na zywo.
+
+**Jak cofnac:** przywrocic w motywie EN, DE i FR do wartosci z blobu
+`baner-state` (pole `rollback.previous`) albo `python3 shopify_rpg_movie.py rollback`
+nie zadziala (inny plik stanu) - wtedy recznie w edytorze motywu.
+
+---
+
 ## 2026-10-31 (korekta po poludniu) [poza repo]
 
 ### Lista 75mm przyciety z 593 do 503 - 90 produktow nie mialo ceny w Excelu
@@ -381,6 +463,11 @@ potem `productOptionUpdate` z `optionValuesToDelete` dla wartości 75mm.
 Stan sprzed zmiany: `automation/backups/75mm/PRZED-KadnaChosen-9734318752010.json`.
 
 ---
+
+## 2026-10-31
+
+### [poza repo] Pliki do maila Mini of the Month (listopad) w Content > Files
+- `motm-2026-11-hero.png`, `motm-2026-11-fire-elemental.png` - publiczne adresy obrazków do newslettera edrone (`Black Friday 2026/11-edrone/maile/motm-2026-11/`). Sklepu nie zmieniają. Cofnięcie: usunąć pliki w Files po wysyłce, jeśli nie są potrzebne.
 
 ## 2026-10-29
 
