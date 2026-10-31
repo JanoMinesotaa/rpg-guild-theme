@@ -10,6 +10,64 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-31 (przed poludniem)
+
+### Zadanie 75mm na 1.11.2026, 02:00 CET - Val Town `[poza repo]`
+val `janstarosta/rpg-guild-ceny-1-11`, nowe pliki `warianty75.ts` (interval)
+i `dane75.json` (dane, 80 KB)
+
+**Co:** drugi plik w tym samym valu, w ktorym siedzi zmiana cen z 1.11. Dodaje
+wartosc rozmiaru `75mm` i 3547 wariantow na 593 produktach DM Stash. Cron
+`* 1-2 1 11 *` (UTC) = co minute 02:00-03:59 CET 1 listopada. Pierwsze
+uruchomienie 2026-11-01T01:00:00Z, potwierdzone przez API.
+
+Dlaczego 02:00, a nie o polnocy: `main.ts` w tym samym valu zajmuje okno
+00:01-00:59 CET na ceny. Nie moga biec rownolegle.
+
+**Jak dziala:** darmowy plan Val Town daje 1 minute na uruchomienie, wiec kazde
+robi 40 s pracy i zapisuje pozycje w blobie `75mm-stan`; kolejne minuty koncza
+reszte. Duplikat wariantu jest pomijany, nie liczony jako blad, wiec powtorzone
+uruchomienie niczego nie psuje. Po 40 bledach zadanie sie zatrzymuje i wysyla
+maila zamiast brnac dalej. Na koniec kontrola na probce 20 produktow plus
+wszystkie z `companions-5e` i mail z podsumowaniem.
+
+**Trzy produkty z dwoma mechanizmami naraz:** `Ervin`, `Jesmira`
+i `Arkham_Ravenswood` leza i na liscie 75mm, i w kolekcji `companions-5e`,
+ktora `main.ts` przecenia o 5% o 00:01. Ich nowe warianty 75mm dostaja to samo
+przekreslenie zaraz po utworzeniu - inaczej karta mialaby polowe wariantow
+w promocji, a polowe nie.
+
+**Dane:** `dane75.json` to `do-wdrozenia.json` sciete do postaci
+`[id produktu, id opcji rozmiaru, id opcji obrobki, SKU, [[indeks obrobki, cena]]]`
+- 80 KB zamiast 307 KB. Ceny bez zmian: plaskie 26,95 / 28,96 / 23,98 / 34,99,
+a tam gdzie cena z Excela przekraczala 53,64 USD - polowa ceny z Excela.
+315 z 593 produktow ma przynajmniej jedna cene z tej drugiej reguly.
+
+**Sprawdzone:** uruchomienie na sucho na `main` (przed START nic nie zapisuje)
+- dane sie wczytuja, 593 produkty / 3547 wariantow, kolekcja `companions-5e`
+ma 120 produktow i 3 wspolne z lista, opcja rozmiaru w probce znaleziona.
+Osobno, na skasowanej juz galezi `proba75`, przeszla cala sciezka zapisu na
+jednym produkcie: utworzenie 6 wariantow, zapis stanu w blobie, kontrola i mail
+- wynik `OK`, warianty potem usuniete, produkt wrocil do 18 wariantow.
+
+**Czego jeszcze nie sprawdzilem:** gałęzi z przecena dla tych trzech produktow
+z `companions-5e`. Mutacja jest ta sama, ktorej `main.ts` uzywa od 27.10, ale
+na zywo w tym pliku nie poszla.
+
+**Czego zadanie NIE robi:** tlumaczen wartosci `75mm` na DE i FR. Apka ma tylko
+`read_products` i `write_products`; `translatableResource` odbija sie o brak
+`read_translations`. Na DE i FR pigulki rozmiarow maja tlumaczenia (`28 mm` ze
+spacja), wiec `75mm` pokaze sie surowo. Do zrobienia po 1.11, gdy Jan dopisze
+`read_translations` i `write_translations` do apki - wczesniej i tak sie nie da,
+bo wartosc opcji nie istnieje, dopoki nie powstanie pierwszy wariant.
+
+**Jak cofnac:** skasowac warianty 75mm (`productVariantsBulkDelete`) - wartosc
+opcji znika sama razem z ostatnim z nich. Zadanie wylacza sie przez usuniecie
+pliku `warianty75.ts` z vala albo zmiane crona; blob `75mm-stan` trzyma dokladna
+pozycje, na ktorej skonczylo.
+
+---
+
 ## 2026-10-31 (rano)
 
 ### 75mm: test na żywo na jednym produkcie, dwie poprawki po nim
