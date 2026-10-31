@@ -829,6 +829,11 @@ img {
     background-repeat: no-repeat !important;
     background-size: cover !important;
    }
+   .hero-bg-103 .custom-section-background > div {
+    background: url("/cdn/shop/files/DnD_Gifts_Visual_Design.webp?v=1793462667");
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+   }
 
   
 
@@ -2099,6 +2104,11 @@ display: none !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
    }
+   .hero-bg-103 .custom-section-background > div {
+    background: url("/cdn/shop/files/DnD_Gifts_Visual_Design.webp?v=1793462667");
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+   }
 
 
   .home-qr-title {
@@ -2617,6 +2627,11 @@ display: none !important;
    }
    .hero-bg-102 .custom-section-background > div {
     background: url("/cdn/shop/files/75mm_Visual_Design.png?v=1793433172");
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+   }
+   .hero-bg-103 .custom-section-background > div {
+    background: url("/cdn/shop/files/DnD_Gifts_Visual_Design.webp?v=1793462667");
     background-repeat: no-repeat !important;
     background-size: cover !important;
    }

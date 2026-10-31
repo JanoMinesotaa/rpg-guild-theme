@@ -10,6 +10,28 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-31 (wieczor, 4)
+
+### Kolekcja DnD Gifts: nowa grafika w hero (skrzynia)
+`assets/base.css` · `templates/collection.gift-collection.json` · Files `[poza repo]`
+
+**Co:** hero kolekcji `dnd-gifts` (szablon `collection.gift-collection.json`, sekcja
+`section_tJEjwT`) dostaje `DnD_Gifts_Visual_Design.webp` (skrzynia z ciepla poswiata)
+zamiast grafiki Aarakocry. Plik wgrany do Shopify Files przez Admin API (`fileCreate`).
+
+**Jak:** ten sam mechanizm co 75mm - nowa klasa `hero-bg-103` w `base.css`, dopisana
+we wszystkich trzech blokach responsywnych zaraz pod `hero-bg-102`, a w szablonie
+`hero-bg-11` -> `hero-bg-103`. Regule `hero-bg-11` zostawiona, bo uzywaja jej
+Aarakocra i Spooky.
+
+**Do poprawy (nie ruszone):** tekst hero w Gifts to wciaz kopia z Aarakocry
+("Soar through the skies...", "One Miniature - 18 variants"). Na telefonie `cover`
+przycina grafike do lewej strony, wiec skrzyni nie widac - tak samo jak w innych hero.
+
+**Jak cofnac:** w szablonie `hero-bg-103` -> `hero-bg-11` (kopia sprzed zmiany:
+`rollback/collection.gift-collection.2026-10-31-przed-hero.json` w folderze projektu),
+tag gita `przed-hero-gift-2026-10-31` dla `base.css`.
+
 ## 2026-10-31 (wieczor, 3)
 
 ### The Long Night (sezon): akt z daty - od 1.11 swieci akt II, we wszystkich miejscach i jezykach
