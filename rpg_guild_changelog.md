@@ -10,6 +10,60 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-31 (poludnie)
+
+### Kolekcja 75mm: nowa grafika w hero
+`assets/base.css` · `templates/collection.75mm.json`
+
+**Co:** hero kolekcji `75mm-miniature-big-scale` (szablon `collection.75mm.json`,
+sekcja `section_tJEjwT`) dostaje `75mm_Visual_Design.png` zamiast grafiki
+pozyczonej od kolekcji Aberration.
+
+**Dlaczego to nie jest zmiana jednego ustawienia:** szablon 75mm jest kopia
+`collection.aberration-5e.json` i odziedziczyl po niej klase `hero-bg-15`.
+Ustawienie `background_image` w sekcji nie ma tu nic do rzeczy - `base.css`
+chowa ten obrazek regula
+`.hero-spacer .custom-section-background img { display: none !important }`,
+a tlo rysuja reguly `hero-bg-N`. Pierwsza probka (sama podmiana ustawienia)
+nie zmienila na stronie nic.
+
+**Jak dziala kaskada hero w base.css** - to jest pulapka, ktora kosztowala dwa
+podejscia. Bloki `hero-bg-*` sa w pliku **trzy razy** i to nie jest duplikat
+przez pomylke:
+
+| blok | linie (po zmianie) | media query | dla kogo |
+|---|---|---|---|
+| 1 | ~326-831 | brak | telefon |
+| 2 | ~1590-2101 | `min-width: 480px` | tablet |
+| 3 | ~2177-2622 | `min-width: 768px` | desktop |
+
+Miedzy blokami stoja ogolne reguly `.hero-spacer .custom-section-background > div`
+(linie 1590 i 2106) z `home-hero-fix.png`. Maja **te sama szczegolowosc** co
+reguly `hero-bg-N`, wiec kasuja wszystko, co stoi nad nimi. Regula dopisana
+tylko do bloku 1 dziala wylacznie na telefonie, tylko do bloku 3 - wylacznie
+na desktopie. `hero-bg-102` jest wiec w kazdym z trzech, dokladnie tak jak
+`hero-bg-15`.
+
+**Zmiana w base.css jest wylacznie dodaniem 15 linii** (3 x ta sama regula),
+zero skasowanych - sprawdzone `diff` z kopia sprzed zmiany
+(`automation/backups/75mm/PRZED-base.css`). Dopisane przy rodzenstwie, za
+`hero-bg-101`, **nie na koncu pliku** - koniec `base.css` to znane miejsce,
+gdzie dopiski gina.
+
+**Sprawdzone na zywo:** 390, 600, 1024 i 1440 px - wszedzie
+`75mm_Visual_Design.png`. EN, DE (`/de-de/`) i FR (`/fr-fr/`) - wszedzie nowa
+grafika, klasa `hero-bg-102` dociera do przetlumaczonych storefrontow.
+Kolekcja `aberration-5e` bez zmian, dalej `Aberration_5e_Miniatures.png`.
+Na telefonie widac sam czerwony pas bez figurki, bo grafika jest szeroka
+(1920x892) i `cover` ucina boki - dokladnie tak samo zachowuje sie hero
+Aberration, wiec to nie regres, tylko sposob dzialania tego motywu.
+
+**Jak cofnac:** tag `przed-hero-75mm` (stan sprzed calej zmiany) albo kopie
+`automation/backups/75mm/PRZED-base.css` i `PRZED-collection.75mm.json`.
+Mniejszym krokiem: wrocic w szablonie `custom_class` na `hero-bg-15`.
+
+---
+
 ## 2026-10-31 (przed poludniem)
 
 ### Zadanie 75mm na 1.11.2026, 02:00 CET - Val Town `[poza repo]`
