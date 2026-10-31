@@ -824,6 +824,11 @@ img {
     background-repeat: no-repeat !important;
     background-size: cover !important;
    }
+   .hero-bg-102 .custom-section-background > div {
+    background: url("/cdn/shop/files/75mm_Visual_Design.png?v=1793433172");
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+   }
 
   
 
