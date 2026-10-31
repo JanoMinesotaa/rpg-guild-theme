@@ -10,6 +10,58 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-31 (korekta po poludniu) [poza repo]
+
+### Lista 75mm przyciety z 593 do 503 - 90 produktow nie mialo ceny w Excelu
+
+**Skad to wyszlo:** Jan poprosil o double check, czy w kolekcji sa naprawde te
+produkty, ktore w arkuszu mialy ceny dla 75mm. Nie byly.
+
+**Blad w zrodle planu:** `policz-ceny.py` dla kazdej z szesciu kolumn
+`75 - Unassembled / Assembled / Drybrush / Primer Grey / Primer Black / Primer Red`
+robil tak: jesli komorka ma wartosc i jest wieksza od progu 53.64 USD - polowa
+tej ceny; **w kazdym innym przypadku stawka plaska**. "Kazdy inny przypadek"
+obejmowal takze komorke pusta. Flaga `ma_ceny` sluzyla wylacznie do wyboru
+miedzy zduplikowanymi wierszami tego samego SKU, nie do odsiewania wierszy.
+Efekt: SKU bez ani jednej ceny 75mm dostawalo pelny cennik plaski i wchodzilo
+do planu na rowni z resztą.
+
+**Liczby z arkusza `Ceny wszystkie profile DM.csv` (759 SKU po deduplikacji):**
+- 557 SKU ma wypelnione wszystkie szesc kolumn 75mm,
+- 202 SKU ma wszystkie szesc pustych.
+Podzial jest zero-jedynkowy, nie ma ani jednego SKU z czescia kolumn.
+
+**Jak to wygladalo w planie 593:**
+- 503 produkty z SKU, ktore ceny mialy,
+- **90 produktow z SKU, ktore nie mialy zadnej** - do usuniecia,
+- 0 produktow o SKU nieobecnym w arkuszu.
+
+**Co zrobione:**
+1. Kolekcja `75mm Miniatures` (`586086809866`): `collectionRemoveProducts`
+   na 90 ID. Stan po: 503 produkty, zgodne z planem co do jednego.
+2. `automation/backups/75mm/dane75.json` przebudowany na 503 produkty /
+   3013 wariantow (bylo 593 / 3547).
+3. Ten sam plik podmieniony w Val Town `janstarosta/rpg-guild-ceny-1-11`
+   (`update_file` z `upload_id`, 67767 B). Suchy przebieg potwierdza:
+   `503 produktow / 3013 wariantow do dodania`, companions-5e nadal 3 wspolne.
+4. Komentarz naglowkowy `warianty75.ts` poprawiony z 593 na 503 wraz
+   z powodem. Harmonogram nietkniety: cron `* 1-2 1 11 *`, aktywny.
+
+**Druga strona kontroli - czego NIE naprawialem:** 55 SKU, ktore ceny 75mm
+w arkuszu maja, nie weszlo do planu w ogole. Odrzucil je `dopasuj.py`: brak
+produktu w sklepie, rozne SKU na wariantach jednego produktu, inny uklad opcji
+niz Size/Treatment, nieznana obrobka. Czesc ma w nazwie `REVISIT`
+(`Artizak REVISIT`, `Korgrin REVISIT`, `Tyria REVISIT`, `Varys REVISIT`,
+`Virana REVISIT`, `Ninera REVISIT`, `Raiko REVISIT`). To jest otwarta luka,
+nie regresja - zglaszona Janowi, decyzja po jego stronie.
+
+**Jak cofnac:** pelna lista 90 odrzuconych rekordow z cenami leży w
+`automation/backups/75mm/USUNIETE-90-bez-cen.json`, poprzedni plan w
+`automation/backups/75mm/PRZED-dane75-593.json`, stan kolekcji przed calym
+dodawaniem w `automation/backups/75mm/PRZED-kolekcja-75mm.json`.
+
+---
+
 ## 2026-10-31 (po poludniu) [poza repo]
 
 ### Kolekcja 75mm: dodane 593 produkty
