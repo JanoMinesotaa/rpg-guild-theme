@@ -22,13 +22,15 @@
   assign uid = section.id
   assign current = section.settings.current_act | default: 1
   # AKT Z DATY (jak w long-night-lp-book): przy włączonym `auto_act` akt nigdy nie jest
-  # niższy niż wynika z kalendarza - od 1.11 00:00 akt II, od 1.12 00:00 akt III (czas
-  # sklepu). Ręczny wybór zostaje dolną granicą. Liczy serwer przy renderze.
+  # niższy niż wynika z kalendarza - akt II od 31.10, akt III od 1.12 00:00 (czas sklepu).
+  # Akt II zapalony dzień przed listopadem na prośbę Jana z 31.10.2026: oś sezonu ma już
+  # dziś wskazywać listopad. Landing sezonu zostaje na 1.11, bo tam akt odblokowuje karty.
+  # Ręczny wybór zostaje dolną granicą. Liczy serwer przy renderze.
   if section.settings.auto_act
     assign ln_now = 'now' | date: '%Y%m%d%H%M' | plus: 0
     if ln_now >= 202612010000 and current < 3
       assign current = 3
-    elsif ln_now >= 202611010000 and current < 2
+    elsif ln_now >= 202610310000 and current < 2
       assign current = 2
     endif
   endif
