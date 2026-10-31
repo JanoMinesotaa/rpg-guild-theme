@@ -824,11 +824,6 @@ img {
     background-repeat: no-repeat !important;
     background-size: cover !important;
    }
-   .hero-bg-102 .custom-section-background > div {
-    background: url("/cdn/shop/files/75mm_Visual_Design.png?v=1793433172");
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
-   }
 
   
 
@@ -2607,6 +2602,11 @@ display: none !important;
    }
    .hero-bg-101 .custom-section-background > div {
     background: url("/cdn/shop/files/Visual_Design_Bundles.png?v=1781877445");
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+   }
+   .hero-bg-102 .custom-section-background > div {
+    background: url("/cdn/shop/files/75mm_Visual_Design.png?v=1793433172");
     background-repeat: no-repeat !important;
     background-size: cover !important;
    }
