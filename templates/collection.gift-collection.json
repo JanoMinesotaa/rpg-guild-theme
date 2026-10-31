@@ -231,7 +231,7 @@
                   "settings": {
                     "enable_custom_font": true,
                     "custom_class": "home-hero-title",
-                    "text": "<h1>{{ closest.collection.title }}</h1>",
+                    "text": "<h1>Perfect DnD Gift Ideas:</h1>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -256,6 +256,7 @@
                 "text_7GJ8RL": {
                   "type": "text",
                   "name": "Sub headline",
+                  "disabled": true,
                   "settings": {
                     "enable_custom_font": false,
                     "custom_class": "",
@@ -286,8 +287,8 @@
                   "name": "Description",
                   "settings": {
                     "enable_custom_font": false,
-                    "custom_class": "",
-                    "text": "<p>{{ closest.collection.metafields.custom.collection_description | metafield_tag }}</p>",
+                    "custom_class": "hero-guild-title2",
+                    "text": "<p>Not sure what to get the adventurer in your life? From handmade dice and mystery boxes to terrain sets and miniature bundles, every gift here is ready for a real game table and hand-detailed in our guild, so it lands as if they had picked it themselves.</p><p></p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -498,7 +499,7 @@
                           "settings": {
                             "enable_custom_font": false,
                             "custom_class": "c",
-                            "text": "<p>One Miniature - 18 variants</p>",
+                            "text": "<p>Buy before December 4th to ensure Xmas arrival</p>",
                             "width": "fit-content",
                             "max_width": "normal",
                             "alignment": "left",
@@ -599,7 +600,7 @@
                           "settings": {
                             "enable_custom_font": false,
                             "custom_class": "c",
-                            "text": "<p>Easy to Paint</p>",
+                            "text": "<p>Free shipping over 60 $/€</p>",
                             "width": "fit-content",
                             "max_width": "normal",
                             "alignment": "left",
@@ -626,113 +627,11 @@
                         "icon_Vnxedw",
                         "text_mQdhDL"
                       ]
-                    },
-                    "group_iENKmg": {
-                      "type": "group",
-                      "name": "t:names.group",
-                      "settings": {
-                        "enable_slider": false,
-                        "custom_class": "c",
-                        "padding_top": "0",
-                        "padding_right": "0",
-                        "padding_bottom": "0",
-                        "padding_left": "0",
-                        "margin_top": "0",
-                        "margin_right": "0",
-                        "margin_bottom": "0",
-                        "margin_left": "0",
-                        "link": "",
-                        "open_in_new_tab": false,
-                        "content_direction": "row",
-                        "vertical_on_mobile": false,
-                        "horizontal_alignment": "flex-start",
-                        "vertical_alignment": "center",
-                        "align_baseline": false,
-                        "horizontal_alignment_flex_direction_column": "flex-start",
-                        "vertical_alignment_flex_direction_column": "center",
-                        "mobile_horizontal_alignment_row": "flex-start",
-                        "mobile_vertical_alignment_row": "center",
-                        "mobile_horizontal_alignment_column": "flex-start",
-                        "mobile_vertical_alignment_column": "center",
-                        "gap": 12,
-                        "gap_mobile": 12,
-                        "width": "fill",
-                        "custom_width_unit": "%",
-                        "custom_width_value": "100",
-                        "width_mobile": "fill",
-                        "custom_width_mobile_unit": "%",
-                        "custom_width_mobile_value": "100",
-                        "custom_height": 100,
-                        "inherit_color_scheme": true,
-                        "color_scheme": "",
-                        "background_media": "none",
-                        "video_position": "cover",
-                        "background_image_position": "cover",
-                        "border": "none",
-                        "border_width": 1,
-                        "border_opacity": 100,
-                        "border_radius": 0,
-                        "toggle_overlay": false,
-                        "overlay_color": "#00000026",
-                        "overlay_style": "solid",
-                        "gradient_direction": "to top",
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {
-                        "icon_AfUjWU": {
-                          "type": "icon",
-                          "name": "t:names.icon",
-                          "settings": {
-                            "icon": "price_tag",
-                            "image_upload": "shopify://shop_images/icon-footer-asset.svg",
-                            "width": 24,
-                            "link": "",
-                            "open_in_new_tab": false
-                          },
-                          "blocks": {}
-                        },
-                        "text_rhJPt3": {
-                          "type": "text",
-                          "name": "t:names.text",
-                          "settings": {
-                            "enable_custom_font": false,
-                            "custom_class": "c",
-                            "text": "<p>Hand Detailed Miniatures</p>",
-                            "width": "fit-content",
-                            "max_width": "normal",
-                            "alignment": "left",
-                            "type_preset": "rte",
-                            "font": "var(--font-body--family)",
-                            "font_size": "1rem",
-                            "line_height": "normal",
-                            "letter_spacing": "normal",
-                            "case": "none",
-                            "wrap": "pretty",
-                            "color": "var(--color-foreground)",
-                            "background": false,
-                            "background_color": "#00000026",
-                            "corner_radius": 0,
-                            "padding-block-start": 0,
-                            "padding-block-end": 0,
-                            "padding-inline-start": 0,
-                            "padding-inline-end": 0
-                          },
-                          "blocks": {}
-                        }
-                      },
-                      "block_order": [
-                        "icon_AfUjWU",
-                        "text_rhJPt3"
-                      ]
                     }
                   },
                   "block_order": [
                     "group_tG4AMk",
-                    "group_ytNDhU",
-                    "group_iENKmg"
+                    "group_ytNDhU"
                   ]
                 }
               },
@@ -1020,16 +919,67 @@
         "padding-block-end": 0,
         "show_bestsellers": true,
         "bestsellers_heading": "Guild's choice:",
-        "bestseller_1": "owlin-5e-archer-fighter-miniature",
-        "bestseller_2": "pirate-captain-aarakocra-5e-miniature",
-        "bestseller_3": "ranger-aarakockra-5e-assasin-miniature",
+        "bestseller_1": "dnd-terrain-modular-bandit-hideout-set",
+        "bestseller_2": "lost-mine-of-phandelver-5e-dnd-complete-set-of-miniatures",
+        "bestseller_3": "mystery-box-of-monster-dnd-miniatures",
         "show_promo_banner": true,
         "promo_image": "shopify://shop_images/Mystery_box_promo_banner.png",
         "promo_heading": "Can't decide? Let the universe choose for you!",
         "promo_text": "Pick our Mystery box and draw from 5k+ miniatures",
         "promo_link": "https://rpgguild.shop/collections/dnd-mystery-box",
         "promo_button_text": "Learn more",
-        "other_products_heading": "Every DnD Aarakocra 5e Miniature:"
+        "other_products_heading": "DnD Gift Ideas:"
+      }
+    },
+    "section_longNightSeason": {
+      "type": "long-night-season",
+      "blocks": {
+        "act_1": {
+          "type": "act",
+          "settings": {
+            "phase": "rising",
+            "label": "Act I",
+            "name": "Blood Moon Rising",
+            "when": "October",
+            "line": "The moon opens one eye, and the dark starts moving."
+          }
+        },
+        "act_2": {
+          "type": "act",
+          "settings": {
+            "phase": "drip",
+            "label": "Act II",
+            "name": "Blood Moon · Black Friday",
+            "when": "November",
+            "line": "The moon is fresh in blood. The Guild let it strive!"
+          }
+        },
+        "act_3": {
+          "type": "act",
+          "settings": {
+            "phase": "eclipse",
+            "label": "Act III",
+            "name": "The Last Moon",
+            "when": "December",
+            "line": "One eclipse, and the Guild closes the gates…"
+          }
+        }
+      },
+      "block_order": [
+        "act_1",
+        "act_2",
+        "act_3"
+      ],
+      "settings": {
+        "kicker": "October - December 2026",
+        "heading": "The Long Night",
+        "current_act": 1,
+        "auto_act": true,
+        "blood_strength": 62,
+        "cta_label": "See the whole season",
+        "cta_link": "shopify://pages/the-long-night-rpg-guild-sale-season",
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
     "section_DzpkzB": {
@@ -3158,56 +3108,6 @@
         "padding-block-end": 72
       }
     },
-    "section_longNightSeason": {
-      "type": "long-night-season",
-      "blocks": {
-        "act_1": {
-          "type": "act",
-          "settings": {
-            "phase": "rising",
-            "label": "Act I",
-            "name": "Blood Moon Rising",
-            "when": "October",
-            "line": "The moon opens one eye, and the dark starts moving."
-          }
-        },
-        "act_2": {
-          "type": "act",
-          "settings": {
-            "phase": "drip",
-            "label": "Act II",
-            "name": "Blood Moon · Black Friday",
-            "when": "November",
-            "line": "The moon is fresh in blood. The Guild let it strive!"
-          }
-        },
-        "act_3": {
-          "type": "act",
-          "settings": {
-            "phase": "eclipse",
-            "label": "Act III",
-            "name": "The Last Moon",
-            "when": "December",
-            "line": "One eclipse, and the Guild closes the gates…"
-          }
-        }
-      },
-      "block_order": [
-        "act_1",
-        "act_2",
-        "act_3"
-      ],
-      "settings": {
-        "kicker": "October - December 2026",
-        "heading": "The Long Night",
-        "current_act": 1,
-        "blood_strength": 62,
-        "cta_label": "See the whole season",
-        "cta_link": "shopify://pages/the-long-night-rpg-guild-sale-season",
-        "padding_top": 40,
-        "padding_bottom": 40
-      }
-    },
     "section_WpqYYg": {
       "type": "section",
       "blocks": {
@@ -3810,6 +3710,45 @@
                     "text_Mmzw9Y"
                   ]
                 },
+                "accordion_row_mwHlgs": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Why do your miniatures cost more than mass-produced ones?",
+                    "open_by_default": false
+                  },
+                  "blocks": {
+                    "text_XWdTtA": {
+                      "type": "text",
+                      "settings": {
+                        "enable_custom_font": false,
+                        "custom_class": "c",
+                        "text": "<p>Because nothing here is cast in advance. Every figure is printed on demand in resin and hand-detailed. That takes five to seven working days, and with weekends inside that window a parcel can leave the Guild on the tenth or eleventh day. Shipping from the EU comes on top. A mass-produced mini is cheaper because it was made before anyone wanted it. What you pay for here is the one character your player has been describing for a year.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-subheading--family)",
+                        "font_size": "1.25rem",
+                        "line_height": "loose",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_XWdTtA"
+                  ]
+                },
                 "accordion_row_KiNPrL": {
                   "type": "_accordion-row",
                   "settings": {
@@ -4012,45 +3951,6 @@
                   "block_order": [
                     "text_xLVChG"
                   ]
-                },
-                "accordion_row_mwHlgs": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Why do your miniatures cost more than mass-produced ones?",
-                    "open_by_default": false
-                  },
-                  "blocks": {
-                    "text_XWdTtA": {
-                      "type": "text",
-                      "settings": {
-                        "enable_custom_font": false,
-                        "custom_class": "c",
-                        "text": "<p>Because nothing here is cast in advance. Every figure is printed on demand in resin and hand-detailed. That takes five to seven working days, and with weekends inside that window a parcel can leave the Guild on the tenth or eleventh day. Shipping from the EU comes on top. A mass-produced mini is cheaper because it was made before anyone wanted it. What you pay for here is the one character your player has been describing for a year.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-subheading--family)",
-                        "font_size": "1.25rem",
-                        "line_height": "loose",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_XWdTtA"
-                  ]
                 }
               },
               "block_order": [
@@ -4147,8 +4047,8 @@
     "section",
     "section_tJEjwT",
     "main",
-    "section_DzpkzB",
     "section_longNightSeason",
+    "section_DzpkzB",
     "section_WpqYYg",
     "section_DpQNeT",
     "section_AMz4Gw",

@@ -10,6 +10,33 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-31 (wieczor, 5)
+
+### Kolekcja DnD Gifts: opis w hero nie wchodzi na skrzynie + tlumaczenia DE/FR
+`templates/collection.gift-collection.json` · tlumaczenia `[poza repo]`
+
+**Co:** blok opisu w hero (`text_9BHigY`, "Not sure what to get...") dostal
+`custom_class: hero-guild-title2` (istniejaca klasa, `max-width: 700px`). Wczesniej
+opis rozciagal sie do 60vw (`.home-hero-left`) i wchodzil na grafike skrzyni.
+
+**Pulapka:** ustawienie "Max width" bloku tekstu w edytorze NIC nie robi -
+`blocks/text.liquid` w tym motywie jest przerobiony i renderuje tylko tekst
+i `custom_class`. Szerokosc zmienia sie wylacznie klasa.
+
+**Skutek uboczny:** przy ~1700 px tytul "Perfect DnD Gift Ideas:" lamie sie
+na dwie linie (potrzebuje 943,2 px, grupa dostaje 942,1 px - wczesniej maskowal
+to szeroki opis). Na 1280/1440 lamal sie i tak. Na telefonie klasa dodaje 32 px
+odstepu nad opisem.
+
+**Tlumaczenia:** szablon mial 0 tlumaczen DE/FR (klon). Przez `translationsRegister`
+wgrane 52 pola na jezyk: 47 przeniesionych po digescie z `collection.aarakocra-5e`
+i `collection.75mm`, 5 nowych (hero, naglowek listy) przetlumaczonych. Kolekcja
+(tytul, opis, SEO) miala juz tlumaczenia. Sprawdzone curlem na `/de-de/` i `/fr-fr/`.
+
+**Jak cofnac:** klasa - `rollback/collection.gift-collection.2026-10-31-przed-opisem.json`;
+tlumaczenia - `translationsRemove` dla zasobu
+`OnlineStoreThemeJsonTemplate/collection.gift-collection`.
+
 ## 2026-10-31 (wieczor, 4)
 
 ### Kolekcja DnD Gifts: nowa grafika w hero (skrzynia)
