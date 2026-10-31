@@ -114,6 +114,56 @@ nie zadziala (inny plik stanu) - wtedy recznie w edytorze motywu.
 
 ---
 
+## 2026-10-31 (wieczorem)
+
+### The Long Night: akt II swieci od 31.10, nie od 1.11
+`sections/long-night-season.liquid`
+
+**Co:** w sekcji sezonu prog aktu II przesuniety z `202611010000` na `202610310000`.
+Od teraz os sezonu wszedzie na sklepie pokazuje zapalony ACT II / NOVEMBER.
+Zmiana jednej liczby plus komentarz - 5 linii dodanych, 3 usuniete.
+
+**Dlaczego w Liquidzie, a nie w szablonach:** sekcja stoi w **74 szablonach**.
+Wszystkie maja `auto_act` nieustawione, czyli lapia domyslne `true` ze schematu,
+73 maja `current_act: 1`, jeden ma `2`. Jedna linia w Liquidzie przestawia komplet;
+edycja 74 plikow JSON byla by ta sama zmiana przepisana 74 razy.
+
+**To nigdy nie bylo w Val Town.** Jan pytal, czy usunac to z vala - nie ma czego.
+Przelaczanie aktu z daty liczy serwer Shopify przy renderze (commit `ed79872`),
+zadne zadanie w chmurze go nie dotyka. Val `rpg-guild-baner-1-11` dotyczy filmow
+w banerze strony glownej i zostaje nietkniety.
+
+**Czego NIE zmienilem i dlaczego:** ta sama data siedzi jeszcze w trzech sekcjach
+landingu sezonu (`long-night-lp-book`, `long-night-lp-doors`, `long-night-lp-poster`)
+oraz w `assets/long-night-lp.js` jako bezpiecznik na cache. Tam akt **nie jest samym
+podswietleniem** - steruje flaga `locked` na kartach aktow (`if no_i > act_i`), wiec
+podniesienie go odslonilo by karte Black Friday dzien wczesniej. To decyzja handlowa,
+nie kosmetyka. Landing przeskoczy sam 1.11 o polnocy. Zgloszone Janowi.
+
+**Weryfikacja na zywym sklepie** (`/en-pl/collections/undead-5e`):
+- desktop 1470 px: `aria-current="true"` na drugim akcie, ACT II / NOVEMBER,
+  krwawa kreska pod nim, akty I i III przygaszone - zgodne ze zrzutem docelowym Jana,
+- 375 px: ten sam wynik,
+- konsola: 2 bledy, oba zewnetrzne (skrypt reklamowy Azure 429, Font Awesome z cdnjs),
+  zadnego z motywu,
+- `theme check`: 0 uwag dla tego pliku,
+- bilans skladni policzony: `{%`/`%}` 31/31, `{{`/`}}` 83/83, `{`/`}` 290/290,
+  schema parsuje sie jako JSON.
+
+**Odczyt kontrolny po pushu:** md5 repo i LIVE identyczne
+(`a365ef7a26807eb4b24d02e0f9942738`).
+
+**Jak cofnac:** tag `przed-ln-akt2`, albo recznie `202610310000` -> `202611010000`
+w linii 33. Kopia pliku sprzed zmiany byla pobrana z LIVE przed edycja
+(md5 `10f360f0cbe1eb411d27100877ff46e5`).
+
+**Przy okazji, do sprawdzenia przez Jana:** strona landingu
+`/pages/the-long-night-rpg-guild-sale-season` jest opublikowana i na goly adres
+oddaje 200, ale wersja `/en-pl/...` przekierowuje na `/collections/dnd-gifts`.
+Nie dotykalem tego - zglaszam jako obserwacje.
+
+---
+
 ## 2026-10-31 (korekta po poludniu) [poza repo]
 
 ### Lista 75mm przyciety z 593 do 503 - 90 produktow nie mialo ceny w Excelu
