@@ -275,8 +275,8 @@
       "sold_out": "Sold out",
       "unavailable": "Unavailable",
       "size_75_label": "About the 75mm size",
-      "size_75_info": "At 75 mm scale this miniature is about {{ inch }} inches ({{ cm }} cm) tall. Need exact dimensions? Write to <a href=\"mailto:{{ email }}\">{{ email }}</a>.",
-      "size_75_info_no_size": "Need the exact dimensions of this miniature at 75 mm? Write to <a href=\"mailto:{{ email }}\">{{ email }}</a>."
+      "size_75_info_html": "At 75 mm scale this miniature is about {{ inch }} inches ({{ cm }} cm) tall. Need exact dimensions? Write to <a href=\"mailto:{{ email }}\">{{ email }}</a>.",
+      "size_75_info_no_size_html": "Need the exact dimensions of this miniature at 75 mm? Write to <a href=\"mailto:{{ email }}\">{{ email }}</a>."
     }
   },
   "custom_forms": {

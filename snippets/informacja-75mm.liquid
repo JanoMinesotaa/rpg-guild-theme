@@ -31,9 +31,9 @@
   if cal != blank and cm != blank
     assign cal_tekst = cal | replace: '.', przecinek
     assign cm_tekst = cm | replace: '.', przecinek
-    assign tresc = 'products.product.size_75_info' | t: inch: cal_tekst, cm: cm_tekst, email: shop.email
+    assign tresc = 'products.product.size_75_info_html' | t: inch: cal_tekst, cm: cm_tekst, email: shop.email
   else
-    assign tresc = 'products.product.size_75_info_no_size' | t: email: shop.email
+    assign tresc = 'products.product.size_75_info_no_size_html' | t: email: shop.email
   endif
 
   assign dymek_id = 'Dymek75-' | append: product.id

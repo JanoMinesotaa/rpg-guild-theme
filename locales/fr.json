@@ -256,8 +256,8 @@
       "sold_out": "Épuisé",
       "unavailable": "Non disponible(s)",
       "size_75_label": "À propos de la taille 75mm",
-      "size_75_info": "À l’échelle 75 mm, cette figurine mesure environ {{ inch }} pouces ({{ cm }} cm) de haut. Dimensions exactes ? Écrivez à <a href=\"mailto:{{ email }}\">{{ email }}</a>.",
-      "size_75_info_no_size": "Besoin des dimensions exactes de cette figurine à l’échelle 75 mm ? Écrivez à <a href=\"mailto:{{ email }}\">{{ email }}</a>."
+      "size_75_info_html": "À l’échelle 75 mm, cette figurine mesure environ {{ inch }} pouces ({{ cm }} cm) de haut. Dimensions exactes ? Écrivez à <a href=\"mailto:{{ email }}\">{{ email }}</a>.",
+      "size_75_info_no_size_html": "Besoin des dimensions exactes de cette figurine à l’échelle 75 mm ? Écrivez à <a href=\"mailto:{{ email }}\">{{ email }}</a>."
     }
   },
   "fields": {
