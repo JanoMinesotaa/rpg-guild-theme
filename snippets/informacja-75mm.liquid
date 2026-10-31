@@ -177,9 +177,34 @@
     translate: -50% 0;
   }
 
+  /* Na wąskim ekranie ikonka stoi blisko krawędzi i dymek wyśrodkowany na niej
+     wychodził poza kadr. Kotwiczymy go do pola wyboru rozmiaru, nie do ikonki.
+     Etykiety pigułek mają własne position: relative, więc wejście z relative
+     na fieldset niczego w nich nie przesuwa. */
   @media screen and (width < 750px) {
+    .variant-option:has(input[value='75mm']) {
+      position: relative;
+    }
+
+    .rozmiar75 {
+      position: static;
+    }
+
     .rozmiar75__dymek {
-      max-width: min(280px, calc(100vw - 48px));
+      inset-inline: 0;
+      width: auto;
+      max-width: none;
+      translate: 0 4px;
+    }
+
+    .rozmiar75__dymek::after {
+      display: none;
+    }
+
+    .rozmiar75:hover .rozmiar75__dymek,
+    .rozmiar75:focus-within .rozmiar75__dymek,
+    .rozmiar75--otwarty .rozmiar75__dymek {
+      translate: 0 0;
     }
   }
 
