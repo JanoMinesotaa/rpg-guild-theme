@@ -10,6 +10,54 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-31 (rano)
+
+### 75mm: test na żywo na jednym produkcie, dwie poprawki po nim
+`snippets/informacja-75mm.liquid` · `locales/en.default.json` · `locales/de.json` ·
+`locales/fr.json` · warianty produktu `KadnaChosen` `[poza repo]`
+
+**Co:** na produkcie `Sorcerer 5e | DnD Female Moon Goddess Miniature`
+(`moon-goddess-sorcerer-5e-miniature`, SKU `KadnaChosen`) powstało na kilkanaście
+minut 6 wariantów 75mm, żeby obejrzeć pigułkę, ikonkę i dymek na żywym sklepie.
+Po testach warianty usunięte, wartość opcji `75mm` zniknęła razem z ostatnim
+z nich - produkt wrócił do 18 wariantów i trzech rozmiarów.
+
+Test wyłapał dwie rzeczy, których nie widać w makiecie:
+
+1. **Link `mailto` renderował się jako tekst.** Shopify escapuje HTML w wartościach
+   tłumaczeń, jeśli klucz nie kończy się na `_html`. Klucze `size_75_info`
+   i `size_75_info_no_size` zmieniły nazwy na `size_75_info_html`
+   i `size_75_info_no_size_html` w trzech plikach lokalizacji i w snippecie.
+   Commit `3a56116`.
+2. **Dymek wychodził poza kadr na telefonie.** Przy 390 px wyśrodkowany na ikonce
+   dymek zaczynał się na -6 px; `body` ma `overflow-x: hidden`, więc tekst był
+   przycięty. Pod 750 px `fieldset` z rozmiarami dostaje `position: relative`,
+   a dymek `inset-inline: 0` - mieści się w kadrze niezależnie od tego, gdzie
+   stoi ikonka. Strzałka na mobile ukryta, bo nie wskazywałaby już ikonki.
+   Etykiety pigułek mają własne `position: relative`, więc nic się w nich
+   nie przesunęło - sprawdzone na żywym DOM-ie przed zmianą. Commit `a1e95fd`.
+
+**Sprawdzone na żywo** (playwright-cli, produkt z wariantem 75mm):
+EN, DE i FR - dymek z właściwym tekstem i działającym `mailto`, przecinek
+dziesiętny w DE i FR (`4,92` / `12,5`), angielska kropka w EN. Pigułka
+niewybrana `#EFD4A4` z obwódką `#C58A30`, wybrana `#95500C` z tekstem `#F1E4D9`,
+ikonka `#95500C` - zgodnie z zatwierdzoną wersją B. Cena wariantu 75mm
+przeliczyła się normalnie przez Markets: 26,95 USD to 109,00 PLN i 24,95 EUR.
+Desktop 1280 i telefon 390 - dymek w kadrze, brak poziomego przewijania.
+
+**Do decyzji Jana:** na DE i FR pigułki rozmiarów mają tłumaczenia
+(`28 mm` ze spacją), a nowa wartość `75mm` wyświetla się surowo, bo nikt jej
+jeszcze nie przetłumaczył. Do zrobienia w Translate & Adapt albo przez
+`translationsRegister` - na 593 produktach × 2 języki.
+
+**Jak cofnąć:** motyw - tag `przed-75mm-html` wskazuje stan sprzed poprawki
+kluczy `_html`; `git checkout przed-75mm-html -- snippets/informacja-75mm.liquid
+locales/en.default.json locales/de.json locales/fr.json` i push tych plików.
+Warianty testowe - już usunięte, log w `zrobione.jsonl.cofniete2` w scratchpadzie
+sesji (ID 6 wariantów, gdyby trzeba było sprawdzić, co istniało).
+
+---
+
 ## 2026-10-30 (noc)
 
 ### Rozmiar 75mm: pigułka, ikonka z wymiarami, tłumaczenia DE i FR
