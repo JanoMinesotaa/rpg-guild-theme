@@ -10,6 +10,43 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-10-31 (po poludniu) [poza repo]
+
+### Kolekcja 75mm: dodane 593 produkty
+
+**Co:** do kolekcji `75mm Miniatures` (`75mm-miniature-big-scale`,
+ID `586086809866`) dodane 593 produkty - dokladnie ta lista, dla ktorej
+zadanie w Val Town zalozy 1.11.2026 o 02:00 CET wariant rozmiaru `75mm`.
+Przed zmiana w kolekcji byl 1 produkt (`5e Bard`, ID `8544646562058`),
+ktory na liscie tez jest, wiec nic nie wypadlo.
+
+**Czym jest ta kolekcja:** w nowym modelu Shopify (`CollectionConditionsSource`)
+ma zero warunkow i wylacznie recznie wskazane produkty. Nie jest automatyczna,
+wiec nic sie samo nie dopisze ani nie wypadnie - lista jest statyczna.
+
+**Jak zrobione:** Admin API `2025-07`, `collectionAddProductsV2` w paczkach po
+100 (zwraca `job`, kazda paczka odczekana do `done`). Semantyka dodawania,
+nie podmiany, wiec paczki sa bezpieczne. Skrypt: scratchpad sesji,
+`dodaj75.py` + `kolekcja75.py`.
+
+**Stan po zmianie (sprawdzony zapytaniem, nie zalozony):** 593 produkty
+w kolekcji, z planu nie brakuje zadnego, nadmiarowych zero. 9 z nich ma status
+`DRAFT`, wiec na sklepie pojawia sie dopiero po publikacji - to stan sprzed
+tej zmiany, nie jej skutek.
+
+**Weryfikacja na zywo:** `/en-pl/collections/75mm-miniature-big-scale` renderuje
+siatke produktow, hero nadal `75mm_Visual_Design.png`.
+
+**Uwaga na okno czasowe:** do 1.11 o 02:00 kolekcja pokazuje produkty, ktore
+jeszcze nie maja opcji `75mm`. Po przejsciu zadania z Val Town opis kolekcji
+i zawartosc sie zgadzaja. Czlonkostwo w kolekcji nie ma zadnego wplywu na to
+zadanie - ono pracuje na ID produktow z `dane75.json`, kolekcji nie dotyka.
+
+**Jak cofnac:** `collectionRemoveProducts` na 592 ID - stan przed zmiana lezy
+w `automation/backups/75mm/PRZED-kolekcja-75mm.json`.
+
+---
+
 ## 2026-10-31 (poludnie)
 
 ### Kolekcja 75mm: nowa grafika w hero
