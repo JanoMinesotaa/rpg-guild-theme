@@ -141,6 +141,68 @@ nie zadziala (inny plik stanu) - wtedy recznie w edytorze motywu.
 
 ---
 
+## 2026-11-01 (noc) [poza repo]
+
+### Wdrozenie 1.11 przez Val Town: ceny, baner, warianty 75mm - wszystko OK
+
+Trzy zadania w chmurze, zero bledow, kazde z wlasna kontrola. Zmiany w danych
+sklepu, nie w motywie - stad `[poza repo]`.
+
+**1. Ceny** (`rpg-guild-ceny-1-11/main.ts`) - `ok: true`, 10 uruchomien.
+- Zdjete przeceny pazdziernikowe: **345 pozycji** w 7 kolekcjach RESTORE.
+- Companions 5e -5%: **120 produktow**.
+- Kontrola: przecenionych poza Companions 0, wariantow Companions bez przeceny 0,
+  jedyna proporcja `0.95`.
+
+**2. Baner strony glownej** (`rpg-guild-baner-1-11/main.ts`) - `OK`, 00:05 UTC.
+Filmy EN/DE/FR podmienione na listopadowe. Potwierdzone na zywym sklepie:
+hash pliku granego na stronie (`5f4e06325e71434c826ffc105297e02a`) zgadza sie
+z `RPG Banner Film Nov 2026 (1).mp4` w Shopify Files. Pazdziernikowe pliki
+zostaly - cofniecie mozliwe.
+
+**3. Warianty 75mm** (`rpg-guild-ceny-1-11/warianty75.ts`) - 12 uruchomien.
+- **503 produkty, 3013 wariantow**, pominietych 0, bledow 0.
+- Trzy produkty wspolne z companions-5e dostaly przekreslenie: sprawdzony
+  `Elf 5e | DnD Pirate Rogue Companion` ma 75mm / Unassembled 25.60 przy
+  26.95 przekreslone, czyli te same -5% co reszta karty.
+- Kontrola probki 23 produktow: bez wartosci 75mm 0, zla liczba wariantow 0,
+  companions bez przekreslenia 0.
+- Weryfikacja na zywej karcie `moon-goddess-sorcerer-5e-miniature`: pigulka 75mm
+  w bursztynie, ikonka informacji, dymek z wymiarem 4.92 cala (12.5 cm) i adresem
+  jako dzialajacym odnosnikiem `mailto:`.
+
+### Pulapka, przez ktora dwa zadania by nie dokonczyly: limit 15 minut w Val Town
+
+**Co sie stalo:** oba zadania pisano z zalozeniem crona co minute. Darmowy plan
+Val Town **nie uruchamia crona czesciej niz co 15 minut** - przyjmuje wyrazenie,
+ale po cichu rzadzi sie swoim limitem. Zamiast 59 uruchomien na godzine byly 4.
+
+`main.ts` mial okno `1-59 23 31 10 *`, czyli **tylko 31.10 do 23:59 UTC**.
+O 23:45 mial zrobione 258 z ~462 pozycji i zostawaly mu 2 minuty. Gdyby okno
+sie zamknelo: czesc produktow ze zdjeta przecena, czesc nie, faza Companions
+w ogole nieuruchomiona, zaden kolejny cron.
+
+**Naprawa (Jan kliknal, mnie zablokowal klasyfikator uprawnien):**
+- `main.ts`: `1-59 23 31 10 *` -> `0,15,30,45 0,3-6 1 11 *`
+- `warianty75.ts`: `* 1-2 1 11 *` -> `7,22,37,52 1-6 1 11 *`
+
+Minuty przesuniete o 7 celowo: oba pliki siedza w jednym valu, na tym samym
+kluczu API, a przebieg trwa 41 s - przy takim przesunieciu nigdy nie trafiaja
+w te sama minute.
+
+**Na przyszlosc:** zadanie jednorazowe w Val Town planuje sie na **4 uruchomienia
+na godzine**, nie 60, i daje mu okno z duzym zapasem godzin. Zmierzona przepustowosc
+tego sklepu: ~70 pozycji na przebieg przy aktualizacji wariantow, ~45 produktow
+(270 wariantow) przy ich tworzeniu.
+
+### Zostalo do zrobienia
+
+Tlumaczenia DE/FR wartosci opcji `75mm` - teraz juz mozliwe, bo wartosc istnieje.
+Apka `Price Manager` ma od 31.10 `read_translations` i `write_translations`.
+Wzor z istniejacych rozmiarow: `28 mm` ze spacja, w obu jezykach.
+
+---
+
 ## 2026-10-31 (wieczorem)
 
 ### The Long Night: akt II swieci od 31.10, nie od 1.11
