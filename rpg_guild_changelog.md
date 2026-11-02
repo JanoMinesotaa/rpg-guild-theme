@@ -10,6 +10,21 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-02 (5)
+
+### Karuzela - krok 2 z 5: 5 figurek Owlbear `[poza repo]`
+Produkty: `owlbear-5e-forest-beast-miniature`, `owlbear-5e-beast-uldar-miniature`,
+`forest-owlbear-5e-beast-miniature`, `snowy-owlbear-5e-beast-miniature`,
+`owlbear-5e-wild-beast-miniature`.
+
+**Co:** `templateSuffix` z `owlbear` (szablonu nie ma w motywie, wiec dzialal domyslny)
+na `test-default-product` (domyslny + karuzela) przez `productUpdate`. Sprawdzone
+curlem: 5 x 200, po 10 polecen Shopify na strone. Kolekcja zapasowa to "Beast 5e",
+bo w kolejnosci kolekcji produktu `beast-5e` stoi przed `owlbear-5e`.
+
+**Jak cofnac:** przywrocic `templateSuffix` z
+`rollback/karuzela-krok2-owlbear.2026-11-02.jsonl` (folder projektu).
+
 ## 2026-11-02 (4)
 
 ### Karuzela nad zdjeciem: polecenia Shopify + kolekcja -5e
