@@ -25,6 +25,53 @@ bo w kolejnosci kolekcji produktu `beast-5e` stoi przed `owlbear-5e`.
 **Jak cofnac:** przywrocic `templateSuffix` z
 `rollback/karuzela-krok2-owlbear.2026-11-02.jsonl` (folder projektu).
 
+## 2026-11-02 (5)
+
+### Odtworzone 32 angielskie meta_description z niemieckiego i francuskiego
+pola SEO produktow `[poza repo]`
+
+**Co:** angielskie `meta_description` 32 produktow bylo przyciete w polowie frazy
+("grins with.", "slashes with a.", "blades poised to."). Odtworzone i zapisane
+przez `productUpdate` (SEOInput.description). Dodatkowo 64 pola tlumaczen DE/FR
+przepiete na nowe odciski i 12 pol tlumaczen poprawionych, bo byly urwane tak
+samo jak oryginal.
+
+**Jak odtwarzane - dwie zasady:**
+
+- 14 kart: brakujaca tresc byla w tlumaczeniu i wrocila do angielskiego. DE
+  "quer über der Brust" dalo "spear held across his chest", FR "prête à bondir"
+  dalo "coiling for a leap", DE "Hellebarde auf dem Arm" dalo "halberd resting
+  on its arm", FR "prêtes à l'attaque" dalo "blades ready to strike".
+- 18 kart: zadne tlumaczenie nie mialo brakujacego dopelnienia, bo powstalo
+  z juz przycietego angielskiego. Tam zdanie zostalo domkniete BEZ dodawania
+  tresci: "grins with." -> "grins.", "hides behind." -> "hides behind his shield"
+  (to jedno z handle `spear-shield`). Nie wymyslalem szczegolow figurki,
+  ktorych nie widze.
+
+**Trzy karty mialy urwane wszystkie trzy jezyki** (`undead-5e-lesser-zombie-
+lizardfolk`, `undead-5e-zombie-rising-from-grave`, `zombie-5e-savage-ghoul-heavy`):
+niemiecki konczyl sie wielokropkiem "klammert sich an den …", francuski "agrippant
+le...". Tam zdanie domkniete we wszystkich trzech jezykach.
+
+**Przy okazji w ruszanych polach:** usuniety artefakt "Parfait(e) pour votre
+campagne" i "se bat avec un(e)" z francuskiego - resztki po tlumaczeniu maszynowym.
+
+**Czym:** angielskie pola przez Shopify MCP (`productUpdate`), bo apka dev ma
+tylko zakres `write_translations` i nie widzi produktow. Tlumaczenia przez
+`shopify_en_odtworzone.py` (check/run). Tresc i stan sprzed zmiany:
+`shopify_en_odtworzone.json`.
+
+**Jedna karta mniej, niz zapowiadal raport:** `undead-5e-ghoul-zombie-sword-running`
+miala poprawny angielski ("blade trailing behind." to zdanie skonczone), wzorzec
+zlapal sam przyimek. Jej flaga wyczyszczona bez zmiany tresci.
+
+**Sprawdzone:** EN zgodny z zamierzonym na 32 z 32, zero pol `outdated`, kontrola
+urwan czysta w EN, DE i FR; curlem potwierdzone trzy karty na `/`, `/de-de/`
+i `/fr-fr/`.
+
+**Jak cofnac:** `rollback/en-meta-przed-2026-11-02.json` ma stare angielskie
+teksty wszystkich 32 kart wraz z wersjami DE i FR z przed zmiany.
+
 ## 2026-11-02 (4)
 
 ### Karuzela nad zdjeciem: polecenia Shopify + kolekcja -5e
