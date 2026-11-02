@@ -10,6 +10,45 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-02
+
+### Kolekcja DnD Gifts: odswiezone tlumaczenia DE/FR pieciu produktow
+tlumaczenia produktow `[poza repo]`
+
+**Co:** 22 pola tlumaczen (DE i FR) przez `translationsRegister` dla pieciu
+produktow z kolekcji `dnd-gifts`. Angielskie copy tych kart zmienilo sie po
+napisaniu tlumaczen, wiec DE/FR siedzialy na starej tresci:
+
+- Mystery Box of Monster Miniatures - opis + meta title + meta description, DE i FR
+- Mystery Box of Heros Miniatures - opis + meta title + meta description, DE i FR
+- Mystery Box of DnD Miniatures - opis + meta title + meta description, DE i FR
+- DnD 5e Starter Set / DM Essentials - opis, DE i FR
+- Box of Misprints - opis, DE i FR
+
+W trzech Mystery Boxach doszedl akapit o blind box i nowe SEO. W Starter Secie
+i Box of Misprints angielskie copy zostalo przepisane od zera (naglowek, lista
+punktowa, nowe zakonczenie), wiec DE i FR dostaly nowa tresc w tej samej strukturze.
+
+**Pulapka:** flaga `outdated` w Shopify nie wystarcza do oceny, czy tlumaczenie
+odpowiada angielskiemu. Przy Starter Secie i Box of Misprints niemiecki mial
+`outdated: false`, a tresc byla stara - digest zapisuje sie w momencie zapisu
+tlumaczenia, wiec ponowne zapisanie starego tekstu po zmianie EN "czysci" flage.
+Przy audycie trzeba porownac tresc, nie tylko flagi.
+
+**Pozostale pola bez zmian:** sama kolekcja (tytul, opis, SEO) i szablon
+`collection.gift-collection.json` byly aktualne. `product_type` nie ma tlumaczenia
+DE przy 9 produktach kolekcji - zostawione, pole nie idzie na front.
+
+**Czym:** `shopify_dnd_gifts_tln.py` (plan/run/check) + `shopify_dnd_gifts_tln.json`
+w katalogu projektu. Apka dev RPG Guild, client credentials, scope `write_translations`.
+
+**Sprawdzone:** `check` pokazuje 0 pol `outdated`; curlem potwierdzone 10 stron
+(5 produktow x `/de-de/` i `/fr-fr/`) - nowe title i nowe akapity w zrodle.
+
+**Jak cofnac:** `rollback/dnd-gifts-tlumaczenia-przed-2026-11-02.json` ma pelny
+stan EN + DE + FR z przed zmiany; wgrac wartosci z powrotem tym samym skryptem
+albo recznie w Translate & Adapt.
+
 ## 2026-10-31 (wieczor, 5)
 
 ### Kolekcja DnD Gifts: opis w hero nie wchodzi na skrzynie + tlumaczenia DE/FR
