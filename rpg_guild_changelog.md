@@ -10,6 +10,38 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-02 (2)
+
+### Audyt tlumaczen DE/FR calego sklepu - 47 kolekcji z rozjechanym SEO
+audyt, bez zmian na sklepie
+
+**Co:** przeskanowane 104 kolekcje, 127 szablonow JSON motywu i 6627 produktow
+w DE i FR. Kazde pole porownane nie tylko po fladze `outdated`, ale tez tresciowo.
+Raport: `audyt-tlumaczen/RAPORT.md` w katalogu projektu, surowe wyniki w `.jsonl`
+obok, skrypt `shopify_audyt_tlumaczen.py` (collections / templates / products).
+
+**Najwazniejsze znalezisko:** w 47 kolekcjach angielskie `meta_title`
+i `meta_description` zostaly przepisane na format z liczba produktow
+("51 Warforged 5e miniatures - ..."), a DE i FR zostaly na poprzedniej generacji
+copy - przy czystych flagach. Poza tym 262 produkty z nieaktualnym
+`meta_description` i 36 z nieaktualnym opisem.
+
+**Pulapka, drugi raz w tym tygodniu:** flaga `outdated` gasnie, gdy ktos zapisze
+stary tekst tlumaczenia po zmianie EN - digest zapisuje sie wtedy na nowo.
+Tlumaczenia SEO kolekcji maja `updatedAt` 2026-09-10 10:44, co do sekund identyczny
+w roznych kolekcjach, czyli jeden zbiorczy przebieg zapisal je na nowo. Audyt
+tlumaczen po samych flagach nic nie wykaze.
+
+**Dwa fasywne alarmy odrzucone po sprawdzeniu na zywo:** `warforged-5e` - DE i FR
+przeliczyly jednostki imperialne na metryczne (6,5 stopy -> 1,80 m), tresc sie zgadza;
+rodzina `dnd-terrain` - liczby sa, tylko z przecinkiem dziesietnym (3,5 cm vs 3.5 cm),
+co psulo pierwsza wersje detektora.
+
+**Pula B2B:** 993 produkty `-b2b` nie maja tlumaczen DE opisu i SEO, ale nie sa
+widoczne na publicznym sklepie (404 na EN, DE i FR), wiec klient tego nie zobaczy.
+
+**Jak cofnac:** nie ma czego, audyt tylko czytal.
+
 ## 2026-11-02
 
 ### Kolekcja DnD Gifts: odswiezone tlumaczenia DE/FR pieciu produktow
