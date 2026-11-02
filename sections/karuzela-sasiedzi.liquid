@@ -17,20 +17,45 @@
   Wstawiać jako pierwszą sekcję szablonu produktu, nad "main".
 {%- endcomment -%}
 
+{%- comment -%}
+  Kolekcja: pierwsza z adresem kończącym się na -5e (rasa albo typ potwora).
+  Pierwsza kolekcja z brzegu bywa techniczna ("AVADA - Best Sellers",
+  "Quick Order"). Bez kolekcji -5e sekcja się nie pokazuje.
+
+  Polecenia Shopify (Search & Discovery): JS po załadowaniu strony pyta
+  /recommendations/products o tę samą sekcję. Wtedy recommendations.performed
+  jest true i plik zwraca same kafelki z polecanymi figurkami (typ produktu
+  zawiera "Miniature"), a JS stawia je na początku paska.
+{%- endcomment -%}
 {% liquid
   assign col = section.settings.collection
   unless col
-    assign col = product.collections.first
+    for c in product.collections
+      assign koncowka = c.handle | slice: -3, 3
+      if koncowka == '-5e'
+        assign col = c
+        break
+      endif
+    endfor
   endunless
 
   assign limit = section.settings.max_products
   assign ile = 0
+  assign zrodlo = col.products
+  if recommendations.performed
+    assign zrodlo = recommendations.products
+  endif
 %}
 
 {%- capture kafelki -%}
-  {%- for p in col.products limit: 40 -%}
+  {%- for p in zrodlo limit: 40 -%}
     {%- if p.id == product.id -%}
       {%- continue -%}
+    {%- endif -%}
+    {%- if recommendations.performed -%}
+      {%- unless p.type contains 'Miniature' -%}
+        {%- continue -%}
+      {%- endunless -%}
     {%- endif -%}
     {%- assign ile = ile | plus: 1 -%}
     {%- if ile > limit -%}
@@ -59,14 +84,24 @@
   {%- endfor -%}
 {%- endcapture -%}
 
-{%- if col and ile > 0 -%}
+{%- if recommendations.performed -%}
+  <ul class="sasiedzi__lista" data-ile="{{ ile }}">{{ kafelki }}</ul>
+{%- elsif col and ile > 0 -%}
   <div
     class="spacing-style sasiedzi-sekcja"
     style="{% render 'spacing-style', settings: section.settings %}"
   >
     <div class="sasiedzi">
-      <p class="sasiedzi__tytul">{{ section.settings.heading_prefix }} {{ col.title }}</p>
-      <div class="sasiedzi__okno" id="Sasiedzi-{{ section.id }}" data-przerwa="{{ section.settings.interval }}">
+      <p class="sasiedzi__tytul" data-polecane="{{ section.settings.heading_polecane | escape }}">
+        {{- section.settings.heading_prefix }} {{ col.title -}}
+      </p>
+      <div
+        class="sasiedzi__okno"
+        id="Sasiedzi-{{ section.id }}"
+        data-przerwa="{{ section.settings.interval }}"
+        data-limit="{{ limit }}"
+        data-polecane-url="{{ routes.product_recommendations_url }}?product_id={{ product.id }}&section_id={{ section.id }}&limit=10&intent=related"
+      >
         <ul class="sasiedzi__lista">{{ kafelki }}</ul>
       </div>
 
@@ -245,11 +280,46 @@
       });
 
       // Pasek mieści się w całości w kadrze - nie ma czym nawigować.
-      if (okno.scrollWidth <= okno.clientWidth + 1) {
+      function strzalkiWidoczne() {
+        var widac = okno.scrollWidth > okno.clientWidth + 1;
         Array.prototype.forEach.call(strzalki, function (przycisk) {
-          przycisk.style.display = 'none';
+          przycisk.style.display = widac ? '' : 'none';
         });
       }
+      strzalkiWidoczne();
+
+      // Polecenia Shopify. Gdy wróciły co najmniej 4 figurki, idą na początek
+      // paska, a wolne miejsca do limitu dopełnia kolekcja (bez powtórek).
+      // Mniej poleceń albo błąd - pasek zostaje z samą kolekcją.
+      fetch(okno.dataset.polecaneUrl)
+        .then(function (odp) {
+          return odp.ok ? odp.text() : '';
+        })
+        .then(function (html) {
+          var tmp = document.createElement('div');
+          tmp.innerHTML = html;
+          var polecane = tmp.querySelectorAll('.sasiedzi__poz');
+          if (polecane.length < 4) return;
+
+          var limit = parseInt(okno.dataset.limit, 10) || 12;
+          var byly = {};
+          var nowa = document.createDocumentFragment();
+          var dodaj = function (li) {
+            var a = li.querySelector('a');
+            if (!a || byly[a.pathname] || nowa.childNodes.length >= limit) return;
+            byly[a.pathname] = true;
+            nowa.appendChild(li);
+          };
+          Array.prototype.forEach.call(polecane, dodaj);
+          Array.prototype.slice.call(lista.children).forEach(dodaj);
+
+          lista.replaceChildren(nowa);
+          okno.scrollLeft = 0;
+          var tytul = korzen.querySelector('.sasiedzi__tytul');
+          if (tytul && tytul.dataset.polecane) tytul.textContent = tytul.dataset.polecane;
+          strzalkiWidoczne();
+        })
+        .catch(function () {});
 
       if (!bezRuchu) timer = setInterval(tyk, przerwa);
     })();
@@ -538,13 +608,19 @@
       "type": "collection",
       "id": "collection",
       "label": "Kolekcja",
-      "info": "Puste = pierwsza kolekcja produktu."
+      "info": "Puste = pierwsza kolekcja produktu z adresem kończącym się na -5e."
     },
     {
       "type": "text",
       "id": "heading_prefix",
       "label": "Słowo przed nazwą kolekcji",
       "default": "More"
+    },
+    {
+      "type": "text",
+      "id": "heading_polecane",
+      "label": "Nagłówek, gdy pasek pokazuje polecenia Shopify",
+      "default": "You may also like"
     },
     {
       "type": "range",
