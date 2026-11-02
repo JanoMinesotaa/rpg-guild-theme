@@ -10,6 +10,33 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-02 (4)
+
+### Karuzela nad zdjeciem: polecenia Shopify + kolekcja -5e
+`sections/karuzela-sasiedzi.liquid` · `templates/product.test-default-product.json` · tlumaczenia `[poza repo]`
+
+**Co:** pasek nad zdjeciem (dzis tylko Owlin 5e Archer) najpierw pokazuje polecenia
+Shopify (Search & Discovery, `intent=related`), tylko produkty z typem zawierajacym
+"Miniature". Gdy wroca min. 4 figurki, ida na poczatek paska, a naglowek zmienia sie
+na "You may also like" (DE "Das könnte Ihnen auch gefallen", FR "Vous pourriez aussi
+aimer"). Wolne miejsca do limitu dopelnia kolekcja: teraz pierwsza z adresem
+konczacym sie na `-5e`, a nie `product.collections.first`, ktora bywa techniczna
+("AVADA - Best Sellers", "Quick Order"). Bez kolekcji -5e sekcja sie nie pokazuje.
+
+**Jak:** ten sam plik sekcji odpowiada na `/recommendations/products?section_id=...`
+(gdy `recommendations.performed`) i zwraca same kafelki, JS je podmienia. Wysokosc
+paska i pozycja zdjecia bez zmian (zmierzone), wiec nic nie skacze. Nowe ustawienie
+`heading_polecane` wpisane do szablonu, zeby dalo sie je przetlumaczyc.
+
+**Kontekst wdrozenia:** 6499 z 6627 produktow faktycznie renderuje "Default product"
+(4371 ma przypisany szablon, ktorego nie ma w motywie, np. `fiend`, `undead` - po
+starym motywie; Shopify cicho spada na domyslny). Dlatego karuzela idzie partiami
+przez przypinanie szablonu, nie przez zmiane domyslnego.
+
+**Jak cofnac:** `rollback/karuzela-sasiedzi.2026-11-02-przed-poleceniami.liquid`
+i `rollback/product.test-default-product.2026-11-02-przed-naglowkiem.json`
+(folder projektu).
+
 ## 2026-11-02 (3)
 
 ### SEO 47 kolekcji: tlumaczenia DE i FR dociagniete do angielskiego
