@@ -52,6 +52,50 @@ przez przypinanie szablonu, nie przez zmiane domyslnego.
 i `rollback/product.test-default-product.2026-11-02-przed-naglowkiem.json`
 (folder projektu).
 
+## 2026-11-02 (4)
+
+### 262 produkty z nieaktualnym meta_description: trzy realne poprawki, 453 flagi
+tlumaczenia produktow `[poza repo]`
+
+**Co wyszlo z porownania tresci:** z 262 produktow, ktore Shopify oznaczyl jako
+nieaktualne, tlumaczenia byly zepsute w **trzech**. Pozostale dziela sie tak:
+
+- 226 produktow: DE i FR odpowiadaja obecnemu angielskiemu, nieaktualny jest tylko
+  digest zapisany przy tlumaczeniu. Wgrany ten sam tekst na biezacym odcisku,
+  453 pola - flaga gasnie zgodnie z prawda, tresc bez zmian.
+- 33 produkty: **angielski opis jest urwany w polowie frazy** ("grins with.",
+  "slashes with a.", "blades poised to."), a DE i FR maja pelne zdanie, bo powstaly
+  przed przycieciem. Tlumaczen nie ruszane - naprawy wymaga oryginal. Lista z pelna
+  trescia do odtworzenia: `audyt-tlumaczen/RAPORT-angielski-urwany.md`.
+- 3 produkty z realna poprawka:
+  - `mini-skeleton-5e-monster-miniature` - DE skracalo cale zdanie do idiomu
+    "Klein, aber oho!" i gubilo "mighty in the rallying call to the undead army",
+  - `samurai-5e-skeleton-dual-sword-taunt-miniature` - FR mialo "Donjons et & Dragons"
+    (podwojny spojnik), DE mowilo o jednym mieczu, a figurka i EN o dwoch,
+  - `printable-dnd-character-sheet-5e-artificer` - DE i FR mowily o "narzedziach"
+    zamiast o przedmiocie, do ktorego przypisana jest infuzja.
+
+**Pulapka przy audycie:** pierwsza wersja klasyfikatora dala 22 rozjazdy, z czego
+21 bylo moimi bledami. Francuskie "Commandez les vents et les vagues" (czyli
+"command the winds") wpadalo we wzorzec na wezwanie do dzialania "Commandez
+maintenant", a francuskie zdanie brzmi "Parfait pour votre campagne Dungeons &
+Dragons", z angielska nazwa gry, wiec wzorzec wymagajacy "Donjons et Dragons"
+nie trafial. Wniosek: przy takim audycie trzeba przeczytac wyniki, nie tylko
+policzyc dopasowania.
+
+**Bramki w skrypcie:** pusta wartosc przerywa zapis; tekst na sklepie musi byc
+identyczny z tym z audytu, inaczej skrypt staje (zabezpieczenie przed zapisem na
+podstawie nieaktualnego zrzutu); limit 320 znakow.
+
+**Czym:** `shopify_md262_tln.py` (plan/run/check, opcjonalnie `run <id produktu>`),
+wejscie `audyt-tlumaczen/md262-dane.json` i `md262-plan.json`.
+
+**Sprawdzone:** `check` zero niezgodnosci; curlem potwierdzone trzy poprawione karty
+na `/de-de/` i `/fr-fr/`.
+
+**Jak cofnac:** `rollback/md262-przed-2026-11-02.json` ma stan EN+DE+FR wszystkich
+228 ruszanych produktow.
+
 ## 2026-11-02 (3)
 
 ### SEO 47 kolekcji: tlumaczenia DE i FR dociagniete do angielskiego
