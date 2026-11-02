@@ -10,6 +10,45 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-02 (3)
+
+### SEO 47 kolekcji: tlumaczenia DE i FR dociagniete do angielskiego
+tlumaczenia kolekcji `[poza repo]`
+
+**Co:** 184 pola `meta_title` i `meta_description` w DE i FR przez
+`translationsRegister` dla 47 kolekcji, ktore audyt tego dnia wskazal jako
+rozjechane (45 kolekcji po cztery pola, `all-products` tylko `meta_title`,
+`dnd-mystery-box` tylko `meta_description` - w pozostalych polach tych dwoch
+tlumaczenie bylo zgodne).
+
+Tytuly trzymaja format angielskiego: nazwa rasy albo klasy, liczba figurek,
+marka - np. "Kämpfer Miniaturen 5e | 1198 DnD Ritter-Minis | RPG Guild",
+"Figurines Mort-vivant 5e | 637 figurines DnD | RPG Guild". Terminologia wzieta
+z istniejacych tlumaczen tytulow kolekcji, zeby SEO zgadzalo sie z tym,
+co klient widzi na stronie.
+
+**Bramka w skrypcie:** kazda liczba co najmniej dwucyfrowa z angielskiego pola
+musi wystepowac w tlumaczeniu, inaczej skrypt staje. Chodzi o licznik produktow -
+"2856 Monster" nie moze wjechac jako "2865". Porownanie ignoruje separatory,
+wiec 4.900, 4 900 i 4,900 znacza to samo. Druga bramka: dlugosc, 65 znakow
+na tytul i 165 na opis.
+
+**Czym:** `shopify_kolekcje_seo_tln.py` (dump/plan/run/check) i
+`shopify_kolekcje_seo_tln.json` z trescia.
+
+**Sprawdzone:** `check` zero niezgodnosci; ponowny skan calego sklepu
+(104 kolekcje) zero pol rozjechanych, bylo 92; curlem potwierdzone znaczniki
+na `/de-de/` i `/fr-fr/` dla undead-5e, fighter-5e i dnd-terrain-tiles.
+
+**Jak cofnac:** `rollback/kolekcje-seo-przed-2026-11-02.json` ma stan wszystkich
+47 kolekcji z przed zmiany (EN, DE, FR).
+
+**Zauwazone przy okazji, nie ruszane:** francuski tytul kolekcji `construct-5e`
+to "Construire 5e", czyli czasownik "budowac" zamiast nazwy rodzaju istot
+(poprawnie "Créature artificielle"); `halfling-5e` ma francuski tytul "Halbling 5e"
+zamiast "Halfelin". W SEO uzylem terminow poprawnych, same tytuly kolekcji
+zostaly jak byly.
+
 ## 2026-11-02 (2)
 
 ### Audyt tlumaczen DE/FR calego sklepu - 47 kolekcji z rozjechanym SEO
