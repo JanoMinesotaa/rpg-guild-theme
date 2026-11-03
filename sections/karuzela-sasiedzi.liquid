@@ -151,6 +151,17 @@
       var naszRuch = 0;
       var klatka = null;
       var timer;
+      var cisza;
+      var palec = false;
+
+      // Po zatrzymaniu przewijania (i po puszczeniu palca) kadr wraca do
+      // środkowej kopii rzędu - patrz wyrownaj().
+      function poCiszy() {
+        clearTimeout(cisza);
+        cisza = setTimeout(function () {
+          if (!klatka && !palec) wyrownaj();
+        }, 150);
+      }
 
       // Zdarzenie scroll leci i od palca, i od nas. Zapamiętujemy tylko gest
       // użytkownika - własny ruch karuzeli blokowałby inaczej kolejny krok.
@@ -158,9 +169,14 @@
         'scroll',
         function () {
           if (Date.now() - naszRuch > 1200) ostatniGest = Date.now();
+          poCiszy();
         },
         { passive: true }
       );
+      okno.addEventListener('touchstart', function () { palec = true; }, { passive: true });
+      ['touchend', 'touchcancel'].forEach(function (nazwa) {
+        okno.addEventListener(nazwa, function () { palec = false; poCiszy(); }, { passive: true });
+      });
 
       // Gest użytkownika przerywa przesuw w pół drogi - palec ma zawsze
       // pierwszeństwo przed karuzelą.
@@ -210,39 +226,68 @@
         return b.offsetLeft - a.offsetLeft;
       }
 
-      // Krok w prawo: kafelek, który wyjechał za lewą krawędź, wraca na koniec
-      // rzędu, a pozycja przewinięcia maleje w tym samym momencie o jego
-      // szerokość. Kadr nie drga, przeskoku nie widać, a pętla nie ma końca.
+      // Palec przewija zwykły pasek, który ma koniec, a iPhone odbija go wtedy
+      // w puste miejsce. Dlatego rząd dostaje kopie (ukryte dla czytników ekranu
+      // i klawiatury) - po ok. 2500 px z każdej strony, czyli więcej niż jeden
+      // mocny swipe - a kadr trzymamy w środkowej: kafelek przenoszony
+      // z jednego końca rzędu na drugi zmienia pozycję przewinięcia o tyle samo,
+      // więc kadr nie drga, przeskoku nie widać, a pętla nie ma końca.
+      function powiel() {
+        Array.prototype.forEach.call(lista.querySelectorAll('.sasiedzi__poz--kopia'), function (li) {
+          li.remove();
+        });
+        var oryginaly = Array.prototype.slice.call(lista.children);
+        if (okno.scrollWidth <= okno.clientWidth + 1) return;
+        var pary = Math.max(1, Math.ceil(2500 / (krok() * oryginaly.length)));
+        for (var i = 0; i < pary * 2; i++) {
+          oryginaly.forEach(function (li) {
+            var kopia = li.cloneNode(true);
+            kopia.classList.add('sasiedzi__poz--kopia');
+            kopia.setAttribute('aria-hidden', 'true');
+            kopia.querySelectorAll('a').forEach(function (a) {
+              a.tabIndex = -1;
+            });
+            lista.appendChild(kopia);
+          });
+        }
+        okno.scrollLeft = krok() * oryginaly.length * pary;
+      }
+
+      function wyrownaj() {
+        var d = krok();
+        var n = lista.querySelectorAll('.sasiedzi__poz:not(.sasiedzi__poz--kopia)').length;
+        if (!d || !n || !lista.querySelector('.sasiedzi__poz--kopia')) return;
+        var okres = d * n;
+        var srodek = Math.floor(lista.children.length / n / 2) * okres;
+
+        var zabezpieczenie = lista.children.length;
+        while (okno.scrollLeft > srodek + okres / 2 && zabezpieczenie-- > 0) {
+          lista.appendChild(lista.firstElementChild);
+          okno.scrollLeft -= d;
+        }
+        while (okno.scrollLeft < srodek - okres / 2 && zabezpieczenie-- > 0) {
+          lista.insertBefore(lista.lastElementChild, lista.firstElementChild);
+          okno.scrollLeft += d;
+        }
+      }
+
       function wprzod() {
         var d = krok();
         if (!d) return;
-
-        var zabezpieczenie = lista.children.length;
-        while (okno.scrollLeft >= d - 0.5 && zabezpieczenie > 0) {
-          lista.appendChild(lista.firstElementChild);
-          okno.scrollLeft -= d;
-          zabezpieczenie -= 1;
-        }
+        wyrownaj();
 
         // Krok kończy się zawsze na krawędzi kafelka. Jeśli palec zostawił
         // pasek w pół kafelka, pierwszy krok po geście dociąga go do siatki -
         // inaczej ucięty kafelek zostawałby przy lewej krawędzi już na zawsze.
+        var cel = (Math.floor((okno.scrollLeft + 0.5) / d) + 1) * d;
         naszRuch = Date.now();
-        przesun(d - okno.scrollLeft);
+        przesun(cel - okno.scrollLeft);
       }
 
-      // Krok w lewo to lustro tamtego: ostatni kafelek wraca na początek rzędu,
-      // a pozycja przewinięcia rośnie o jego szerokość, więc jest dokąd cofać.
       function wstecz() {
         var d = krok();
         if (!d) return;
-
-        var zabezpieczenie = lista.children.length;
-        while (okno.scrollLeft < d + 0.5 && zabezpieczenie > 0) {
-          lista.insertBefore(lista.lastElementChild, lista.firstElementChild);
-          okno.scrollLeft += d;
-          zabezpieczenie -= 1;
-        }
+        wyrownaj();
 
         var cel = (Math.ceil(okno.scrollLeft / d) - 1) * d;
         if (cel >= okno.scrollLeft - 0.5) cel -= d;
@@ -287,6 +332,7 @@
         });
       }
       strzalkiWidoczne();
+      powiel();
 
       // Polecenia Shopify. Gdy wróciły co najmniej 4 figurki, idą na początek
       // paska, a wolne miejsca do limitu dopełnia kolekcja (bez powtórek).
@@ -311,13 +357,13 @@
             nowa.appendChild(li);
           };
           Array.prototype.forEach.call(polecane, dodaj);
-          Array.prototype.slice.call(lista.children).forEach(dodaj);
+          Array.prototype.forEach.call(lista.querySelectorAll('.sasiedzi__poz:not(.sasiedzi__poz--kopia)'), dodaj);
 
           lista.replaceChildren(nowa);
-          okno.scrollLeft = 0;
           var tytul = korzen.querySelector('.sasiedzi__tytul');
           if (tytul && tytul.dataset.polecane) tytul.textContent = tytul.dataset.polecane;
           strzalkiWidoczne();
+          powiel();
         })
         .catch(function () {});
 
