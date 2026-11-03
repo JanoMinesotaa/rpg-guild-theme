@@ -10,6 +10,69 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-03 (11)
+
+### Kolekcja kart postaci i zestaw 13: koniec obietnicy ukladu klasowego `[poza repo]`
+Zasoby: kolekcja `dnd-5e-character-sheet-pdf` i produkt `dnd-character-sheets-all-13-in-color`.
+EN przez Shopify MCP (`collectionUpdate` z OBOMA polami `seo`, `productUpdate`), DE i FR
+(6 pol) przez `translationsRegister`. Skrypt: `shopify_kolekcja_i_zestaw_13_tln.py` + `.json`.
+
+**Kolekcja:** h2 "A DnD 5e character sheet for every class, not one sheet for all thirteen"
+i `meta_description` "built for your class, not for everyone" sugerowaly arkusz zbudowany
+pod mechanike klasy. Teraz: "Thirteen DnD 5e character sheets, one per class, each with its
+own hand-drawn art" i "One DnD 5e character sheet per class, each with its own hand-drawn
+art...". `meta_title` ("One Per Class") jest prawdziwy i zostal.
+
+**Zestaw 13:** akapit "Every class gets a sheet built around what it actually tracks.
+Infusions for the Artificer, Wild Shape for the Druid, ki for the Monk..." obiecywal sekcje,
+ktorych arkusze nie maja (zdjecia produktowe, wpis (9) i (10)). Zastapiony opisem tego, co
+zdjecia pokazuja: grafika klasy i kolor (helm i dym bitewny Barbarzyncy, lutnia Barda,
+slonce w otwartych dloniach Kleryka, oko Warlocka), trzy strony 5e. Reszta zestawu bez zmian.
+**Zweryfikowane, nie przepisane:** "Worth over $95 if bought separately" - 13 kart po 7,33 USD
+= 95,29 USD, wiec prawdziwe i zostaje. W DE i FR przywrocone dwa `<br>`, ktore moje
+wczesniejsze tlumaczenie (wpis 2026-11-02 (2) i (5)) pominelo; FR "Sorcier" -> "Ensorceleur"
+w liscie klas (spojnie z kolekcjami i nowymi opisami).
+
+**ZALOZENIE:** zdjecia produktowe odpowiadaja obecnym PDF (PDF nie da sie otworzyc przez API).
+Jesli sa przeprojektowane - cofnac z `rollback/kolekcja-i-zestaw-13-przed-2026-11-03.json`.
+
+**Sprawdzone:** `check` 6 pol, 0 problemow, brak flag `meta_title`/`title`. Odpowiedz
+`collectionUpdate`: `seo.title` kolekcji nietkniety. **Odczyt na zywo NIEKOMPLETNY:**
+sklep zwraca 429 `local_rate_limited` po moich wczesniejszych odczytach (24 strony pod rzad) -
+udalo sie tylko EN kolekcji (nowy h2 i meta obecne, stare frazy nieobecne). DE/FR kolekcji,
+zestaw w trzech jezykach i osiem kart po niemiecku NIE zostaly obejrzane na storefroncie.
+Skrypt `weryfikacja.sh` (czeka na limit, strony co 6 s) jest do ponowienia pozniej.
+
+**Otwarte:** hero szablonu kolekcji ("Immersive, intuitive, user-friendly interface, and
+class-specific...") stoi w EN/DE/FR w szablonie motywu. "class-specific" jest tam
+dwuznaczne (grafika jest specyficzna dla klasy, uklad nie). EN zyje w pliku
+`templates/*.json`, wiec zmiana to push motywu, a nie API - decyzja Jana.
+`meta_title` zestawu EN: "...promo bundle (cs in color)" - skrot "cs" w tytule SEO.
+
+**Jak cofnac:** `rollback/kolekcja-i-zestaw-13-przed-2026-11-03.json` (EN+DE+FR obu zasobow).
+
+## 2026-11-03 (10)
+
+### Osiem kart postaci: copy bez obietnic ukladu klasowego `[poza repo]`
+Produkty: artificer, druid, ranger, sorcerer, wizard, fighter, monk, rogue. EN przez MCP
+(`productUpdate`, oba pola `seo`), DE i FR (32 pola) przez `translationsRegister`. Skrypt:
+`shopify_karty_postaci_8_tln.py` + `.json`.
+
+**Co:** stare EN obiecywalo "infusion list with slots", "dedicated Wild Shape section",
+"dedicated ki tracking", "sorcery point pool", "spellbook and prepared spells tracked
+separately", "expertise marked apart" itd. Obejrzalem zdjecia produktowe wszystkich osmiu:
+ten sam ogolny uklad trzech stron co u pieciu kart z wpisu (9), roznica tylko w grafice
+i kolorze. Nowy opis (ta sama struktura co wpis (9)) mowi o grafice klasy, kolorze, trzech
+stronach i wersji kolorowej i czarno-bialej. Wizard w DE/FR jako "Magier" / "Magicien"
+(wczesniej "Zauberer", ktory kolidowal z Sorcererem), Sorcerer FR jako "Ensorceleur".
+
+**ZALOZENIE:** jak wyzej - zdjecia (maj/czerwiec 2024) odpowiadaja obecnym PDF.
+
+**Sprawdzone:** `check` 32 pola, 0 problemow; odpowiedz API: `seo.title` wszystkich osmiu
+nietkniete. Odczyt na zywo NIE zostal wykonany (limit 429, patrz wpis (11)).
+
+**Jak cofnac:** `rollback/karty-postaci-8-przed-2026-11-03.json` (EN+DE+FR osmiu kart).
+
 ## 2026-11-03 (9)
 
 ### Piec kart postaci ze starym copy: nowy opis i SEO w EN, DE, FR `[poza repo]`
