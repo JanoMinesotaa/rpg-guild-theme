@@ -10,7 +10,19 @@ Konwencja: najnowsze na górze.
 
 ---
 
-## 2026-11-03 (12)
+## 2026-11-03 (13)
+
+### Wyłączony rabat automatyczny „Gift :)” `[poza repo]`
+Zasób: `gid://shopify/DiscountAutomaticNode/1473954349322`. Shopify MCP, `discountAutomaticDeactivate`.
+Rabat dawał -5 USD od 100 USD i nie łączył się z rabatami na produkty. Decyzja Jana: wyłączyć,
+bo planowana zmiana gratisu Character Sheets na produkt za 0 USD przywróciłaby te -5 USD przy
+każdym zamówieniu od 100 USD.
+
+Powód całej zmiany: rabat FREE CS z aplikacji EG Auto Add to Cart nie liczy Custom Bundle
+do progu, więc przy koszyku z samym bundlem sheety kosztują 90 USD. Sam ten wpis tego błędu
+nie naprawia, potrzebny jest jeszcze nowy produkt-gratis i podmiana w regule EG.
+
+**Jak cofnąć:** `discountAutomaticActivate` z tym samym ID albo Rabaty → „Gift :)” → Aktywuj.
 
 ### Cztery warianty z przesunietym przecinkiem w cenie `[poza repo]`
 Zasoby: 4 warianty w 4 produktach. Shopify MCP, `productVariantsBulkUpdate`, tylko pole `price`.
