@@ -10,6 +10,58 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-03 (8)
+
+### Szablony Long Night: 25 pol DE/FR w dwoch szablonach `[poza repo]`
+Tlumaczenia szablonow JSON (`ONLINE_STORE_THEME_JSON_TEMPLATE`) przez
+`translationsRegister`. Skrypt: `shopify_szablony_long_night_tln.py` + `.json`
+(folder projektu).
+
+**Co z audytu okazalo sie realnym, a co nie:** audyt wskazal `page.long-night`
+z 7 polami "brakujacymi" i 3 "nieaktualnymi" w kazdym jezyku. Po przeczytaniu:
+
+- **7 "brakujacych" to nazwa marki i cyfry rzymskie** (RPG Guild, I, II, III x2).
+  Wygladaja tak samo w kazdym jezyku, na stronie nic nie brakowalo. Zapisane jawnie
+  (14 pol), zeby audyt przestal je zglaszac; zero zmiany na stronie.
+- **3 "nieaktualne" (Blood Moon, daty, Custom Bundle)** maja tresc zgodna z EN:
+  liczby (10/20/50, -10/-20/-30 %), daty (1-30 listopada, apogeum 27-30) i nazwy
+  sie zgadzaja. Przepiecie odcisku (6 pol). Encje `&middot;` i `&minus;` renderuja sie
+  poprawnie na zywo, bez podwojnego escapowania.
+- Test tresci wszystkich 64 przetlumaczonych pol `page.long-night` (liczby, tagi,
+  dlugosc) i test wycieku (czy angielski tekst szablonu pojawia sie na stronie DE/FR):
+  zero trafien. Strona kampanii byla w porzadku.
+
+**Prawdziwy defekt byl gdzie indziej: `collection.sale-miniatures`** (5 pol).
+Naglowek i akapit o The Long Night mialy w EN nowe copy ("Monthly Miniature
+Rotation!", "The Long Night brings a fresh rotation of miniatures for sale. Join
+our newsletter..."), a DE i FR stare: "Unser monatlicher Miniaturverkauf!" i
+"... bis zu 15 % Rabatt!" - obietnice znizki, ktorej angielski tekst szablonu juz
+nie zawiera. Nowe tlumaczenia w rejestrze reszty kampanii (DE "du", FR "vous",
+"Sale-Rotation" / "rotation des figurines en promotion"). Plus przepiecie odcisku
+jednej odpowiedzi FAQ o pliku STL (tresc zgodna).
+
+**Bramka zlapala blad zanim cokolwiek zapisalem:** pola `text` w tym szablonie to
+tekst sformatowany z opakowaniem (`<h1>...</h1>`, `<p>...</p>`), a moje tlumaczenia
+poszly bez niego. Bramka na bilans tagow zatrzymala akapit; naglowka by nie zatrzymala,
+bo lista tagow nie zawierala `h1` - dopisane. Przy tlumaczeniu pola szablonu zawsze
+brac wartosc EN z opakowaniem jako wzor.
+
+**Sprawdzone:** `check` - 25 pol, 0 problemow. Curlem na zywo EN/DE/FR kolekcji
+`miniatures-on-sale`: nowy naglowek w `<h1>` i nowy akapit, stary "Miniaturverkauf" /
+"Vente Mensuelle" nieobecny; strona kampanii DE i FR laduje sie w calosci.
+
+**Jak cofnac:** `rollback/szablony-long-night-przed-2026-11-03.json` - pelny stan
+EN+DE+FR obu szablonow.
+
+**Otwarte - decyzja o tresci, nie o tlumaczeniu:**
+- Kolekcja `miniatures-on-sale` ma w EN `body_html` "Enjoy our Summer Sale!" - w
+  listopadzie, w trakcie Long Night. DE i FR mowia tam "bis zu 15 % guenstiger" /
+  "jusqu'a 15 % moins cher", a angielski opis tego nie zawiera (EN meta_description
+  mowi "15% cheaper"). Flaga jest czysta, wiec audyt tego nie wykryl. Nie znam
+  aktualnej oferty, wiec niczego nie zmienilem.
+- Pole `description` w danych strukturalnych tej strony bierze ten tekst, wiec
+  Google tez widzi "bis zu 15 %".
+
 ## 2026-11-03 (7)
 
 ### Usuniety szablon testowy `product.test-default-product.json`
