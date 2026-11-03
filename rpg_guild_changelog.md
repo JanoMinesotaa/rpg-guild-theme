@@ -12,6 +12,19 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-03 (7)
 
+### Usuniety szablon testowy `product.test-default-product.json`
+**Co:** plik usuniety z motywu (push wykonany przez Jana). Byl kopia domyslnego
+szablonu z karuzela, uzywana do testu; od 03.11 karuzele ma szablon domyslny.
+Produkty, ktore moglyby jeszcze miec ten sufiks, spadaja na `product.json`,
+czyli dostaja to samo. Sprawdzone: pliku nie ma w motywie (Admin API), Owlin
+i Dwarf dzialaja z karuzela.
+
+**Jak cofnac:** wgrac `rollback/product.test-default-product.2026-11-03-przed-usunieciem.json`
+(folder projektu) jako `templates/product.test-default-product.json`. Tlumaczenia
+DE/FR naglowkow tego szablonu trzeba by wtedy zarejestrowac od nowa.
+
+## 2026-11-03 (7)
+
 ### Dwie kolekcje z nieaktualnym opisem: 12 pol DE/FR i 1 pole EN `[poza repo]`
 Tlumaczenia kolekcji przez `translationsRegister`, plus jedna zmiana zrodla EN przez
 Shopify MCP (`collectionUpdate`). Skrypt: `shopify_kolekcje_opisy_tln.py` + `.json`
