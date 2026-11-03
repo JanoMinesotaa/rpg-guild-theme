@@ -10,6 +10,56 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-03 (7)
+
+### Dwie kolekcje z nieaktualnym opisem: 12 pol DE/FR i 1 pole EN `[poza repo]`
+Tlumaczenia kolekcji przez `translationsRegister`, plus jedna zmiana zrodla EN przez
+Shopify MCP (`collectionUpdate`). Skrypt: `shopify_kolekcje_opisy_tln.py` + `.json`
+(folder projektu).
+
+**`dnd-5e-character-sheet-pdf`** (6 pol): angielskie `body_html`, `meta_title`
+i `meta_description` byly przepisane na copy "karta dla kazdej klasy", a DE i FR
+zostaly na starym ("Hallo Abenteurer! ...", "Une interface immersive..."). Nowe
+tlumaczenia h2, meta_title i meta_description. Akapit i link w body zostawione
+(tlumaczyly sie poprawnie), poza atrybutem `title` linku w FR, ktory byl po angielsku.
+
+**`dnd-mystery-box`** (6 pol): `body_html` DE i FR mialo stare "Lust auf ein
+schnelles Spiel?" / "Envie d'un petit pari rapide ?" zamiast nowego opisu.
+Przetlumaczone od nowa, struktura i link zachowane.
+
+**Blad w liczbie, ktory przepisalem sam:** angielskie `meta_description` Mystery Box
+mowilo "over 1000 minis in the draw", a opis tej samej kolekcji i strona
+`/pages/dnd-mystery-box` mowia "over 5000" (trzy miejsca). Liczbe 1000 przepisalem
+do DE i FR 2026-11-02 przy SEO 47 kolekcji, ufajac angielskiemu. Poprawione w EN,
+DE i FR na 5000.
+
+**Pomylka przy zmianie EN, wykryta i naprawiona w tej samej sesji:**
+`collectionUpdate` z samym `seo.description` WYCZYSCILO `seo.title` kolekcji
+(odpowiedz zwrocila `title: null`). Zauwazone od razu w odpowiedzi, przywrocone
+w tej samej sesji z punktu cofniecia, ktory zrobilem przed zmiana. Krotka chwila bez
+tytulu SEO na produkcji. Skutek uboczny: DE i FR `meta_title` Mystery Box dostaly
+flage `outdated` mimo identycznego odcisku i tresci - przepiete tym samym tekstem
+(+2 pola w skrypcie). **Zasada na przyszlosc: `collectionUpdate` z `seo` zawsze
+z obydwoma polami (`title` i `description`).** Argument `input` jest w tej wersji
+API przestarzaly - uzywac `collection: CollectionUpdateInput!`.
+
+**Czym:** apka dev (`write_translations`) dla tlumaczen, Shopify MCP dla zrodla EN.
+Bramki: zywe tlumaczenie musi byc dokladnie to przejrzane; dla meta_description
+Mystery Box zywy EN musi byc juz nowy; w body_html bilans tagow musi zgadzac sie
+z angielskim; liczby z EN musza byc w tlumaczeniu.
+
+**Sprawdzone:** `check` - 12 pol, 0 problemow. Curlem na zywo EN/DE/FR obu kolekcji:
+`<title>` i `<meta description>` nowe, "ueber 5000" / "plus de 5000" w opisach SEO,
+stary tekst opisu Mystery Box nieobecny. Strona kart postaci w DE i FR: nowy h2 obecny.
+
+**Jak cofnac:** `rollback/kolekcje-opisy-przed-2026-11-03.json` - pelny stan
+EN+DE+FR obu kolekcji sprzed zmian (tez stary EN meta_description Mystery Box).
+
+**Otwarte:** w sekcji hero szablonu kolekcji kart postaci (`<h4>` pod naglowkiem) stoi
+w EN, DE i FR to samo stare copy ("Immersive, intuitive, user-friendly interface...").
+Tlumaczenia sa zgodne ze zrodlem - to angielski nie zostal przepisany. Decyzja
+o tresci, nie o tlumaczeniu.
+
 ## 2026-11-03 (6)
 
 ### Karuzela: koniec testu, 6 produktow wraca z szablonu testowego `[poza repo]`
@@ -39,7 +89,7 @@ Strzalki i automat korzystaja z tego samego mechanizmu. Sprawdzone na zywo
 **Jak cofnac:** wgrac `rollback/karuzela-sasiedzi.2026-11-03-przed-petla-palca.liquid`
 (folder projektu) jako `sections/karuzela-sasiedzi.liquid`.
 
-## 2026-11-03 (5)
+## 2026-11-03 (5, fey-5e)
 
 ### Kolekcja `fey-5e` po niemiecku: tytul, SEO, opis i menu `[poza repo]`
 Tlumaczenia kolekcji i pozycji menu przez `translationsRegister`. Skrypt:
@@ -139,7 +189,7 @@ w mnogiej, reszta w pojedynczej, choc angielski ma wszedzie pojedyncza. Niespojn
 ale po niemiecku czyta sie naturalnie, a zmiana dotknelaby polowy nawigacji.
 `rescale-miniatures` = "Miniaturen skalieren" w bezokoliczniku (tak samo FR) - to
 kolekcja uslugi, sens zachowany. `fey-5e` = "Fee 5e": typ istoty to po niemiecku
-"Feenwesen", "Fee" znaczy wrozka. **[Korekta w (5): francuskie "Fée 5e" jest
+"Feenwesen", "Fee" znaczy wrozka. **[Korekta w (5, fey-5e): francuskie "Fée 5e" jest
 oficjalnym terminem i nie wymagalo zmiany - uwaga o "tym samym niedociagnieciu" byla
 bledna.]**
 
