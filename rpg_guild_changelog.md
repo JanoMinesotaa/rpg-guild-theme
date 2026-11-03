@@ -10,6 +10,19 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-03 (6)
+
+### Karuzela: koniec testu, 6 produktow wraca z szablonu testowego `[poza repo]`
+**Co:** `templateSuffix` przez `productUpdate`: 5 figurek Owlbear z powrotem na
+`owlbear` (szablonu nie ma w motywie, wiec dziala domyslny), Owlin
+(`owlin-5e-archer-fighter-miniature`) na pusty, czyli domyslny - jego szablonu
+sprzed testu nie ma w zadnym zapisie. Karuzela zostaje, bo ma ja szablon
+domyslny (wpis 2026-11-03). Sprawdzone curlem: karuzela na Owlinie i sowach.
+Plik `templates/product.test-default-product.json` zostaje w motywie - do
+usuniecia, gdy nikt go nie uzywa.
+
+**Jak cofnac:** `rollback/karuzela-sprzatanie-testu.2026-11-03.jsonl` (folder projektu).
+
 ## 2026-11-03 (5)
 
 ### Karuzela: palec nie dojezdza do konca rzedu
