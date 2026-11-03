@@ -10,6 +10,26 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-03 (14)
+
+### Gratis Character Sheets jako osobny produkt za 0 USD `[poza repo]`
+Zasoby: nowy produkt `dnd-character-sheets-all-13-in-color-free-gift`
+(`gid://shopify/Product/10700021072138`, szablon `cart-automations`) oraz reguła FREE CS
+w aplikacji EG Auto Add to Cart. Produkt i regułę zmienił Jan w panelu, cenę i szablon Shopify MCP.
+
+Reguła dodaje teraz nowy produkt, jej rabat FREE CS jest usunięty, a opcja „Prevent customers
+from adding the action products outside of the rule” włączona. Sprzedawany normalnie produkt
+`dnd-character-sheets-all-13-in-color` zostaje za 90 USD.
+
+Powód: rabat EG nie liczył Custom Bundle do progu, więc przy koszyku z samym bundlem sheety
+kosztowały 90 USD. Sprawdzone na żywych koszykach, bez składania zamówienia: sam bundle 147,42 USD,
+bundle z produktem za 32,13 USD i zwykły produkt za 251,72 USD dają sheety za 0 USD. Koszyk za
+32,13 USD nie dostaje gratisu, a ręcznie dodany gratis jest usuwany z komunikatem aplikacji.
+Dostawa PDF po zamówieniu nie była testowana.
+
+**Jak cofnąć:** w regule FREE CS przywróć stary produkt i rabat EG, wyłącz opcję „Prevent...”,
+potem ustaw nowy produkt jako Draft.
+
 ## 2026-11-03 (13)
 
 ### Wyłączony rabat automatyczny „Gift :)” `[poza repo]`
