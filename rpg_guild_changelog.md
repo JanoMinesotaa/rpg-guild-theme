@@ -10,6 +10,22 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-03 (5)
+
+### Karuzela: palec nie dojezdza do konca rzedu
+Plik: `sections/karuzela-sasiedzi.liquid` (commit `1112b96`).
+
+**Co:** na telefonie przewijanie palcem konczylo sie na koncu rzedu i iPhone
+odbijal pasek w puste miejsce (petla dzialala tylko dla automatu i strzalek).
+Rzad dostaje teraz kopie kafelkow (`.sasiedzi__poz--kopia`, `aria-hidden`,
+linki `tabindex=-1`), ok. 2500 px zapasu w kazda strone, a po zatrzymaniu
+przewijania kadr wraca do srodkowej kopii (`powiel()`, `wyrownaj()`).
+Strzalki i automat korzystaja z tego samego mechanizmu. Sprawdzone na zywo
+(390 px i 1280 px): skrajne pozycje wracaja do srodka, polecenia dalej pierwsze.
+
+**Jak cofnac:** wgrac `rollback/karuzela-sasiedzi.2026-11-03-przed-petla-palca.liquid`
+(folder projektu) jako `sections/karuzela-sasiedzi.liquid`.
+
 ## 2026-11-03 (4)
 
 ### Niemieckie tytuly kolekcji: 7 pol `[poza repo]`
