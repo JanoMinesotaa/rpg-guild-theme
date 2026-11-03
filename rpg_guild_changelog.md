@@ -39,6 +39,55 @@ Strzalki i automat korzystaja z tego samego mechanizmu. Sprawdzone na zywo
 **Jak cofnac:** wgrac `rollback/karuzela-sasiedzi.2026-11-03-przed-petla-palca.liquid`
 (folder projektu) jako `sections/karuzela-sasiedzi.liquid`.
 
+## 2026-11-03 (5)
+
+### Kolekcja `fey-5e` po niemiecku: tytul, SEO, opis i menu `[poza repo]`
+Tlumaczenia kolekcji i pozycji menu przez `translationsRegister`. Skrypt:
+`shopify_fey_de.py` (folder projektu).
+
+**Co:** niemiecka nazwa typu istoty "Fey" to "Feenwesen" (tak w niemieckim
+Podreczniku Potworow 5e); "Fee" znaczy pojedyncza wrozke. Kolekcja zawiera dryady,
+satyry, pixie i inne istoty ze Swiata Fey, wiec "Fee" zawezalo ja do jednej z nich.
+Zmienione 4 pola:
+
+- `title` kolekcji: Fee 5e -> Feenwesen 5e
+- `meta_title` kolekcji: "Fee 5e| DnD ..." -> "Feenwesen 5e | DnD ..." (przy okazji
+  brakujaca spacja przed kreska)
+- `body_html` kolekcji: dwa wystapienia ("bringt Fee 5e", "Fee 5e - Die Bewohner")
+- pozycja menu glownego `Link/504024432906`: Fee 5e -> Feenwesen 5e
+
+**Dlaczego cztery, a nie dwa:** po zapisie tytulu i meta_title strona w tytule
+przegladarki byla juz dobra, ale w jej zrodle stare "Fee 5e" bylo jeszcze 6 razy.
+Okruszek nawigacji (`snippets/breadcrumbs.liquid`) bierze tekst z `link.title`
+menu glownego, a tytuly pozycji menu to osobny zasob (`LINK`) z wlasnym
+tlumaczeniem, niezalezny od tytulu kolekcji. Opis kolekcji to trzecie osobne pole.
+Gdybym sprawdzil tylko `<title>`, uznalbym to za skonczone.
+
+**Francuski bez zmian:** "Fée" jest oficjalnym francuskim terminem typu istoty
+(razem z bête, céleste, fiélon, mort-vivant). Opis FR uzywa "Fey 5e" po
+angielsku jak nazwy wlasnej, tak samo jak oryginal - zostawiony.
+
+**Czym:** apka dev (`~/.secrets/rpg-guild-movie.env`, client credentials,
+`write_translations`), Admin API 2025-07. Bramki: zywa wartosc musi byc dokladnie
+ta przejrzana; w body_html liczba tagow i liczby musza byc takie same jak w starym
+tekscie.
+
+**Sprawdzone:** `check` - 4 pola, 0 problemow. Curlem na `/de-de/collections/fey-5e`:
+`<title>` "Feenwesen 5e | DnD Miniaturen-Sammlung | RPG Guild", okruszek
+"Feenwesen 5e", fraza "Fee 5e" w calym zrodle strony: 0 (przed zmiana: 6).
+FR: `<title>` "Fée 5e | ..." bez zmian.
+
+**Jak cofnac:** `rollback/fey-de-przed-2026-11-03.json` (tytul i meta_title)
+oraz `rollback/fey-de-opis-menu-przed-2026-11-03.json` (opis i menu).
+
+**Otwarte - nie do ruszenia przez API:**
+- Strona `/pages/dnd-monster-types` jest zbudowana w GemPages. Kafelek tej kolekcji
+  ma podpis "Fee" (tekst, alt i title obrazka), a GemPages trzyma tresc poza
+  tlumaczeniami Shopify. Do zmiany w edytorze GemPages, na stronie DE.
+- Niemiecki adres kolekcji to `/de-de/collections/fee-5e-1` (przetlumaczony
+  handle, z doklejonym `-1`). Adresu nie zmieniam: zmiana to nowy URL, a stary
+  musialby przekierowac. Do decyzji, czy w ogole warto.
+
 ## 2026-11-03 (4)
 
 ### Niemieckie tytuly kolekcji: 7 pol `[poza repo]`
@@ -90,8 +139,9 @@ w mnogiej, reszta w pojedynczej, choc angielski ma wszedzie pojedyncza. Niespojn
 ale po niemiecku czyta sie naturalnie, a zmiana dotknelaby polowy nawigacji.
 `rescale-miniatures` = "Miniaturen skalieren" w bezokoliczniku (tak samo FR) - to
 kolekcja uslugi, sens zachowany. `fey-5e` = "Fee 5e": typ istoty to po niemiecku
-"Feenwesen", "Fee" znaczy wrozka - to samo niedociagniecie ma francuskie
-"Fée 5e", wiec zostawiam oba do jednej decyzji.
+"Feenwesen", "Fee" znaczy wrozka. **[Korekta w (5): francuskie "Fée 5e" jest
+oficjalnym terminem i nie wymagalo zmiany - uwaga o "tym samym niedociagnieciu" byla
+bledna.]**
 
 **Terminologia do decyzji (nie ruszana):** `artificer-5e` ma tytul "Erfinder 5e",
 a produkty-karty postaci uzywaja "Artificer" - sklep mowi dwoma slowami o tej
