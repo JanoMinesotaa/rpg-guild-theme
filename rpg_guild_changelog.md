@@ -27,6 +27,14 @@ bundle z produktem za 32,13 USD i zwykły produkt za 251,72 USD dają sheety za 
 32,13 USD nie dostaje gratisu, a ręcznie dodany gratis jest usuwany z komunikatem aplikacji.
 Dostawa PDF po zamówieniu nie była testowana.
 
+Z nowego produktu usunięte tagi skopiowane z oryginału. Status Unlisted był włączony na krótko
+i cofnięty do Active, więc produkt nadal jest widoczny w kolekcjach sklepu w cenie 0 USD.
+
+**Otwarty problem:** po zmianie część sesji testowych i koszyk Jana nie dostają żadnego gratisu
+(Free Mini, Potion, Random Mini, sheety), a skrypt EG nie wysyła wtedy żadnego żądania dodania.
+Reguły na stronie są aktywne i poprawne. Przyczyna nieustalona; zamówienie #13242 sprzed zmiany
+też nie ma gratisów, ale związek nie jest potwierdzony.
+
 **Jak cofnąć:** w regule FREE CS przywróć stary produkt i rabat EG, wyłącz opcję „Prevent...”,
 potem ustaw nowy produkt jako Draft.
 
