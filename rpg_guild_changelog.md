@@ -10,6 +10,66 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-03 (4)
+
+### Niemieckie tytuly kolekcji: 7 pol `[poza repo]`
+Tlumaczenia kolekcji przez `translationsRegister`. Skrypt:
+`shopify_kolekcje_tytuly_de.py` (folder projektu).
+
+| kolekcja | bylo | jest | dlaczego |
+|---|---|---|---|
+| `hot-miniatures` | Heiße Miniaturen | Angesagte Miniaturen | "heiß" to goraca; EN "hot" znaczy tu popularna |
+| `hot-sale-products` | Bestseller | Top-Angebote | identyczny tytul jak `best-selling-collection` |
+| `artisan-guild-miniatures` | Miniaturen der Handwerkergilde | Artisan Guild Miniaturen | przetlumaczona nazwa studia |
+| `physical-products` | Physikalische Produkte | Physische Produkte | "physikalisch" dotyczy fizyki jako nauki |
+| `wizard-5e` | "Magier 5e " | Magier 5e | spacja na koncu |
+| `customers-favourites-dnd-miniatures` | "Kundenfavoriten " | Kundenfavoriten | spacja na koncu |
+| `dnd-mystery-box` | "DnD Mystery Box " | DnD Mystery Box | spacja na koncu |
+
+**Dwie rzeczy, ktore przesadzily o brzmieniu:** niemiecki `meta_title` kolekcji
+`hot-miniatures` juz wczesniej mowil "Angesagte Miniaturen" - czyli sklep mial
+dobre slowo w SEO, a tytul zostal w tyle; wziety wiec zostal ten sam.
+Niemiecki `meta_title` kolekcji `artisan-guild-miniatures` zachowuje "Artisan
+Guild", a pozostale marki trzymaja wzor "<marka> Miniaturen" (Cast n Play,
+Daybreak, DM Stash, Galaad) - nowy tytul idzie tym wzorem.
+
+Zderzenie nazw bylo realne: `hot-sale-products` i `best-selling-collection` mialy
+oba tytul "Bestseller", wiec niemiecki klient widzial w nawigacji dwie rozne
+kolekcje pod jedna nazwa. `best-selling-collection` zostaje "Bestseller", bo
+angielski to "Best selling products"; `hot-sale-products` ("Hot Sale Products")
+dostaje "Top-Angebote", co nie koliduje tez z `miniatures-on-sale`
+("Miniaturen im Angebot"). Trzeci "Bestseller" - `avada-best-sellers` - zostaje,
+bo ma przedrostek marki.
+
+**Czym:** apka dev (`~/.secrets/rpg-guild-movie.env`, client credentials,
+`write_translations`), Admin API 2025-07. Bramka: zywa wartosc musi byc dokladnie
+ta przejrzana, inaczej skrypt staje. Sprawdzone te slowa tez w polach SEO - poza
+`hot-miniatures` i `artisan-guild` (gdzie byly juz dobre) nie wystepuja, wiec
+poprawka dotyczy wylacznie tytulow.
+
+**Sprawdzone:** `check` - 7 pol, 0 problemow. Curlem na `/de-de/collections/...`
+wszystkie siedem plus `best-selling-collection` (nadal "Bestseller", wiec
+zderzenie zniklo w jedna strone). Stare frazy "Heiße Miniaturen", "Miniaturen
+der Handwerkergilde" i "Physikalische Produkte" nie wystepuja na zadnej z tych
+stron.
+
+**Jak cofnac:** `rollback/kolekcje-tytuly-de-przed-2026-11-03.json`.
+
+**Co zostaje swiadomie nietkniete:** liczba w rodzinach jest w DE mieszana -
+"Zwerge 5e", "Vampire 5e", "Untote 5e", "Humanoide 5e" i "Werratten 5e" sa
+w mnogiej, reszta w pojedynczej, choc angielski ma wszedzie pojedyncza. Niespojne,
+ale po niemiecku czyta sie naturalnie, a zmiana dotknelaby polowy nawigacji.
+`rescale-miniatures` = "Miniaturen skalieren" w bezokoliczniku (tak samo FR) - to
+kolekcja uslugi, sens zachowany. `fey-5e` = "Fee 5e": typ istoty to po niemiecku
+"Feenwesen", "Fee" znaczy wrozka - to samo niedociagniecie ma francuskie
+"Fée 5e", wiec zostawiam oba do jednej decyzji.
+
+**Terminologia do decyzji (nie ruszana):** `artificer-5e` ma tytul "Erfinder 5e",
+a produkty-karty postaci uzywaja "Artificer" - sklep mowi dwoma slowami o tej
+samej klasie. Kolekcje `sorcerer-5e` ("Zauberer 5e") i `wizard-5e` ("Magier 5e")
+sa poprawne i rozdzielone; to produkty maja zderzenie, oba nazwane "Zauberer"
+(wpis 2026-11-03 (2)).
+
 ## 2026-11-03 (3)
 
 ### Francuskie tytuly kolekcji: 7 tytulow i 3 pola SEO `[poza repo]`
