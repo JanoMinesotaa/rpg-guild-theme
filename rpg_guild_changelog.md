@@ -10,6 +10,65 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-03 (3)
+
+### Francuskie tytuly kolekcji: 7 tytulow i 3 pola SEO `[poza repo]`
+Tlumaczenia kolekcji przez `translationsRegister`. Skrypt:
+`shopify_kolekcje_tytuly_fr.py` (folder projektu).
+
+**Co:** przejrzane wszystkie 104 kolekcje w EN, DE i FR. Bledne francuskie tytuly
+okazaly sie **siedem**, nie dwa, ktore wyszly przy audycie tlumaczen:
+
+| kolekcja | bylo | jest | dlaczego |
+|---|---|---|---|
+| `construct-5e` | Construire 5e | Créature artificielle 5e | czasownik "budowac" zamiast typu istoty |
+| `halfling-5e` | Halbling 5e | Halfelin 5e | niemieckie slowo we francuskim sklepie |
+| `gnome-5e` | Gnom 5e | Gnome 5e | to samo, forma niemiecka |
+| `daybreak-miniatures` | Figurines Aube | Figurines Daybreak | przetlumaczona nazwa studia |
+| `dungeon-dog` | Chien de Donjon | Dungeon Dog | przetlumaczona nazwa studia |
+| `hot-miniatures` | Figurines chaudes | Figurines tendance | "chaude" to goraca, nie popularna |
+| `customers-favourites-dnd-miniatures` | ...Donjon et Dragon... | ...Donjons et Dragons... | nazwa gry w liczbie pojedynczej |
+
+Ten sam blad z nazwa gry siedzial w trzech polach SEO: `meta_title`
+i `meta_description` kolekcji `customers-favourites-dnd-miniatures` oraz
+`meta_description` kolekcji `all-products`. Razem 10 pol.
+
+**Moj wlasny blad:** francuskie `meta_description` kolekcji `all-products`
+("figurines Donjon et Dragon") wpisalem sam 2026-11-02 przy przepisywaniu SEO
+47 kolekcji. Teraz poprawione.
+
+**Czym:** apka dev (`~/.secrets/rpg-guild-movie.env`, client credentials,
+`write_translations`), Admin API 2025-07. Bramka przed kazdym zapisem: zywa
+wartosc na sklepie musi byc dokladnie ta, ktora przejrzalem - inaczej skrypt
+staje. Ta bramka zlapala roznice w znaku spacji w "4 900" i nie pozwolila zapisac
+tekstu zbudowanego na zlym zalozeniu. Przy poprawce jednego slowa warunek
+liczbowy porownuje stary tekst z nowym, nie z angielskim: angielski ma "5e",
+ktorego francuski nie powtarza, wiec porownanie do EN dawalo falszywy alarm.
+
+**Sprawdzone:** `check` - 10 pol, 0 problemow. Curlem na `/fr-fr/collections/...`:
+construct-5e, halfling-5e, gnome-5e, dungeon-dog, hot-miniatures,
+daybreak-miniatures, customers-favourites (tytul + `<title>` + `<meta
+description>`), all-products (`<meta description>`). Fraza "Donjon et Dragon"
+w liczbie pojedynczej nie wystepuje na zadnej z tych stron.
+
+**Jak cofnac:** `rollback/kolekcje-tytuly-fr-przed-2026-11-03.json` - stan przed
+i po dla kazdego z 10 pol. Pelny zrzut tytulow wszystkich 104 kolekcji w trzech
+jezykach z przed zmiany: `audyt-tlumaczen/kolekcje-tytuly-2026-11-03-przed.json`.
+
+**Co zostaje swiadomie nietkniete:** `merfolk-5e` ma po francusku "Tritons 5e"
+w liczbie mnogiej, gdy reszta rodzin jest w pojedynczej - niespojne, ale nie
+bledne. `rescale-miniatures` ma "Redimensionner les figurines" w trybie
+rozkazujacym (tak samo DE) - to kolekcja uslugi skalowania, wiec sens jest
+zachowany. Piec kolekcji `modular-dnd-terrain-*` ma cztery rozne szyki
+("Terrain modulaire RPG", "...pour RPG", "...de RPG", "Terrain de RPG
+modulaire") - do ujednolicenia przy okazji, nie jest to blad tresci.
+
+**Niemieckie tytuly do decyzji (nie ruszane):** `hot-miniatures` = "Heiße
+Miniaturen" ma ten sam problem co francuskie "chaudes"; `hot-sale-products`
+i `best-selling-collection` maja oba "Bestseller", wiec w menu DE sa dwie
+kolekcje o tej samej nazwie; `daybreak-miniatures` = "Daybreak Miniaturen"
+jest w porzadku, ale `dungeon-dog` zostalo nietkniete i to jest poprawne.
+
 ## 2026-11-03 (2)
 
 ### Opisy produktow DE i FR: 38 kart, 72 pola `[poza repo]`
