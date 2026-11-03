@@ -10,6 +10,69 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-03 (9)
+
+### Piec kart postaci ze starym copy: nowy opis i SEO w EN, DE, FR `[poza repo]`
+Produkty: `printable-dnd-character-sheet-5e-barbarian`, `-bard`, `-cleric`,
+`-warlock` oraz paladyn pod **innym adresem**: `printable-paladin-dnd-5e-character-sheet-pdf`
+(adres `printable-dnd-character-sheet-5e-paladin` nie istnieje - wczesniej pisalem,
+ze potwierdzilem cztery karty z pieciu, to byl powod).
+
+**Co:** w EN `body_html` i `meta_description` przez Shopify MCP (`productUpdate`),
+potem DE i FR (20 pol) przez `translationsRegister`. Skrypt:
+`shopify_karty_postaci_5_tln.py` + `.json` (folder projektu). Stary opis byl
+jednakowym szablonem ("This essential tool isn't overloaded with unnecessary
+embellishment...") z kolorem i grafika tla jako jedynymi faktami, a `meta_description`
+mowilo ogolne "built for one class, not for all thirteen". Flagi tlumaczen byly czyste,
+wiec audyt tych kart nie wykryl - tlumaczenia byly zgodne ze starym EN.
+
+**Dlaczego copy NIE jest w stylu pozostalych osmiu kart:** obejrzalem zdjecia
+produktowe wszystkich pieciu (i artificera oraz druida dla porownania). Kazdy arkusz to
+ten sam ogolny uklad trzech stron - strona postaci (atrybuty, rzuty obronne,
+umiejetnosci, ataki, ekwipunek, cechy i atuty), strona sojusznikow i dodatkowych cech,
+strona zaklec - rozni sie tylko grafika i kolorem. Nie ma licznika Szalu, listy
+infuzji ani sekcji Dzikiej Postaci. Copy w stylu "built around what a Barbarian
+tracks" obiecywaloby wiec funkcje, ktorych arkusz nie ma. Nowy tekst opisuje to, co
+na zdjeciach widac: grafike klasy (np. gorny helm, topory i plomienie u Barbarzyncy;
+luta, nuty, swiece, pioro i kalamarz u Barda; slonce w otwartych dloniach i skrzydlate
+berla u Klerykia; helm z pioropuszem i zawijasy u Paladyna; oko, weze i flaszki
+z miksturami u Hexenmeistera), kolor z poprzedniego opisu, trzy strony, wersje
+kolorowa i czarno-biala (potwierdzona zdjeciem dla wszystkich pieciu).
+
+**Pomylka uniknieta na etapie bramki, nie na produkcji:** pierwsza wersja opisu
+paladyna miala "golden colour ... colour and black & white" (powtorzone slowo) -
+poprawione przed wyslaniem. W `productUpdate` wyslane OBA pola `seo` (title i
+description), zgodnie z reguła z wpisu (7): `seo.title` wszystkich pieciu pozostal
+nietkniety (odpowiedz API to potwierdzila), a `check` nie pokazal flag `meta_title`.
+
+**Czym:** MCP dla zrodla EN, apka dev (`write_translations`) dla tlumaczen. Bramki:
+zywe EN musi byc dokladnie tym, co mialo wejsc; zywe tlumaczenie musi byc takie, jak
+w punkcie cofniecia; bilans tagow i liczby zgodne z EN.
+
+**Sprawdzone:** `check` - 20 pol, 0 problemow, `meta_title` DE/FR bez flag.
+Curlem na zywo EN/DE/FR wszystkich pieciu stron (15): nowy naglowek obecny, fraza
+"unnecessary embellishment" / "unnötigem Schnickschnack" / "embellissements inutiles"
+nieobecna; `<title>` i `<meta description>` nowe.
+
+**Jak cofnac:** `rollback/karty-postaci-5-przed-2026-11-03.json` - pelny stan
+EN+DE+FR pieciu kart sprzed zmian (stare EN `body_html` i `meta_description` tez tam sa).
+
+**OTWARTE - do sprawdzenia przez wlasciciela produktu:** pozostale osiem kart
+(artificer, druid, ranger, sorcerer, wizard, fighter, monk, rogue) i kolekcja
+`dnd-5e-character-sheet-pdf` oraz zestaw `dnd-character-sheets-all-13-in-color`
+maja w EN copy obiecujace uklad specyficzny dla klasy: "Infusion list with slots for
+known, active and attached item" (artificer), "Dedicated Wild Shape section"
+(druid), "Dedicated ki tracking instead of a blank line" (monk), "Sorcery point pool
+with space for each Metamagic" (sorcerer), "Spellbook and prepared spells tracked
+separately" (wizard) itd.; zestaw 13: "Every class gets a sheet built around what it
+actually tracks. Infusions for the Artificer, Wild Shape for the Druid...". Zdjecia
+produktowe artificera i druida pokazuja ten sam ogolny uklad co Barbarzynca, bez tych
+sekcji. Moze pliki PDF zostaly przeprojektowane, a zdjecia sa stare (ich wersje
+w URL-ach to maj 2024) - wtedy copy jest prawdziwe, a zdjecia do wymiany; moze
+nie zostaly, wtedy copy wprowadza w blad, a ja przetlumaczylem je dzis na DE i FR (72
+pola w wpisie 2026-11-02 (2) i 6 pol kolekcji w (7)). Tego nie potrafie rozstrzygnac
+z API - trzeba otworzyc PDF.
+
 ## 2026-11-03 (8)
 
 ### Szablony Long Night: 25 pol DE/FR w dwoch szablonach `[poza repo]`
