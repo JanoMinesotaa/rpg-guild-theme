@@ -10,6 +10,30 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-03 (12)
+
+### Cztery warianty z przesunietym przecinkiem w cenie `[poza repo]`
+Zasoby: 4 warianty w 4 produktach. Shopify MCP, `productVariantsBulkUpdate`, tylko pole `price`.
+Zgloszenie klienta (screen sprzed 22 h): na kartach produktow ceny $13,490.00 i $43,520.00.
+
+| Produkt | Wariant | Bylo | Jest |
+|---|---|---|---|
+| `treant-5e-branch-monster-forest-warchief-miniature` | 32mm / Primer - Red | 13490.00 | 13.49 |
+| `toad-rider-grung-5e-battleaxe-miniature` | 32mm / Primer - Black | 43520.00 | 43.52 |
+| `lizardfolk-5e-barbarian-defender-hammer-miniature` | 38mm / Primer - Red | 19750.00 | 19.75 |
+| `dragon-5e-acient-bratazul-miniature` | 38mm / Drybrush | 8658.90 | 86.59 |
+
+Poprawne wartosci wynikaja z sasiednich wariantow (ten sam rozmiar i wykonczenie). Smoka
+wyliczone: 8658.90 / 100 = 86.589, zaokraglone do 86.59. Skan katalogu filtrem `price:>1000`
+dal dokladnie te 4 produkty; pomylki dziesieciokrotne (np. 12.50 jako 125) tym skanem nie sa
+wykrywane. Przyczyny nie ustalono: warianty Treanta i Toad Ridera maja ten sam czas edycji
+(27.08.2026, 12:06), jak po jednej hurtowej operacji.
+
+**Jak cofnac:** plik `rollback/ceny_przecinek_2026-11-03.jsonl` (variantId, old, new) w
+folderze projektu; przywrocic `old` przez `productVariantsBulkUpdate`.
+
+---
+
 ## 2026-11-03 (11)
 
 ### Kolekcja kart postaci i zestaw 13: koniec obietnicy ukladu klasowego `[poza repo]`
