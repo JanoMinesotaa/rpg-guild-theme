@@ -33,10 +33,10 @@ umiejetnosci, ataki, ekwipunek, cechy i atuty), strona sojusznikow i dodatkowych
 strona zaklec - rozni sie tylko grafika i kolorem. Nie ma licznika Szalu, listy
 infuzji ani sekcji Dzikiej Postaci. Copy w stylu "built around what a Barbarian
 tracks" obiecywaloby wiec funkcje, ktorych arkusz nie ma. Nowy tekst opisuje to, co
-na zdjeciach widac: grafike klasy (np. gorny helm, topory i plomienie u Barbarzyncy;
-luta, nuty, swiece, pioro i kalamarz u Barda; slonce w otwartych dloniach i skrzydlate
-berla u Klerykia; helm z pioropuszem i zawijasy u Paladyna; oko, weze i flaszki
-z miksturami u Hexenmeistera), kolor z poprzedniego opisu, trzy strony, wersje
+na zdjeciach widac: grafike klasy (np. rogaty helm, topory i plomienie u Barbarzyncy;
+lutnia, nuty, swiece, pioro i kalamarz u Barda; slonce w otwartych dloniach i skrzydlate
+berla u Kleryka; helm z pioropuszem i zawijasy u Paladyna; oko, weze i flaszki
+z miksturami u Warlocka), kolor z poprzedniego opisu, trzy strony, wersje
 kolorowa i czarno-biala (potwierdzona zdjeciem dla wszystkich pieciu).
 
 **Pomylka uniknieta na etapie bramki, nie na produkcji:** pierwsza wersja opisu
