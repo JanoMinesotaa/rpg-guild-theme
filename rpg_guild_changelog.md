@@ -10,6 +10,23 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-03
+
+### Karuzela sasiadow na wszystkich produktach (szablon domyslny)
+Plik: `templates/product.json`.
+
+**Co:** na poczatek szablonu "Default product" dodana sekcja `sasiedzi_karuzela`
+(`karuzela-sasiedzi`, 12 produktow, naglowek "More" / "You may also like").
+Dziala na ok. 6500 produktach, bo szablon domyslny lapie tez produkty z
+nieistniejacymi szablonami ze starego motywu (dwarf, undead, fighter...).
+Produkty bez kolekcji `-5e` (kosci, teren, uslugi) karuzeli nie dostaja.
+Tlumaczenia naglowkow `[poza repo]`: DE "Mehr" / "Das könnte Ihnen auch gefallen",
+FR "Plus" / "Vous pourriez aussi aimer". Sprawdzone curlem na /en-pl/, /de-de/,
+/fr-fr/ i w przegladarce (12 kafelkow, polecenia Shopify na pierwszym miejscu).
+
+**Jak cofnac:** wgrac `rollback/product.2026-11-02-przed-karuzela.json`
+(folder projektu) jako `templates/product.json`.
+
 ## 2026-11-02 (5)
 
 ### Karuzela - krok 2 z 5: 5 figurek Owlbear `[poza repo]`

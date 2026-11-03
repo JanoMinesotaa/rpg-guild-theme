@@ -9,6 +9,16 @@
  */
 {
   "sections": {
+    "sasiedzi_karuzela": {
+      "type": "karuzela-sasiedzi",
+      "settings": {
+        "heading_prefix": "More",
+        "heading_polecane": "You may also like",
+        "max_products": 12,
+        "padding-block-start": 16,
+        "padding-block-end": 14
+      }
+    },
     "main": {
       "type": "product-information",
       "blocks": {
@@ -140,7 +150,7 @@
                   "settings": {
                     "enable_custom_font": false,
                     "custom_class": "title use-rosarivo",
-                    "text": "<h1>{{ closest.product.title }}</h1>",
+                    "text": "<h1>{{ closest.product.title }}<\/h1>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -186,7 +196,7 @@
                   "blocks": {}
                 },
                 "wishlist_plus_wishlist_pdp_button_rTJyrM": {
-                  "type": "shopify://apps/wishlist-plus/blocks/wishlist-pdp-button/80c3b1fc-3a8f-407e-8367-ffdeebb8b612",
+                  "type": "shopify:\/\/apps\/wishlist-plus\/blocks\/wishlist-pdp-button\/80c3b1fc-3a8f-407e-8367-ffdeebb8b612",
                   "settings": {
                     "swym_atw_button_icon": "heart",
                     "swym_atw_icon_thickness": 1.7,
@@ -249,7 +259,7 @@
               "type": "custom-liquid",
               "name": "Sculptors",
               "settings": {
-                "custom_liquid": "{% assign sculptor_name = product.metafields.custom.sculptor.value | default: product.metafields.custom.sculptor %}\n\n{% if sculptor_name %}\n  {%- comment -%} MAPA: nazwa z metapola → URL kolekcji {%- endcomment -%}\n  {% case sculptor_name %}\n    {% when \"Artisan Guild\" %}{% assign sculptor_url = \"/collections/artisan-guild-miniatures\" %}\n    {% when \"Cast n Play\" %}{% assign sculptor_url = \"/collections/cast-n-play-miniatures\" %}\n    {% when \"DM Stash\" %}{% assign sculptor_url = \"/collections/dm-stash-miniatures\" %}\n    {% when \"Rescale\" %}{% assign sculptor_url = \"/collections/rescale-miniatures\" %}\n    {% when \"Galaad\" %}{% assign sculptor_url = \"/collections/galaad-miniatures\" %}\n    {% when \"Daybreak\" %}{% assign sculptor_url = \"/collections/daybreak-miniatures\" %}\n    {% when \"Dungeon Dog\" %}{% assign sculptor_url = \"/collections/dungeon-dog\" %}\n  {% endcase %}\n\n  <p class=\"sculptor-line\">\n    <span class=\"label\">Designed by</span>\n    {% if sculptor_url %}\n      <a href=\"{{ sculptor_url }}\">{{ sculptor_name }}</a>\n    {% else %}\n      {{ sculptor_name }}\n    {% endif %}\n  </p>\n\n  <style>\n    .sculptor-line{margin:12px 0 4px}\n    .sculptor-line .label{opacity:.8;margin-right:.35em}\n    .sculptor-line a{font-weight:600;text-decoration:underline}\n  </style>\n{% endif %}"
+                "custom_liquid": "{% assign sculptor_name = product.metafields.custom.sculptor.value | default: product.metafields.custom.sculptor %}\n\n{% if sculptor_name %}\n  {%- comment -%} MAPA: nazwa z metapola → URL kolekcji {%- endcomment -%}\n  {% case sculptor_name %}\n    {% when \"Artisan Guild\" %}{% assign sculptor_url = \"\/collections\/artisan-guild-miniatures\" %}\n    {% when \"Cast n Play\" %}{% assign sculptor_url = \"\/collections\/cast-n-play-miniatures\" %}\n    {% when \"DM Stash\" %}{% assign sculptor_url = \"\/collections\/dm-stash-miniatures\" %}\n    {% when \"Rescale\" %}{% assign sculptor_url = \"\/collections\/rescale-miniatures\" %}\n    {% when \"Galaad\" %}{% assign sculptor_url = \"\/collections\/galaad-miniatures\" %}\n    {% when \"Daybreak\" %}{% assign sculptor_url = \"\/collections\/daybreak-miniatures\" %}\n    {% when \"Dungeon Dog\" %}{% assign sculptor_url = \"\/collections\/dungeon-dog\" %}\n  {% endcase %}\n\n  <p class=\"sculptor-line\">\n    <span class=\"label\">Designed by<\/span>\n    {% if sculptor_url %}\n      <a href=\"{{ sculptor_url }}\">{{ sculptor_name }}<\/a>\n    {% else %}\n      {{ sculptor_name }}\n    {% endif %}\n  <\/p>\n\n  <style>\n    .sculptor-line{margin:12px 0 4px}\n    .sculptor-line .label{opacity:.8;margin-right:.35em}\n    .sculptor-line a{font-weight:600;text-decoration:underline}\n  <\/style>\n{% endif %}"
               },
               "blocks": {}
             },
@@ -294,11 +304,11 @@
               "block_order": []
             },
             "eb_easy_bundle_builder_app_block_bundle_upsell_aEgzGW": {
-              "type": "shopify://apps/eb-easy-bundle-builder/blocks/app-block-bundleUpsell/05b1325c-6303-4da5-8e2f-b13ab2a50e1a",
+              "type": "shopify:\/\/apps\/eb-easy-bundle-builder\/blocks\/app-block-bundleUpsell\/05b1325c-6303-4da5-8e2f-b13ab2a50e1a",
               "settings": {}
             },
             "delivery_timer_visual_timer_N8zyKW": {
-              "type": "shopify://apps/delivery-timer/blocks/visual_timer/bace9725-6846-4fad-8461-027a1ac43ad8",
+              "type": "shopify:\/\/apps\/delivery-timer\/blocks\/visual_timer\/bace9725-6846-4fad-8461-027a1ac43ad8",
               "settings": {}
             },
             "group_JbmQwr": {
@@ -483,7 +493,7 @@
                           "settings": {
                             "enable_custom_font": false,
                             "custom_class": "c",
-                            "text": "<p>Free shipping over 60 $/€</p>",
+                            "text": "<p>Free shipping over 60 $\/€<\/p>",
                             "width": "fit-content",
                             "max_width": "normal",
                             "alignment": "left",
@@ -632,42 +642,42 @@
         "pill_a76rYA": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "Hand Detailed"
           }
         },
         "pill_zPWLWH": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "Manufactured in Poland"
           }
         },
         "pill_8za7eG": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "Easy to Paint"
           }
         },
         "pill_Dxt4TD": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "High Quality & Durability"
           }
         },
         "pill_areqha": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "One Miniature - 18 variants"
           }
         },
         "separator_RD3G4y": {
           "type": "separator",
           "settings": {
-            "image": "shopify://shop_images/Frame_1984077844_20d1f24b-faa5-43ad-baee-3ec34271ae1c.png",
+            "image": "shopify:\/\/shop_images\/Frame_1984077844_20d1f24b-faa5-43ad-baee-3ec34271ae1c.png",
             "alt": ""
           }
         },
@@ -694,7 +704,7 @@
         "side_image_PFNGAb": {
           "type": "side_image",
           "settings": {
-            "image": "shopify://shop_images/Guild_1636x1404_6c563834-fe08-4f49-9ade-500c3168f811.webp",
+            "image": "shopify:\/\/shop_images\/Guild_1636x1404_6c563834-fe08-4f49-9ade-500c3168f811.webp",
             "alt": ""
           }
         },
@@ -707,42 +717,42 @@
         "pill_CK4ixV": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "Hand Detailed"
           }
         },
         "pill_yUyXHf": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "Manufactured in Poland"
           }
         },
         "pill_8UNHw4": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "Easy to Paint"
           }
         },
         "pill_3XtVGy": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "High Quality & Durability"
           }
         },
         "pill_VpD3zd": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "One Miniature - 18 variants"
           }
         },
         "separator_trXBQw": {
           "type": "separator",
           "settings": {
-            "image": "shopify://shop_images/Frame_1984077844_20d1f24b-faa5-43ad-baee-3ec34271ae1c.png",
+            "image": "shopify:\/\/shop_images\/Frame_1984077844_20d1f24b-faa5-43ad-baee-3ec34271ae1c.png",
             "alt": ""
           }
         },
@@ -755,21 +765,21 @@
         "separator_cQxyz3": {
           "type": "separator",
           "settings": {
-            "image": "shopify://shop_images/Table.png",
+            "image": "shopify:\/\/shop_images\/Table.png",
             "alt": ""
           }
         },
         "separator_gBqWCG": {
           "type": "separator",
           "settings": {
-            "image": "shopify://shop_images/new_a00aba7d-c0ef-4b6e-af1d-a746b351210d.png",
+            "image": "shopify:\/\/shop_images\/new_a00aba7d-c0ef-4b6e-af1d-a746b351210d.png",
             "alt": ""
           }
         },
         "text_AMtjJU": {
           "type": "text",
           "settings": {
-            "rich": "<p><strong>SCALE ≠ EXACT SIZE </strong><br/>Miniature size may vary from sculptor to sculptor.<br/><br/><strong>How it works:<br/></strong>Average human from Galaad Miniatures is 35mm tall in 28mm scale, the same human in 32mm scale will be 39mm tall (12.5% taller), and in 38mm scale this human will be 46mm tall (18.7% taller).<br/><br/>Need more details?</p>"
+            "rich": "<p><strong>SCALE ≠ EXACT SIZE <\/strong><br\/>Miniature size may vary from sculptor to sculptor.<br\/><br\/><strong>How it works:<br\/><\/strong>Average human from Galaad Miniatures is 35mm tall in 28mm scale, the same human in 32mm scale will be 39mm tall (12.5% taller), and in 38mm scale this human will be 46mm tall (18.7% taller).<br\/><br\/>Need more details?<\/p>"
           }
         },
         "button_x3c3Km": {
@@ -788,42 +798,42 @@
         "separator_pRTAQT": {
           "type": "separator",
           "settings": {
-            "image": "shopify://shop_images/Frame_1984077844_20d1f24b-faa5-43ad-baee-3ec34271ae1c.png",
+            "image": "shopify:\/\/shop_images\/Frame_1984077844_20d1f24b-faa5-43ad-baee-3ec34271ae1c.png",
             "alt": ""
           }
         },
         "pill_bKrpeR": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "Hand Detailed"
           }
         },
         "pill_U6z3gP": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "Manufactured in Poland"
           }
         },
         "pill_JbJ6BV": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "Easy to Paint"
           }
         },
         "pill_wiLByi": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "High Quality & Durability"
           }
         },
         "pill_h7qkbi": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "One Miniature - 18 variants"
           }
         },
@@ -833,19 +843,19 @@
             "tab_1_title": "Unassembled",
             "tab_1_headline": "",
             "tab_1_paragraph": "The miniature is packaged with its components separate, not glued together. This option allows for customization before assembly.",
-            "tab_1_image": "shopify://shop_images/Tabs_Treatment_373x401_1.svg",
+            "tab_1_image": "shopify:\/\/shop_images\/Tabs_Treatment_373x401_1.svg",
             "tab_2_title": "Assembled",
             "tab_2_headline": "",
             "tab_2_paragraph": "We carefully glue the all of the components together for you, so you can enjoy the final effect!",
-            "tab_2_image": "shopify://shop_images/Tabs_Treatment.svg",
+            "tab_2_image": "shopify:\/\/shop_images\/Tabs_Treatment.svg",
             "tab_3_title": "Primed",
             "tab_3_headline": "Comes Assembled!",
             "tab_3_paragraph": "We apply a primer coat in various colors. This is an ideal choice if you intend to paint the miniatures yourself, as the basic plastic doesn't retain paint well without this preparation. Comes in black, red, and grey.",
-            "tab_3_image": "shopify://shop_images/Tabs_Treatment_373x401_f59a0bff-719b-4a9e-bb6c-4a7aba4c4be8.svg",
+            "tab_3_image": "shopify:\/\/shop_images\/Tabs_Treatment_373x401_f59a0bff-719b-4a9e-bb6c-4a7aba4c4be8.svg",
             "tab_4_title": "Drybrushed",
             "tab_4_headline": "Comes Assembled!",
             "tab_4_paragraph": "After gluing and applying a black primer to the miniature, we perform a light drybrush technique to enhance shadows and details. This gives the miniature a more defined appearance.",
-            "tab_4_image": "shopify://shop_images/Tabs_-_Treatment.svg"
+            "tab_4_image": "shopify:\/\/shop_images\/Tabs_-_Treatment.svg"
           }
         },
         "tab_reviews_WT9kWN": {
@@ -855,7 +865,7 @@
           }
         },
         "fera_product_reviews_wxLgFd": {
-          "type": "shopify://apps/fera/blocks/product_reviews/2fbfcfa7-8a04-479f-89a8-0621fa099c51",
+          "type": "shopify:\/\/apps\/fera\/blocks\/product_reviews\/2fbfcfa7-8a04-479f-89a8-0621fa099c51",
           "settings": {
             "heading": "Product Reviews",
             "layout": "masonry",
@@ -864,7 +874,7 @@
           }
         },
         "fera_product_customer_media_TUqJCM": {
-          "type": "shopify://apps/fera/blocks/product_customer_media/2fbfcfa7-8a04-479f-89a8-0621fa099c51",
+          "type": "shopify:\/\/apps\/fera\/blocks\/product_customer_media\/2fbfcfa7-8a04-479f-89a8-0621fa099c51",
           "disabled": true,
           "settings": {
             "heading": "",
@@ -874,42 +884,42 @@
         "pill_AirhCU": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "Hand Detailed"
           }
         },
         "pill_rCtfqn": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "Manufactured in Poland"
           }
         },
         "pill_y3MFEE": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "Easy to Paint"
           }
         },
         "pill_fUBcUN": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "High Quality & Durability"
           }
         },
         "pill_bP8CWL": {
           "type": "pill",
           "settings": {
-            "icon": "shopify://shop_images/icon-footer-asset.svg",
+            "icon": "shopify:\/\/shop_images\/icon-footer-asset.svg",
             "label": "One Miniature - 18 variants"
           }
         },
         "separator_wTU7wg": {
           "type": "separator",
           "settings": {
-            "image": "shopify://shop_images/Frame_1984077844_20d1f24b-faa5-43ad-baee-3ec34271ae1c.png",
+            "image": "shopify:\/\/shop_images\/Frame_1984077844_20d1f24b-faa5-43ad-baee-3ec34271ae1c.png",
             "alt": ""
           }
         }
@@ -1006,7 +1016,7 @@
         "current_act": 1,
         "blood_strength": 62,
         "cta_label": "See the whole season",
-        "cta_link": "shopify://pages/the-long-night-rpg-guild-sale-season",
+        "cta_link": "shopify:\/\/pages\/the-long-night-rpg-guild-sale-season",
         "padding_top": 40,
         "padding_bottom": 40
       }
@@ -1073,7 +1083,7 @@
               "settings": {
                 "enable_custom_font": false,
                 "custom_class": "title use-rosarivo",
-                "text": "<h2>You may also like</h2>",
+                "text": "<h2>You may also like<\/h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -1159,7 +1169,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "Check all RPG Guild Collections",
-                "link": "shopify://pages/all-collections",
+                "link": "shopify:\/\/pages\/all-collections",
                 "open_in_new_tab": false,
                 "custom_class": "btn-2",
                 "style_class": "button",
@@ -1603,7 +1613,7 @@
                       "settings": {
                         "enable_custom_font": true,
                         "custom_class": "c",
-                        "text": "<h4>Suggested Character</h4>",
+                        "text": "<h4>Suggested Character<\/h4>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -1630,7 +1640,7 @@
                       "name": "t:names.button",
                       "settings": {
                         "label": "Check all RPG Guild Collections",
-                        "link": "shopify://pages/all-collections",
+                        "link": "shopify:\/\/pages\/all-collections",
                         "open_in_new_tab": false,
                         "custom_class": "btn-1",
                         "style_class": "button-secondary",
@@ -1937,7 +1947,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
-                    "image": "shopify://shop_images/Obszar_roboczy_14_od_Janek_via_Slack_1.webp",
+                    "image": "shopify:\/\/shop_images\/treasure-map-2026-en.png",
                     "link": "",
                     "image_ratio": "adapt",
                     "width": "fill",
@@ -2017,7 +2027,7 @@
           "name": "t:names.button",
           "settings": {
             "label": "Check all RPG Guild Collections",
-            "link": "shopify://pages/all-collections",
+            "link": "shopify:\/\/pages\/all-collections",
             "open_in_new_tab": false,
             "custom_class": "btn-1",
             "style_class": "button",
@@ -2188,7 +2198,7 @@
                   "settings": {
                     "enable_custom_font": false,
                     "custom_class": "title use-rosarivo",
-                    "text": "<h2>Welcome to our Guild!</h2>",
+                    "text": "<h2>Welcome to our Guild!<\/h2>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
@@ -2378,7 +2388,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
-                    "image": "shopify://shop_images/Product_Page_Welcome_to_our_Guild.webp",
+                    "image": "shopify:\/\/shop_images\/Product_Page_Welcome_to_our_Guild.webp",
                     "link": "",
                     "image_ratio": "adapt",
                     "width": "fit-content",
@@ -2456,7 +2466,7 @@
                       "settings": {
                         "enable_custom_font": true,
                         "custom_class": "use-rosarivo",
-                        "text": "<h4>Hand Detailed Miniatures</h4>",
+                        "text": "<h4>Hand Detailed Miniatures<\/h4>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "center",
@@ -2483,7 +2493,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>We approach each mini individually!<br/>From making sure there are no production imperfections to hand cleaning and brushing. It makes them perfect for both gameplay and painting.</p>",
+                        "text": "<p>We approach each mini individually!<br\/>From making sure there are no production imperfections to hand cleaning and brushing. It makes them perfect for both gameplay and painting.<\/p>",
                         "width": "100%",
                         "max_width": "narrow",
                         "alignment": "center",
@@ -2575,7 +2585,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
-                    "image": "shopify://shop_images/Product_Page_Custom_Production_2026.webp",
+                    "image": "shopify:\/\/shop_images\/Product_Page_Custom_Production_2026.webp",
                     "link": "",
                     "image_ratio": "adapt",
                     "width": "fit-content",
@@ -2653,7 +2663,7 @@
                       "settings": {
                         "enable_custom_font": true,
                         "custom_class": "use-rosarivo",
-                        "text": "<p>Custom Production</p>",
+                        "text": "<p>Custom Production<\/p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "center",
@@ -2680,7 +2690,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>You don't have to worry about getting a suspicious, plastic-looking product. We've built our own system from scratch to provide the highest quality minis out there! </p>",
+                        "text": "<p>You don't have to worry about getting a suspicious, plastic-looking product. We've built our own system from scratch to provide the highest quality minis out there! <\/p>",
                         "width": "100%",
                         "max_width": "narrow",
                         "alignment": "center",
@@ -2772,7 +2782,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
-                    "image": "shopify://shop_images/Trio_AI_5.png",
+                    "image": "shopify:\/\/shop_images\/Trio_AI_5.png",
                     "link": "",
                     "image_ratio": "adapt",
                     "width": "fit-content",
@@ -2850,7 +2860,7 @@
                       "settings": {
                         "enable_custom_font": true,
                         "custom_class": "use-rosarivo",
-                        "text": "<h4>Immersion & Durability</h4>",
+                        "text": "<h4>Immersion & Durability<\/h4>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "center",
@@ -2877,7 +2887,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>Each miniature is forged with care and precision. Built to be flexible yet unyielding, they endure countless adventures while detailed features pull you deeper into the story at your table. </p>",
+                        "text": "<p>Each miniature is forged with care and precision. Built to be flexible yet unyielding, they endure countless adventures while detailed features pull you deeper into the story at your table. <\/p>",
                         "width": "100%",
                         "max_width": "narrow",
                         "alignment": "center",
@@ -3022,7 +3032,7 @@
               "settings": {
                 "enable_custom_font": false,
                 "custom_class": "title use-rosarivo",
-                "text": "<h2>Start your first quest  with RPG Guild</h2>",
+                "text": "<h2>Start your first quest  with RPG Guild<\/h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -3108,7 +3118,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "Read more",
-                "link": "https://rpgguild.shop/pages/get-a-free-mini",
+                "link": "https:\/\/rpgguild.shop\/pages\/get-a-free-mini",
                 "open_in_new_tab": false,
                 "custom_class": "btn-1",
                 "style_class": "button-secondary",
@@ -3344,7 +3354,7 @@
         "color_scheme": "scheme-1",
         "background_media": "image",
         "video_position": "cover",
-        "background_image": "shopify://shop_images/Popup_Visual_Design.png",
+        "background_image": "shopify:\/\/shop_images\/Popup_Visual_Design.png",
         "background_image_position": "fit",
         "border": "none",
         "border_width": 1,
@@ -3422,7 +3432,7 @@
               "settings": {
                 "enable_custom_font": false,
                 "custom_class": "title use-rosarivo home-faq-title",
-                "text": "<h3>Frequently asked questions</h3>",
+                "text": "<h3>Frequently asked questions<\/h3>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
@@ -3535,7 +3545,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>In most cases, the right choice is <strong>32mm scale</strong>. However, if you’d like to know the <em>exact</em> size of a specific miniature, simply reach out to us — we’ll gladly provide precise details. At times this may mean adjusting the original size to perfectly match your game, but that is no problem for the Guild. Your satisfaction is always our highest priority.</p>",
+                        "text": "<p>In most cases, the right choice is <strong>32mm scale<\/strong>. However, if you’d like to know the <em>exact<\/em> size of a specific miniature, simply reach out to us — we’ll gladly provide precise details. At times this may mean adjusting the original size to perfectly match your game, but that is no problem for the Guild. Your satisfaction is always our highest priority.<\/p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -3574,7 +3584,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>Because nothing here is cast in advance. Every figure is printed on demand in resin and hand-detailed. That takes five to seven working days, and with weekends inside that window a parcel can leave the Guild on the tenth or eleventh day. Shipping from the EU comes on top. A mass-produced mini is cheaper because it was made before anyone wanted it. What you pay for here is the one character your player has been describing for a year.</p>",
+                        "text": "<p>Because nothing here is cast in advance. Every figure is printed on demand in resin and hand-detailed. That takes five to seven working days, and with weekends inside that window a parcel can leave the Guild on the tenth or eleventh day. Shipping from the EU comes on top. A mass-produced mini is cheaper because it was made before anyone wanted it. What you pay for here is the one character your player has been describing for a year.<\/p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -3613,7 +3623,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>Feel free to message us about it! We will estimate if we can meet your needs. We've been printing miniatures in a <strong>variety of scale on demand!</strong></p>",
+                        "text": "<p>Feel free to message us about it! We will estimate if we can meet your needs. We've been printing miniatures in a <strong>variety of scale on demand!<\/strong><\/p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -3654,7 +3664,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>Absolutely! Whether your order was delayed in shipment, a miniature arrived damaged, or a piece is missing - feel encouraged to contact us. We offer <strong>hassle-free refunds within 30 days</strong>, no questions asked. In most cases, it simply means sending you the missing part or replacing anything you’re not fully satisfied with.</p>",
+                        "text": "<p>Absolutely! Whether your order was delayed in shipment, a miniature arrived damaged, or a piece is missing - feel encouraged to contact us. We offer <strong>hassle-free refunds within 30 days<\/strong>, no questions asked. In most cases, it simply means sending you the missing part or replacing anything you’re not fully satisfied with.<\/p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -3695,7 +3705,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>Yes! <strong>We just need a STL file to work with</strong>, which you can buy  from any online artist you like. For this case and any other, please message us first and we will take it from there.</p>",
+                        "text": "<p>Yes! <strong>We just need a STL file to work with<\/strong>, which you can buy  from any online artist you like. For this case and any other, please message us first and we will take it from there.<\/p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -3736,7 +3746,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p>We take our craft very seriously! Each miniature also goes through a hand-detailing process. <strong>It usually takes between 5 to 7 business days </strong>with the default, drybrush or primer option. Shipping time depends on your geolocation. You can <strong>get the estimated time</strong> on the top of each product page. Our full process is explained here.</p>",
+                        "text": "<p>We take our craft very seriously! Each miniature also goes through a hand-detailing process. <strong>It usually takes between 5 to 7 business days <\/strong>with the default, drybrush or primer option. Shipping time depends on your geolocation. You can <strong>get the estimated time<\/strong> on the top of each product page. Our full process is explained here.<\/p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -3777,7 +3787,7 @@
                       "settings": {
                         "enable_custom_font": false,
                         "custom_class": "c",
-                        "text": "<p><strong>We are open to a variety of B2B opportunities and requests!</strong> If you're looking for a reliable partner visit our B2B page and contact us for more details :)</p>",
+                        "text": "<p><strong>We are open to a variety of B2B opportunities and requests!<\/strong> If you're looking for a reliable partner visit our B2B page and contact us for more details :)<\/p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -3870,7 +3880,7 @@
         "link": "",
         "open_in_new_tab": false,
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/Frame_1984078169.png",
+        "image_1": "shopify:\/\/shop_images\/Frame_1984078169.png",
         "media_type_2": "image",
         "content_direction": "row",
         "vertical_on_mobile": true,
@@ -3896,6 +3906,7 @@
     }
   },
   "order": [
+    "sasiedzi_karuzela",
     "main",
     "product_tabs_C7WbwY",
     "section_longNightSeason",
