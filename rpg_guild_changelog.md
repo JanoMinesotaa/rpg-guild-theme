@@ -10,6 +10,65 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-03 (2)
+
+### Opisy produktow DE i FR: 38 kart, 72 pola `[poza repo]`
+Pola `body_html` (plus tytul i SEO jednego produktu) przez `translationsRegister`
+i `translatableResourcesByIds`. Skrypt: `shopify_opisy_bh_tln.py` + `.json`
+(folder projektu).
+
+**Co:** audyt z 2026-11-02 wskazal 36 produktow z flaga `outdated` na opisie i 10
+z rozjazdem tresciowym (razem 38 kart). Po przeczytaniu tresci rozklad wyszedl inny
+niz flagi:
+
+- **8 miniatur** - angielski przepisano na format ze specyfikacja (trzy rozmiary
+  28/32/38 mm, opcje wysylki, uwagi dla malarzy), DE i FR zostaly na starym copy
+  marketingowym. Nowe tlumaczenia, 16 pol. Produkty: `angel-5e-biblically-accurate-celestial`,
+  `assasin-rogue-leonin-5e`, `bladesinger-wizard-5e-hero`, `giant-snail-5e-monstrosity`,
+  `monster-5e-beast-leviathan`, `ranger-harengon-5e-mage`, `ranger-tiefling-5e-hervera`,
+  `tiefling-5e-female-paladin`.
+- **9 kart postaci** - angielski dostal calkiem nowe copy oparte na mechanice klasy
+  (infuzje, Wildgestalt, ki, punkty zaklec), tlumaczenia niosly stary tekst ogolny
+  i gubily cala liste punktow. Nowe tlumaczenia, 16 pol: artificer, druid, ranger,
+  sorcerer, wizard (DE+FR) oraz fighter, monk, rogue (tylko FR - DE bylo juz zrobione).
+- **`dnd-character-sheets-all-13-in-color`** - produkt powstal przez duplikat karty
+  Sorcerera i w DE oraz FR nigdy nie podmieniono tlumaczen. Niemiec i Francuz widzieli
+  zestaw 13 bogow opisany jako jeden bogus Sorcerera, razem z tytulem. Poprawione
+  `title`, `meta_title`, `meta_description` i `body_html` w obu jezykach, 8 pol.
+- **`bard-5e-human-lute`** - DE zgadzalo sie z EN, ale mowilo o bardzie w rodzaju
+  meskim, choc figurka i angielski opisuja kobiete. 6 punktowych zamian w DE.
+- **`fighter-5e-lesser-knight-halberd`** - FR mialo dwa akapity opisu zamkniete
+  w `<li>`, wiec renderowaly sie jako punkty listy. Przeniesione do `<p>`, tresc bez zmian.
+- **20 produktow** - tresc zgadza sie z angielskim, nieaktualny byl tylko odcisk.
+  Zapis tego samego tekstu na biezacym digescie, 34 pola.
+
+**Pulapka (ta sama, trzeci raz):** flaga `outdated` nie jest dowodem. 20 z 38 kart
+mialo poprawne tlumaczenie i samo zestarzale ksiegowanie, a jednoczesnie 8 miniatur
+i 5 kart postaci mialo flage **czysta** przy rozjechanej tresci - zbiorczy przebieg
+z 2026-09-18 zapisal stare teksty na nowo i flagi zgasly. Dlatego klasyfikacja
+szla po tresci: liczba punktow listy, obecnosc liczb z EN, obecnosc znacznikow
+starego edytora.
+
+**Czym:** apka dev (`~/.secrets/rpg-guild-movie.env`, client credentials,
+zakres `write_translations`), Admin API 2025-07. Bramki przed zapisem: pusta
+wartosc, bilans `<ul> <li> <p> <h2> <div> <span> <strong>` policzony a nie
+ogladniety, liczby z EN obecne w tlumaczeniu, limity dlugosci dla SEO.
+
+**Sprawdzone:** `check` - 38 produktow, 0 niezgodnych, 0 nadal `outdated`.
+Curlem na zywo: DE druid (Wildgestalt), FR zestaw 13 (nowy tytul), DE tiefling
+paladin (Drei Tischgroessen 28 mm), DE bard (rodzaj zenski), FR rogue, FR halberd
+(akapit renderuje sie jako `<p>`, nie jako punkt).
+
+**Jak cofnac:** `rollback/opisy-bh-przed-2026-11-03.json` (folder projektu) ma pelny
+stan EN + DE + FR wszystkich 38 produktow przed zmiana.
+
+**Co z tego zostaje otwarte:** DE uzywa slowa "Zauberer" i dla Sorcerera, i dla
+Wizarda (tytuly obu kart sa identyczne), FR uzywa "Sorcier" i dla Sorcerera,
+i dla Warlocka. W liscie 13 klas rozdzielilem je na Zauberer/Magier i
+Sorcier/Occultiste, ale tytuly produktow nadal sie zderzaja. Osobno: 5 kart postaci
+(barbarian, bard, cleric, paladin, warlock) ma po angielsku STARE copy - reszta
+dostala nowe, wiec sklep ma dwa rejestry jednoczesnie.
+
 ## 2026-11-03
 
 ### Karuzela sasiadow na wszystkich produktach (szablon domyslny)
