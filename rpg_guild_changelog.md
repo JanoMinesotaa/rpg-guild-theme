@@ -62,10 +62,12 @@ Dostawa PDF po zamówieniu nie była testowana.
 Z nowego produktu usunięte tagi skopiowane z oryginału. Status Unlisted był włączony na krótko
 i cofnięty do Active, więc produkt nadal jest widoczny w kolekcjach sklepu w cenie 0 USD.
 
-**Otwarty problem:** po zmianie część sesji testowych i koszyk Jana nie dostają żadnego gratisu
-(Free Mini, Potion, Random Mini, sheety), a skrypt EG nie wysyła wtedy żadnego żądania dodania.
-Reguły na stronie są aktywne i poprawne. Przyczyna nieustalona; zamówienie #13242 sprzed zmiany
-też nie ma gratisów, ale związek nie jest potwierdzony.
+**Przejściowy problem, przyczyna nieustalona:** po pierwszym zapisie reguły część sesji testowych
+i koszyk Jana nie dostawały żadnego gratisu (Free Mini, Potion, Random Mini, sheety), a skrypt EG
+nie wysyłał wtedy żadnego żądania dodania. Po zapauzowaniu i wznowieniu reguły FREE CS objaw zniknął:
+Jan potwierdził w incognito koszyk z Custom Bundle, a świeża sesja testowa dostała wszystkie 4 gratisy
+przy koszyku za 251,72 USD. Związek z pauzą nie jest dowiedziony. Zamówienie #13242 sprzed zmiany
+też nie ma gratisów, więc warto obserwować kolejne zamówienia.
 
 **Jak cofnąć:** w regule FREE CS przywróć stary produkt i rabat EG, wyłącz opcję „Prevent...”,
 potem ustaw nowy produkt jako Draft.
