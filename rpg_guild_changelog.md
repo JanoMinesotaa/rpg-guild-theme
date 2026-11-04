@@ -12,6 +12,33 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-04
 
+### Kody rabatowe bez Custom Bundle `[poza repo]`
+Zasoby: nowa kolekcja automatyczna `discount-eligible-no-bundles`
+(`gid://shopify/Collection/586552181002`, reguła: cena wariantu powyżej 0 USD, nieopublikowana)
+oraz kody `RPGSHOP`, `ESSEN26`, `!RPG15` i 3 pule Fera (#35924 x2, #61630).
+
+Powód: kody 10-20% obniżały cenę `Guild's Custom Bundle` (`test-2`), który ma już własne progi.
+Shopify nie ma w kodzie pola „wyklucz produkt”, więc kody działają teraz na kolekcję bez bundla.
+Bundle ma cenę bazową 0 USD, dlatego reguła sama go pomija, razem z gratisami za 0 USD.
+
+`RPGSHOP` i Fera obejmowały wszystkie produkty, a `ESSEN26` i `!RPG15` łapały bundla przez
+`best-selling-collection`. Samej `best-selling-collection` nie ruszałem, bo może jej używać EG
+Auto Add to Cart. `janas12345` (50 USD) celowo bez zmian, decyzja Jana: dalej działa na bundlu.
+
+**Skutek uboczny:** `RPGSHOP` i Fera zmieniły klasę z rabatu na zamówienie na rabat na produkty,
+a ich ustawienie łączenia z rabatami na produkty zostało wyłączone. Nie połączą się więc ze sobą
+ani z innymi rabatami na produkty, choć wcześniej `RPGSHOP` łączył się z Fera.
+
+Sprawdzone na żywych koszykach bez składania zamówienia: zwykły produkt dostaje poprawny rabat
+ze wszystkich zmienionych kodów (test objął po jednym kodzie z pul Fera 10% #35924 i 20% #61630).
+Bundla nie ma w nowej kolekcji (`hasProduct`). Przed zmianą `WIZA10` obniżył zwykłego Wizarda, a bundla
+z miniaturką Wizard w środku nie ruszył. **Niepotwierdzone:** bezpośredni test zmienionych kodów
+na koszyku z bundlem, bo automat nie zdołał złożyć bundla po zmianie. Nowa pula kodów Fera może znów
+obejmować wszystkie produkty, nie sprawdzano.
+
+**Jak cofnąć:** `rollback/kody-bez-bundla-2026-11-04.json` zawiera poprzedni zakres każdego kodu
+(`discountCodeBasicUpdate`), potem usuń kolekcję.
+
 ### Filmy produktów w Google Merchant Center (`video_link`) `[poza repo]`
 Zasoby: 4 nowe źródła uzupełniające w Merchant Center (konto `5432602054`): DE-de `10790748330`,
 DE-en `10790748357`, FR-fr `10790748402`, US-en `10790748207`, każde pobiera codziennie o 6:00
