@@ -10,6 +10,38 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-04
+
+### Filmy produktów w Google Merchant Center (`video_link`) `[poza repo]`
+Zasoby: 4 nowe źródła uzupełniające w Merchant Center (konto `5432602054`): DE-de `10790748330`,
+DE-en `10790748357`, FR-fr `10790748402`, US-en `10790748207`, każde pobiera codziennie o 6:00
+(Europe/Warsaw) ten sam plik TSV z Shopify Files (`gid://shopify/GenericFile/51507089834250`).
+W Shopify Files doszło 5426 plików MP4 `gmc-<handle>.mp4` (ok. 18 GB). Nie są podpięte pod produkty,
+więc strony produktów się nie zmieniły. Skrypty: `merchant-video/` w folderze RPG Guild.
+
+Powód: Google pokazuje filmy produktów w bezpłatnych wynikach, AI Mode, Demand Gen i PMax. Wymaga
+pliku wideo 6-240 s, min. 720p, proporcje 1:1, 16:9 albo 9:16, a GIF-y nie są obsługiwane.
+
+Co zrobione: 5581 produktów online dostało film (101 522 warianty). 156 używa oryginalnego adresu
+z Shopify. Filmy 5 s są zapętlone do 10 s bez ponownego kodowania, 642 GIF-y przekonwertowane
+na MP4 1080x1080 (źródło 640x640, więc jakość gorsza), 1 film przycięty do 1:1.
+
+Pliki są hostowane jako GenericFile, a nie Video: limit planu to 5000 filmów i modeli 3D, sklep ma
+4986. GenericFile nie wlicza się do tego limitu, ale ma limit 20 MB na plik.
+
+Sprawdzone: pobranie pliku `SUCCEEDED` na wszystkich 4 feedach, 101 504 z 101 522 wierszy dopasowane,
+próba 60 produktów ma `videoLinks` w każdym feedzie, próba 40 adresów przechodzi jako Googlebot
+(HTTP 200, `video/mp4`, długość, proporcje, rozdzielczość). Akceptacja filmów przez Google
+nie jest jeszcze potwierdzona: pierwsze przetworzenie nowego adresu trwa 24-72 h.
+
+**Otwarte:** `gnoll-5e-hunter-ranger-miniature` jest aktywny w sklepie, ale nie ma go w Merchant
+Center (18 wierszy „Offer does not exist”), przyczyna nieustalona. Nowe produkty nie dostaną filmu
+same: trzeba ponowić `build.py` (`plan`, `run`, `wait`, `tsv`) i `gmc_deploy.py` (`wgraj`, `adres`).
+
+**Jak cofnąć:** `python3 gmc_deploy.py cofnij` odpina i kasuje 4 źródła, filmy znikają z ofert przy
+kolejnym przetworzeniu. Kopia źródeł sprzed zmiany: `rollback/gmc-zrodla-przed-video-2026-11-03.json`.
+Pliki `gmc-*` w Shopify Files można potem usunąć według `merchant-video/state.jsonl`.
+
 ## 2026-11-03 (14)
 
 ### Gratis Character Sheets jako osobny produkt za 0 USD `[poza repo]`
