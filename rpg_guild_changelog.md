@@ -10,6 +10,24 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-05
+
+### Tista Minis: zamówienie 280226 wpisane do BaseLinkera, przy okazji puste zamówienie testowe `[poza repo]`
+
+**Co:** zamówienie 280226 (Denny Borges, 2 figurki, 15,50 CAD za sztukę) nie dotarło z Shopify Tisty, więc
+wysłałem je przez webhook scenariusza Make `Shopify RPG Guild → Baselinker addOrder` (ID 6657607).
+W BaseLinkerze to 162935162. Bez adresu e-mail klienta, którego nie było w mailu od Tisty.
+
+**Skutek uboczny:** moja próbka diagnostyczna (SKU bez `-b2b`) utworzyła puste zamówienie 162935080.
+Filtr `-b2b` zatrzymuje pozycje, ale scenariusz i tak dochodzi do `addOrder`.
+
+**Dlaczego:** David z Tisty zgłosił 4.11, że to drugi taki przypadek. W Make nie było żadnego uruchomienia
+z 4.11, więc zamówienie nie dotarło do scenariusza. Przyczyna po stronie Tisty jeszcze nie jest ustalona.
+
+**Jak cofnąć:** anulować 162935162 i 162935080 ręcznie w BaseLinkerze. Scenariusza nie zmieniałem.
+
+---
+
 ## 2026-11-04
 
 ### Kody rabatowe bez Custom Bundle `[poza repo]`
