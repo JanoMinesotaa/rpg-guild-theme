@@ -12,6 +12,17 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-05
 
+### Make: filtr przeciw pustym zamówieniom w scenariuszu Tisty `[poza repo]`
+
+**Co:** w scenariuszu 6657607, przed modułem 4 (`json:CreateJSON`), dodany filtr `{{length(3.array)}}` większe od 0.
+
+**Dlaczego:** zamówienie bez pozycji `-b2b` tworzyło puste zamówienie w BaseLinkerze.
+
+**Test:** próbka bez `-b2b` kończy się po 3 operacjach, wcześniej 5, i nie tworzy zamówienia. Prawdziwego zamówienia
+`-b2b` po zmianie jeszcze nie było.
+
+**Jak cofnąć:** `rollback/make-scenariusz-6657607-przed-2026-11-05.md`.
+
 ### Tista Minis: zamówienie 280226 wpisane do BaseLinkera, przy okazji puste zamówienie testowe `[poza repo]`
 
 **Co:** zamówienie 280226 (Denny Borges, 2 figurki, 15,50 CAD za sztukę) nie dotarło z Shopify Tisty, więc
