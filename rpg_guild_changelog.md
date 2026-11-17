@@ -12,6 +12,14 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-17
 
+### Pliki: dwa hero do maili edrone (Gift Collection, 75 mm) `[poza repo]`
+
+**Co:** w Shopify Files dodane dwa obrazy z Recrafta: `44830f82-2edb-43e7-ac07-b09c7c86b965.webp` (skrzynia, mail Gift Collection) i `a872439d-577b-4902-afee-4ac97a816298.jpg` (Butcher Demon 32/75 mm, mail 75 mm). Nic w motywie ich nie używa.
+
+**Dlaczego:** edrone potrzebuje publicznych adresów obrazów w HTML maili.
+
+**Jak cofnąć:** usunąć oba pliki w Shopify > Content > Files (najpierw usunąć je z maili w edrone).
+
 ### Ceny: DnD Gifts -10% z przekreśloną ceną `[poza repo]`
 
 **Co:** na kolekcji `dnd-gifts` 27 produktów i 429 wariantów dostało `compareAtPrice` = stara cena oraz `price` = stara cena × 0,90 (zaokrąglone do 2 miejsc). E-karta podarunkowa (`RPG Guild E-Gift Card`) jest celowo wyłączona. Warianty z ceną 0 są pomijane. Narzędzie: `shopify_discount_gifts.py` (kopia skryptu terrain).
