@@ -10,6 +10,28 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-17
+
+### Brama partnerów: Crippled God włączony (Shopify + Etsy z adresem) `[poza repo]`
+
+**Co:** w Val Town `janstarosta/rpg-partner-gateway` data startu CG zmieniona z 2099 na 12.11.2026, źródła Shopify i Etsy. Zamówienie z Etsy bez adresu czeka w folderze New bez alarmu, a po ręcznym dopisaniu adresu przez Nicka brama je pobiera. Okno odczytu wydłużone z 7 do 30 dni. Kod: `Partner-App/gateway`, commit `d421487`.
+
+**Dlaczego:** Nick (17.11) dał zielone światło na start. Adresy z Etsy będzie dopisywał ręcznie w Order Desk.
+
+**Test:** 21 testów lokalnie; na sucho 2 zamówienia Shopify w porządku, 5 zamówień z Etsy pominiętych. Po wdrożeniu przebieg crona utworzył w Base #5952 (164424424) i #5954 (164424426), status CG New, adresy są, w #5954 2 pozycje `CG-FREE-MINI`. Partnerzy test i tista bez zmian. Znane: zamówienia z Etsy mają rabat na całe zamówienie, więc przyjdą z alarmem `order_level_discount` (decyzja czeka na Macieja).
+
+**Jak cofnąć:** w Val Town przywrócić wersję `main` v54. Zamówienia już utworzone w Base usunąć ręcznie.
+
+### Brama partnerów: zamówienia Crippled God z Order Desk (bezczynne do startu) `[poza repo]`
+
+**Co:** w Val Town `janstarosta/rpg-partner-gateway` dodane pliki `cg.ts`, `cgSync.ts`, `orderdesk.ts`, poprawione `partners.ts` i `cron.ts`. Cron co 15 minut ma pobierać zamówienia Shopify z folderu New w Order Desk Crippled God Foundry do Base (status CG New 387993), a po CG Shipped 387994 odsyłać numer przesyłki do Order Desk i przenosić zamówienie do folderu Closed. Pliki STL są pomijane, darmowe „Random Mini” trafiają jako `CG-FREE-MINI` za 0, Etsy na razie wyłączone (Order Desk nie dostaje adresów). Data startu ustawiona na 2099, więc brama nic jeszcze nie pobiera. Kod: `Partner-App/gateway`, commit `bf059ad`.
+
+**Dlaczego:** Crippled God Foundry (Nick) nie instaluje aplikacji Shopify, jego zamówienia zbiera Order Desk.
+
+**Test:** 21 testów lokalnie; 16 historycznych zamówień Shopify z Order Desk złożonych na sucho bez błędów; po wdrożeniu ręczny przebieg crona bez błędów, partnerzy test i tista bez zmian.
+
+**Jak cofnąć:** w Val Town przywrócić wersję `main` v49 (sprzed zmiany).
+
 ## 2026-11-05
 
 ### Make: filtr przeciw pustym zamówieniom w scenariuszu Tisty `[poza repo]`
