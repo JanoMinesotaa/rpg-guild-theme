@@ -12,6 +12,16 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-17
 
+### Ceny: DnD Gifts -10% z przekreśloną ceną `[poza repo]`
+
+**Co:** na kolekcji `dnd-gifts` 27 produktów i 429 wariantów dostało `compareAtPrice` = stara cena oraz `price` = stara cena × 0,90 (zaokrąglone do 2 miejsc). E-karta podarunkowa (`RPG Guild E-Gift Card`) jest celowo wyłączona. Warianty z ceną 0 są pomijane. Narzędzie: `shopify_discount_gifts.py` (kopia skryptu terrain).
+
+**Dlaczego:** kampania Akt II obiecuje 10% rabatu na DnD Gift Collection przez cały listopad, a maile edrone (Gift Collection) to komunikują. Przed zmianą sprawdzone: na kolekcję nie działa żaden rabat automatyczny, więc nie ma sumowania rabatów. Na sklepie aktywna jest jeszcze przecena Companions 5e -5%.
+
+**Test:** odczyt na żywo po zmianie: wszystkie 27 produktów mają dokładnie -10%, e-karta bez przekreślenia, 0 błędów API.
+
+**Jak cofnąć:** w terminalu Maca, w folderze `RPG Guild 🛡️`: `python3 shopify_discount_gifts.py rollback` (czyta `gifts_discount_rollback.jsonl`, nie kasować).
+
 ### Brama partnerów: Crippled God włączony (Shopify + Etsy z adresem) `[poza repo]`
 
 **Co:** w Val Town `janstarosta/rpg-partner-gateway` data startu CG zmieniona z 2099 na 12.11.2026, źródła Shopify i Etsy. Zamówienie z Etsy bez adresu czeka w folderze New bez alarmu, a po ręcznym dopisaniu adresu przez Nicka brama je pobiera. Okno odczytu wydłużone z 7 do 30 dni. Kod: `Partner-App/gateway`, commit `d421487`.
