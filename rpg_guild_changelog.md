@@ -12,6 +12,16 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-18
 
+### Brama partnerów: Tista Minis na produkcji `[poza repo]`
+
+**Co:** w Val Town `janstarosta/rpg-partner-gateway` (`partners.ts`) zamówienia Tisty trafiają do „Nowe zamówienia” (143848) zamiast `PT New`. Po statusie „Shipped” (384301) numer przesyłki wraca do zamówienia w Shopify Tisty. Data startu bez zmian (13.11.2026 20:16 UTC). Kod: `Partner-App/gateway`, commit `c9ca49e`.
+
+**Dlaczego:** David wyłączył Flow i anulował zamówienie testowe (odpowiedź z 18.11). Ostatnie zamówienie przez Make: #283298 z 14.11, potem żadnych.
+
+**Test:** 21 testów lokalnie; ręczny przebieg crona po wdrożeniu bez błędów (tista: 1 zamówienie sprawdzone, nic nowego do utworzenia; cg i test bez zmian).
+
+**Jak cofnąć:** w Val Town przywrócić `partners.ts` w wersji v58 (albo `git checkout przed-tista-live -- partners.ts` i wgrać). Flow u Tisty włącza David. Scenariusz Make 6657607 jest jeszcze włączony, do wyłączenia po kilku dniach.
+
 ### Brama partnerów: kopie testowe Tisty wyłączone z obserwacji `[poza repo]`
 
 **Co:** w bazie bramy (`janstarosta/rpg-partner-gateway`, tabela `orders`) zamówienia tista #283017 i #283298 przestawione z `in_base` na `cancelled`.
