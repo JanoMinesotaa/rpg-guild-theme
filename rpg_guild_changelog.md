@@ -12,6 +12,16 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-18
 
+### Ceny: zdjęta przecena Companions 5e -5% `[poza repo]`
+
+**Co:** na kolekcji `companions-5e` 120 produktów i 1413 wariantów (w tym 45 kopii `-b2b`) wróciło do ceny sprzed przeceny: `price` = `compareAtPrice`, przekreślenie usunięte. Narzędzie: `shopify_restore_from_compare_at.py run companions-5e`, 0 błędów.
+
+**Dlaczego:** decyzja Jana 18.11.2026.
+
+**Test:** pełny skan katalogu po zmianie: przekreślenie zostało tylko na 28 produktach (27 z DnD Gifts i Golden Dragon z cenami 0,00); wszystkie 1413 cen zgodne z kopią sprzed przeceny z 1.11 (`~/.local/share/rpg-guild-1-11/companions_przed_przecena.jsonl`).
+
+**Jak cofnąć:** `python3 shopify_restore_from_compare_at.py undo companions-5e` (czyta `companions_5e_restore_rollback.jsonl` w folderze `RPG Guild 🛡️`).
+
 ### Brama partnerów: Tista Minis na produkcji `[poza repo]`
 
 **Co:** w Val Town `janstarosta/rpg-partner-gateway` (`partners.ts`) zamówienia Tisty trafiają do „Nowe zamówienia” (143848) zamiast `PT New`. Po statusie „Shipped” (384301) numer przesyłki wraca do zamówienia w Shopify Tisty. Data startu bez zmian (13.11.2026 20:16 UTC). Kod: `Partner-App/gateway`, commit `c9ca49e`.
