@@ -12,6 +12,14 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-18
 
+### Pliki: hero do maila edrone „Elf Rotation” `[poza repo]`
+
+**Co:** w Shopify Files dodany obraz `0654d1a9-8427-47ad-ab8c-b0825bb35b40.webp` (gid MediaImage/51643612332298): figurki Elf Ranger Rogue i Elf Ranger Sairena na tle krwawego księżyca z design systemu The Long Night. Nic w motywie go nie używa.
+
+**Dlaczego:** edrone potrzebuje publicznego adresu obrazu w HTML maila o rotacji elfów -10%.
+
+**Jak cofnąć:** usunąć plik w Shopify > Content > Files (najpierw usunąć go z maila w edrone).
+
 ### Ceny: Elf 5e -10% z przekreśloną ceną (rotacja aktu II) `[poza repo]`
 
 **Co:** na kolekcji `elf-5e` 541 produktów i 6101 wariantów (w tym kopie B2B) dostało `compareAtPrice` = stara cena oraz `price` = stara cena × 0,90 (zaokrąglone do 2 miejsc, pół w górę). Narzędzie: `shopify_discount_elf.py` (kopia `shopify_discount_gifts.py` z innym handle kolekcji), 0 błędów.
