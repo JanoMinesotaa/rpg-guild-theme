@@ -12,6 +12,16 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-18
 
+### Ceny: Elf 5e -10% z przekreśloną ceną (rotacja aktu II) `[poza repo]`
+
+**Co:** na kolekcji `elf-5e` 541 produktów i 6101 wariantów (w tym kopie B2B) dostało `compareAtPrice` = stara cena oraz `price` = stara cena × 0,90 (zaokrąglone do 2 miejsc, pół w górę). Narzędzie: `shopify_discount_elf.py` (kopia `shopify_discount_gifts.py` z innym handle kolekcji), 0 błędów.
+
+**Dlaczego:** decyzja Jana 18.11.2026. Elfy to najlepiej sprzedająca się kolekcja figurek w ostatnich 12 miesiącach (ok. 3 060 USD, 251 zamówień). Przed zmianą sprawdzone: brak automatycznego rabatu procentowego na tę kolekcję.
+
+**Test:** pełny skan katalogu po zmianie: wszystkie 6101 wariantów ma `compareAtPrice` = cena sprzed i `price` = dokładnie -10%.
+
+**Jak cofnąć:** `python3 shopify_discount_elf.py rollback` (czyta `elf_discount_rollback.jsonl` w folderze `RPG Guild 🛡️`).
+
 ### Ceny: zdjęta przecena Companions 5e -5% `[poza repo]`
 
 **Co:** na kolekcji `companions-5e` 120 produktów i 1413 wariantów (w tym 45 kopii `-b2b`) wróciło do ceny sprzed przeceny: `price` = `compareAtPrice`, przekreślenie usunięte. Narzędzie: `shopify_restore_from_compare_at.py run companions-5e`, 0 błędów.
