@@ -10,6 +10,16 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-18
+
+### Brama partnerów: kopie testowe Tisty wyłączone z obserwacji `[poza repo]`
+
+**Co:** w bazie bramy (`janstarosta/rpg-partner-gateway`, tabela `orders`) zamówienia tista #283017 i #283298 przestawione z `in_base` na `cancelled`.
+
+**Dlaczego:** ich kopie testowe w grupie Partner TEST (163960669, 164040632) ktoś usunął 17.11 razem z innymi zamówieniami testowymi, przez co brama codziennie wysyłała alarm „zniknęło z Base”. Prawdziwe zamówienie #283298 (Base 164040627, z Make) jest nietknięte.
+
+**Jak cofnąć:** `UPDATE orders SET state = 'in_base', reason = NULL WHERE partner_key = 'tista' AND order_name IN ('#283017', '#283298')`. Wrócą wtedy alarmy, chyba że kopie zostaną przywrócone z kosza Base.
+
 ## 2026-11-17
 
 ### Pliki: dwa hero do maili edrone (Gift Collection, 75 mm) `[poza repo]`
