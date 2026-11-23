@@ -12,6 +12,14 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-23
 
+### Make: scenariusz Tisty wyłączony `[poza repo]`
+
+**Co:** w Make wyłączony scenariusz 6657607 „Shopify RPG Guild → Baselinker addOrder” (stara droga zamówień Tisty: Flow → Make → Base).
+
+**Dlaczego:** od 18.11 zamówienia Tisty idą przez bramę partnerów. Flow u Tisty jest wyłączony, ostatnie wywołanie scenariusza było 14.11 (#283298).
+
+**Jak cofnąć:** w Make włączyć scenariusz 6657607. Działa tylko wtedy, gdy David włączy z powrotem Flow „Route dropship orders to Make.com”.
+
 ### Brama partnerów: pełny fulfilment w aplikacji Shopify, CG bez alarmu o rabatach `[poza repo]`
 
 **Co:** w Val Town `janstarosta/rpg-partner-gateway` aplikacja Shopify ma drugi tryb partnera: wszystkie wysyłane pozycje zamiast samych `-b2b`, pliki cyfrowe pominięte, darmowe figurki jako `CG-FREE-MINI` za 0, pomijane kraje. Nowy partner `cgshop` (sklep Crippled God, `1474a2-3e.myshopify.com`) w trybie testowym: kopie do Partner TEST, bez zwrotu numerów i maili do klientów, bez GR/GB/US, nieaktywny do instalacji. Zamówienia CG (Order Desk i aplikacja) nie wysyłają już alarmu o rabacie na całe zamówienie. Kod: `Partner-App/gateway`, commity `08a9665`, `867af6c`, `9e5498f`.
