@@ -10,6 +10,18 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-23
+
+### Brama partnerów: pełny fulfilment w aplikacji Shopify, CG bez alarmu o rabatach `[poza repo]`
+
+**Co:** w Val Town `janstarosta/rpg-partner-gateway` aplikacja Shopify ma drugi tryb partnera: wszystkie wysyłane pozycje zamiast samych `-b2b`, pliki cyfrowe pominięte, darmowe figurki jako `CG-FREE-MINI` za 0, pomijane kraje. Nowy partner `cgshop` (sklep Crippled God, `1474a2-3e.myshopify.com`) w trybie testowym: kopie do Partner TEST, bez zwrotu numerów i maili do klientów, bez GR/GB/US, nieaktywny do instalacji. Zamówienia CG (Order Desk i aplikacja) nie wysyłają już alarmu o rabacie na całe zamówienie. Kod: `Partner-App/gateway`, commity `08a9665`, `867af6c`, `9e5498f`.
+
+**Dlaczego:** test aplikacji na CG obok Order Desk (decyzja Jana 23.11). CG rozliczamy po kosztach produkcji, więc rabaty z Etsy nie mają znaczenia (Maciej 23.11). Kraje: wszystko oprócz Grecji, UK i USA (ustalenie z Nickiem z 17.11).
+
+**Test:** 26 testów lokalnie, w tym 5 nowych. Ręczny przebieg crona po wgraniu bez błędów: tista, test i cgshop bez zmian, cg 9 zamówień sprawdzonych, nic nowego.
+
+**Jak cofnąć:** w Val Town przywrócić wersję `main` v61 albo `git checkout przed-cg-shopify` w `Partner-App/gateway` i wgrać pliki.
+
 ## 2026-11-18
 
 ### Pliki: hero do maila edrone „Elf Rotation” `[poza repo]`
