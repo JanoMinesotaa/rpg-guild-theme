@@ -12,13 +12,13 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-23
 
-### Rabaty: kod LASTMOON15 na Black Week, NAT20 i GMCRPG wstrzymane `[poza repo]`
+### Rabaty: kod BLACKWEEK na Black Week, NAT20 i GMCRPG wstrzymane `[poza repo]`
 
-**Co:** nowy kod `LASTMOON15` (-15%, tylko segment „Email subscribers”, 27.11 00:00 - 30.11 23:59 czasu polskiego, jedno użycie na klienta, bez minimum). Obejmuje kolekcje All Miniatures, Miniature Bundles i Handmade DnD Dice Sets (bez Mystery Boxów, Terrain, Custom DnD Minis, kart postaci, kart podarunkowych i B2B). Łączy się z darmową dostawą i rabatami na produkty, nie łączy się z rabatami na zamówienie. `NAT20` i `GMCRPG` mają ustawiony koniec ważności na 26.11 23:59.
+**Co:** nowy kod `BLACKWEEK` (pierwotnie założony jako `LASTMOON15`, przemianowany tego samego dnia; -15%, tylko segment „Email subscribers”, od 27.11 00:00 czasu polskiego do 1.12 08:00 czasu nowojorskiego, czyli 14:00 w Polsce, jedno użycie na klienta, bez minimum). Obejmuje kolekcje All Miniatures, Miniature Bundles i Handmade DnD Dice Sets (bez Mystery Boxów, Terrain, Custom DnD Minis, kart postaci, kart podarunkowych i B2B). Łączy się z darmową dostawą i rabatami na produkty, nie łączy się z rabatami na zamówienie. `NAT20` i `GMCRPG` mają ustawiony koniec ważności na 26.11 23:59.
 
 **Dlaczego:** kampania Black Week 2026 to wyłącznie rabat dla subskrybentów (decyzja Jana 23.11). Publiczne kody -20% przebijałyby ofertę dla listy.
 
-**Jak cofnąć:** plik `black_week_2026_codes_rollback.json` w folderze RPG Guild. `LASTMOON15` usunąć albo dezaktywować. `NAT20` i `GMCRPG`: ustawić `endsAt` na puste - **do zrobienia 1.12.2026**.
+**Jak cofnąć:** plik `black_week_2026_codes_rollback.json` w folderze RPG Guild. `BLACKWEEK` usunąć albo dezaktywować. `NAT20` i `GMCRPG`: ustawić `endsAt` na puste - **do zrobienia 1.12.2026**.
 
 ### Pliki: ikony Aktu III bez uciętego dołu, hero maila Black Week `[poza repo]`
 
