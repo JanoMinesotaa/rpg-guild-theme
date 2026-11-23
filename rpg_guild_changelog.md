@@ -12,6 +12,20 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-23
 
+### Rabaty: kod LASTMOON15 na Black Week, NAT20 i GMCRPG wstrzymane `[poza repo]`
+
+**Co:** nowy kod `LASTMOON15` (-15%, tylko segment „Email subscribers”, 27.11 00:00 - 30.11 23:59 czasu polskiego, jedno użycie na klienta, bez minimum). Obejmuje kolekcje All Miniatures, Miniature Bundles i Handmade DnD Dice Sets (bez Mystery Boxów, Terrain, Custom DnD Minis, kart postaci, kart podarunkowych i B2B). Łączy się z darmową dostawą i rabatami na produkty, nie łączy się z rabatami na zamówienie. `NAT20` i `GMCRPG` mają ustawiony koniec ważności na 26.11 23:59.
+
+**Dlaczego:** kampania Black Week 2026 to wyłącznie rabat dla subskrybentów (decyzja Jana 23.11). Publiczne kody -20% przebijałyby ofertę dla listy.
+
+**Jak cofnąć:** plik `black_week_2026_codes_rollback.json` w folderze RPG Guild. `LASTMOON15` usunąć albo dezaktywować. `NAT20` i `GMCRPG`: ustawić `endsAt` na puste - **do zrobienia 1.12.2026**.
+
+### Pliki: ikony Aktu III bez uciętego dołu, hero maila Black Week `[poza repo]`
+
+**Co:** wgrane do Shopify Files `ln-ic-chest-a3v3.png`, `ln-ic-potion-a3v3.png` (skrzynia i fiolka z dorysowanym w Recrafcie dołem) i `ln-hero-blackweek.jpg`. Stare `a3v2` zostały.
+
+**Jak cofnąć:** w mailu wrócić do adresów `a3v2`; nowe pliki usunąć w Shopify Files.
+
 ### Make: scenariusz Tisty wyłączony `[poza repo]`
 
 **Co:** w Make wyłączony scenariusz 6657607 „Shopify RPG Guild → Baselinker addOrder” (stara droga zamówień Tisty: Flow → Make → Base).
