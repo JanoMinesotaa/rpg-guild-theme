@@ -22,7 +22,7 @@ Konwencja: najnowsze na górze.
 
 ### Pliki: ikony Aktu III bez uciętego dołu, hero maila Black Week `[poza repo]`
 
-**Co:** wgrane do Shopify Files `ln-ic-chest-a3v3.png`, `ln-ic-potion-a3v3.png` (skrzynia i fiolka z dorysowanym w Recrafcie dołem) i `ln-hero-blackweek.jpg`, a potem `ln-hero-blackweek-v2.jpg` (kompozycja: twarze z inspo-01, księżyc z Aktu II, herb crest-blood; ta wersja jest w mailu). Stare `a3v2` zostały.
+**Co:** wgrane do Shopify Files `ln-ic-chest-a3v3.png`, `ln-ic-potion-a3v3.png` (skrzynia i fiolka z dorysowanym w Recrafcie dołem) i `ln-hero-blackweek.jpg`, a potem `ln-hero-blackweek-v2.jpg` (kompozycja: twarze z inspo-01, księżyc z Aktu II, herb crest-blood), a na końcu `ln-hero-blackweek-v3.jpg` (sam księżyc + herb) i `ln-bw-faces.jpg` (twarze obok tekstu) - te dwa są w mailu. Stare `a3v2` zostały.
 
 **Jak cofnąć:** w mailu wrócić do adresów `a3v2`; nowe pliki usunąć w Shopify Files.
 
