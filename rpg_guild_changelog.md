@@ -10,7 +10,35 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-25
+
+### Rabaty: test BLACKWEEK na Custom Bundle, kod testowy założony i usunięty `[poza repo]`
+
+**Co:** założony tymczasowy kod `BWTEST7Q3K` (kopia BLACKWEEK 1:1: -15%, kolekcje All Miniatures, Miniature Bundles, Handmade Dice; łączy się z rabatami na produkty i dostawę; dla wszystkich, ważny 2 h, limit 1 użycia) i po testach usunięty. Wynik w kasie: kod NIE działa na Custom Bundle z Easy Bundle Builder (zestawy 5, 10 i 20 figurek - Shopify: „discount code isn't valid for the items in your cart”), działa na zwykłe figurki i na gotowe zestawy z Miniature Bundles. Powód: zestaw trafia do koszyka jako produkt „Guild's Custom Bundle”, który nie należy do żadnej z tych kolekcji. Bez zmian w BLACKWEEK.
+
+**Dlaczego:** mail Black Week mówi „NOT VALID ON CUSTOM BUNDLES” - sprawdzenie, że sklep robi to samo.
+
+**Uwaga na przyszłość:** produktu „Guild's Custom Bundle” (handle `test-2`) nie dodawać do kolekcji All Miniatures, Miniature Bundles ani Handmade Dice - wtedy kody na kolekcje zaczną działać na zestawy.
+
+**Jak cofnąć:** nic do cofania, kod testowy już nie istnieje.
+
 ## 2026-11-24
+
+### Rabaty: nowy kod RPG10 dla maila powitalnego edrone `[poza repo]`
+
+**Co:** kod `RPG10` (`gid://shopify/DiscountCodeNode/1640185168138`): -10% na kolekcję discount-eligible-no-bundles (jak RPGSHOP), raz na klienta, wszyscy klienci, łączy się z rabatami na zamówienie i dostawę, nie z rabatami na produkty. Aktywny od 24.11, bez końca.
+
+**Dlaczego:** pula edrone „Zapis do newslettera -10%” (2 wiadomości) wysyłała kod RPG10, którego w Shopify nie było - nowi subskrybenci dostawali niedziałający kod. Decyzja Jana 24.11.
+
+**Jak cofnąć:** usunąć albo dezaktywować kod RPG10 w Shopify (Rabaty).
+
+### Rabaty: NAT20 i GMCRPG wracają same 1.12 o 14:00 `[poza repo]`
+
+**Co:** oba kody dostały `startsAt = 2026-12-01T13:00:00Z` (14:00 CET, gdy kończy się BLACKWEEK) i `endsAt = null`. Status SCHEDULED - od 24.11 wieczorem nie działają, 1.12 Shopify włączy je sam.
+
+**Dlaczego:** powrót 1.12 był ustalony 23.11. Apka Price Manager (Val Town) nie ma uprawnień do rabatów, a przyszłej daty startu nie da się ustawić bez wyłączenia kodu od razu. Jan wybrał 24.11 wyłączenie 2 dni wcześniej (NAT20 14 użyć w roku, GMCRPG 3) zamiast ręcznego kroku 27.11.
+
+**Jak cofnąć:** daty `przed` z `RPG Guild 🛡️/rollback/kody-nat20-gmcrpg-2026-11-24.json`.
 
 ### Ceny aktu III zaplanowane na 1.12.2026 00:00 CET - Val Town `[poza repo]`
 val `janstarosta/rpg-guild-ceny-1-11`, nowy plik `akt3.ts` (interval). Zlecenie Jana z 24.11.
