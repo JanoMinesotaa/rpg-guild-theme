@@ -12,6 +12,24 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-24
 
+### Ceny aktu III zaplanowane na 1.12.2026 00:00 CET - Val Town `[poza repo]`
+val `janstarosta/rpg-guild-ceny-1-11`, nowy plik `akt3.ts` (interval). Zlecenie Jana z 24.11.
+
+**Co zrobi 1.12:** rabat zawsze od ceny regularnej (przekreślona, gdy jest, inaczej cena), z przekreśleniem (compareAt = cena regularna).
+- -20%: Wizard 5e, DnD Mystery Box, terrain (dnd-terrain, dnd-terrain-tiles, modular-dnd-terrain-sets, modular-dnd-terrain-starter-sets).
+- -10%: All Miniatures oraz pozostałe figurki i popiersia spoza tej kolekcji (typy RPG Miniature, RPG Miniature<5000, DnD Miniature), bez bundli i zestawów (kolekcja dnd-miniature-bundles albo „bundle”/„set” w adresie).
+- Cena regularna: Elf 5e (koniec rotacji aktu II; elfy-figurki dostają -10% jak wszystkie) i DnD Gifts poza grupami wyżej.
+- B2B (typ B2B Miniature / all-miniatures-b2b / -b2b): bez rabatu; 239 elfów B2B, które miały -10% z rotacji, wraca do ceny regularnej.
+- Głębsza przecena niż docelowa zostaje, cena 0 pomijana.
+
+**Próba na sucho 24.11 (nic nie zmieniła):** 5531 produktów / 96 244 warianty: -20% 272, -10% 4999, cena regularna 21, B2B 239; bundle pominięte 48, warianty z ceną 0: 9. Próbka 40 produktów: proporcje wyłącznie 0,90 i 0,80. Testowe wgranie pliku planu do Shopify OK.
+
+**Jak działa:** od 1.12 00:00 CET eksport (bulk query) + członkostwo kolekcji -> plan -> zrzut cen do cofnięcia (blob `akt3-live-snap`) -> bulk mutation -> kontrola 40 losowych produktów -> mail „RPG Guild 1.12 akt III ceny: OK/SPRAWDZ”. Przed 1.12 tylko próba na sucho (stan `akt3-dry`).
+
+**Przy okazji:** kod `DNDGIFT` ma koniec 1.12 00:00 CET (endsAt `2026-11-30T23:00:00Z`) - kończy się razem z przeceną Gift Collection.
+
+**Jak cofnąć:** przed 1.12 - wyłączyć harmonogram pliku `akt3.ts`. Po 1.12 - przywrócić ceny ze zrzutu `akt3-live-snap` (price/compareAtPrice każdego zmienionego wariantu). `DNDGIFT`: endsAt = null.
+
 ### Landing The Long Night: 4 przyciski w akcie III (zadziałają od 1.12)
 `sections/long-night-lp-book.liquid`, `templates/page.long-night.json`, `templates/product.gift-card.json`, `templates/product.gift-card-2.json`.
 
