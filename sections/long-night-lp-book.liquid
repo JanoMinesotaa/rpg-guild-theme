@@ -240,6 +240,9 @@
           {%- if block.settings.cta_3_label != blank and block.settings.cta_3_link != blank -%}
             <a class="ln-cta ln-cta--sm" href="{{ block.settings.cta_3_link }}">{{ block.settings.cta_3_label }}</a>
           {%- endif -%}
+          {%- if block.settings.cta_4_label != blank and block.settings.cta_4_link != blank -%}
+            <a class="ln-cta ln-cta--sm" href="{{ block.settings.cta_4_link }}">{{ block.settings.cta_4_label }}</a>
+          {%- endif -%}
         {%- endif -%}
       {%- endcapture -%}
 
@@ -384,7 +387,9 @@
         { "type": "text", "id": "cta_2_label", "label": "Przycisk 2 · napis", "default": "Big Terrain Sale" },
         { "type": "url", "id": "cta_2_link", "label": "Przycisk 2 · adres" },
         { "type": "text", "id": "cta_3_label", "label": "Przycisk 3 · napis", "default": "Character sheet" },
-        { "type": "url", "id": "cta_3_link", "label": "Przycisk 3 · adres" }
+        { "type": "url", "id": "cta_3_link", "label": "Przycisk 3 · adres" },
+        { "type": "text", "id": "cta_4_label", "label": "Przycisk 4 · napis" },
+        { "type": "url", "id": "cta_4_link", "label": "Przycisk 4 · adres" }
       ]
     }
   ],

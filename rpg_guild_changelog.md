@@ -12,6 +12,15 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-24
 
+### Landing The Long Night: 4 przyciski w akcie III (zadziałają od 1.12)
+`sections/long-night-lp-book.liquid`, `templates/page.long-night.json`, `templates/product.gift-card.json`, `templates/product.gift-card-2.json`.
+
+**Co:** wpis aktu III w księdze miał trzy puste linki przycisków, więc 1.12 akt otworzyłby się bez żadnego przycisku. Sekcja dostała czwarty przycisk (`cta_4_label` / `cta_4_link`, ten sam wzorzec co 1-3). Akt III: Every miniature → `all-products`, Mystery Box → `dnd-mystery-box`, Terrains → `dnd-terrain`, Custom Miniature → `products/custom-dnd-minis-printed-to-order` (decyzja Jana 24.11). Tłumaczenia DE/FR nowych napisów zarejestrowane: Mystery Box / Gelände / Individuelle Miniatur i Mystery Box / Décors / Figurine sur mesure. Przy okazji w dwóch szablonach karty podarunkowej przycisk sekcji sezonu („See the whole season”) prowadził na `#` - dostał link do landingu (jedyna zmiana w tych plikach).
+
+**Dlaczego teraz:** przed 1.12 klient tego nie widzi - akt III jest zamknięty („Get notified”), akt liczy się z daty, ustawienia `act: 2` i `auto_act: true` bez zmian. Sprawdzone na LIVE w EN/DE/FR: akty 2,2,2, akt III zamknięty, nowych linków nie ma w HTML. Na kopii motywu z aktem 3: 4 przyciski, linki HTTP 200 (EN/DE/FR), Chromium 1440 px i iPhone 15 WebKit bez przewijania w bok.
+
+**Jak cofnąć:** wgrać 4 pliki z `RPG Guild 🛡️/automation/backups/2026-11-24-landing-akt3/przed/` (najpierw szablony, potem sekcja) albo w edytorze motywu wyczyścić przyciski aktu III.
+
 ### Rabaty: wyłączone kody OCTOBER i SPOOKY z aktu I `[poza repo]`
 
 **Co:** `OCTOBER` (-10% na kolekcję Dragon 5e) i `SPOOKY` (-5% na Spooky Miniatures) dezaktywowane (`discountCodeDeactivate`, status EXPIRED, koniec 24.11 22:03 UTC). Oba bez użyć.

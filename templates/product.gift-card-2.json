@@ -55,7 +55,8 @@
         "blood_strength": 62,
         "cta_label": "See the whole season",
         "padding_top": 40,
-        "padding_bottom": 40
+        "padding_bottom": 40,
+        "cta_link": "shopify://pages/the-long-night-rpg-guild-sale-season"
       }
     },
     "main": {

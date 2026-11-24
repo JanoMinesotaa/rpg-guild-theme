@@ -23,7 +23,8 @@
     "ln_poster": {
       "type": "long-night-lp-poster",
       "settings": {
-        "act": "1",
+        "act": "2",
+        "auto_act": true,
         "eyebrow": "October - December 2026",
         "heading": "The Long Night",
         "lede": "Three moons over the Guild. Three acts, one season - and when the last one sets, we close the gates.",
@@ -76,7 +77,8 @@
         "act_3"
       ],
       "settings": {
-        "act": "1",
+        "act": "2",
+        "auto_act": true,
         "heading": "The three acts",
         "padding_top": 0,
         "padding_bottom": 0
@@ -112,19 +114,19 @@
             "act_no": "2",
             "plate_alt": "Two dragons facing each other under a full blood moon dripping blood.",
             "numeral": "II",
-            "name": "Blood Moon &middot; <em>Black Friday</em>",
-            "when": "1 - 30 November &middot; peak 27 - 30",
+            "name": "Blood Moon · <em>Black Friday</em>",
+            "when": "1 - 30 November · peak 27 - 30",
             "line": "The moon is fresh in blood. The Guild let it strive!",
             "opens": "Opens 1 November",
-            "what_1": "Custom Bundle: 10 minis &minus;10%, 20 &minus;20%, 50 &minus;30%",
+            "what_1": "Custom Bundle: 10 minis −10%, 20 −20%, 50 −30%",
             "what_2": "The 75 mm option arrives",
             "what_3": "Gift Collection, 10% off",
             "cta_1_label": "Custom Bundle",
-            "cta_1_link": "",
+            "cta_1_link": "shopify://pages/custom-guilds-bundles",
             "cta_2_label": "The 75 mm option",
-            "cta_2_link": "",
+            "cta_2_link": "shopify://collections/75mm-miniature-big-scale",
             "cta_3_label": "Gift Collection",
-            "cta_3_link": ""
+            "cta_3_link": "shopify://collections/dnd-gifts"
           }
         },
         "entry_3": {
@@ -141,11 +143,13 @@
             "what_2": "Mystery Box and Terrains, 20% off",
             "what_3": "Custom Miniature",
             "cta_1_label": "Every miniature",
-            "cta_1_link": "",
-            "cta_2_label": "Mystery Box &amp; Terrains",
-            "cta_2_link": "",
-            "cta_3_label": "Custom Miniature",
-            "cta_3_link": ""
+            "cta_1_link": "shopify://collections/all-products",
+            "cta_2_label": "Mystery Box",
+            "cta_2_link": "shopify://collections/dnd-mystery-box",
+            "cta_3_label": "Terrains",
+            "cta_3_link": "shopify://collections/dnd-terrain",
+            "cta_4_label": "Custom Miniature",
+            "cta_4_link": "shopify://products/custom-dnd-minis-printed-to-order"
           }
         }
       },
@@ -155,7 +159,8 @@
         "entry_3"
       ],
       "settings": {
-        "act": "1",
+        "act": "2",
+        "auto_act": true,
         "eyebrow": "The season",
         "heading": "Three acts, three moons, multiple incentives!",
         "lede": "Apart from the ongoing <a href=\"/collections/miniatures-on-sale\" title=\"Miniatures on sale\">miniature sale rotation</a>, dive into our seasonal offers.&nbsp;",
