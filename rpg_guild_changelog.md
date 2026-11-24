@@ -22,6 +22,16 @@ Konwencja: najnowsze na górze.
 
 **Jak cofnąć:** nic do cofania, kod testowy już nie istnieje.
 
+## 2026-11-25
+
+### edrone: porzucony koszyk bez drugiego maila (NAT20) do stycznia `[poza repo]`
+
+**Co:** w automatyzacji „Recover abandoned carts” usunięty drugi mail („🎲 Critical Hit! - You Just Rolled a Nat 20!”, wysyłany 1 dzień po pierwszym, z kodem NAT20 -20% wpisanym na sztywno). Zostały mail 1 i SMS po 2 h. Automatyzacja wznowiona, sprawdzone przez API edrone (2 wiadomości).
+
+**Dlaczego:** decyzja Jana 25.11 - 20% to za dużo w akcie III; mail ma wrócić w styczniu.
+
+**Jak cofnąć:** `Black Friday 2026/11-edrone/maile/zamrozone/README.md` (edrone pozwala przywrócić usunięty mail; kopia HTML w tym samym folderze).
+
 ## 2026-11-24
 
 ### Rabaty: nowy kod RPG10 dla maila powitalnego edrone `[poza repo]`
