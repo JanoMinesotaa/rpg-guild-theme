@@ -10,6 +10,24 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-24
+
+### Rabaty: wyłączone kody OCTOBER i SPOOKY z aktu I `[poza repo]`
+
+**Co:** `OCTOBER` (-10% na kolekcję Dragon 5e) i `SPOOKY` (-5% na Spooky Miniatures) dezaktywowane (`discountCodeDeactivate`, status EXPIRED, koniec 24.11 22:03 UTC). Oba bez użyć.
+
+**Dlaczego:** to kody październikowego aktu I, które zostały aktywne po przejściu na akt II 1.11. Decyzja Jana 24.11 przy planowaniu aktu III.
+
+**Jak cofnąć:** `discountCodeActivate` na ID z pliku `RPG Guild 🛡️/rollback/kody-akt1-october-spooky-2026-11-24.json` (albo w panelu: Rabaty → kod → Aktywuj).
+
+### Pliki: grafiki maila otwierającego Akt III `[poza repo]`
+
+**Co:** wgrane do Shopify Files `ln-hero-act3-tower.jpg` (pionowy kadr afisza Aktu III z landingu, hero na telefonie), `ln-hero-act3-eclipse.jpg` (szeroki kadr tego samego afisza, hero na komputerze) i `ln-moon-act3-night.jpg` (księżyc Aktu III `ln-lp-moon-3` spłaszczony na tło nocy). Używa ich mail „The last moon has risen” do edrone (`Black Friday 2026/11-edrone/maile/akt3-grudzien/act3-the-last-moon-do-edrone.html`).
+
+**Dlaczego:** edrone potrzebuje publicznych adresów obrazów; hero ma być spójne z afiszem landingu sezonu.
+
+**Jak cofnąć:** usunąć trzy pliki w Shopify Files (Treści → Pliki). Motyw ich nie używa.
+
 ## 2026-11-23
 
 ### Rabaty: kod BLACKWEEK na Black Week, NAT20 i GMCRPG wstrzymane `[poza repo]`
