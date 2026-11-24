@@ -24,6 +24,22 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-25
 
+### edrone: popupy aktu II do 30.11, popupy aktu III 1.12-31.12 `[poza repo]`
+
+**Co:** w edrone (Onsites → Popup) harmonogram zamiast „ciągle”: Desktop Act 2, Desktop ACT 2 Homepage, Mobile ACT 2 Homepage, Mobile ACT 2 BUNDLE - 25.11 00:00 do 30.11 23:59. Desktop ACT 3 Bundle i MOBILE ACT 3 BUNDLE (Custom Bundle, bez daty aktu) - opublikowane, 1.12 00:00 do 31.12 23:59. Sprawdzone przez API edrone.
+
+**Dlaczego:** popupy aktu II mówią „Act II · 1-30 November” i „Gift Collection 10% off” - w grudniu byłyby nieprawdą. Decyzja Jana 25.11 („do 1 stycznia”).
+
+**Jak cofnąć:** w edytorze popupu: Display → When → Schedule → „Display now”, publikacja.
+
+### Rabaty: NAT20 zostaje wyłączony (bez powrotu 1.12) `[poza repo]`
+
+**Co:** `discountCodeDeactivate` na NAT20 - status EXPIRED. Zaplanowany wcześniej powrót 1.12 14:00 anulowany. GMCRPG bez zmian (wraca sam 1.12 14:00).
+
+**Dlaczego:** Jan 25.11: 20% to za dużo; mail porzuconego koszyka z NAT20 i tak jest zamrożony do stycznia.
+
+**Jak cofnąć:** `RPG Guild 🛡️/rollback/kody-nat20-gmcrpg-2026-11-24.json` (daty „przed”).
+
 ### edrone: porzucony koszyk bez drugiego maila (NAT20) do stycznia `[poza repo]`
 
 **Co:** w automatyzacji „Recover abandoned carts” usunięty drugi mail („🎲 Critical Hit! - You Just Rolled a Nat 20!”, wysyłany 1 dzień po pierwszym, z kodem NAT20 -20% wpisanym na sztywno). Zostały mail 1 i SMS po 2 h. Automatyzacja wznowiona, sprawdzone przez API edrone (2 wiadomości).
