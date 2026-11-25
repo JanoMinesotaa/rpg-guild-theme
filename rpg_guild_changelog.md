@@ -12,6 +12,14 @@ Konwencja: najnowsze na górze.
 
 ## 2026-11-25
 
+### Brama partnerów: CG #5973 przepięte na zamówienie połączone w Base `[poza repo]`
+
+**Co:** w bazie bramy (`janstarosta/rpg-partner-gateway`, tabela `orders`) zamówienie cg #5973 (Order Desk 4987723956) wskazuje teraz na Base 164762708 zamiast 164916909.
+
+**Dlaczego:** w Base ktoś połączył #5973 z #5963 tego samego klienta (wszystkie pozycje i 4 darmowe figurki są w 164762708, status CG New). Brama widziała tylko, że 164916909 zniknęło, i wysłała alarm. Po przepięciu numer przesyłki z 164762708 trafi do obu zamówień w Order Desk.
+
+**Jak cofnąć:** `UPDATE orders SET bl_order_id = 164916909 WHERE partner_key = 'cg' AND shopify_order_id = '4987723956'`.
+
 ### Rabaty: test BLACKWEEK na Custom Bundle, kod testowy założony i usunięty `[poza repo]`
 
 **Co:** założony tymczasowy kod `BWTEST7Q3K` (kopia BLACKWEEK 1:1: -15%, kolekcje All Miniatures, Miniature Bundles, Handmade Dice; łączy się z rabatami na produkty i dostawę; dla wszystkich, ważny 2 h, limit 1 użycia) i po testach usunięty. Wynik w kasie: kod NIE działa na Custom Bundle z Easy Bundle Builder (zestawy 5, 10 i 20 figurek - Shopify: „discount code isn't valid for the items in your cart”), działa na zwykłe figurki i na gotowe zestawy z Miniature Bundles. Powód: zestaw trafia do koszyka jako produkt „Guild's Custom Bundle”, który nie należy do żadnej z tych kolekcji. Bez zmian w BLACKWEEK.
