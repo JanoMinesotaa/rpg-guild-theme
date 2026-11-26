@@ -27,6 +27,11 @@
      Pola idą na poziom grupy (ProductGroup), bo opisuja produkt, nie wariant.
      Puste metadane sa pomijane - nie emitujemy pustych PropertyValue.
 
+  5. image jako lista - filtr daje kazdemu wariantowi jedno zdjecie, a Merchant Center
+     liczy "Images per offer" ze strony, nie z feedu (11.2026: ocena "Incomplete" na
+     trzech rynkach przy 3+ zdjeciach w feedzie). Zdjecie wariantu zostaje pierwsze,
+     za nim reszta zdjec produktu, razem max 11 (1 + 10 dodatkowych wg Google).
+
   Uzycie w sekcji produktu, zamiast golego `| structured_data`:
     {% render 'schema-produktu', product: section.settings.product %}
 {%- endcomment -%}
@@ -64,6 +69,23 @@
   endif
 
   assign product_ld = product_ld | replace: '"@type":"Offer",', pola_oferty
+
+  # 5. Adres budowany jak w filtrze (https + width 1920, escape przez json), inaczej replace nic nie trafi.
+  if product.images.size > 1
+    assign zdjecia = ''
+    for zdjecie in product.images limit: 11
+      assign adres = zdjecie | image_url: width: 1920 | prepend: 'https:' | json
+      assign zdjecia = zdjecia | append: '~~' | append: adres
+    endfor
+    for zdjecie in product.images limit: 11
+      assign adres = zdjecie | image_url: width: 1920 | prepend: 'https:' | json
+      assign stare = '~~' | append: adres
+      assign reszta = zdjecia | remove_first: stare | replace: '~~', ','
+      assign stare = '"image":' | append: adres
+      assign nowe = '"image":[' | append: adres | append: reszta | append: ']'
+      assign product_ld = product_ld | replace: stare, nowe
+    endfor
+  endif
 
   assign klucze = 'mini_type,class,race_,sex,pose,mounted,weapon_,sculptor' | split: ','
   assign etykiety = 'Miniature type,Character class,Race,Gender,Pose,Mounted,Weapon,Sculptor' | split: ','
