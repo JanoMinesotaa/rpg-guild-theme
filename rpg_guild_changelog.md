@@ -10,6 +10,25 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-26
+
+### Zaplanowane na 1.12: filmy w banerze i zdjęcie FREE Mini of the Month (wilk) `[poza repo]`
+
+- **Co:** dwa jednorazowe zadania w Val Town, te same co 1.11, przestawione na 1.12:
+  - `janstarosta/rpg-guild-ceny-1-11/foto.ts`, cron `2-30 0 1 12 *` (1.12 01:02-01:30 CET): `BadgeGrudzien2026.webp` (wilk, FREE) jako pierwsze zdjęcie produktu `free-dnd-mini-of-the-month`, zdejmuje `BadgeListopad2026.webp`. Plik w Files: `gid://shopify/MediaImage/51729334501642`. Stan: blob `foto-state-12`.
+  - `janstarosta/rpg-guild-baner-1-11/main.ts`, cron `5-59 0 1 12 *` (1.12 01:05-01:59 CET): `video_1` w `hero_XFBPJU` → EN `Stronka RPG Banner film 12_2026_ENG.mp4`, DE `..._DE.mp4`, FR `..._FR.mp4` (wgrane 26.11, READY). Stan i punkt cofnięcia: blob `baner-state-12`.
+- **Dlaczego:** zlecenie Jana 26.11 (zmiana decyzji z 24.11, że baner i Mini of the Month zostają).
+- **Sprawdzone:** oba vale uruchomione na sucho 26.11 - uprawnienia OK, pliki READY/HTTP 200, obecne listopadowe wskazania i zdjęcie odczytane. Wynik 1.12 przyjdzie mailem (OK/SPRAWDZ/BLAD).
+- **Jak cofnąć:** baner - wartości z blobu `baner-state-12` (`rollback.previous`), stare filmy nie są kasowane. Zdjęcie - kopia `Free-Mini-of-the-Month/BadgeListopad2026.webp`, dodać w panelu produktu i zdjąć nowe.
+
+### Schema produktu: wszystkie zdjęcia przy każdym wariancie
+
+- **Co:** w danych strukturalnych (JSON-LD) każdy wariant dostaje listę do 11 zdjęć produktu zamiast jednego. Zdjęcie wariantu zostaje pierwsze. Produkty z jednym zdjęciem bez zmian.
+- **Gdzie:** `snippets/schema-produktu.liquid`, punkt 5 (podmiana `"image"` w wyjściu filtra `structured_data`).
+- **Dlaczego:** Merchant Center w listopadzie pokazał „Images per offer: Incomplete” na trzech rynkach. Feed miał 3+ zdjęcia na ofertę, ale Google liczy ten wskaźnik ze strony sklepu, a strona pokazywała 1 zdjęcie na wariant. Strona produktu rośnie o ok. 17 KB przed kompresją (np. 1372 → 1389 KB).
+- **Sprawdzone na LIVE:** figurka 24 warianty → 7 zdjęć, kości → 7, karty postaci → 4, EN i DE, JSON poprawny, oceny i oferty bez zmian.
+- **Jak cofnąć:** wgrać `rollback/schema-produktu-przed-zdjeciami-2026-11-26/snippets/schema-produktu.liquid` (`theme push --only snippets/schema-produktu.liquid --allow-live`) albo tag gita `przed-schema-zdjecia-2026-11-26`.
+
 ## 2026-11-25
 
 ### Brama partnerów: CG #5973 przepięte na zamówienie połączone w Base `[poza repo]`
