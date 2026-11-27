@@ -10,6 +10,15 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-27
+
+### Aplikacja „RPG Partner Crippled God”: IP allowlist włączony `[poza repo]`
+
+- **Co:** w Dev Dashboard (org „Maciej Klimczak Media”, aplikacja 451097853953 → Settings → IP allowlist) dozwolone: zakres `74.220.50.0/24` (wyjście Val Town) oraz sieć AS16509 (Amazon) ograniczona do USA. Ochrona włączona.
+- **Dlaczego:** od 20.11.2026 Shopify nie pozwala zainstalować aplikacji custom w sklepie spoza naszej organizacji bez allowlisty. Nick (CG) dostał błąd „IP allowlist required”. Od 1.01.2027 to samo dotyczy istniejących instalacji (Tista).
+- **Uwaga na migrację z Val Town:** nowa platforma ma inne IP. Przed przełączeniem dopisać jej IP/ASN w allowliście aplikacji CG i Tisty, inaczej zapytania dostaną 403.
+- **Jak cofnąć:** ten sam ekran, wyłączyć „Enforce IP allowlist” i zapisać (lista zostaje).
+
 ## 2026-11-26
 
 ### Zaplanowane na 1.12: filmy w banerze i zdjęcie FREE Mini of the Month (wilk) `[poza repo]`
