@@ -10,6 +10,15 @@ Konwencja: najnowsze na górze.
 
 ---
 
+## 2026-11-28
+
+### Brama partnerów: Crippled God pomija GR/GB/US także na torze Order Desk `[poza repo]`
+
+- **Co:** w `janstarosta/rpg-partner-gateway` (Val Town) nowa funkcja `skipsCountry` w `cg.ts` i jej wywołanie w `cgSync.ts`, w `partners.ts` partner `cg` dostał `skipCountries: ["GR", "GB", "US"]`. Rozpoznaje kody ISO i pełne nazwy (np. „United Kingdom” w adresach Etsy wpisywanych ręcznie). Commit `33690b3` w `Partner-App/gateway`.
+- **Dlaczego:** filtr z 23.11 działał tylko w aplikacji Shopify (`cgshop`), a CG produkcyjnie idzie przez Order Desk. 25.11 do „CG New” weszły 3 zamówienia z UK (Base 165367220, 165367221, 165367223), które Nick obsługuje sam. Te 3 zostają w Base do decyzji Macieja.
+- **Sprawdzone:** testy 27/27, na żywym valu suchy przebieg po folderze New w Order Desk: 52 zamówienia, 3 z GB pominięte, reszta bez zmian.
+- **Jak cofnąć:** Val Town wersja 100 (przed zmianą) albo tag `przed-cg-filtr-krajow` w `Partner-App/gateway`.
+
 ## 2026-11-27
 
 ### Aplikacja „RPG Partner Crippled God”: IP allowlist włączony `[poza repo]`
